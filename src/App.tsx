@@ -11,7 +11,7 @@ import ContactPage from './pages/ContactPage';
 import './index.css';
 import ScrollToTop from './helpers/ScrollToTop';
 
-#import fs from "fs";
+
 function Layout({ children }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-base)' }}>
