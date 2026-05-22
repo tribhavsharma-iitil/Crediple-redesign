@@ -1,9 +1,9 @@
-import HeroSection from '../components/sections/heroSection';
-import BrandsSection from '../components/sections/brandsSection';
-import AboutSection from '../components/sections/aboutSection';
-import MilestonesSection from '../components/sections/milestonesSection';
-import WhoWeServeSection from '../components/sections/whoWeServeSection';
-import TestimonialsSection from '../components/sections/testimonialsSection';
+import HeroSection from '../components/sections/HeroSection';
+import BrandsSection from '../components/sections/BrandsSection';
+import AboutSection from '../components/sections/AboutSection';
+import MilestonesSection from '../components/sections/MilestonesSection';
+import WhoWeServeSection from '../components/sections/WhoWeServeSection';
+import TestimonialsSection from '../components/sections/TestimonialsSection';
 import CTABanner from '../components/sections/CTABanner';
 
 export default function HomePage() {
