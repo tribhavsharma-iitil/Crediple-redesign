@@ -2,8 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import HomePage from './pages/HomePage';
-
+import HomePage from './pages/Homepage';
 import AboutPage from './pages/AboutPage';
 import BrandsPage from './pages/BrandsPage';
 import ContactPage from './pages/ContactPage';
@@ -11,7 +10,7 @@ import ContactPage from './pages/ContactPage';
 import './index.css';
 import ScrollToTop from './helpers/ScrollToTop';
 
-
+import fs from "fs";
 function Layout({ children }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-base)' }}>
@@ -38,4 +37,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
