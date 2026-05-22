@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import HomePage from './pages/Homepage';
+import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import BrandsPage from './pages/BrandsPage';
 import ContactPage from './pages/ContactPage';
