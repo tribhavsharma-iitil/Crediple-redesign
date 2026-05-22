@@ -3,7 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import HomePage from './pages/HomePage';
-#import HomePage from './pages/Homepage';
+
 import AboutPage from './pages/AboutPage';
 import BrandsPage from './pages/BrandsPage';
 import ContactPage from './pages/ContactPage';
