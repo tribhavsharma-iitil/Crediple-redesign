@@ -1,393 +1,313 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { Search, Menu, X } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
-import { NAV_LINKS } from "../../data/siteData";
-import navbar_logo from "../../assets/navbar_logo.png";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { NAV_LINKS as navLinks } from "@/utils/siteData";
+import ThemeToggle from "@/components/theme/ThemeToggle";
+import { useTheme } from "@/context/ThemeContext";
+import enterprise_light from '@/assets/yaka_light.png';
+import enterprise_dark from '@/assets/yaka_dark.png';
+import crediple_light from '@/assets/crediple_light.png';
+import crediple_dark from '@/assets/crediple_dark.png';
+import Image from "next/image";
 
-// ─── animation variants ────────────────────────────────────────────────────
-const desktopLinkContainer = {
+// ── Animation variants ────────────────────────────────────────────────────────
+const mobileDrawer = {
+  hidden: { opacity: 0, y: -10, scale: 0.97 },
+  show:   { opacity: 1, y: 0, scale: 1,  transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const } },
+  exit:   { opacity: 0, y: -10, scale: 0.97, transition: { duration: 0.2 } },
+};
+const mobileContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.25 } },
+  show: { transition: { staggerChildren: 0.065, delayChildren: 0.06 } },
+};
+const mobileItem = {
+  hidden: { opacity: 0, x: -14 },
+  show:   { opacity: 1, x: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
-const desktopLinkItem = {
-  hidden: { y: -12, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+interface NavbarProps {
+  scrollProgress?: number;
+}
 
-const rightActionsContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.45 } },
-};
+export default function Navbar({ scrollProgress = 0 }: NavbarProps) {
+  const pathname = usePathname();
+  const { isDark } = useTheme();
 
-const rightActionItem = {
-  hidden: { scale: 0.7, opacity: 0 },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    transition: { duration: 0.35, ease: [0.34, 1.56, 0.64, 1] },
-  },
-};
-
-const mobileMenuVariants = {
-  hidden: { height: 0, opacity: 0 },
-  visible: {
-    height: "auto",
-    opacity: 1,
-    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-  },
-  exit: {
-    height: 0,
-    opacity: 0,
-    transition: { duration: 0.25, ease: "easeIn" },
-  },
-};
-
-const mobileLinkVariants = {
-  hidden: { x: -24, opacity: 0 },
-  visible: (i) => ({
-    x: 0,
-    opacity: 1,
-    transition: { delay: i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-  }),
-  exit: (i) => ({
-    x: -16,
-    opacity: 0,
-    transition: { delay: i * 0.03, duration: 0.2 },
-  }),
-};
-
-// ─── main component ────────────────────────────────────────────────────────
-export default function Navbar() {
-  const location = useLocation();
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled,   setScrolled]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const NAVBAR_H = 64;
+  const [mounted,    setMounted]    = useState(false);
 
-  const isHomePage = location.pathname === "/";
-  const animStart = isHomePage ? 300 : 160;
-  const animEnd   = isHomePage ? 500 : 300;
-
-  const { scrollY } = useScroll();
-
-  // ── Logo: comes from bottom, fades in, scales up ──────────────────────────
-  const navLogoOpacity = useTransform(scrollY, [animStart, animEnd], [0, 1]);
-  const navLogoScale   = useTransform(scrollY, [animStart, animEnd], [0.5, 1]);
-  const navLogoY       = useTransform(scrollY, [animStart, animEnd], [28, 0]);  // bottom → top
-
-
-  const LOGO_WIDTH = 56; 
-  const contentShiftX = useTransform(scrollY, [animStart, animEnd], [0, -LOGO_WIDTH / 2]);
-
-  // ── border/shadow on scroll ───────────────────────────────────────────────
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    setMounted(true);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
-
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
-
-  const isActive = (path) => {
-    if (path === "/") return location.pathname === "/";
-    return location.pathname.startsWith(path);
-  };
+  const isScrolled   = mounted && scrolled;
+  const yakaVisible  = mounted && scrollProgress > 0.72;
+  const yakaArrived  = mounted && scrollProgress > 0.85;
 
   return (
     <>
-      <nav
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 50,
-          background: "var(--nav-bg)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderBottom: scrolled
-            ? "1px solid var(--border-color)"
-            : "1px solid transparent",
-          boxShadow: scrolled ? "var(--shadow-sm)" : "none",
-          transition: "border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease",
-        }}
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed top-0 left-0 right-0 z-50"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-
-            {/* ── Left: Crediple wordmark ── */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="flex-shrink-0"
-            >
-              <Link to="/">
-                <motion.span
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="text-4xl font-extrabold text-[#003c82] inline-block"
-                >
-                  Crediple
-                </motion.span>
-              </Link>
-            </motion.div>
-
-            {/* ── Center: Nav links — shift left when logo appears ── */}
-            <motion.div
-              variants={desktopLinkContainer}
-              initial="hidden"
-              animate="visible"
-              style={{ x: contentShiftX }}
-              className="hidden md:flex items-center gap-0.5"
-            >
-              {NAV_LINKS.map((link) => (
-                <motion.div key={link.path} variants={desktopLinkItem} className="relative">
-                  <NavItem link={link} active={isActive(link.path)} />
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/*
-              ── Right: search bar + YAKA logo ──
-              The search bar shifts left together with nav links.
-              The logo sits to the RIGHT of the search bar, animating
-              in from below as the user scrolls.
-            */}
-            <motion.div
-              variants={rightActionsContainer}
-              initial="hidden"
-              animate="visible"
-              className="hidden md:flex items-center gap-3"
-            >
-              {/* Search bar — shifts left */}
-              <motion.div
-                variants={rightActionItem}
-                style={{ x: contentShiftX }}
-              >
-                <motion.div
-                  style={{
-                    background: "rgba(249, 246, 242, 1)",
-                    borderRadius: "2rem",
-                  }}
-                  className="flex items-center gap-2 px-4 py-1.5 border-[var(--border-color)] border"
-                  whileFocusWithin={{ boxShadow: "0 0 0 2px var(--color-primary)" }}
-                  transition={{ duration: 0.15 }}
-                >
-                  <input
-                    placeholder="Search for..."
-                    style={{
-                      background: "transparent",
-                      color: "rgba(188, 156, 129, 1)",
-                      width: 180,
-                    }}
-                    className="text-xs outline-none"
-                  />
-                  <Search size={15} style={{ color: "rgba(188, 156, 129, 1)", flexShrink: 0 }} />
-                </motion.div>
-              </motion.div>
-
-           
-              <motion.div
-                style={{
-                  opacity: navLogoOpacity,
-                  scale: navLogoScale,
-                  y: navLogoY,
-                  transformOrigin: "bottom center",
-                  overflow: "hidden",
-                  // width is always reserved so layout doesn't jump —
-                  // but we clip it to 0 height when invisible via maxHeight
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src={navbar_logo}
-                  alt="A YAKA Enterprise"
-                  style={{
-                    height: "2rem",        // 32px mobile
-                    width: "auto",
-                    objectFit: "contain",
-                    display: "block",
-                    flexShrink: 0,
-                  }}
-                  className="md:!h-9"     // 36px on md+
-                />
-              </motion.div>
-            </motion.div>
-
-            {/* ── Mobile Controls ── */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="md:hidden flex items-center gap-1"
-            >
-              <motion.button
-                onClick={() => setMobileOpen((o) => !o)}
-                whileTap={{ scale: 0.9 }}
-                style={{ color: "var(--text-primary)" }}
-                className="p-2 rounded-lg hover:bg-[var(--bg-surface)] transition-colors"
-                aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              >
-                <AnimatePresence mode="wait">
-                  {mobileOpen ? (
-                    <motion.span
-                      key="close"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      style={{ display: "flex" }}
-                    >
-                      <X size={22} />
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="menu"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      style={{ display: "flex" }}
-                    >
-                      <Menu size={22} />
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* ── Mobile Menu ── */}
+        {/* Glass bar */}
         <AnimatePresence>
-          {mobileOpen && (
+          {isScrolled && (
             <motion.div
-              variants={mobileMenuVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              key="glass-bar"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0"
               style={{
-                background: "var(--nav-bg)",
-                backdropFilter: "blur(20px)",
+                background:           isDark ? "rgba(2,6,23,0.75)"    : "rgba(248,250,252,0.88)",
+                backdropFilter:       "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
-                borderTop: "1px solid var(--border-color)",
+                borderBottom:         isDark ? "1px solid rgba(147,197,253,0.10)" : "1px solid rgba(15,23,42,0.08)",
+                boxShadow:            isDark ? "0 4px 40px rgba(0,0,0,0.35)"      : "0 4px 24px rgba(0,0,0,0.08)",
               }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="px-4 py-4 flex flex-col gap-1">
-                {NAV_LINKS.map((link, i) => (
-                  <motion.div
-                    key={link.path}
-                    custom={i}
-                    variants={mobileLinkVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                  >
-                    <Link
-                      to={link.path}
-                      style={{
-                        color: isActive(link.path) ? "var(--color-primary)" : "var(--text-secondary)",
-                        fontWeight: isActive(link.path) ? 600 : 400,
-                        fontFamily: "DM Sans, sans-serif",
-                      }}
-                      className="block px-4 py-3 rounded-xl text-sm hover:bg-[var(--bg-elevated)] transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
-
-                {/* Mobile search */}
-                <motion.div
-                  custom={NAV_LINKS.length}
-                  variants={mobileLinkVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className="mt-2 px-1"
-                >
-                  <div
-                    style={{
-                      background: "var(--bg-surface)",
-                      border: "1px solid var(--border-color)",
-                      borderRadius: "0.75rem",
-                    }}
-                    className="flex items-center gap-2 px-3 py-2"
-                  >
-                    <Search size={16} style={{ color: "var(--text-muted)", flexShrink: 0 }} />
-                    <input
-                      placeholder="Search for..."
-                      style={{
-                        background: "transparent",
-                        color: "var(--text-primary)",
-                        fontFamily: "DM Sans, sans-serif",
-                      }}
-                      className="flex-1 text-sm outline-none placeholder:text-[var(--text-muted)]"
-                    />
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
+            />
           )}
         </AnimatePresence>
-      </nav>
 
-      {/* Spacer so content starts below fixed navbar */}
-      <div style={{ height: NAVBAR_H }} />
+
+        <div className="relative max-w-[1200px] mx-auto px-6 md:px-8 h-16 flex items-center gap-4">
+
+          {/* ── Crediple logo (left) ── */}
+          <Link href="/" className="shrink-0 no-underline z-10 flex items-center" aria-label="Crediple home">
+            <Image
+              src={isDark ? crediple_dark : crediple_light}
+              alt="Crediple"
+              width={100}
+              height={76}
+            />
+          </Link>
+
+          {/* ── Desktop: nav links + ThemeToggle + Contact (fills space, right-aligned to Yaka) ── */}
+          <div className="hidden md:flex flex-1 items-center justify-center gap-3 z-10">
+
+            {/* Nav links — spring left when yaka arrives */}
+            <motion.nav
+              className="flex items-center gap-4"
+              animate={{ x: yakaArrived ? -6 : 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 28 }}
+            >
+              {navLinks.map((link, i) => {
+                const active = pathname === link.href;
+                return (
+                  <motion.div
+                    key={link.label}
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <Link
+                      href={link.href}
+                      className="relative inline-flex items-center gap-3 px-4 py-2 rounded-full text-[0.88rem] font-medium tracking-wide no-underline transition-all duration-200"
+                      style={{
+                        fontFamily: "'Jost', sans-serif",
+                        color:      active ? (isDark ? "#ffffff" : "#0f172a")                            : (isDark ? "rgba(255,255,255,0.58)" : "rgba(15,23,42,0.50)"),
+                        background: active ? (isDark ? "rgba(255,255,255,0.12)" : "rgba(15,23,42,0.07)") : (isDark ? "rgba(255,255,255,0.04)" : "rgba(15,23,42,0.03)"),
+                        border:     active ? (isDark ? "1px solid rgba(147,197,253,0.28)" : "1px solid rgba(15,23,42,0.14)") : (isDark ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(15,23,42,0.06)"),
+                        boxShadow:  active ? (isDark ? "0 0 20px rgba(96,165,250,0.15),inset 0 1px 0 rgba(255,255,255,0.10)" : "0 0 12px rgba(15,23,42,0.06)") : "none",
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!active) {
+                          e.currentTarget.style.color       = isDark ? "rgba(255,255,255,0.88)" : "rgba(15,23,42,0.85)";
+                          e.currentTarget.style.background  = isDark ? "rgba(255,255,255,0.08)" : "rgba(15,23,42,0.06)";
+                          e.currentTarget.style.borderColor = isDark ? "rgba(147,197,253,0.18)" : "rgba(15,23,42,0.12)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!active) {
+                          e.currentTarget.style.color       = isDark ? "rgba(255,255,255,0.58)" : "rgba(15,23,42,0.50)";
+                          e.currentTarget.style.background  = isDark ? "rgba(255,255,255,0.04)" : "rgba(15,23,42,0.03)";
+                          e.currentTarget.style.borderColor = isDark ? "rgba(255,255,255,0.07)" : "rgba(15,23,42,0.06)";
+                        }
+                      }}
+                    >
+                      {link.label}
+                      {link.hasDropdown && <ChevronDown size={12} className="opacity-50 mt-px" />}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </motion.nav>
+
+            {/* Divider */}
+            <div
+              className="h-5 w-px shrink-0 mx-14"
+              style={{ background: isDark ? "rgba(255,255,255,0.10)" : "rgba(15,23,42,0.10)" }}
+            />
+
+            <ThemeToggle />
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-5 py-2 rounded-full text-[0.88rem] font-semibold tracking-wide no-underline transition-all duration-200 active:scale-95 shrink-0"
+              style={{
+                fontFamily: "'Jost', sans-serif",
+                background: isDark ? "rgba(255,255,255,0.95)" : "#0f172a",
+                color:      isDark ? "#020617"                : "#f8fafc",
+                boxShadow:  isDark ? "0 0 24px rgba(147,197,253,0.20)" : "0 2px 12px rgba(15,23,42,0.18)",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >
+              Contact us
+            </Link>
+          </div>
+
+          {/* ── Yaka icon — far right, slides in from below on scroll ── */}
+          <AnimatePresence>
+            {yakaVisible && (
+              <motion.div
+                key="yaka-nav"
+                initial={{ opacity: 0, y: 20, scale: 0.6  }}
+                animate={{ opacity: 1, y: 0,  scale: 1    }}
+                exit={{    opacity: 0, y: 14,  scale: 0.75 }}
+                transition={{ type: "spring", stiffness: 240, damping: 24 }}
+                className="hidden md:flex items-center shrink-0 z-10"
+                style={{ marginLeft: 4 }}
+              >
+                <Image
+                  src={isDark ? enterprise_dark : enterprise_light}
+                  alt="Yaka"
+                  width={34}
+                  height={34}
+                  style={{ display: "block" }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* ── Mobile: ThemeToggle + Hamburger ── */}
+          <div className="md:hidden flex items-center gap-2 z-10 ml-auto">
+            <ThemeToggle />
+            <motion.button
+              whileTap={{ scale: 0.88 }}
+              className="p-2.5 rounded-xl flex items-center justify-center"
+              style={{
+                background: isDark ? "rgba(255,255,255,0.06)" : "rgba(15,23,42,0.05)",
+                border:     isDark ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(15,23,42,0.10)",
+                color:      isDark ? "rgba(255,255,255,0.8)"  : "rgba(15,23,42,0.8)",
+                cursor:     "pointer",
+              }}
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={mobileOpen ? "close" : "open"}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0,   opacity: 1 }}
+                  exit={{    rotate:  90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="block leading-none"
+                >
+                  {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+                </motion.span>
+              </AnimatePresence>
+            </motion.button>
+          </div>
+
+        </div>
+      </motion.header>
+
+      {/* ── Mobile Drawer ──────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 md:hidden"
+              style={{ background: isDark ? "rgba(0,0,0,0.55)" : "rgba(15,23,42,0.30)", backdropFilter: "blur(4px)" }}
+              onClick={() => setMobileOpen(false)}
+            />
+
+            <motion.div
+              key="drawer"
+              variants={mobileDrawer} initial="hidden" animate="show" exit="exit"
+              className="fixed top-[72px] left-3 right-3 z-50 md:hidden rounded-2xl overflow-hidden"
+              style={{
+                background:           isDark ? "rgba(6,12,30,0.96)"    : "rgba(248,250,252,0.97)",
+                backdropFilter:       "blur(28px)",
+                WebkitBackdropFilter: "blur(28px)",
+                border:               isDark ? "1px solid rgba(147,197,253,0.14)" : "1px solid rgba(15,23,42,0.10)",
+                boxShadow:            isDark ? "0 28px 80px rgba(0,0,0,0.55)"     : "0 20px 60px rgba(15,23,42,0.12)",
+              }}
+            >
+              {/* Brand strip */}
+              <div
+                className="flex items-center gap-3 px-4 pt-4 pb-3"
+                style={{ borderBottom: isDark ? "1px solid rgba(147,197,253,0.08)" : "1px solid rgba(15,23,42,0.07)" }}
+              >
+                <Image src={isDark ? enterprise_dark : enterprise_light} alt="Yaka" width={28} height={28} />
+                <Image
+                  src={isDark ? crediple_dark : crediple_light}
+                  alt="Crediple"
+                  width={100}
+                  height={38}
+                  style={{ height: 22, width: "auto" }}
+                />
+              </div>
+
+              <motion.nav variants={mobileContainer} initial="hidden" animate="show" className="flex flex-col p-3 gap-1">
+                {navLinks.map((link) => {
+                  const active = pathname === link.href;
+                  return (
+                    <motion.div key={link.label} variants={mobileItem}>
+                      <Link
+                        href={link.href}
+                        className="flex items-center justify-between px-4 py-3.5 rounded-xl text-[0.93rem] font-medium no-underline transition-all duration-150"
+                        style={{
+                          fontFamily: "'Jost', sans-serif",
+                          color:      active ? (isDark ? "#ffffff" : "#0f172a") : (isDark ? "rgba(255,255,255,0.58)" : "rgba(15,23,42,0.55)"),
+                          background: active ? (isDark ? "rgba(147,197,253,0.12)" : "rgba(15,23,42,0.07)") : "transparent",
+                          border:     active ? (isDark ? "1px solid rgba(147,197,253,0.20)" : "1px solid rgba(15,23,42,0.10)") : "1px solid transparent",
+                        }}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        <span>{link.label}</span>
+                        {link.hasDropdown && <ChevronDown size={14} style={{ opacity: 0.4, color: isDark ? "#fff" : "#0f172a" }} />}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </motion.nav>
+
+              <div style={{ height: "1px", background: isDark ? "rgba(147,197,253,0.08)" : "rgba(15,23,42,0.07)", margin: "0 12px" }} />
+
+              <motion.div variants={mobileItem} className="p-3">
+                <Link
+                  href="/contact"
+                  className="flex items-center justify-center px-4 py-3.5 rounded-xl text-[0.93rem] font-semibold no-underline transition-all duration-150 active:scale-[0.98]"
+                  style={{
+                    fontFamily: "'Jost', sans-serif",
+                    background: isDark ? "rgba(255,255,255,0.95)" : "#0f172a",
+                    color:      isDark ? "#020617"                : "#f8fafc",
+                    boxShadow:  isDark ? "0 0 28px rgba(147,197,253,0.18)" : "0 4px 16px rgba(15,23,42,0.22)",
+                  }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Contact us
+                </Link>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
-  );
-}
-
-// ─── NavItem ───────────────────────────────────────────────────────────────
-function NavItem({ link, active }) {
-  return (
-    <Link
-      to={link.path}
-      className="relative px-4 py-2 flex items-center gap-1 group"
-      style={{ fontFamily: "DM Sans, sans-serif" }}
-    >
-      <span
-        className="text-sm font-medium transition-colors duration-200"
-        style={{ color: active ? "var(--color-primary)" : "var(--text-secondary)" }}
-      >
-        {link.label}
-      </span>
-
-      <motion.span
-        layoutId="nav-underbar"
-        className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full"
-        style={{ background: "var(--color-primary)" }}
-        initial={false}
-        animate={{ opacity: active ? 1 : 0, scaleX: active ? 1 : 0 }}
-        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-      />
-
-      <motion.span
-        className="absolute inset-0 rounded-lg -z-10"
-        style={{ background: "var(--bg-surface)" }}
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.15 }}
-      />
-    </Link>
   );
 }

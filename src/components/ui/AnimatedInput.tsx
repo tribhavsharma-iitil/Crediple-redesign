@@ -1,5 +1,21 @@
-"use client"
+import type { ChangeEvent, FocusEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+type AnimatedInputProps = {
+  label?: string;
+  type?: string;
+  name: string;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  placeholder?: string;
+  error?: string;
+  success?: boolean;
+  multiline?: boolean;
+  rows?: number;
+  required?: boolean;
+  className?: string;
+};
 
 export default function AnimatedInput({
   label,
@@ -15,7 +31,7 @@ export default function AnimatedInput({
   rows = 5,
   required = false,
   className = '',
-}) {
+}: AnimatedInputProps) {
   const statusClass = error ? 'input-error' : success ? 'input-success' : '';
 
   return (
@@ -44,7 +60,7 @@ export default function AnimatedInput({
             placeholder={placeholder}
             rows={rows}
             required={required}
-            className={`input-field resize-none  bg-[#F0FAFF] ${statusClass}`}
+            className={`input-field resize-none ${statusClass}`}
           />
         ) : (
           <input
@@ -56,7 +72,7 @@ export default function AnimatedInput({
             onBlur={onBlur}
             placeholder={placeholder}
             required={required}
-            className={`input-field bg-[#F0FAFF]  ${statusClass}`}
+            className={`input-field ${statusClass}`}
           />
         )}
       </motion.div>
