@@ -18,6 +18,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
     outputs:
       build-version: ${{ steps.version.outputs.sha }}
 
@@ -32,13 +33,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build Next.js app
         run: npm run build
         env:
           NODE_ENV: production
@@ -46,8 +47,8 @@ jobs:
       - name: Upload Next.js artifact
         uses: actions/upload-artifact@v4
         with:
-        name: next-${{ steps.version.outputs.sha }}
-        path: .next/
+          name: next-${{ steps.version.outputs.sha }}
+          path: .next/
           retention-days: 7
 
   deploy:
@@ -57,11 +58,11 @@ jobs:
     environment: production
 
     steps:
-      - name: Download dist artifact
+      - name: Download Next.js artifact
         uses: actions/download-artifact@v4
         with:
-          name: dist-${{ needs.build.outputs.build-version }}
-          path: dist/
+          name: next-${{ needs.build.outputs.build-version }}
+          path: .next/
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
@@ -69,25 +70,13 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Deploy assets (long cache)
-        run: |
-          aws s3 sync dist/assets/ s3://${{ vars.AWS_S3_BUCKET }}/assets/ \
-            --delete \
-            --cache-control "public, max-age=31536000, immutable"
+      - name: Verify downloaded files
+        run: ls -la .next
 
-      - name: Deploy index.html (no cache)
+      - name: Upload Next.js build to S3
         run: |
-          aws s3 cp dist/index.html s3://${{ vars.AWS_S3_BUCKET }}/index.html \
-            --cache-control "no-cache, no-store, must-revalidate" \
-            --content-type "text/html; charset=utf-8"
-
-      - name: Deploy remaining files
-        run: |
-          aws s3 sync dist/ s3://${{ vars.AWS_S3_BUCKET }}/ \
-            --delete \
-            --exclude "assets/*" \
-            --exclude "index.html" \
-            --cache-control "public, max-age=3600"
+          aws s3 sync .next/ s3://${{ vars.AWS_S3_BUCKET }}/ \
+            --delete
 
       - name: Invalidate CloudFront cache
         run: |
@@ -98,5 +87,5 @@ jobs:
       - name: Deployment summary
         run: |
           echo "### Deployment Successful" >> $GITHUB_STEP_SUMMARY
-          echo "- **Version:** ${{ needs.build.outputs.build-version }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Bucket:** s3://${{ vars.AWS_S3_BUCKET }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Version: ${{ needs.build.outputs.build-version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Bucket: s3://${{ vars.AWS_S3_BUCKET }}" >> $GITHUB_STEP_SUMMARY
