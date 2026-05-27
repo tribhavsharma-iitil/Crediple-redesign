@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { HERO_CONTENT as heroContent } from "@/utils/siteData";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { ArrowRight, Search, Sparkles } from "lucide-react";
 
 const container = {

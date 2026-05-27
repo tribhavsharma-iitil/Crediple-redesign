@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, MapPin, MessageCircle, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import AnimatedInput from "@/components/ui/AnimatedInput";
 
-const fadeUp = {
+const fadeUp = { 
   hidden: { opacity: 0, y: 28 },
   show: (i = 0) => ({
     opacity: 1,

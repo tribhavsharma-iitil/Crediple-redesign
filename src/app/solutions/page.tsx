@@ -16,7 +16,7 @@ import {
   Sparkles,
   Workflow,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import SolutionsHero from "@/sections/solutions/hero";
 
 // ── animation variants ────────────────────────────────────────────────────────
