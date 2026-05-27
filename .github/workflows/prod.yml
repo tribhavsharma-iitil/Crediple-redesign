@@ -43,11 +43,11 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Upload dist artifact
+      - name: Upload Next.js artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist-${{ steps.version.outputs.sha }}
-          path: dist/
+        name: next-${{ steps.version.outputs.sha }}
+        path: .next/
           retention-days: 7
 
   deploy:
