@@ -22,8 +22,6 @@ import card_4 from "@/assets/card_4.png";
 import card_5 from "@/assets/card_5.png";
 import card_6 from "@/assets/card_6.png";
 
-
-
 export const NAV_LINKS = [
   { label: "Home", href: "/", hasDropdown: false },
   { label: "About", href: "/about", hasDropdown: false },
