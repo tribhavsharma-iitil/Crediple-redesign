@@ -4,6 +4,7 @@ import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { BRANDS_PAGE_DATA, UNIFIED_ADVANTAGE } from "@/utils/siteData";
 import BrandHero from "@/sections/brand/hero";
+import Image from "next/image";
 
 // ─── Animation Variants ──────────────────────────────────────────────────────
 
@@ -12,18 +13,30 @@ const fadeUp = {
   show: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
   }),
 };
 
 const fadeLeft = {
   hidden: { opacity: 0, x: -36 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 const fadeRight = {
   hidden: { opacity: 0, x: 36 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 const stagger = {
@@ -33,7 +46,12 @@ const stagger = {
 
 const cardVariant = {
   hidden: { opacity: 0, y: 20, scale: 0.97 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.48, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.48, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 // ─── Glow Card ───────────────────────────────────────────────────────────────
@@ -94,32 +112,36 @@ function GlowCard({
 
 export default function BrandsPage() {
   return (
-    <div className="w-full overflow-x-hidden" style={{ background: "var(--background)" }}>
+    <div
+      className="w-full overflow-x-hidden"
+      style={{ background: "var(--background)" }}
+    >
       <BrandHero />
 
-      {/* ── BRAND SECTIONS ────────────────────────────────────────────────── */}
+      {/* ── BRAND SECTIONS ──────────────────────────────────────────────── */}
       {BRANDS_PAGE_DATA.map((brand, index) => {
         const isLast = index === BRANDS_PAGE_DATA.length - 1;
         const imageRight = index % 2 === 0;
 
         return (
-          <div key={brand.id}>
-
-            {/* thin divider between brand blocks (skip before first) */}
+          <div key={brand.id} id={`brand-${brand.id}`}>
+            {/* divider between brand blocks */}
             {index > 0 && (
               <div className="mx-auto max-w-7xl px-4 sm:px-6">
-                <div style={{ height: "1px", background: "rgba(34,211,238,0.08)" }} />
+                <div
+                  style={{ height: "1px", background: "rgba(34,211,238,0.08)" }}
+                />
               </div>
             )}
 
-            {/* ── Brand Hero Content + Image ─────────────────────────────── */}
+            {/* ── Hero Content + Image ───────────────────────────────── */}
             <section className="relative py-16 sm:py-24 px-4 overflow-hidden">
-              {/* ambient glow alternates side */}
               <div
                 className="absolute top-1/2 -translate-y-1/2 w-[450px] h-[350px] pointer-events-none"
                 style={{
                   [imageRight ? "left" : "right"]: "-80px",
-                  background: "radial-gradient(ellipse at center, rgba(34,211,238,0.06) 0%, transparent 65%)",
+                  background:
+                    "radial-gradient(ellipse at center, rgba(34,211,238,0.06) 0%, transparent 65%)",
                   filter: "blur(70px)",
                 }}
                 aria-hidden
@@ -135,14 +157,14 @@ export default function BrandsPage() {
                     imageRight ? "md:flex-row" : "md:flex-row-reverse"
                   }`}
                 >
-                  {/* Text Content */}
+                  {/* Text */}
                   <motion.div
                     variants={imageRight ? fadeLeft : fadeRight}
                     className="w-full md:w-1/2 flex flex-col justify-center"
                   >
                     <p
                       className="mb-3 text-xs font-semibold uppercase tracking-[0.22em]"
-                      style={{ color: "rgba(34,211,238,0.5)" }}
+                      style={{ color: "rgb(34, 156, 238)" }}
                     >
                       Brand 0{index + 1}
                     </p>
@@ -159,7 +181,7 @@ export default function BrandsPage() {
                         <p
                           key={line}
                           className="text-[11px] font-semibold uppercase tracking-[0.16rem]"
-                          style={{ color: "rgba(34,211,238,0.45)" }}
+                          style={{ color: "rgb(34, 156, 238)" }}
                         >
                           {line}
                         </p>
@@ -191,12 +213,16 @@ export default function BrandsPage() {
                   >
                     <div
                       className="rounded-xl overflow-hidden"
-                      style={{ border: "1px solid rgba(34,211,238,0.12)" }}
+                      style={{
+                        border: "1px solid rgba(34,211,238,0.12)",
+                      }}
                     >
-                      <img
+                      <Image
                         src={brand.image}
                         alt={brand.name}
-                        className="w-full h-64 sm:h-72 md:h-80 lg:h-96 object-cover"
+                        
+                          className="w-full h-64 sm:h-72 md:h-80 lg:h-96 object-cover"
+
                       />
                     </div>
                   </motion.div>
@@ -204,21 +230,25 @@ export default function BrandsPage() {
               </div>
             </section>
 
-            {/* subtle inner divider */}
+            {/* inner divider */}
             <div className="mx-auto max-w-6xl px-4 sm:px-6">
-              <div style={{ height: "1px", background: "rgba(34,211,238,0.06)" }} />
+              <div
+                style={{ height: "1px", background: "rgba(34,211,238,0.06)" }}
+              />
             </div>
 
-            {/* ── What We Build ─────────────────────────────────────────── */}
+            {/* ── What We Build ─────────────────────────────────────── */}
             <section className="relative py-14 sm:py-16 px-4 overflow-hidden">
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] pointer-events-none"
                 style={{
-                  background: "radial-gradient(ellipse at center, rgba(139,92,246,0.06) 0%, transparent 65%)",
+                  background:
+                    "radial-gradient(ellipse at center, rgba(139,92,246,0.06) 0%, transparent 65%)",
                   filter: "blur(60px)",
                 }}
                 aria-hidden
               />
+
               <div className="max-w-6xl mx-auto relative z-10">
                 <motion.div
                   variants={fadeUp}
@@ -229,7 +259,7 @@ export default function BrandsPage() {
                 >
                   <p
                     className="mb-2 text-xs font-semibold uppercase tracking-[0.22em]"
-                    style={{ color: "rgba(34,211,238,0.5)" }}
+                    style={{ color: "rgb(34, 156, 238)" }}
                   >
                     Deliverables
                   </p>
@@ -260,7 +290,7 @@ export default function BrandsPage() {
                         <div className="px-6 py-5 flex items-center justify-center h-full">
                           <span
                             className="text-sm sm:text-[15px] font-semibold text-center"
-                            style={{ color: "#22d3ee" }}
+                            style={{ color: "rgb(34, 156, 238)" }}
                           >
                             {item}
                           </span>
@@ -270,7 +300,7 @@ export default function BrandsPage() {
                   ))}
                 </motion.div>
 
-                {/* Row 2 — remaining, centered */}
+                {/* Row 2 — remaining, centred */}
                 {brand.whatWeBuild.length > 3 && (
                   <motion.div
                     variants={stagger}
@@ -290,7 +320,7 @@ export default function BrandsPage() {
                           <div className="px-6 py-5 flex items-center justify-center h-full">
                             <span
                               className="text-sm sm:text-[15px] font-semibold text-center"
-                              style={{ color: "#22d3ee" }}
+                              style={{ color: "rgb(34, 156, 238)" }}
                             >
                               {item}
                             </span>
@@ -303,12 +333,14 @@ export default function BrandsPage() {
               </div>
             </section>
 
-            {/* subtle inner divider */}
+            {/* inner divider */}
             <div className="mx-auto max-w-6xl px-4 sm:px-6">
-              <div style={{ height: "1px", background: "rgba(34,211,238,0.06)" }} />
+              <div
+                style={{ height: "1px", background: "rgba(34,211,238,0.06)" }}
+              />
             </div>
 
-            {/* ── Core Focus ────────────────────────────────────────────── */}
+            {/* ── Core Focus ────────────────────────────────────────── */}
             <motion.section
               variants={fadeUp}
               initial="hidden"
@@ -319,7 +351,7 @@ export default function BrandsPage() {
               <div className="max-w-3xl mx-auto text-center relative z-10">
                 <p
                   className="text-xs font-bold uppercase tracking-[0.22em] mb-4"
-                  style={{ color: "rgba(34,211,238,0.5)" }}
+                  style={{ color: "rgb(34, 156, 238)" }}
                 >
                   Core Focus
                 </p>
@@ -331,19 +363,22 @@ export default function BrandsPage() {
                 </p>
               </div>
 
-              {/* bottom divider — skip on last brand */}
               {!isLast && (
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 mt-12">
-                  <div style={{ height: "1px", background: "rgba(34,211,238,0.1)" }} />
+                  <div
+                    style={{
+                      height: "1px",
+                      background: "rgba(34,211,238,0.1)",
+                    }}
+                  />
                 </div>
               )}
             </motion.section>
-
           </div>
         );
       })}
 
-      {/* ── UNIFIED ADVANTAGE ─────────────────────────────────────────────── */}
+      {/* ── UNIFIED ADVANTAGE ───────────────────────────────────────────── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div style={{ height: "1px", background: "rgba(34,211,238,0.08)" }} />
       </div>
@@ -352,7 +387,8 @@ export default function BrandsPage() {
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, rgba(34,211,238,0.05) 0%, transparent 65%)",
+            background:
+              "radial-gradient(ellipse at center, rgba(34,211,238,0.05) 0%, transparent 65%)",
             filter: "blur(70px)",
           }}
           aria-hidden
@@ -378,11 +414,9 @@ export default function BrandsPage() {
             >
               Unified Advantage
             </h2>
-            <p
-              className="text-sm"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Every brand in our ecosystem benefits from the same central intelligence layer.
+            <p className="text-sm" style={{ color: "var(--text-primary)" }}>
+              Every brand in our ecosystem benefits from the same central
+              intelligence layer.
             </p>
           </motion.div>
 
@@ -400,7 +434,11 @@ export default function BrandsPage() {
                   <GlowCard className="h-full">
                     <motion.div
                       whileHover={{ x: 4 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 22,
+                      }}
                       className="flex items-center gap-4 px-6 py-5 h-full"
                     >
                       <div
@@ -427,7 +465,7 @@ export default function BrandsPage() {
         </div>
       </section>
 
-      {/* ── FOOTER CTA ────────────────────────────────────────────────────── */}
+      {/* ── FOOTER CTA ──────────────────────────────────────────────────── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div style={{ height: "1px", background: "rgba(34,211,238,0.08)" }} />
       </div>
@@ -436,7 +474,8 @@ export default function BrandsPage() {
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, rgba(139,92,246,0.08) 0%, transparent 65%)",
+            background:
+              "radial-gradient(ellipse at center, rgba(139,92,246,0.08) 0%, transparent 65%)",
             filter: "blur(60px)",
           }}
           aria-hidden
@@ -471,8 +510,9 @@ export default function BrandsPage() {
             className="text-sm leading-relaxed"
             style={{ color: "var(--text-primary)" }}
           >
-            Each brand is distinct. Each ecosystem is independent. But all are powered by the same Crediple
-            intelligence layer — a unified backbone that accelerates growth across every domain.
+            Each brand is distinct. Each ecosystem is independent. But all are
+            powered by the same Crediple intelligence layer — a unified backbone
+            that accelerates growth across every domain.
           </motion.p>
         </div>
       </section>

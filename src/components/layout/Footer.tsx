@@ -150,7 +150,7 @@ export default function Footer() {
                 <span style={{ fontWeight: 700, color: "var(--text-primary)" }}>
                   YAKA
                 </span>{" "}
-                Brand
+                Enterprise
               </p>
             </div>
 
@@ -176,17 +176,7 @@ export default function Footer() {
                   whileTap={{ scale: 0.92 }}
                   transition={{ type: "spring", stiffness: 320, damping: 20 }}
                   className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full cursor-pointer"
-                  style={{
-                    background: isDark
-                      ? "rgba(255,255,255,0.05)"
-                      : "rgba(29,78,216,0.06)",
-                    border: `1px solid ${isDark ? "rgba(147,197,253,0.14)" : "rgba(29,78,216,0.14)"}`,
-                    color: isDark
-                      ? "rgba(255,255,255,0.55)"
-                      : "rgba(12,26,53,0.55)",
-                    transition:
-                      "background 0.3s ease, border-color 0.3s ease, color 0.3s ease",
-                  }}
+                  
                   onMouseEnter={(e) => {
                     const el = e.currentTarget as HTMLElement;
                     el.style.color = isDark ? "#93c5fd" : "#1d4ed8";

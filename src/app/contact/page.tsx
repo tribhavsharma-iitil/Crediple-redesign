@@ -126,26 +126,7 @@ function ContactHero() {
           </motion.p>
         </motion.div>
 
-        <motion.div variants={fadeRight} initial="hidden" animate="show" className="hidden md:block">
-          <div
-            className="rounded-2xl p-6"
-            style={{
-              background: "var(--card-inner)",
-              border: "1px solid var(--border)",
-              boxShadow: "0 24px 70px color-mix(in srgb, var(--accent-color) 12%, transparent)",
-            }}
-          >
-            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl" style={{ background: "var(--icon-accent-bg)", border: "1px solid var(--icon-accent-border)" }}>
-              <MessageCircle className="h-6 w-6" style={{ color: "var(--icon-accent)" }} />
-            </div>
-            <p className="mb-2 text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
-              Hyderabad, India
-            </p>
-            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Sattva Knowledge City, Hi-Tech City - 500081, Hyderabad, Telangana.
-            </p>
-          </div>
-        </motion.div>
+
       </div>
     </section>
   );
@@ -230,7 +211,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-16 sm:py-20" style={{ background: "var(--bg-elevated)" }}>
+      <section className="relative overflow-hidden py-4 sm:py-8" style={{ background: "var(--bg-elevated)" }}>
         <div
           className="pointer-events-none absolute right-1/4 bottom-0 h-[300px] w-[420px]"
           style={{

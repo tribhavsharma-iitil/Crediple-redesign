@@ -11,8 +11,8 @@ import Image from "next/image";
 const NAV_H        = 64;
 const SCROLL_START = 50;
 const SCROLL_END   = 240;
-const HERO_LG = 80;  const NAV_LG = 34;
-const HERO_SM = 60;  const NAV_SM = 28;
+const HERO_LG = 60;  const NAV_LG = 34;
+const HERO_SM = 44;  const NAV_SM = 28;
 
 interface FloatingLogoProps {
   loaderDone: boolean;
@@ -39,8 +39,7 @@ export default function FloatingLogo({ loaderDone, isHome = false, onScrollProgr
   const heroLeft = Math.max(0, winW - rightPad - logoHero);
   const heroTop  = NAV_H + 16;
 
-  // Must align with Navbar's yaka icon position:
-  // right edge minus padding + contactBtn(~108) + gap(12) + themeToggle(36) + gap(12) + icon
+  
   const navRight = rightPad + 108 + 12 + 36 + 12;
   const navLeft  = Math.max(0, winW - navRight - logoNav);
   const navTop   = (NAV_H - logoNav) / 2;
@@ -49,8 +48,7 @@ export default function FloatingLogo({ loaderDone, isHome = false, onScrollProgr
   const scrollY    = useTransform(progress, [0, 1], [heroTop,  navTop]);
   const scrollSize = useTransform(progress, [0, 1], [logoHero, logoNav]);
 
-  // Fades out 0.65→0.80; Navbar yaka fades IN at 0.72 — seamless handoff.
-  // z-index 48 (< navbar z-50) means it slides behind the bar naturally.
+  
   const floatOpacity = useTransform(progress, [0.65, 0.80], [1, 0]);
 
   useLayoutEffect(() => {

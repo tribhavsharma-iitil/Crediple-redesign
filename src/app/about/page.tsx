@@ -4,7 +4,10 @@ import { motion } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
 import { Check } from "lucide-react";
 import About from "@/sections/about/hero";
-
+import crediple_light from "@/assets/crediple_light.png";
+import crediple_dark from "@/assets/crediple_dark.png";
+import { useTheme } from "@/context/ThemeContext";
+import Image from "next/image";
 // ─── Reusable animation variants ───────────────────────────────────────────
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -108,6 +111,10 @@ function AccentCard({
 }
 
 export default function AboutUs() {
+
+    const { isDark } = useTheme();
+
+
   return (
     // Single unified background for the entire page — no more striping
     <div className="w-full overflow-x-hidden" style={{ background: "var(--background)" }}>
@@ -771,21 +778,13 @@ export default function AboutUs() {
           aria-hidden
         />
         <div className="max-w-xl mx-auto px-6 relative z-10">
-          <motion.h2
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="text-4xl font-black tracking-widest mb-4"
-            style={{
-              background: "var(--heading-gradient)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            CREDIPLE
-          </motion.h2>
+          
+          <Image
+                src={isDark ? crediple_dark : crediple_light}
+                alt="Crediple"
+                width={200}
+                className="mx-auto mb-6"
+              />
           <motion.div
             variants={fadeUp}
             initial="hidden"

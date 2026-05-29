@@ -3,10 +3,26 @@ import brand_icon_1 from "@/assets/brand_icon_1.png";
 import brand_icon_2 from "@/assets/brand_icon_2.png";
 import brand_icon_3 from "@/assets/brand_icon_3.png";
 import brand_icon_4 from "@/assets/brand_icon_4.png";
+import brand_icon_5 from "@/assets/brand_icon_5.png";
+import brand_icon_6 from "@/assets/brand_icon_6.png";
+import brand_icon_dark_1 from "@/assets/brand_icon_dark_1.png";
+import brand_icon_dark_2 from "@/assets/brand_icon_dark_2.png";
+import brand_icon_dark_3 from "@/assets/brand_icon_dark_3.png";
+import brand_icon_dark_4 from "@/assets/brand_icon_dark_4.png";
+import brand_icon_dark_5 from "@/assets/brand_icon_dark_5.png";
+import brand_icon_dark_6 from "@/assets/brand_icon_dark_6.png";
 import { BsBarChartFill } from "react-icons/bs";
 import { GiBrain } from "react-icons/gi";
 import { FaDatabase } from "react-icons/fa6";
 import { FaClock } from "react-icons/fa6";
+import card_1 from "@/assets/card_1.png";
+import card_2 from "@/assets/card_2.png";
+import card_3 from "@/assets/card_3.png";
+import card_4 from "@/assets/card_4.png";
+import card_5 from "@/assets/card_5.png";
+import card_6 from "@/assets/card_6.png";
+
+
 
 export const NAV_LINKS = [
   { label: "Home", href: "/", hasDropdown: false },
@@ -16,20 +32,16 @@ export const NAV_LINKS = [
 ];
 
 export const HERO_CONTENT = {
-  eyebrow:
-    "Unified Digital Ecosystem",
+  eyebrow: "Unified Digital Ecosystem",
 
-  title:
-    "One Holding.",
+  title: "One Holding.",
 
-  highlight:
-    "Multiple Innovations.",
+  highlight: "Multiple Innovations.",
 
   subtitle:
     "Crediple powers scalable brands across healthcare, finance, legal, and data intelligence.",
 
-  subtitle2:
-    "Built for growth. Designed for impact.",
+  subtitle2: "Built for growth. Designed for impact.",
 
   cta1: {
     label: "Explore Brands",
@@ -43,20 +55,16 @@ export const HERO_CONTENT = {
 };
 
 export const ABOUT_HERO_CONTENT = {
-  eyebrow:
-    "Driven By Innovation",
+  eyebrow: "Driven By Innovation",
 
-  title:
-    "Building Businesses Through",
+  title: "Building Businesses Through",
 
-  highlight:
-    "Technology & Strategy.",
+  highlight: "Technology & Strategy.",
 
   subtitle:
     "Crediple creates scalable digital ecosystems for modern industries and future-ready growth.",
 
-  subtitle2:
-    "Innovation powered by integration.",
+  subtitle2: "Innovation powered by integration.",
 
   cta1: {
     label: "Our Ecosystem",
@@ -70,20 +78,16 @@ export const ABOUT_HERO_CONTENT = {
 };
 
 export const BRANDS_HERO_CONTENT = {
-  eyebrow:
-    "Our Brand Ecosystem",
+  eyebrow: "Our Brand Ecosystem",
 
-  title:
-    "Specialized Brands.",
+  title: "Specialized Brands.",
 
-  highlight:
-    "Unified Vision.",
+  highlight: "Unified Vision.",
 
   subtitle:
     "Each Crediple brand solves industry-specific challenges with scalable digital solutions.",
 
-  subtitle2:
-    "Built to lead modern industries.",
+  subtitle2: "Built to lead modern industries.",
 
   cta1: {
     label: "View Brands",
@@ -97,20 +101,16 @@ export const BRANDS_HERO_CONTENT = {
 };
 
 export const SERVICES_HERO_CONTENT = {
-  eyebrow:
-    "Smart Digital Solutions",
+  eyebrow: "Smart Digital Solutions",
 
-  title:
-    "Scalable Systems For",
+  title: "Scalable Systems For",
 
-  highlight:
-    "Modern Businesses.",
+  highlight: "Modern Businesses.",
 
   subtitle:
     "We build intelligent platforms, automation systems, and enterprise-ready digital infrastructure.",
 
-  subtitle2:
-    "Fast. Scalable. Future-ready.",
+  subtitle2: "Fast. Scalable. Future-ready.",
 
   cta1: {
     label: "Our Solutions",
@@ -124,20 +124,16 @@ export const SERVICES_HERO_CONTENT = {
 };
 
 export const CONTACT_HERO_CONTENT = {
-  eyebrow:
-    "Let’s Build Together",
+  eyebrow: "Let’s Build Together",
 
-  title:
-    "Create The Future With",
+  title: "Create The Future With",
 
-  highlight:
-    "Crediple.",
+  highlight: "Crediple.",
 
   subtitle:
     "Partner with us to build scalable digital solutions and high-impact business ecosystems.",
 
-  subtitle2:
-    "Innovation starts here.",
+  subtitle2: "Innovation starts here.",
 
   cta1: {
     label: "Get In Touch",
@@ -150,69 +146,81 @@ export const CONTACT_HERO_CONTENT = {
   },
 };
 
-
 export const BRANDS = [
   {
-    name: "My Doctor Capsule",
-    description:
-      "Healthcare ecosystem focused on digital patient acquisition, healthcare visibility, and modern clinical growth systems.",
-    href: "https://www.mydoctorcapsule.com",
-    icon: brand_icon_1,
-  },
-  {
-    name: "Loan Konnekt",
-    description:
-      "Structured financial intelligence and lending ecosystem simplifying credit analysis and borrower journeys.",
-    href: "https://www.loankonnekt.com",
-    icon: brand_icon_2,
+    name: "Iitil",
+    description: "Data intelligence ecosystem transforming fragmented business data into strategic decision-making systems.",
+    href: "https://www.iitil.com",
+    icon: brand_icon_4,
+    iconDark: brand_icon_dark_4,
   },
   {
     name: "Lawvix",
-    description:
-      "LegalTech platform focused on structured legal workflows, documentation automation, and digital legal access.",
+    description: "LegalTech platform focused on structured legal workflows, documentation automation, and digital legal access.",
     href: "https://www.lawvix.com",
     icon: brand_icon_3,
+    iconDark: brand_icon_dark_3,
   },
   {
-    name: "Iitil",
-    description:
-      "Data intelligence ecosystem transforming fragmented business data into strategic decision-making systems.",
-    href: "https://www.iitil.com",
-    icon: brand_icon_4,
+    name: "Orgatry",
+    description: "Comprehensive HRMS solutions streamlining workforce management, payroll, attendance, and organisational workflows.",
+    href: "https://orgatry.com",
+    icon: brand_icon_5,
+    iconDark: brand_icon_dark_5,
+  },
+  {
+    name: "Propertizer",
+    description: "Intelligent property platform connecting buyers, sellers, and agents with data-driven real estate insights.",
+    href: "https://propertizer.com",
+    icon: brand_icon_6,
+    iconDark: brand_icon_dark_6,
+  },
+  {
+    name: "Loan Konnekt",
+    description: "Structured financial intelligence and lending ecosystem simplifying credit analysis and borrower journeys.",
+    href: "https://www.loankonnekt.com",
+    icon: brand_icon_2,
+    iconDark: brand_icon_dark_2,
+  },
+  {
+    name: "My Doctor Capsule",
+    description: "Healthcare ecosystem focused on digital patient acquisition, healthcare visibility, and modern clinical growth systems.",
+    href: "https://www.mydoctorcapsule.com",
+    icon: brand_icon_1,
+    iconDark: brand_icon_dark_1,
   },
 ];
 
-
 export const STATS = [
-  { value: "50+",   label: "Global Brands"  },
-  { value: "10K+",  label: "Happy Clients"  },
-  { value: "25+",   label: "Countries"      },
-  { value: "100%",  label: "Satisfaction"   },
+  { value: "50+", label: "Global Brands" },
+  { value: "10K+", label: "Happy Clients" },
+  { value: "25+", label: "Countries" },
+  { value: "100%", label: "Satisfaction" },
 ];
 
 export const TIMELINE = [
   {
-    period:  "2018-2019",
-    tag:     "STARTED IN",
-    title:   "Foundation of Crediple",
+    period: "2018-2019",
+    tag: "STARTED IN",
+    title: "Foundation of Crediple",
     tagColor: "#f59e0b",
   },
   {
-    period:  "2020-2022",
-    tag:     "SUCCESSFULLY DONE",
-    title:   "Healthcare service and Finances and digital Brands",
+    period: "2020-2022",
+    tag: "SUCCESSFULLY DONE",
+    title: "Healthcare service and Finances and digital Brands",
     tagColor: "#f59e0b",
   },
   {
-    period:  "2022-2024",
-    tag:     "FUTURE READY TECHNOLOGIES",
-    title:   "Focused on Future ready solution",
+    period: "2022-2024",
+    tag: "FUTURE READY TECHNOLOGIES",
+    title: "Focused on Future ready solution",
     tagColor: "#f59e0b",
   },
   {
-    period:  "2025-2026",
-    tag:     "PRESENT",
-    title:   "Service across India",
+    period: "2025-2026",
+    tag: "PRESENT",
+    title: "Service across India",
     tagColor: "#f59e0b",
   },
 ];
@@ -289,7 +297,6 @@ export const WHO_WE_SERVE = [
   },
 ];
 
-
 export const TESTIMONIALS = [
   {
     name: "Rajiv Sharma",
@@ -341,105 +348,87 @@ export const TESTIMONIALS = [
   },
 ];
 
-
 export const BRANDS_PAGE_DATA = [
   {
     id: 1,
-    name: "My Doctor Capsule",
-    taglines: [
-      "Transforming Healthcare Services",
-      "Into a Digital First Patient Ecosystem",
-    ],
-    description: [
-      "My Doctor Capsule is designed to transform how healthcare service providers connect with, engage and grow their patient base in a digitally driven world. It focuses on building a complete healthcare visibility and patient acquisition ecosystem for clinics, hospitals, and independent practitioners.",
-      "In today's healthcare environment, trust, visibility, and accessibility are as important as treatment itself. My Doctor Capsule bridges this gap by enabling healthcare providers to establish a strong and credible digital identity.",
-    ],
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=900&q=85",
-    whatWeBuild: [
-      "End-to-end digital presence systems",
-      "Structured patient acquisition funnels",
-      "Healthcare branding",
-      "Profile optimization",
-      "Engagement systems",
-    ],
-    coreFocus:
-      "We do not just market healthcare services — we build structured patient connection systems that improve discovery, trust, and conversion into care.",
-  },
-  {
-    id: 2,
-    name: "Loan Konnekt",
-    taglines: [
-      "Building Structured Intelligence for Credit &",
-      "Lending Ecosystems",
-    ],
-    description: [
-      "Loan Konnekt is a financial intelligence ecosystem focused on simplifying and structuring credit, lending and financial decision making processes. It is built to bridge the gap between borrowers, financial understanding, and lending systems through structured advisory and analytical frameworks.",
-      "The financial world is complex, fragmented, and often inaccessible to the average individual or business. Loan Konnekt simplifies this through system-driven financial clarity and credit intelligence models.",
-    ],
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=900&q=85",
-    whatWeBuild: [
-      "Credit analysis frameworks",
-      "Borrower profiling systems",
-      "Lending ecosystem facilitation",
-      "Financial intelligence dashboards",
-      "Credit improvement pathways",
-    ],
-    coreFocus:
-      "We transform financial complexity into structured clarity and actionable credit intelligence, enabling better decisions for individuals and institutions.",
-  },
-  {
-    id: 3,
-    name: "Lawvix",
-    taglines: [
-      "Digitizing Legal Access Through",
-      "Structured Workflow Systems",
-    ],
-    description: [
-      "Lawvix is a legalTech ecosystem focused on simplifying legal access, improving case management and enabling structured legal service delivery through digital transformation.",
-      "Legal systems are often slow, fragmented and difficult to navigate. Lawvix is designed to bring structure, transparency, and accessibility into legal workflows using technology-enabled systems.",
-    ],
-    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=85",
-    whatWeBuild: [
-      "Digital case management",
-      "Client onboarding workflows",
-      "Legal documentation automation",
-      "Legal service access platforms",
-      "Workflow optimization tools",
-    ],
-    coreFocus:
-      "We enable a shift from traditional legal handling to structured, process-driven legal ecosystems that improve efficiency, clarity, and accessibility.",
-  },
-  {
-    id: 4,
     name: "Iitil",
-    taglines: [
-      "Turning Data Into Strategic Business",
-      "Intelligence",
-    ],
+    taglines: ["Turning Data Into Strategic Business", "Intelligence"],
     description: [
       "Iitil is a data intelligence-driven ecosystem focused on transforming raw, unstructured data into meaningful business insights that drive strategic decision-making across industries.",
       "In a modern business environment, data is everywhere—but intelligence is missing. Iitil bridges this gap by building structured analytical systems and decision intelligence frameworks.",
     ],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=85",
-    whatWeBuild: [
-      "Data aggregation systems",
-      "Business analytics dashboards",
-      "Cross-industry insights",
-      "Predictive analytics models",
-      "Decision support systems",
+    image: card_4,
+    whatWeBuild: ["Data aggregation systems", "Business analytics dashboards", "Cross-industry insights", "Predictive analytics models", "Decision support systems"],
+    coreFocus: "We convert fragmented data into structured intelligence that powers better business decisions, operational efficiency, and strategic growth.",
+  },
+  {
+    id: 2,
+    name: "Lawvix",
+    taglines: ["Digitizing Legal Access Through", "Structured Workflow Systems"],
+    description: [
+      "Lawvix is a legalTech ecosystem focused on simplifying legal access, improving case management and enabling structured legal service delivery through digital transformation.",
+      "Legal systems are often slow, fragmented and difficult to navigate. Lawvix is designed to bring structure, transparency, and accessibility into legal workflows using technology-enabled systems.",
     ],
-    coreFocus:
-      "We convert fragmented data into structured intelligence that powers better business decisions, operational efficiency, and strategic growth.",
+    image: card_3,
+    whatWeBuild: ["Digital case management", "Client onboarding workflows", "Legal documentation automation", "Legal service access platforms", "Workflow optimization tools"],
+    coreFocus: "We enable a shift from traditional legal handling to structured, process-driven legal ecosystems that improve efficiency, clarity, and accessibility.",
+  },
+  {
+    id: 3,
+    name: "Orgatry",
+    taglines: ["Streamlining Human Capital Through", "Intelligent HRMS Solutions"],
+    description: [
+      "Orgatry is a comprehensive HRMS ecosystem designed to simplify and automate the full lifecycle of workforce management — from onboarding and attendance to payroll, performance, and compliance.",
+      "Managing people is complex. Orgatry transforms traditional HR operations into structured, data-driven workflows that reduce administrative overhead and empower organisations to focus on growth.",
+    ],
+    image: card_5,
+    whatWeBuild: ["End-to-end HRMS platforms", "Payroll automation systems", "Attendance & leave management", "Performance tracking workflows", "Compliance & reporting tools"],
+    coreFocus: "We replace fragmented HR processes with unified, intelligent workforce systems that improve efficiency, transparency, and organisational clarity.",
+  },
+  {
+    id: 4,
+    name: "Propertizer",
+    taglines: ["Connecting Buyers, Sellers & Agents Through", "Intelligent Real Estate Systems"],
+    description: [
+      "Propertizer is a data-driven real estate platform built to bridge the gap between property seekers, sellers, and agents through structured discovery, smart listings, and intelligent market insights.",
+      "The real estate market is noisy and opaque. Propertizer brings clarity through structured property data, verified listings, and analytical tools that help all stakeholders make confident, informed decisions.",
+    ],
+    image: card_6,
+    whatWeBuild: ["Smart property listing systems", "Buyer & seller matching engines", "Agent management platforms", "Market analytics dashboards", "Property valuation frameworks"],
+    coreFocus: "We transform fragmented real estate experiences into structured, insight-driven ecosystems that accelerate transactions and build lasting property trust.",
+  },
+  {
+    id: 5,
+    name: "Loan Konnekt",
+    taglines: ["Building Structured Intelligence for Credit &", "Lending Ecosystems"],
+    description: [
+      "Loan Konnekt is a financial intelligence ecosystem focused on simplifying and structuring credit, lending and financial decision making processes. It is built to bridge the gap between borrowers, financial understanding, and lending systems through structured advisory and analytical frameworks.",
+      "The financial world is complex, fragmented, and often inaccessible to the average individual or business. Loan Konnekt simplifies this through system-driven financial clarity and credit intelligence models.",
+    ],
+    image: card_2,
+    whatWeBuild: ["Credit analysis frameworks", "Borrower profiling systems", "Lending ecosystem facilitation", "Financial intelligence dashboards", "Credit improvement pathways"],
+    coreFocus: "We transform financial complexity into structured clarity and actionable credit intelligence, enabling better decisions for individuals and institutions.",
+  },
+  {
+    id: 6,
+    name: "My Doctor Capsule",
+    taglines: ["Transforming Healthcare Services", "Into a Digital First Patient Ecosystem"],
+    description: [
+      "My Doctor Capsule is designed to transform how healthcare service providers connect with, engage and grow their patient base in a digitally driven world. It focuses on building a complete healthcare visibility and patient acquisition ecosystem for clinics, hospitals, and independent practitioners.",
+      "In today's healthcare environment, trust, visibility, and accessibility are as important as treatment itself. My Doctor Capsule bridges this gap by enabling healthcare providers to establish a strong and credible digital identity.",
+    ],
+    image: card_1,
+    whatWeBuild: ["End-to-end digital presence systems", "Structured patient acquisition funnels", "Healthcare branding", "Profile optimization", "Engagement systems"],
+    coreFocus: "We do not just market healthcare services — we build structured patient connection systems that improve discovery, trust, and conversion into care.",
   },
 ];
- 
+
 export const UNIFIED_ADVANTAGE = [
   { label: "Scalability", icon: BsBarChartFill },
   { label: "Cross-industry intelligence", icon: GiBrain },
   { label: "Unified data systems", icon: FaDatabase },
   { label: "Faster innovation cycles", icon: FaClock },
 ];
-
 
 export const FOOTER_QUICK_LINKS = [
   { label: "Home", href: "/" },
@@ -448,34 +437,23 @@ export const FOOTER_QUICK_LINKS = [
   { label: "Solutions", href: "/solutions" },
   { label: "Contact", href: "/contact" },
 ];
- 
+
 export const FOOTER_BRANDS = [
-  {
-    label: "My Doctor Capsule",
-    href: "https://www.mydoctorcapsule.com",
-  },
-  {
-    label: "Loan Konnekt",
-    href: "https://www.loankonnekt.com",
-  },
-  {
-    label: "Lawvix",
-    href: "https://www.lawvix.com",
-  },
-  {
-    label: "Iitil",
-    href: "https://www.iitil.com",
-  },
+  { label: "Iitil",            href: "https://www.iitil.com" },
+  { label: "Lawvix",           href: "https://www.lawvix.com" },
+  { label: "Orgatry",          href: "https://orgatry.com" },
+  { label: "Propertizer",      href: "https://propertizer.com" },
+  { label: "Loan Konnekt",     href: "https://www.loankonnekt.com" },
+  { label: "My Doctor Capsule",href: "https://www.mydoctorcapsule.com" },
 ];
- 
+
 export const FOOTER_LEGAL = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
   { label: "Cookie Policy", href: "/cookie-policy" },
 ];
- 
+
 export const FOOTER_TAGLINE =
   "Building the future through innovation, excellence, and unified brand power. The Core That Connects Every Venture.";
 
-export const FOOTER_COPYRIGHT =
-  "© 2018 Crediple. All rights reserved.";
+export const FOOTER_COPYRIGHT = "© 2018 Crediple. All rights reserved.";
