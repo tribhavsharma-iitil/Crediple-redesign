@@ -178,7 +178,6 @@ function TimelineCard({
                   borderColor: "var(--timeline-dot-border)",
                 }
           }
-          transition={{ duration: 0.3 }}
           style={{
             width: 56,
             height: 56,
