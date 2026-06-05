@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Mail, MapPin, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Clock, Building2, Map, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import AnimatedInput from "@/components/ui/AnimatedInput";
 
-const fadeUp = { 
+const fadeUp = {
   hidden: { opacity: 0, y: 28 },
   show: (i = 0) => ({
     opacity: 1,
@@ -30,6 +30,57 @@ const stagger = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1 } },
 };
+
+// ─── Address detail rows ──────────────────────────────────────────────────────
+
+const ADDRESS_ROWS: {
+  icon: React.ElementType;
+  label: string;
+  value: React.ReactNode;
+}[] = [
+  {
+    icon: Building2,
+    label: "Building",
+    value: (
+      <>
+        Sattva Knowledge City
+        <br />
+        Hi-Tech City
+      </>
+    ),
+  },
+  {
+    icon: Map,
+    label: "Pin code",
+    value: (
+      <>
+        500081
+        <br />
+        Telangana, India
+      </>
+    ),
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: (
+      <a
+        href="mailto:hello@crediple.com"
+        className="transition-opacity hover:opacity-75"
+        style={{ color: "#22d3ee" }}
+      >
+        hello@crediple.com
+      </a>
+    ),
+  },
+  {
+    icon: Clock,
+    label: "Response time",
+    value: "Within 1 business day",
+  },
+];
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
 
 function ContactHero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -125,12 +176,12 @@ function ContactHero() {
             We usually respond within one business day.
           </motion.p>
         </motion.div>
-
-
       </div>
     </section>
   );
 }
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -148,6 +199,7 @@ export default function ContactPage() {
     <div className="overflow-x-hidden font-sans" style={{ background: "var(--background)" }}>
       <ContactHero />
 
+      {/* ── Contact Form ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden py-16 sm:py-20" style={{ background: "var(--bg-secondary)" }}>
         <div
           className="pointer-events-none absolute left-1/4 top-1/2 h-[300px] w-[500px] -translate-y-1/2"
@@ -211,7 +263,11 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-4 sm:py-8" style={{ background: "var(--bg-elevated)" }}>
+      {/* ── Address Card ─────────────────────────────────────────────── */}
+      <section
+        className="relative overflow-hidden py-12 sm:py-16"
+        style={{ background: "var(--bg-elevated)" }}
+      >
         <div
           className="pointer-events-none absolute right-1/4 bottom-0 h-[300px] w-[420px]"
           style={{
@@ -220,43 +276,133 @@ export default function ContactPage() {
           }}
           aria-hidden
         />
+
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="relative mx-auto max-w-lg px-6"
+          className="relative z-10 mx-auto max-w-6xl px-6"
         >
-          <span className="absolute left-0 top-0 h-full w-[2px]" style={{ background: "var(--icon-accent)" }} />
-          <span className="absolute right-0 top-0 h-full w-[2px]" style={{ background: "var(--icon-accent)" }} />
-
-          <div className="px-8 py-10 text-center">
-            <div className="mb-5 flex justify-center">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: "var(--icon-accent-bg)", border: "1px solid var(--icon-accent-border)" }}>
-                <MapPin className="h-5 w-5" style={{ color: "var(--icon-accent)" }} />
+          {/* Card */}
+          <div
+            className="overflow-hidden rounded-[20px]"
+            style={{
+              border: "1px solid rgba(34,211,238,0.18)",
+              background: "rgba(255,255,255,0.02)",
+            }}
+          >
+            {/* Top — city header */}
+            <div
+              className="flex items-start gap-5 px-9 py-8"
+              style={{ borderBottom: "1px solid rgba(34,211,238,0.1)" }}
+            >
+              <div
+                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[14px]"
+                style={{
+                  background: "rgba(34,211,238,0.1)",
+                  border: "1px solid rgba(34,211,238,0.22)",
+                }}
+              >
+                <MapPin className="h-6 w-6" style={{ color: "#22d3ee" }} />
+              </div>
+              <div>
+                <h3
+                  className="text-3xl font-bold leading-none"
+                  style={{ color: "#22d3ee" }}
+                >
+                  Hyderabad
+                </h3>
+                <p
+                  className="mt-2 text-[11px] font-semibold uppercase tracking-[0.18em]"
+                  style={{ color: "rgba(34,211,238,0.45)" }}
+                >
+                  India · Asia/Kolkata (IST)
+                </p>
               </div>
             </div>
-            <h3 className="mb-3 text-2xl font-bold" style={{ color: "var(--icon-accent)" }}>
-              Hyderabad
-            </h3>
-            <p className="mb-4 text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Sattva Knowledge City, Hi-Tech City - 500081,
-              <br />
-              Hyderabad, Telangana, India
-            </p>
 
-            <a
-              href="mailto:hello@crediple.com"
-              className="inline-flex items-center gap-2 text-sm font-medium transition-opacity hover:opacity-75"
-              style={{ color: "var(--icon-accent)" }}
+            {/* Body — 2-column detail grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2">
+              {ADDRESS_ROWS.map((row, i) => {
+                const Icon = row.icon;
+                const isOdd = i % 2 === 0;
+                const isLastRow = i >= ADDRESS_ROWS.length - 2;
+
+                return (
+                  <div
+                    key={row.label}
+                    className="flex items-start gap-4 px-9 py-6"
+                    style={{
+                      borderBottom: isLastRow ? "none" : "1px solid rgba(34,211,238,0.07)",
+                      borderRight: isOdd ? "1px solid rgba(34,211,238,0.07)" : "none",
+                    }}
+                  >
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px]"
+                      style={{
+                        background: "rgba(34,211,238,0.08)",
+                        border: "1px solid rgba(34,211,238,0.15)",
+                      }}
+                    >
+                      <Icon className="h-4 w-4" style={{ color: "#22d3ee" }} />
+                    </div>
+                    <div>
+                      <p
+                        className="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em]"
+                        style={{ color: "rgba(34,211,238,0.45)" }}
+                      >
+                        {row.label}
+                      </p>
+                      <p
+                        className="text-sm font-medium leading-snug"
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        {row.value}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Footer — status + directions */}
+            <div
+              className="flex items-center justify-between px-9 py-4"
+              style={{
+                borderTop: "1px solid rgba(34,211,238,0.1)",
+                background: "rgba(34,211,238,0.03)",
+              }}
             >
-              <Mail className="h-4 w-4" />
-              hello@crediple.com
-            </a>
+              <div className="flex items-center gap-2">
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ background: "#22d3ee", opacity: 0.7 }}
+                />
+                <span
+                  className="text-[11px] font-semibold"
+                  style={{ color: "rgba(34,211,238,0.6)" }}
+                >
+                  Office open · Mon – Fri, 9 AM – 6 PM IST
+                </span>
+              </div>
+
+              <a
+                href="https://maps.google.com/?q=Sattva+Knowledge+City+Hyderabad"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-xs font-semibold transition-opacity hover:opacity-75"
+                style={{ color: "#22d3ee" }}
+              >
+                Get directions
+                <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+            </div>
           </div>
         </motion.div>
       </section>
 
+      {/* ── Footer CTA ───────────────────────────────────────────────── */}
       <section className="relative overflow-hidden px-6 py-16" style={{ background: "var(--bg-primary)" }}>
         <div
           className="pointer-events-none absolute left-1/2 top-0 h-[260px] w-[540px] -translate-x-1/2"

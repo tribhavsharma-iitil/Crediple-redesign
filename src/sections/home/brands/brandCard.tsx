@@ -59,12 +59,12 @@ export default function BrandCard({
         transition: "background 0.1s ease",
       }}
     >
-      {/* inner card */}
+      {/* Inner card */}
       <div
         className="relative rounded-[17px] p-6 h-full flex flex-col overflow-hidden"
         style={{ background: "var(--card-inner)" }}
       >
-        {/* subtle inner glow on hover */}
+        {/* Subtle inner glow on hover */}
         {hovered && (
           <div
             className="absolute pointer-events-none rounded-[17px] inset-0 transition-opacity duration-300"
@@ -74,16 +74,16 @@ export default function BrandCard({
           />
         )}
 
-        {/* icon */}
+        {/* Icon / cover image */}
         <div className="w-full rounded-[14px] overflow-hidden mb-5 shrink-0">
           <Image
-           src={isDark ? brand.iconDark : brand.icon}
+            src={isDark ? brand.iconDark : brand.icon}
             alt={brand.name}
-            className="w-full h-48 object-cover"
+            className="w-full h-68  sm:h-48 object-cover"
           />
         </div>
 
-        {/* name */}
+        {/* Name */}
         <h3
           className="font-semibold text-lg mb-2 leading-snug"
           style={{ color: "var(--icon-accent)" }}
@@ -91,7 +91,7 @@ export default function BrandCard({
           {brand.name}
         </h3>
 
-        {/* description */}
+        {/* Description */}
         <p
           className="text-sm font-light leading-relaxed flex-1 mb-5"
           style={{ color: "var(--card-text-secondary)" }}
@@ -99,9 +99,11 @@ export default function BrandCard({
           {brand.description}
         </p>
 
-        {/* learn more */}
+        {/* Learn more — opens in new tab */}
         <Link
           href={brand.href}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-blue-400 hover:text-blue-300 transition-colors duration-150 no-underline group"
         >
           Learn More

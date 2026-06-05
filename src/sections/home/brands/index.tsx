@@ -1,18 +1,37 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { BRANDS } from "@/utils/siteData";
 import Header from "@/shared/header";
 import BrandCard from "./brandCard";
 
-const VISIBLE = 4;
 const INTERVAL = 5000;
 
 const sectionVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.13, delayChildren: 0.1 } },
 };
+
+// Responsive visible count based on window width
+function useVisibleCount() {
+  const [count, setCount] = useState(4);
+
+  useEffect(() => {
+    function update() {
+      const w = window.innerWidth;
+      if (w < 640) setCount(1);
+      else if (w < 768) setCount(2);
+      else if (w < 1024) setCount(3);
+      else setCount(4);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return count;
+}
 
 export default function Brands() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -21,7 +40,9 @@ export default function Brands() {
   const [current, setCurrent] = useState(0);
   const [progressKey, setProgressKey] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const maxIndex = BRANDS.length - VISIBLE;
+
+  const visible = useVisibleCount();
+  const maxIndex = Math.max(0, BRANDS.length - visible);
 
   const goTo = useCallback(
     (idx: number) => {
@@ -31,6 +52,11 @@ export default function Brands() {
     },
     [maxIndex]
   );
+
+  // Clamp current when visible count changes (e.g. resize)
+  useEffect(() => {
+    setCurrent((c) => Math.min(c, maxIndex));
+  }, [maxIndex]);
 
   const startAuto = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -51,16 +77,21 @@ export default function Brands() {
   }, [startAuto]);
 
   const handleNav = (dir: "prev" | "next") => {
-    goTo(dir === "prev" ? (current > 0 ? current - 1 : maxIndex) : current < maxIndex ? current + 1 : 0);
+    goTo(
+      dir === "prev"
+        ? current > 0 ? current - 1 : maxIndex
+        : current < maxIndex ? current + 1 : 0
+    );
     startAuto();
   };
 
-  // offset each card by 25% per step
-  const trackX = -(current * (100 / VISIBLE));
+  // Each card takes (100 / visible)% width; track shifts by that per step
+  const cardWidthPct = 100 / visible;
+  const trackX = -(current * cardWidthPct);
 
   return (
-    <section ref={sectionRef} className="relative py-24 px-6 overflow-hidden">
-      {/* background glow */}
+    <section ref={sectionRef} className="relative py-24 px-4 sm:px-6 overflow-hidden">
+      {/* Background glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
         style={{
@@ -83,9 +114,9 @@ export default function Brands() {
           subheading="Access specialized solutions, unified under one powerful ecosystem"
         />
 
-        {/* ── carousel ── */}
+        {/* ── Carousel ── */}
         <div className="relative">
-          {/* progress bar */}
+          {/* Progress bar */}
           <div
             className="absolute -top-2 left-0 right-0 h-[2px] rounded-full overflow-hidden"
             style={{ background: "rgba(255,255,255,0.06)" }}
@@ -100,7 +131,7 @@ export default function Brands() {
             />
           </div>
 
-          {/* track */}
+          {/* Track */}
           <div className="overflow-hidden">
             <motion.div
               className="flex"
@@ -110,8 +141,8 @@ export default function Brands() {
               {BRANDS.map((brand, i) => (
                 <div
                   key={brand.name}
-                  className="min-w-[25%] px-2"
-                  style={{ flex: "0 0 25%" }}
+                  className="px-2 shrink-0"
+                  style={{ width: `${cardWidthPct}%`, flex: `0 0 ${cardWidthPct}%` }}
                 >
                   <BrandCard brand={brand} index={i} />
                 </div>
@@ -119,10 +150,10 @@ export default function Brands() {
             </motion.div>
           </div>
 
-          {/* nav buttons */}
+          {/* Nav buttons */}
           <button
             onClick={() => handleNav("prev")}
-            className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-150"
+            className="absolute -left-4 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-150"
             style={{
               border: "1px solid var(--border)",
               background: "var(--card-inner)",
@@ -134,7 +165,7 @@ export default function Brands() {
           </button>
           <button
             onClick={() => handleNav("next")}
-            className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-150"
+            className="absolute -right-4 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-150"
             style={{
               border: "1px solid var(--border)",
               background: "var(--card-inner)",
@@ -146,7 +177,7 @@ export default function Brands() {
           </button>
         </div>
 
-        {/* dots */}
+        {/* Dots */}
         <div className="flex justify-center gap-2 mt-6">
           {Array.from({ length: maxIndex + 1 }).map((_, i) => (
             <button
@@ -156,19 +187,23 @@ export default function Brands() {
               style={{
                 width: i === current ? "20px" : "6px",
                 height: "6px",
-                background: i === current ? "rgba(59,130,246,0.8)" : "rgba(255,255,255,0.2)",
+                background:
+                  i === current
+                    ? "rgba(59,130,246,0.8)"
+                    : "rgba(255,255,255,0.2)",
               }}
               aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
 
-        {/* ticker */}
+        {/* Ticker */}
         <div
           className="relative mt-10 overflow-hidden rounded-full border py-3"
           style={{
             borderColor: "var(--border)",
-            background: "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(96,165,250,0.04))",
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(96,165,250,0.04))",
             maskImage:
               "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           }}

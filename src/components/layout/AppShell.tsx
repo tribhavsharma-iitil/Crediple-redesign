@@ -14,6 +14,7 @@ import FloatingLogo from "@/components/animations/FloatingLogo";
 import ScrollButton from "@/components/ui/ScrollButton";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import CookieConsent from "@/components/cookies/CookieConsent";
 
 export default function AppShell({
   children,
@@ -98,7 +99,6 @@ export default function AppShell({
 
   return (
     <>
-      {/* Global top progress bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 z-[60] origin-left h-[3px] pointer-events-none"
         style={{
@@ -108,19 +108,16 @@ export default function AppShell({
         }}
       />
 
-      {/* First homepage loader only */}
       {isHome && !loaderDone && (
         <Loader onComplete={handleLoaderComplete} />
       )}
 
-      {/* Floating logo */}
       <FloatingLogo
         loaderDone={loaderDone}
         isHome={isHome}
         onScrollProgress={setScrollProgress}
       />
 
-      {/* Main App */}
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0 }}
@@ -145,6 +142,7 @@ export default function AppShell({
 
       {/* Scroll To Top */}
       <ScrollButton />
+      <CookieConsent />
     </>
   );
 }

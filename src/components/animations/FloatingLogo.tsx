@@ -11,8 +11,8 @@ import Image from "next/image";
 const NAV_H        = 64;
 const SCROLL_START = 50;
 const SCROLL_END   = 240;
-const HERO_LG = 60;  const NAV_LG = 34;
-const HERO_SM = 44;  const NAV_SM = 28;
+const HERO_LG = 130;  const NAV_LG = 34;
+const HERO_SM = 94;  const NAV_SM = 28;
 
 interface FloatingLogoProps {
   loaderDone: boolean;

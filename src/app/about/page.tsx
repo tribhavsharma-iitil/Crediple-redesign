@@ -14,18 +14,30 @@ const fadeUp = {
   show: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+    transition: {
+      delay: i * 0.12,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
   }),
 };
 
 const fadeLeft = {
   hidden: { opacity: 0, x: -40 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 const fadeRight = {
   hidden: { opacity: 0, x: 40 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 const stagger = {
@@ -111,14 +123,14 @@ function AccentCard({
 }
 
 export default function AboutUs() {
-
-    const { isDark } = useTheme();
-
+  const { isDark } = useTheme();
 
   return (
     // Single unified background for the entire page — no more striping
-    <div className="w-full overflow-x-hidden" style={{ background: "var(--background)" }}>
-
+    <div
+      className="w-full overflow-x-hidden"
+      style={{ background: "var(--background)" }}
+    >
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <About />
 
@@ -127,13 +139,19 @@ export default function AboutUs() {
         <div
           className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[300px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
+            background:
+              "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
             filter: "blur(60px)",
           }}
           aria-hidden
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-10 items-center relative z-10">
-          <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <motion.div
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
             <p
               className="text-xs font-semibold uppercase tracking-[0.25rem] mb-5"
               style={{ color: "var(--text-muted)" }}
@@ -153,13 +171,18 @@ export default function AboutUs() {
                   backgroundClip: "text",
                 }}
               >
-                Holding <br /> Company
+                Holding <br /> Company.
               </span>{" "}
-              — A system builder across industries
+              A system builder across industries
             </h2>
           </motion.div>
 
-          <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <motion.div
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
             <p
               className="text-lg md:text-xl leading-relaxed mb-4 font-medium"
               style={{ color: "var(--text-primary)" }}
@@ -172,7 +195,8 @@ export default function AboutUs() {
               className="text-sm font-light text-center"
               style={{ color: "var(--icon-accent)" }}
             >
-              We are not just building Brands. We are building systems that power industries.
+              We are not just building Brands. We are building systems that
+              power industries.
             </p>
           </motion.div>
         </div>
@@ -188,7 +212,8 @@ export default function AboutUs() {
         <div
           className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[400px] h-[300px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, var(--glow-secondary) 0%, transparent 70%)",
+            background:
+              "radial-gradient(ellipse at center, var(--glow-secondary) 0%, transparent 70%)",
             filter: "blur(50px)",
           }}
           aria-hidden
@@ -213,7 +238,8 @@ export default function AboutUs() {
             className="text-center text-sm md:text-base mb-12"
             style={{ color: "var(--text-secondary)" }}
           >
-            We do not run businesses in isolation. We design interconnected ecosystems.
+            We do not run businesses in isolation. We design interconnected
+            ecosystems.
           </motion.p>
 
           <motion.div
@@ -233,7 +259,7 @@ export default function AboutUs() {
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-6">
                   {[
-                    "Can it be systemised?",
+                    "Can we standardise this process?",
                     "Can it be scaled through technology?",
                     "Can it improve decision making or access?",
                   ].map((text, i) => (
@@ -290,7 +316,8 @@ export default function AboutUs() {
         <div
           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, var(--hero-glow) 0%, transparent 70%)",
+            background:
+              "radial-gradient(ellipse at center, var(--hero-glow) 0%, transparent 70%)",
             filter: "blur(50px)",
           }}
           aria-hidden
@@ -319,7 +346,12 @@ export default function AboutUs() {
 
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             {/* ✕ card — was using heading-gradient causing invisible text */}
-            <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            <motion.div
+              variants={fadeLeft}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
               <GlowCard glowVar="var(--glow-secondary)" className="h-full">
                 <div className="p-8 h-full">
                   <span
@@ -345,7 +377,12 @@ export default function AboutUs() {
             </motion.div>
 
             {/* ✓ card — replaced gradient bg with AccentCard for readable text */}
-            <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            <motion.div
+              variants={fadeRight}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+            >
               <AccentCard className="p-8">
                 <span
                   className="text-2xl font-bold mb-4 block"
@@ -363,7 +400,8 @@ export default function AboutUs() {
                   className="text-sm italic"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  What system needs to exist to solve this industry problem at scale?
+                  What system needs to exist to solve this industry problem at
+                  scale?
                 </p>
               </AccentCard>
             </motion.div>
@@ -385,7 +423,11 @@ export default function AboutUs() {
                   This approach allows us to build:
                 </p>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {["Long-term infrastructure", "Repeatable models", "Scalable ecosystems"].map((label) => (
+                  {[
+                    "Long-term infrastructure",
+                    "Repeatable models",
+                    "Scalable ecosystems",
+                  ].map((label) => (
                     <span
                       key={label}
                       className="px-6 py-3 rounded-full text-sm font-medium"
@@ -415,7 +457,8 @@ export default function AboutUs() {
         <div
           className="absolute top-0 right-0 w-[400px] h-[400px] pointer-events-none"
           style={{
-            background: "radial-gradient(circle at 80% 20%, var(--glow-primary) 0%, transparent 60%)",
+            background:
+              "radial-gradient(circle at 80% 20%, var(--glow-primary) 0%, transparent 60%)",
             filter: "blur(60px)",
           }}
           aria-hidden
@@ -438,9 +481,18 @@ export default function AboutUs() {
 
           <div className="flex flex-col gap-4">
             {[
-              { left: "Most companies operate vertically", right: "We operate horizontally across industries" },
-              { left: "Most brands sell services", right: "We design frameworks that deliver services at scale" },
-              { left: "Most systems are disconnected", right: "We connect intelligence across domains" },
+              {
+                left: "Most companies operate vertically",
+                right: "We operate horizontally across industries",
+              },
+              {
+                left: "Most brands sell services",
+                right: "We design frameworks that deliver services at scale",
+              },
+              {
+                left: "Most systems are disconnected",
+                right: "We connect intelligence across domains",
+              },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -493,15 +545,19 @@ export default function AboutUs() {
 
       {/* ── STRUCTURE ────────────────────────────────────────────────────── */}
       <section className="relative py-16 md:py-20 overflow-hidden">
+        {/* Background glow */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
+            background:
+              "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
             filter: "blur(70px)",
           }}
           aria-hidden
         />
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          {/* Heading */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -520,58 +576,54 @@ export default function AboutUs() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-6 max-w-4xl mx-auto">
-            {/* Central Intelligence — replaced gradient bg with AccentCard */}
-            <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
-              <AccentCard className="p-8 h-full">
-                <h3
-                  className="text-xl font-bold mb-3"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Central Intelligence Layer
-                </h3>
-                <p
-                  className="text-sm mb-6"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  A unified strategic and technology backbone that governs:
-                </p>
-                <ul className="space-y-4">
-                  {["Product architecture", "Data systems", "Brand frameworks", "Growth strategy"].map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-3 text-sm"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      <span
-                        className="w-2 h-2 rounded-full flex-shrink-0"
-                        style={{ background: "var(--icon-accent)" }}
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </AccentCard>
-            </motion.div>
+          {/* Two-column grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            {/* LEFT — Central Intelligence Layer */}
+            <motion.div
+              variants={fadeLeft}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="h-full"
+            >
+              <GlowCard glowVar="var(--glow-blue)" className="h-full">
+                <div className="p-8 h-full flex flex-col">
+                  {/* Icon badge */}
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 shrink-0"
+                    style={{
+                      background: "var(--icon-accent-bg)",
+                      border: "1px solid var(--icon-accent-border)",
+                    }}
+                  >
+                    <span style={{ fontSize: 18 }}>🧠</span>
+                  </div>
 
-            <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }}>
-              <GlowCard glowVar="var(--glow-cyan)" className="h-full">
-                <div className="p-8 h-full">
                   <h3
                     className="text-xl font-bold mb-3"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    Independent Business Units
+                    Central Intelligence Layer
                   </h3>
                   <p
                     className="text-sm mb-5"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Each business operates as an independent brand ecosystem:
+                    A unified strategic and technology backbone that governs:
                   </p>
+
                   <ul className="space-y-3 mb-6">
-                    {["HealthTech systems", "FinTech systems", "LegalTech systems", "DataTech systems"].map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-sm" style={{ color: "var(--text-primary)" }}>
+                    {[
+                      "Product architecture",
+                      "Data systems",
+                      "Brand frameworks",
+                      "Growth strategy",
+                    ].map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-center gap-2 text-sm"
+                        style={{ color: "var(--text-primary)" }}
+                      >
                         <span
                           className="w-2 h-2 rounded-full flex-shrink-0"
                           style={{ background: "var(--icon-accent)" }}
@@ -580,18 +632,139 @@ export default function AboutUs() {
                       </li>
                     ))}
                   </ul>
+
                   <div
-                    className="border-t pt-4"
+                    className="border-t pt-4 mt-auto"
                     style={{ borderColor: "var(--border-subtle)" }}
                   >
                     <p
                       className="text-sm font-semibold mb-2"
                       style={{ color: "var(--text-primary)" }}
                     >
-                      Each business has:
+                      The layer ensures:
                     </p>
                     <ul className="space-y-1">
-                      {["Its own operational focus", "Its own customer journey", "Its own performance metrics"].map((item) => (
+                      {[
+                        "Consistent quality standards",
+                        "Shared infrastructure & tooling",
+                        "Cross-brand synergy & insights",
+                      ].map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-center gap-1 my-2 text-xs"
+                          style={{ color: "var(--text-secondary)" }}
+                        >
+                          <span style={{ color: "var(--icon-accent)" }}>→</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </GlowCard>
+            </motion.div>
+
+            {/* RIGHT — Brand Ecosystem */}
+            <motion.div
+              variants={fadeRight}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="h-full"
+            >
+              <GlowCard glowVar="var(--glow-primary)" className="h-full">
+                <div className="p-8 h-full flex flex-col">
+                  {/* Icon badge */}
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 shrink-0"
+                    style={{
+                      background: "var(--icon-accent-bg)",
+                      border: "1px solid var(--icon-accent-border)",
+                    }}
+                  >
+                    <span style={{ fontSize: 18 }}>🌐</span>
+                  </div>
+
+                  <h3
+                    className="text-xl font-bold mb-3"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    Brand Ecosystem
+                  </h3>
+                  <p
+                    className="text-sm mb-5"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Independent brands operating across key verticals, each
+                    solving a focused problem:
+                  </p>
+
+                  <ul className="space-y-3 mb-6">
+                    {[
+                      {
+                        name: "Iitil",
+                        desc: "Data intelligence & business decision systems",
+                      },
+                      {
+                        name: "Lawvix",
+                        desc: "LegalTech & documentation automation",
+                      },
+                      { name: "Orgatry", desc: "HRMS & workforce management" },
+                      {
+                        name: "Propertizor",
+                        desc: "AI-driven real estate insights",
+                      },
+                      {
+                        name: "Loan Konnekt",
+                        desc: "Lending & NBFC partnerships",
+                      },
+                      {
+                        name: "My Doctor Capsule",
+                        desc: "Healthcare & digital patient acquisition",
+                      },
+                    ].map((brand) => (
+                      <li
+                        key={brand.name}
+                        className="flex items-start gap-2 text-sm"
+                      >
+                        <span
+                          className="w-2 h-2 rounded-full flex-shrink-0 mt-[5px]"
+                          style={{ background: "var(--icon-accent)" }}
+                        />
+                        <span>
+                          <span
+                            className="font-semibold"
+                            style={{ color: "var(--text-primary)" }}
+                          >
+                            {brand.name}
+                          </span>
+                          <span
+                            className="ml-1"
+                            style={{ color: "var(--text-secondary)" }}
+                          >
+                            — {brand.desc}
+                          </span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div
+                    className="border-t pt-4 mt-auto"
+                    style={{ borderColor: "var(--border-subtle)" }}
+                  >
+                    <p
+                      className="text-sm font-semibold mb-2"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      Each brand delivers:
+                    </p>
+                    <ul className="space-y-1">
+                      {[
+                        "Specialised user experiences",
+                        "Vertical-specific product depth",
+                        "Scalable, independent growth",
+                      ].map((item) => (
                         <li
                           key={item}
                           className="flex items-center gap-1 my-2 text-xs"
@@ -608,6 +781,7 @@ export default function AboutUs() {
             </motion.div>
           </div>
 
+          {/* Bottom banner */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -621,8 +795,11 @@ export default function AboutUs() {
             }}
           >
             <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-              But all are powered by the{" "}
-              <span className="font-semibold" style={{ color: "var(--icon-accent)" }}>
+              Independent brands, unified vision — all powered by the{" "}
+              <span
+                className="font-semibold"
+                style={{ color: "var(--icon-accent)" }}
+              >
                 same core intelligence layer
               </span>
               .
@@ -641,12 +818,15 @@ export default function AboutUs() {
         <div
           className="absolute bottom-0 right-1/4 w-[400px] h-[300px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, var(--glow-secondary) 0%, transparent 65%)",
+            background:
+              "radial-gradient(ellipse at center, var(--glow-secondary) 0%, transparent 65%)",
             filter: "blur(55px)",
           }}
           aria-hidden
         />
+
         <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
+          {/* Heading */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -665,6 +845,7 @@ export default function AboutUs() {
             </p>
           </motion.div>
 
+          {/* Cards grid */}
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -673,22 +854,44 @@ export default function AboutUs() {
             className="grid sm:grid-cols-2 gap-4"
           >
             {[
-              "Transparent systems",
-              "Scalable digital infrastructure",
-              "Industry ready technology frameworks",
-              "Long term ecosystem value",
+              {
+                label: "Transparent systems",
+                number: "01",
+              },
+              {
+                label: "Scalable digital infrastructure",
+                number: "02",
+              },
+              {
+                label: "Industry ready technology frameworks",
+                number: "03",
+              },
+              {
+                label: "Long term ecosystem value",
+                number: "04",
+              },
             ].map((item, i) => (
-              <motion.div key={item} variants={fadeUp} custom={i}>
+              <motion.div key={item.label} variants={fadeUp} custom={i}>
                 <GlowCard glowVar="var(--glow-cyan)">
                   <div className="flex items-center gap-4 p-5">
+                    {/* Numbered badge */}
                     <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-                      style={{ background: "var(--heading-gradient)" }}
+                      className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-[13px]"
+                      style={{
+                        background: "var(--icon-accent-bg)",
+                        border: "1px solid var(--icon-accent-border)",
+                        color: "var(--icon-accent)",
+                        letterSpacing: "0.04em",
+                        fontVariantNumeric: "tabular-nums",
+                      }}
                     >
-                      <Check size={14} className="text-white" />
+                      {item.number}
                     </div>
-                    <span className="text-sm" style={{ color: "var(--text-primary)" }}>
-                      {item}
+                    <span
+                      className="text-sm leading-snug"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      {item.label}
                     </span>
                   </div>
                 </GlowCard>
@@ -697,7 +900,6 @@ export default function AboutUs() {
           </motion.div>
         </div>
       </section>
-
       {/* ── divider ──────────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="h-px" style={{ background: "var(--border-subtle)" }} />
@@ -708,7 +910,8 @@ export default function AboutUs() {
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 60%)",
+            background:
+              "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 60%)",
             filter: "blur(60px)",
           }}
           aria-hidden
@@ -733,7 +936,10 @@ export default function AboutUs() {
                   style={{ color: "var(--text-secondary)" }}
                 >
                   Our focus is not just expansion. It is{" "}
-                  <strong className="font-bold" style={{ color: "var(--icon-accent)" }}>
+                  <strong
+                    className="font-bold"
+                    style={{ color: "var(--icon-accent)" }}
+                  >
                     ecosystem convergence
                   </strong>
                   .
@@ -742,12 +948,18 @@ export default function AboutUs() {
                   className="text-sm mb-10 mx-auto leading-relaxed"
                   style={{ color: "var(--text-muted)" }}
                 >
-                  Where healthcare, finance, legal systems, and data intelligence begin to interact seamlessly under one{" "}
+                  Where healthcare, finance, legal systems, and data
+                  intelligence begin to interact seamlessly under one{" "}
                   <br className="hidden sm:block" />
                   unified structure.
                 </p>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {["Healthcare", "Finance", "Legal Systems", "Data Intelligence"].map((tag) => (
+                  {[
+                    "Healthcare",
+                    "Finance",
+                    "Legal Systems",
+                    "Data Intelligence",
+                  ].map((tag) => (
                     <span
                       key={tag}
                       className="px-5 py-2.5 rounded-full text-sm"
@@ -772,19 +984,19 @@ export default function AboutUs() {
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
+            background:
+              "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
             filter: "blur(60px)",
           }}
           aria-hidden
         />
         <div className="max-w-xl mx-auto px-6 relative z-10">
-          
           <Image
-                src={isDark ? crediple_dark : crediple_light}
-                alt="Crediple"
-                width={200}
-                className="mx-auto mb-6"
-              />
+            src={isDark ? crediple_dark : crediple_light}
+            alt="Crediple"
+            width={200}
+            className="mx-auto mb-6"
+          />
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -814,7 +1026,8 @@ export default function AboutUs() {
             className="font-bold text-lg leading-snug mb-12"
             style={{ color: "var(--text-primary)" }}
           >
-            It is a multi-domain system architecture designed to transform how industries operate.
+            It is a multi-domain system architecture designed to transform how
+            industries operate.
           </motion.p>
           <div
             className="border-t pt-6"

@@ -14,19 +14,7 @@ export default function Loader({ onComplete }: LoaderProps) {
   const [visible, setVisible] = useState(true);
   const { isDark } = useTheme();
 
-  /**
-   * FIX — Hydration mismatch
-   *
-   * The server always renders with isDark=true (the SSR default). On the
-   * client, ThemeScript has already set the correct class on <html> before
-   * React hydrates, so isDark may be false — causing src/srcSet to differ
-   * between the server HTML and the first client render, which triggers the
-   * "A tree hydrated but some attributes didn't match" warning.
-   *
-   * Solution: render a blank placeholder on the first paint (SSR + hydration),
-   * then swap in the real themed image after mount. Since `mounted` starts
-   * false on both server and client, the initial HTML always matches.
-   */
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 

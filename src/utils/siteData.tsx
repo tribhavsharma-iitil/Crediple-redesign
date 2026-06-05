@@ -167,9 +167,9 @@ export const BRANDS = [
     iconDark: brand_icon_dark_5,
   },
   {
-    name: "Propertizer",
+    name: "Propertizor",
     description: "Intelligent property platform connecting buyers, sellers, and agents with data-driven real estate insights.",
-    href: "https://propertizer.com",
+    href: "https://propertizor.com",
     icon: brand_icon_6,
     iconDark: brand_icon_dark_6,
   },
@@ -385,11 +385,11 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 4,
-    name: "Propertizer",
+    name: "Propertizor",
     taglines: ["Connecting Buyers, Sellers & Agents Through", "Intelligent Real Estate Systems"],
     description: [
-      "Propertizer is a data-driven real estate platform built to bridge the gap between property seekers, sellers, and agents through structured discovery, smart listings, and intelligent market insights.",
-      "The real estate market is noisy and opaque. Propertizer brings clarity through structured property data, verified listings, and analytical tools that help all stakeholders make confident, informed decisions.",
+      "Propertizor is a data-driven real estate platform built to bridge the gap between property seekers, sellers, and agents through structured discovery, smart listings, and intelligent market insights.",
+      "The real estate market is noisy and opaque. Propertizor brings clarity through structured property data, verified listings, and analytical tools that help all stakeholders make confident, informed decisions.",
     ],
     image: card_6,
     whatWeBuild: ["Smart property listing systems", "Buyer & seller matching engines", "Agent management platforms", "Market analytics dashboards", "Property valuation frameworks"],
@@ -428,29 +428,30 @@ export const UNIFIED_ADVANTAGE = [
   { label: "Faster innovation cycles", icon: FaClock },
 ];
 
-export const FOOTER_QUICK_LINKS = [
+// In your siteData.ts, update/add these:
+export const FOOTER_COL1 = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Brands", href: "/brands" },
+];
+
+export const FOOTER_COL2 = [
   { label: "Solutions", href: "/solutions" },
   { label: "Contact", href: "/contact" },
+  { label: "Legal", href: "/legal" },
 ];
 
-export const FOOTER_BRANDS = [
-  { label: "Iitil",            href: "https://www.iitil.com" },
-  { label: "Lawvix",           href: "https://www.lawvix.com" },
-  { label: "Orgatry",          href: "https://orgatry.com" },
-  { label: "Propertizer",      href: "https://propertizer.com" },
-  { label: "Loan Konnekt",     href: "https://www.loankonnekt.com" },
-  { label: "My Doctor Capsule",href: "https://www.mydoctorcapsule.com" },
+export const FOOTER_COL3 = [
+  { label: "Iitil", href: "https://www.iitil.com/" },
+  { label: "Lawvix", href: "https://www.lawvix.com/" },
+  { label: "Orgatry", href: "https://orgatry.com/" },
 ];
 
-export const FOOTER_LEGAL = [
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms of Service", href: "/terms-of-service" },
-  { label: "Cookie Policy", href: "/cookie-policy" },
+export const FOOTER_COL4 = [
+  { label: "Propertizor", href: "https://propertizor.com/" },
+  { label: "Loan Konnekt", href: "https://www.loankonnekt.com/" },
+  { label: "My Doctor Capsule", href: "https://www.mydoctorcapsule.com/" },
 ];
-
 export const FOOTER_TAGLINE =
   "Building the future through innovation, excellence, and unified brand power. The Core That Connects Every Venture.";
 

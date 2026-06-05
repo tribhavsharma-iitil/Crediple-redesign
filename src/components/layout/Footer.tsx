@@ -6,9 +6,10 @@ import { motion } from "framer-motion";
 import { FaLinkedinIn, FaInstagram, FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import {
-  FOOTER_QUICK_LINKS,
-  FOOTER_BRANDS,
-  FOOTER_LEGAL,
+  FOOTER_COL1,
+  FOOTER_COL2,
+  FOOTER_COL3,
+  FOOTER_COL4,
   FOOTER_TAGLINE,
   FOOTER_COPYRIGHT,
 } from "@/utils/siteData";
@@ -31,14 +32,6 @@ const fadeUp = {
   },
 };
 
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-};
-
 const SOCIALS = [
   { Icon: FaXTwitter, href: "#", label: "X / Twitter" },
   { Icon: FaInstagram, href: "#", label: "Instagram" },
@@ -53,32 +46,23 @@ function LinkColumn({
   title: string;
   links: { label: string; href: string }[];
 }) {
-  const [isDark, setIsDark] = useState(true);
-  useEffect(() => {
-    const update = () =>
-      setIsDark(!document.documentElement.classList.contains("light"));
-    update();
-    const observer = new MutationObserver(update);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <motion.div variants={fadeUp} className="flex flex-col gap-0">
-      <h4
-        className="text-[14px] sm:text-[15px] font-semibold mb-4 sm:mb-5 tracking-wide"
-        style={{ color: "var(--text-primary)" }}
-      >
-        {title}
-      </h4>
+      {title && (
+        <h4
+          className="text-[14px] sm:text-[15px] font-semibold mb-4 sm:mb-5 tracking-wide"
+          style={{ color: "var(--text-primary)" }}
+        >
+          {title}
+        </h4>
+      )}
       <ul className="flex flex-col gap-3 sm:gap-[14px]">
         {links.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-[13px] sm:text-[14px] leading-none transition-colors duration-150 no-underline"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={(e) =>
@@ -138,7 +122,6 @@ export default function Footer() {
             variants={fadeUp}
             className="flex flex-col gap-4 max-w-[280px] sm:max-w-[300px]"
           >
-            {/* Logo / name */}
             <div className="inline-flex items-start gap-2 flex-col">
               <Image
                 src={isDark ? crediple_dark : crediple_light}
@@ -165,18 +148,24 @@ export default function Footer() {
               {FOOTER_TAGLINE}
             </p>
 
-            {/* Social icons */}
+            {/* Social icons — each opens in a new tab */}
             <div className="flex items-center gap-2 mt-1 flex-wrap">
               {SOCIALS.map(({ Icon, href, label }) => (
                 <motion.a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   whileHover={{ scale: 1.12, y: -2 }}
                   whileTap={{ scale: 0.92 }}
                   transition={{ type: "spring", stiffness: 320, damping: 20 }}
                   className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full cursor-pointer"
-                  
+                  style={{
+                    border: `1px solid ${isDark ? "rgba(147,197,253,0.14)" : "rgba(29,78,216,0.14)"}`,
+                    color: isDark ? "rgba(255,255,255,0.55)" : "rgba(12,26,53,0.55)",
+                    background: isDark ? "rgba(255,255,255,0.05)" : "rgba(29,78,216,0.06)",
+                  }}
                   onMouseEnter={(e) => {
                     const el = e.currentTarget as HTMLElement;
                     el.style.color = isDark ? "#93c5fd" : "#1d4ed8";
@@ -207,9 +196,11 @@ export default function Footer() {
           </motion.div>
 
           {/* Link columns */}
-          <div className="flex flex-row gap-10 sm:gap-16 md:gap-24 lg:gap-32 md:ml-auto">
-            <LinkColumn title="Quick Links" links={FOOTER_QUICK_LINKS} />
-            <LinkColumn title="Our Brands" links={FOOTER_BRANDS} />
+          <div className="flex flex-row gap-8 sm:gap-12 md:gap-16 lg:gap-20 md:ml-auto flex-wrap">
+            <LinkColumn title="" links={FOOTER_COL1} />
+            <LinkColumn title="" links={FOOTER_COL2} />
+            <LinkColumn title="" links={FOOTER_COL3} />
+            <LinkColumn title="" links={FOOTER_COL4} />
           </div>
         </motion.div>
       </div>
@@ -225,56 +216,20 @@ export default function Footer() {
       />
 
       {/* Bottom bar */}
-      <motion.div
-        variants={fadeIn}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="relative z-10 py-4 sm:py-5 px-5 sm:px-8"
-      >
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          {/* Copyright */}
-          <p
-            className="text-[12px] sm:text-[13px] order-2 sm:order-1 text-center sm:text-left"
-            style={{
-              color: "var(--text-muted)",
-              transition: "color 0.4s ease",
-            }}
-          >
-            {FOOTER_COPYRIGHT}
-          </p>
-
-          {/* Legal links */}
-          <div className="flex items-center gap-1 order-1 sm:order-2 flex-wrap justify-center">
-            {FOOTER_LEGAL.map((link, i) => (
-              <span key={link.href} className="flex items-center gap-1">
-                {i > 0 && (
-                  <span
-                    className="text-[10px] select-none"
-                    style={{ color: "var(--text-muted)" }}
-                    aria-hidden
-                  >
-                    •
-                  </span>
-                )}
-                <Link
-                  href={link.href}
-                  className="text-[12px] sm:text-[13px] transition-colors duration-150 no-underline"
-                  style={{ color: "var(--text-muted)" }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--text-primary)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "var(--text-muted)")
-                  }
-                >
-                  {link.label}
-                </Link>
-              </span>
-            ))}
-          </div>
-        </div>
-      </motion.div>
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p
+          className="text-[12px] sm:text-[13px] order-2 sm:order-1 text-center sm:text-left"
+          style={{ color: "var(--text-muted)", transition: "color 0.4s ease" }}
+        >
+          © 2024 All Rights Reserved.
+        </p>
+        <p
+          className="text-[12px] sm:text-[13px] order-1 sm:order-2 text-center sm:text-right"
+          style={{ color: "var(--text-muted)", transition: "color 0.4s ease" }}
+        >
+          Crediple India Private Limited (CIPL)
+        </p>
+      </div>
     </footer>
   );
 }

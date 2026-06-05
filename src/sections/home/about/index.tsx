@@ -5,6 +5,9 @@ import { motion, useInView } from "framer-motion";
 import { Award, Shield, Zap, Star, Target, Eye } from "lucide-react";
 import Header from "@/shared/header";
 import { ABOUT_MISSION, ABOUT_VISION, CORE_VALUES } from "@/utils/siteData";
+import Image from "next/image";
+import m_logo from "@/assets/m_logo.png";
+import v_logo from "@/assets/v_logo.png";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   award:  <Award  size={22} />,
@@ -144,7 +147,7 @@ export default function About() {
                   boxShadow: "0 0 28px rgba(52,211,153,0.12)",
                 }}
               >
-                <Target size={26} style={{ color: "#34d399" }} />
+                <Image src={m_logo} alt="Mission Logo" width={46} height={46} />
               </motion.div>
 
               <motion.h3
@@ -176,7 +179,7 @@ export default function About() {
                   boxShadow: "0 0 28px rgba(139,92,246,0.14)",
                 }}
               >
-                <Eye size={26} style={{ color: "#a78bfa" }} />
+                <Image src={v_logo} alt="Vision Logo" width={46} height={46} />
               </motion.div>
 
               <motion.h3
