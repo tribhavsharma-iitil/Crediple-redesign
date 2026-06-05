@@ -61,7 +61,7 @@ export default function Loader({ onComplete }: LoaderProps) {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
             className="relative z-10 flex flex-col items-center gap-5"
           >
-            <div style={{ width: 110, height: 110, position: "relative" }}>
+            <div style={{ width: 180, height: 180, position: "relative" }}>
               {/*
                * key={String(mounted && isDark)} forces React to remount the
                * <Image> when the logo src changes after mount, avoiding a
