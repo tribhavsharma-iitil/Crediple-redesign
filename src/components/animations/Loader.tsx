@@ -54,7 +54,6 @@ export default function Loader({ onComplete }: LoaderProps) {
             }}
           />
 
-          {/* Logo */}
           <motion.div
             initial={{ scale: 3.5, opacity: 0, filter: "blur(18px)" }}
             animate={{ scale: 1,   opacity: 1, filter: "blur(0px)"  }}
@@ -62,11 +61,7 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="relative z-10 flex flex-col items-center gap-5"
           >
             <div style={{ width: 180, height: 180, position: "relative" }}>
-              {/*
-               * key={String(mounted && isDark)} forces React to remount the
-               * <Image> when the logo src changes after mount, avoiding a
-               * stale srcSet being patched in-place (which also logs warnings).
-               */}
+           
               <Image
                 key={String(mounted && isDark)}
                 src={logoSrc}

@@ -1,218 +1,364 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView, AnimatePresence, useAnimation } from "framer-motion";
 import { TIMELINE } from "@/utils/siteData";
 
 const containerVariants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 44 },
+  hidden: { opacity: 0, y: 30 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
-const dotEntryVariants = {
-  hidden: { opacity: 0, scale: 0.4 },
-  show: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] as const },
-  },
-};
-
-const lineVariants = {
-  hidden: { scaleX: 0, opacity: 0 },
-  show: {
-    scaleX: 1,
-    opacity: 1,
-    transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const, delay: 0.2 },
-  },
-};
-
-const TIMELINE_DETAILS: Record<string, {
-  headline: string;
-  highlights: string[];
-  metric?: string;
-  metricLabel?: string;
-}> = {
+const TIMELINE_DETAILS: Record<
+  string,
+  {
+    headline: string;
+    highlights: string[];
+    metric?: string;
+    metricLabel?: string;
+  }
+> = {
   "2018-2019": {
-    headline: "Foundation of Crediple",
+    headline: "Foundation & Concept Stage",
     highlights: [
-      "Crediple incorporated to simplify financial access for Indian SMEs and individuals",
-      "Core founding team assembled across FinTech, LegalTech & HealthTech domains",
-      "Seed funding secured; operations commenced from Udaipur, Rajasthan",
+      "Ideation of an OPC model built as a Loan Proposal Aggregator ecosystem",
+      "Research on credit bureaus, scoring systems, and lending behaviour in India",
+      "Development of core philosophy around credit correction, optimisation, and financial inclusion",
+      "Early validation of credit pain points among individuals and small businesses",
+      "Formation of the foundational team and advisory discussions initiated",
     ],
     metric: "2018",
-    metricLabel: "Year Founded",
+    metricLabel: "Inception Year",
   },
   "2020-2022": {
-    headline: "Healthcare, Finances & Digital Brands",
+    headline: "Research, Design & Early Structuring",
     highlights: [
-      "Healthcare vertical launched with teleconsultation and medicine delivery in Tier 2 cities",
-      "Financial services expanded — connecting borrowers with 40+ NBFC & bank partners",
-      "Multiple digital brands onboarded under the Crediple umbrella ecosystem",
+      "Deep research driven development of credit improvement methodologies",
+      "Structuring service frameworks for credit audit, correction, and score enhancement",
+      "Mapping relationships between lenders, credit bureaus, and credit behaviour patterns",
+      "Building the initial operational blueprint and service lifecycle design",
+      "Establishing internal processes for credit analysis and integrated aggregator framework",
     ],
-    metric: "40+",
-    metricLabel: "NBFC & Bank Partners",
+    metric: "Core",
+    metricLabel: "Methodology Built",
   },
   "2022-2024": {
-    headline: "Future-ready technologies",
+    headline: "Platform Building & Service Expansion",
     highlights: [
-      "AI-driven underwriting and risk assessment tools deployed across lending verticals",
-      "Proprietary tech stack built to support real-time financial decisioning at scale",
-      "Strategic partnerships established with leading fintech infrastructure providers",
+      "Transition from concept to a structured credit services platform ecosystem",
+      "Service lines expansion of credit audit, correction, score improvement, and optimisation",
+      "Design of customer journey workflows with SRN based service lifecycle",
+      "Strengthening channel driven service delivery model across partners",
+      "Development of training frameworks for credit partners and internal teams",
     ],
-    metric: "1.5L+",
-    metricLabel: "Users Served",
+    metric: "SRN",
+    metricLabel: "Lifecycle Deployed",
   },
   "2025-2026": {
-    headline: "Service across India",
+    headline: "Scale, Automation & Ecosystem Growth",
     highlights: [
-      "Expanded to 12+ Indian states with localised support in 6 regional languages",
-      "Pan-India service network established for financial, health and digital offerings",
-      "Recognised among India's top emerging multi-brand fintech ecosystems",
+      "6 years of primary market research across multiple verticals, channels, and customer segments",
+      "Deep understanding of market dynamics, resource gaps, challenges, and execution risks",
+      "Development of a multi domain enterprise ecosystem across health, finance, law, technology, data, HR, and property management",
+      "Phased launch of multiple brands through structured and controlled market entry",
+      "Ecosystem-led strategy designed to overcome typical startup and brand launch challenges",
     ],
-    metric: "12+",
-    metricLabel: "States Active",
+    metric: "7+",
+    metricLabel: "Domains Integrated",
   },
 };
 
-// ─── Single Timeline Card ─────────────────────────────────────────────────────
-// The entire column (circle + period + tag + title) is the hover target.
-// On hover it expands vertically to reveal the extra detail section below.
+// Smooth expand using measured pixel height — avoids the height:"auto" snap bug
+function ExpandPanel({
+  isOpen,
+  details,
+}: {
+  isOpen: boolean;
+  details: (typeof TIMELINE_DETAILS)[string] | undefined;
+}) {
+  const controls = useAnimation();
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!innerRef.current) return;
+
+    if (isOpen) {
+      // Measure actual content height, then animate from 0 → that value
+      const fullHeight = innerRef.current.scrollHeight;
+      controls.start({
+        height: fullHeight,
+        opacity: 1,
+        transition: {
+          height: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+          opacity: { duration: 0.6, ease: "easeOut", delay: 0.1 },
+        },
+      });
+    } else {
+      controls.start({
+        height: 0,
+        opacity: 0,
+        transition: {
+          height: { duration: 0.7, ease: [0.4, 0, 0.2, 1] },
+          opacity: { duration: 0.3, ease: "easeIn" },
+        },
+      });
+    }
+  }, [isOpen, controls]);
+
+  if (!details) return null;
+
+  return (
+    <motion.div
+      initial={{ height: 0, opacity: 0 }}
+      animate={controls}
+      style={{ overflow: "hidden", width: "100%" }}
+    >
+      {/* Inner wrapper — always rendered so scrollHeight is measurable */}
+      <div ref={innerRef} style={{ width: "100%", padding: "0 24px", boxSizing: "border-box" }}>
+        <div className="pt-4 pb-2" style={{ width: "100%" }}>
+          <div
+            style={{
+              height: 1,
+              background: "rgba(34,211,238,0.15)",
+              marginBottom: 20,
+            }}
+          />
+
+          {details.metric && (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                background: "rgba(34,211,238,0.07)",
+                border: "1px solid rgba(34,211,238,0.15)",
+                borderRadius: 999,
+                padding: "4px 14px",
+                marginBottom: 20,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 14,
+                  fontWeight: 800,
+                  backgroundImage: "linear-gradient(135deg, #22d3ee, #60a5fa)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                {details.metric}
+              </span>
+              <span
+                style={{
+                  fontSize: 9,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "var(--text-muted, rgba(148,163,184,0.7))",
+                }}
+              >
+                {details.metricLabel}
+              </span>
+            </div>
+          )}
+
+          {/* Staggered highlight rows */}
+          {details.highlights.map((h, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 8 }}
+              animate={
+                isOpen
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 8 }
+              }
+              transition={{
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
+                delay: isOpen ? 0.35 + i * 0.1 : 0,
+              }}
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: 10,
+                marginBottom: i < details.highlights.length - 1 ? 12 : 0,
+              }}
+            >
+              <span
+                style={{
+                  marginTop: 7,
+                  width: 5,
+                  height: 5,
+                  borderRadius: "50%",
+                  flexShrink: 0,
+                  background: "rgba(34,211,238,0.6)",
+                }}
+              />
+              <p
+                style={{
+                  fontSize: 12.5,
+                  lineHeight: 1.6,
+                  color: "rgba(226, 232, 240, 0.95)",
+                  margin: 0,
+                  textAlign: "left",
+                }}
+              >
+                {h}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 function TimelineCard({
   item,
-  delay,
+  isHovered,
+  isAnyHovered,
+  onHoverStart,
+  onHoverEnd,
 }: {
   item: (typeof TIMELINE)[number];
-  delay: number;
+  isHovered: boolean;
+  isAnyHovered: boolean;
+  onHoverStart: () => void;
+  onHoverEnd: () => void;
 }) {
-  const [hovered, setHovered] = useState(false);
   const details = TIMELINE_DETAILS[item.period];
 
   return (
     <motion.div
       variants={itemVariants}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ cursor: "pointer" }}
+      onMouseEnter={onHoverStart}
+      onMouseLeave={onHoverEnd}
+      className="w-full select-none"
+      style={{ cursor: "pointer", height: "100%" }}
     >
-      {/* The expanding card wrapper */}
       <motion.div
-        animate={
-          hovered
-            ? {
-                borderColor: "rgba(34,211,238,0.35)",
-                backgroundColor: "var(--card-bg, rgba(10,18,40,0.85))",
-                boxShadow:
-                  "0 8px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(34,211,238,0.18), 0 0 32px rgba(34,211,238,0.07)",
-              }
-            : {
-                borderColor: "rgba(34,211,238,0.08)",
-                backgroundColor: "transparent",
-                boxShadow: "none",
-              }
-        }
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        animate={{
+          borderColor: isHovered ? "rgba(34,211,238,0.35)" : "rgba(34,211,238,0.08)",
+          backgroundColor: isHovered ? "rgba(10,18,40,0.95)" : "rgba(10,18,40,0.15)",
+          boxShadow: isHovered
+            ? "0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(34,211,238,0.2)"
+            : "0 0px 0px rgba(0,0,0,0)",
+          opacity: !isHovered && isAnyHovered ? 0.35 : 1,
+          scale: !isHovered && isAnyHovered ? 0.97 : 1,
+        }}
+        transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
         style={{
           border: "1px solid",
-          borderRadius: 20,
-          padding: "20px 16px",
+          borderRadius: 24,
+          padding: "32px 24px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-          backdropFilter: hovered ? "blur(14px)" : "none",
           position: "relative",
+          zIndex: isHovered ? 50 : 10,
+          backdropFilter: isHovered ? "blur(20px)" : "none",
           overflow: "hidden",
+          minHeight: 280,
+          height: "100%",
+          boxSizing: "border-box",
         }}
       >
-        {/* Subtle glow smear top — only visible when expanded */}
+        {/* Ambient Top Glow */}
         <AnimatePresence>
-          {hovered && (
+          {isHovered && (
             <motion.div
               key="glow"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.8 }}
               aria-hidden
               style={{
                 position: "absolute",
-                top: -30,
+                top: -40,
                 left: "50%",
                 transform: "translateX(-50%)",
-                width: 160,
-                height: 80,
+                width: 220,
+                height: 90,
                 borderRadius: "50%",
                 background:
-                  "radial-gradient(ellipse, rgba(34,211,238,0.1), transparent 70%)",
-                filter: "blur(12px)",
+                  "radial-gradient(ellipse, rgba(34,211,238,0.2), transparent 70%)",
+                filter: "blur(16px)",
                 pointerEvents: "none",
               }}
             />
           )}
         </AnimatePresence>
 
-        {/* ── Circle dot ── */}
+        {/* ── Circle to Rectangle Morph ── */}
         <motion.div
-          variants={dotEntryVariants}
-          transition={{ delay }}
-          animate={
-            hovered
-              ? {
-                  boxShadow:
-                    "0 0 0 6px rgba(34,211,238,0.1), 0 0 28px rgba(34,211,238,0.3)",
-                  borderColor: "rgba(34,211,238,0.9)",
-                }
-              : {
-                  boxShadow: "0 0 16px rgba(34,211,238,0.1)",
-                  borderColor: "var(--timeline-dot-border)",
-                }
-          }
+          animate={{
+            width: isHovered ? "100%" : 56,
+            height: isHovered ? 44 : 56,
+            borderRadius: isHovered ? 12 : 999,
+            borderColor: isHovered
+              ? "rgba(34,211,238,0.5)"
+              : "rgba(34,211,238,0.2)",
+            backgroundColor: isHovered
+              ? "rgba(34,211,238,0.07)"
+              : "rgba(10,18,40,0.5)",
+          }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            width: 56,
-            height: 56,
-            borderRadius: "50%",
             border: "1.5px solid",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "var(--timeline-dot-bg)",
-            marginBottom: 16,
+            marginBottom: 24,
             flexShrink: 0,
           }}
         >
-          {/* Inner pulsing dot */}
-          <motion.div
-            animate={
-              hovered
-                ? { scale: [1, 1.5, 1], opacity: [1, 1, 1] }
-                : { scale: [1, 1.25, 1], opacity: [0.85, 1, 0.85] }
-            }
-            transition={{
-              repeat: Infinity,
-              duration: hovered ? 1.1 : 2.4,
-              ease: "easeInOut",
-            }}
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              background: "var(--timeline-inner-dot, #22d3ee)",
-              boxShadow: hovered
-                ? "0 0 14px rgba(34,211,238,1)"
-                : "0 0 8px rgba(34,211,238,0.7)",
-            }}
-          />
+          <AnimatePresence mode="wait">
+            {isHovered ? (
+              <motion.span
+                key="tag"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: item.tagColor,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {item.tag}
+              </motion.span>
+            ) : (
+              <motion.div
+                key="dot"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "var(--timeline-inner-dot, #22d3ee)",
+                  boxShadow: "0 0 8px rgba(34,211,238,0.7)",
+                }}
+              />
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* ── Period ── */}
@@ -220,194 +366,138 @@ function TimelineCard({
           style={{
             fontFamily: "Jost, sans-serif",
             fontWeight: 700,
-            fontSize: "clamp(1.35rem, 2.5vw, 1.75rem)",
-            backgroundImage: "var(--timeline-period)",
+            fontSize: "clamp(1.4rem, 2vw, 1.75rem)",
+            backgroundImage:
+              "var(--timeline-period, linear-gradient(to right, #fff, #94a3b8))",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             WebkitTextFillColor: "transparent",
             color: "transparent",
             display: "inline-block",
-            marginBottom: 6,
+            marginBottom: 8,
             lineHeight: 1.2,
           }}
         >
           {item.period}
         </span>
 
-        {/* ── Tag ── */}
-        <span
-          style={{
-            fontWeight: 600,
-            fontSize: 11,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: item.tagColor,
-            marginBottom: 6,
+        {/* ── Tag label (visible only when NOT hovered) ── */}
+        <motion.div
+          animate={{
+            opacity: isHovered ? 0 : 1,
+            height: isHovered ? 0 : "auto",
+            marginBottom: isHovered ? 0 : 8,
           }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ overflow: "hidden" }}
         >
-          {item.tag}
-        </span>
+          <span
+            style={{
+              fontWeight: 600,
+              fontSize: 11,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: item.tagColor,
+            }}
+          >
+            {item.tag}
+          </span>
+        </motion.div>
 
         {/* ── Title ── */}
-        <p
+        <motion.p
+          animate={{
+            color: isHovered ? "#fff" : "var(--timeline-text, #cbd5e1)",
+          }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           style={{
-            fontSize: 13.5,
-            lineHeight: 1.55,
-            color: "var(--timeline-text)",
-            maxWidth: 180,
+            fontSize: 14,
+            lineHeight: 1.6,
+            maxWidth: isHovered ? "100%" : "170px",
             margin: "0 auto",
           }}
         >
-          {item.title}
-        </p>
+          {details?.headline || item.title}
+        </motion.p>
 
-        {/* ── Expanded detail section — animates height from 0 → auto ── */}
-        <motion.div
-          initial={false}
-          animate={hovered ? { height: "auto", opacity: 1, marginTop: 16 } : { height: 0, opacity: 0, marginTop: 0 }}
-          transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          style={{ overflow: "hidden", width: "100%" }}
-        >
-          {details && (
-            <div style={{ width: "100%" }}>
-              {/* Divider */}
-              <div
-                style={{
-                  height: 1,
-                  background: "rgba(34,211,238,0.15)",
-                  marginBottom: 14,
-                }}
-              />
-
-              {/* Metric pill */}
-              {details.metric && (
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                    background: "rgba(34,211,238,0.07)",
-                    border: "1px solid rgba(34,211,238,0.15)",
-                    borderRadius: 999,
-                    padding: "4px 12px",
-                    marginBottom: 12,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 800,
-                      backgroundImage: "linear-gradient(135deg, #22d3ee, #60a5fa)",
-                      WebkitBackgroundClip: "text",
-                      backgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
-                  >
-                    {details.metric}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 9,
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: "var(--text-muted, rgba(148,163,184,0.7))",
-                    }}
-                  >
-                    {details.metricLabel}
-                  </span>
-                </div>
-              )}
-
-              {/* Highlights */}
-              <ul
-                style={{
-                  listStyle: "none",
-                  padding: 0,
-                  margin: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 8,
-                  textAlign: "left",
-                }}
-              >
-                {details.highlights.map((h, i) => (
-                  <li
-                    key={i}
-                    style={{ display: "flex", alignItems: "flex-start", gap: 8 }}
-                  >
-                    <span
-                      style={{
-                        marginTop: 5,
-                        width: 5,
-                        height: 5,
-                        borderRadius: "50%",
-                        flexShrink: 0,
-                        background: "rgba(34,211,238,0.6)",
-                      }}
-                    />
-                    <p
-                      style={{
-                        fontSize: 11.5,
-                        lineHeight: 1.6,
-                        color: "var(--text-secondary, rgba(148,163,184,0.9))",
-                        margin: 0,
-                      }}
-                    >
-                      {h}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </motion.div>
+        {/* ── Smooth Expand Panel ── */}
+        <ExpandPanel isOpen={isHovered} details={details} />
       </motion.div>
     </motion.div>
   );
 }
 
-// ─── Timeline ────────────────────────────────────────────────────────────────
-
 export default function Timeline() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const HOVER_DELAY_MS = 120;
+
+  const handleHoverStart = (index: number) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setHoveredIndex(index);
+    }, HOVER_DELAY_MS);
+  };
+
+  const handleHoverEnd = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setHoveredIndex(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  const getGridTemplateColumns = () => {
+    if (hoveredIndex === null) return "1fr 1fr 1fr 1fr";
+    return TIMELINE.map((_, i) =>
+      i === hoveredIndex ? "2.2fr" : "0.6fr",
+    ).join(" ");
+  };
 
   return (
-    <section ref={ref} className="relative py-20 px-6">
-      {/* Background glow */}
+    <section
+      ref={ref}
+      className="relative pt-24 pb-32 px-6"
+      style={{ minHeight: "450px" }}
+    >
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(ellipse at center, rgba(34,211,238,0.04) 0%, transparent 65%)",
-          filter: "blur(40px)",
+            "radial-gradient(ellipse at center, rgba(34,211,238,0.03) 0%, transparent 75%)",
+          filter: "blur(60px)",
         }}
         aria-hidden
       />
 
-      <div className="max-w-5xl mx-auto">
-        {/* Connecting line — desktop only */}
-        <div className="hidden md:block relative mb-0">
-          <motion.div
-            variants={lineVariants}
-            initial="hidden"
-            animate={inView ? "show" : "hidden"}
-            className="absolute top-[48px] left-[calc(12.5%+28px)] right-[calc(12.5%+28px)] h-[1px] origin-left"
-            style={{ backgroundImage: "var(--timeline-line)" }}
-            aria-hidden
-          />
-        </div>
-
-        {/* Grid — align-items start so expanding cards don't stretch siblings */}
+      <div className="max-w-6xl mx-auto">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-4"
-          style={{ alignItems: "start" }}
+          className="grid grid-cols-1 md:transition-[grid-template-columns] md:duration-[1200ms] md:ease-[cubic-bezier(0.16,1,0.3,1)] gap-5 items-stretch"
+          style={{
+            gridTemplateColumns:
+              typeof window !== "undefined" && window.innerWidth >= 768
+                ? getGridTemplateColumns()
+                : "1fr",
+          }}
         >
           {TIMELINE.map((item, i) => (
-            <TimelineCard key={item.period} item={item} delay={i * 0.12} />
+            <TimelineCard
+              key={item.period}
+              item={item}
+              isHovered={hoveredIndex === i}
+              isAnyHovered={hoveredIndex !== null}
+              onHoverStart={() => handleHoverStart(i)}
+              onHoverEnd={handleHoverEnd}
+            />
           ))}
         </motion.div>
       </div>

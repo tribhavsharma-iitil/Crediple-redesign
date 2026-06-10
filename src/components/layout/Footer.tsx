@@ -61,8 +61,12 @@ function LinkColumn({
           <li key={link.href}>
             <Link
               href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(link.href.startsWith("http")
+                ? {
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                  }
+                : {})}
               className="text-[13px] sm:text-[14px] leading-none transition-colors duration-150 no-underline"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={(e) =>
@@ -163,8 +167,12 @@ export default function Footer() {
                   className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full cursor-pointer"
                   style={{
                     border: `1px solid ${isDark ? "rgba(147,197,253,0.14)" : "rgba(29,78,216,0.14)"}`,
-                    color: isDark ? "rgba(255,255,255,0.55)" : "rgba(12,26,53,0.55)",
-                    background: isDark ? "rgba(255,255,255,0.05)" : "rgba(29,78,216,0.06)",
+                    color: isDark
+                      ? "rgba(255,255,255,0.55)"
+                      : "rgba(12,26,53,0.55)",
+                    background: isDark
+                      ? "rgba(255,255,255,0.05)"
+                      : "rgba(29,78,216,0.06)",
                   }}
                   onMouseEnter={(e) => {
                     const el = e.currentTarget as HTMLElement;
