@@ -14,7 +14,7 @@ const itemVariants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
   },
 };
 
@@ -98,7 +98,7 @@ function ExpandPanel({
         height: fullHeight,
         opacity: 1,
         transition: {
-          height: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+          height: { duration: 1.2, ease: [0.16, 1, 0.3, 1] as const },
           opacity: { duration: 0.6, ease: "easeOut", delay: 0.1 },
         },
       });
@@ -107,7 +107,7 @@ function ExpandPanel({
         height: 0,
         opacity: 0,
         transition: {
-          height: { duration: 0.7, ease: [0.4, 0, 0.2, 1] },
+          height: { duration: 0.7, ease: [0.4, 0, 0.2, 1] as const },
           opacity: { duration: 0.3, ease: "easeIn" },
         },
       });
@@ -183,7 +183,7 @@ function ExpandPanel({
               }
               transition={{
                 duration: 0.5,
-                ease: [0.16, 1, 0.3, 1],
+                ease: [0.16, 1, 0.3, 1] as const,
                 delay: isOpen ? 0.35 + i * 0.1 : 0,
               }}
               style={{
@@ -255,7 +255,7 @@ function TimelineCard({
           opacity: !isHovered && isAnyHovered ? 0.35 : 1,
           scale: !isHovered && isAnyHovered ? 0.97 : 1,
         }}
-        transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] as const }}
         style={{
           border: "1px solid",
           borderRadius: 24,
@@ -313,7 +313,7 @@ function TimelineCard({
               ? "rgba(34,211,238,0.07)"
               : "rgba(10,18,40,0.5)",
           }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] as const }}
           style={{
             border: "1.5px solid",
             display: "flex",
@@ -388,7 +388,7 @@ function TimelineCard({
             height: isHovered ? 0 : "auto",
             marginBottom: isHovered ? 0 : 8,
           }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
           style={{ overflow: "hidden" }}
         >
           <span
