@@ -23,6 +23,7 @@ import card_3 from "@/assets/card_3.png";
 import card_4 from "@/assets/card_4.png";
 import card_5 from "@/assets/card_5.png";
 import card_6 from "@/assets/card_6.png";
+import card_7 from "@/assets/card_7.png";
 
 export const NAV_LINKS = [
   { label: "Home", href: "/", hasDropdown: false },
@@ -370,15 +371,15 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 2,
-    name: "Lawvix",
-    taglines: ["Digitizing Legal Access Through", "Structured Workflow Systems"],
+    name: "EatsKart",
+    taglines: ["Your Food, Your Way Through", "Intelligent On-Demand Delivery"],
     description: [
-      "Lawvix is a legalTech ecosystem focused on simplifying legal access, improving case management and enabling structured legal service delivery through digital transformation.",
-      "Legal systems are often slow, fragmented and difficult to navigate. Lawvix is designed to bring structure, transparency, and accessibility into legal workflows using technology-enabled systems.",
+      "EatsKart is a modern food delivery ecosystem designed to give you your food, your way, by connecting consumers with top-rated local restaurants and diverse cuisines effortlessly.",
+      "Explore trending menus, discover fresh culinary choices, track your order in real time, and enjoy fast, reliable delivery brought straight to your doorstep via a seamless, few-tap workflow.",
     ],
-    image: card_3,
-    whatWeBuild: ["Digital case management", "Client onboarding workflows", "Legal documentation automation", "Legal service access platforms", "Workflow optimization tools"],
-    coreFocus: "We enable a shift from traditional legal handling to structured, process-driven legal ecosystems that improve efficiency, clarity, and accessibility.",
+    image: card_7, 
+    whatWeBuild: ["On-demand food delivery networks", "Real-time order tracking engines", "Restaurant discovery interfaces", "Localized marketplace systems", "Secure checkout workflows"],
+    coreFocus: "We transform local dining into a structured, highly reliable delivery ecosystem that prioritizes convenience, speed, and absolute meal satisfaction.",
   },
   {
     id: 3,
@@ -394,15 +395,15 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 4,
-    name: "Propertizor",
-    taglines: ["Connecting Buyers, Sellers & Agents Through", "Intelligent Real Estate Systems"],
+    name: "My Doctor Capsule",
+    taglines: ["Transforming Healthcare Services", "Into a Digital First Patient Ecosystem"],
     description: [
-      "Propertizor is a data-driven real estate platform built to bridge the gap between property seekers, sellers, and agents through structured discovery, smart listings, and intelligent market insights.",
-      "The real estate market is noisy and opaque. Propertizor brings clarity through structured property data, verified listings, and analytical tools that help all stakeholders make confident, informed decisions.",
+      "My Doctor Capsule is designed to transform how healthcare service providers connect with, engage and grow their patient base in a digitally driven world. It focuses on building a complete healthcare visibility and patient acquisition ecosystem for clinics, hospitals, and independent practitioners.",
+      "In today's healthcare environment, trust, visibility, and accessibility are as important as treatment itself. My Doctor Capsule bridges this gap by enabling healthcare providers to establish a strong and credible digital identity.",
     ],
-    image: card_6,
-    whatWeBuild: ["Smart property listing systems", "Buyer & seller matching engines", "Agent management platforms", "Market analytics dashboards", "Property valuation frameworks"],
-    coreFocus: "We transform fragmented real estate experiences into structured, insight-driven ecosystems that accelerate transactions and build lasting property trust.",
+    image: card_1,
+    whatWeBuild: ["End-to-end digital presence systems", "Structured patient acquisition funnels", "Healthcare branding", "Profile optimization", "Engagement systems"],
+    coreFocus: "We do not just market healthcare services — we build structured patient connection systems that improve discovery, trust, and conversion into care.",
   },
   {
     id: 5,
@@ -418,15 +419,27 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 6,
-    name: "My Doctor Capsule",
-    taglines: ["Transforming Healthcare Services", "Into a Digital First Patient Ecosystem"],
+    name: "Lawvix",
+    taglines: ["Digitizing Legal Access Through", "Structured Workflow Systems"],
     description: [
-      "My Doctor Capsule is designed to transform how healthcare service providers connect with, engage and grow their patient base in a digitally driven world. It focuses on building a complete healthcare visibility and patient acquisition ecosystem for clinics, hospitals, and independent practitioners.",
-      "In today's healthcare environment, trust, visibility, and accessibility are as important as treatment itself. My Doctor Capsule bridges this gap by enabling healthcare providers to establish a strong and credible digital identity.",
+      "Lawvix is a legalTech ecosystem focused on simplifying legal access, improving case management and enabling structured legal service delivery through digital transformation.",
+      "Legal systems are often slow, fragmented and difficult to navigate. Lawvix is designed to bring structure, transparency, and accessibility into legal workflows using technology-enabled systems.",
     ],
-    image: card_1,
-    whatWeBuild: ["End-to-end digital presence systems", "Structured patient acquisition funnels", "Healthcare branding", "Profile optimization", "Engagement systems"],
-    coreFocus: "We do not just market healthcare services — we build structured patient connection systems that improve discovery, trust, and conversion into care.",
+    image: card_3,
+    whatWeBuild: ["Digital case management", "Client onboarding workflows", "Legal documentation automation", "Legal service access platforms", "Workflow optimization tools"],
+    coreFocus: "We enable a shift from traditional legal handling to structured, process-driven legal ecosystems that improve efficiency, clarity, and accessibility.",
+  },
+  {
+    id: 7,
+    name: "Propertizor",
+    taglines: ["Connecting Buyers, Sellers & Agents Through", "Intelligent Real Estate Systems"],
+    description: [
+      "Propertizor is a data-driven real estate platform built to bridge the gap between property seekers, sellers, and agents through structured discovery, smart listings, and intelligent market insights.",
+      "The real estate market is noisy and opaque. Propertizor brings clarity through structured property data, verified listings, and analytical tools that help all stakeholders make confident, informed decisions.",
+    ],
+    image: card_6,
+    whatWeBuild: ["Smart property listing systems", "Buyer & seller matching engines", "Agent management platforms", "Market analytics dashboards", "Property valuation frameworks"],
+    coreFocus: "We transform fragmented real estate experiences into structured, insight-driven ecosystems that accelerate transactions and build lasting property trust.",
   },
 ];
 
@@ -441,26 +454,23 @@ export const UNIFIED_ADVANTAGE = [
 export const FOOTER_COL1 = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "Brands", href: "/brands" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const FOOTER_COL2 = [
-  { label: "Solutions", href: "/solutions" },
-  { label: "Contact", href: "/contact" },
-  { label: "Legal", href: "/legal" },
-];
-
-export const FOOTER_COL3 = [
   { label: "Iitil", href: "https://www.iitil.com/" },
+  { label: "EatsKart", href: "https://eatskart.com/" },
   { label: "Lawvix", href: "https://www.lawvix.com/" },
   { label: "Orgatry", href: "https://orgatry.com/" },
 ];
 
-export const FOOTER_COL4 = [
+export const FOOTER_COL3 = [
   { label: "Propertizor", href: "https://propertizor.com/" },
   { label: "Loan Konnekt", href: "https://www.loankonnekt.com/" },
   { label: "My Doctor Capsule", href: "https://www.mydoctorcapsule.com/" },
 ];
+
 export const FOOTER_TAGLINE =
   "Building the future through innovation, excellence, and unified brand power. The Core That Connects Every Venture.";
 

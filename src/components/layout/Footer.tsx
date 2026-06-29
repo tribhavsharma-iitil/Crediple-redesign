@@ -9,7 +9,6 @@ import {
   FOOTER_COL1,
   FOOTER_COL2,
   FOOTER_COL3,
-  FOOTER_COL4,
   FOOTER_TAGLINE,
   FOOTER_COPYRIGHT,
 } from "@/utils/siteData";
@@ -208,7 +207,6 @@ export default function Footer() {
             <LinkColumn title="" links={FOOTER_COL1} />
             <LinkColumn title="" links={FOOTER_COL2} />
             <LinkColumn title="" links={FOOTER_COL3} />
-            <LinkColumn title="" links={FOOTER_COL4} />
           </div>
         </motion.div>
       </div>
@@ -229,13 +227,21 @@ export default function Footer() {
           className="text-[12px] sm:text-[13px] order-2 sm:order-1 text-center sm:text-left"
           style={{ color: "var(--text-muted)", transition: "color 0.4s ease" }}
         >
-          © 2024 All Rights Reserved.
+          © 2024 All Rights Reserved. Crediple India Private Limited (CIPL)
         </p>
         <p
           className="text-[12px] sm:text-[13px] order-1 sm:order-2 text-center sm:text-right"
           style={{ color: "var(--text-muted)", transition: "color 0.4s ease" }}
         >
-          Crediple India Private Limited (CIPL)
+          <a href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
+            Privacy Policy &nbsp; &#8226; &nbsp;
+          </a>
+          <a href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
+            &nbsp; Terms & Conditions &nbsp;  &#8226; &nbsp;
+          </a>
+          <a href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
+            &nbsp; Cookie Policy
+          </a>
         </p>
       </div>
     </footer>
