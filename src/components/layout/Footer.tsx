@@ -233,15 +233,15 @@ export default function Footer() {
           className="text-[12px] sm:text-[13px] order-1 sm:order-2 text-center sm:text-right"
           style={{ color: "var(--text-muted)", transition: "color 0.4s ease" }}
         >
-          <a href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
+          <Link href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
             Privacy Policy &nbsp; &#8226; &nbsp;
-          </a>
-          <a href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
+          </Link>
+          <Link href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
             &nbsp; Terms & Conditions &nbsp;  &#8226; &nbsp;
-          </a>
-          <a href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
+          </Link>
+          <Link href="/legal" target="_blank" rel="noopener noreferrer" className=" transition-colors duration-150">
             &nbsp; Cookie Policy
-          </a>
+          </Link>
         </p>
       </div>
     </footer>
