@@ -39,7 +39,7 @@ function LinkColumn({
       <ul className="flex flex-col gap-3">
         {links.map((link) => {
           // Define which exact links are allowed to navigate
-          const allowedLabels = ["Home", "About Us", "Solutions", "Contact", "Iitil", "Eatskart"];
+          const allowedLabels = ["Home", "About Us", "Solutions","Brands", "Contact", "Legal", "Iitil", "Eatskart"];
           const isClickable = allowedLabels.includes(link.label);
 
           return (
@@ -155,17 +155,17 @@ export default function Footer() {
           </motion.div>
 
           {/* Column 2: Navigation Links */}
-          <div className="md:col-span-1 md:ml-20 ">
+          <div className="md:col-span-1 md:ml-20">
             <LinkColumn title="" links={FOOTER_COL1} />
           </div>
           
           {/* Column 3: Brand Links Group A */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 md:ml-20">
             <LinkColumn title="" links={FOOTER_COL2} />
           </div>
 
           {/* Column 4: Brand Links Group B */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 md:ml-20">
             <LinkColumn title="" links={FOOTER_COL3} />
           </div>
         </motion.div>
@@ -181,29 +181,15 @@ export default function Footer() {
             "text-[12px] font-medium tracking-wide",
             isDark ? "text-slate-500" : "text-[#94A3B8]"
           )}>
-            &copy; 2018 All rights reserved. Crediple India Private Limited (CIPL)
+            &copy; 2018 All rights reserved. 
           </p>
           
-          <div className="flex items-center gap-6">
-            <Link
-              href="/legal#privacy-policy"
-              className={cn(
-                "text-[12px] font-medium no-underline transition-colors",
-                isDark ? "text-slate-500 hover:text-white" : "text-[#94A3B8] hover:text-[#1E293B]"
-              )}
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/legal#terms-of-service"
-              className={cn(
-                "text-[12px] font-medium no-underline transition-colors",
-                isDark ? "text-slate-500 hover:text-white" : "text-[#94A3B8] hover:text-[#1E293B]"
-              )}
-            >
-              Terms of Service
-            </Link>
-          </div>
+          <p className={cn(
+            "text-[12px] font-medium tracking-wide",
+            isDark ? "text-slate-500" : "text-[#94A3B8]"
+          )}>
+            Crediple India Private Limited (CIPL)
+          </p>
         </div>
       </div>
     </footer>

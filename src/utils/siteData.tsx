@@ -470,20 +470,18 @@ export const FOOTER_COL1 = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Solutions", href: "/solutions" },
-  { label: "Contact", href: "/contact" },
+ 
 ];
 
 export const FOOTER_COL2 = [
-  { label: "Iitil", href: "https://www.iitil.com/" },
-  { label: "Eatskart", href: "https://eatskart.com/" },
-  { label: "Orgatry", href: "https://orgatry.com/" },
-  { label: "My Doctor Capsule", href: "https://www.mydoctorcapsule.com/" },
+  { label: "Brands", href: "/brands" },
+  { label: "Contact", href: "/contact" },
+  { label: "Legal", href: "/legal" },
 ];
 
 export const FOOTER_COL3 = [
-  { label: "Lawvix", href: "https://www.lawvix.com/" },
-  { label: "Propertizor", href: "https://propertizor.com/" },
-  { label: "Loan Konnekt", href: "https://www.loankonnekt.com/" },
+    { label: "Iitil", href: "https://www.iitil.com/" },
+    { label: "Eatskart", href: "https://eatskart.com/" },
 ];
 
 export const FOOTER_TAGLINE =
