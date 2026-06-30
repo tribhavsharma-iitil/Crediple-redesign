@@ -5,48 +5,45 @@ import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  BarChart3,
-  Check,
   CircleDollarSign,
   DatabaseZap,
   HeartPulse,
-  Layers3,
   Scale,
-  ShieldCheck,
-  Sparkles,
-  Workflow,
+  Check,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import SolutionsHero from "@/sections/solutions/hero";
+import { CredipleButton } from "@/components/ui/CredipleButton";
+import PageHero from "@/components/layout/PageHero";
+import { SERVICES_HERO_CONTENT } from "@/utils/siteData";
+import { useTheme } from "@/context/ThemeContext";
 
 // ── animation variants ────────────────────────────────────────────────────────
 const fadeUp = {
-  hidden: { opacity: 0, y: 34 },
+  hidden: { opacity: 0, y: 20 },
   show: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.62, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   }),
 };
 
 const fadeLeft = {
-  hidden: { opacity: 0, x: -34 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const } },
+  hidden: { opacity: 0, x: -20 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 };
 
 const fadeRight = {
-  hidden: { opacity: 0, x: 34 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const } },
+  hidden: { opacity: 0, x: 20 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 };
 
 const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
+  show: { transition: { staggerChildren: 0.06 } },
 };
 
 const cardVariant = {
-  hidden: { opacity: 0, y: 22, scale: 0.97 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const } },
+  hidden: { opacity: 0, y: 15 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
 };
 
 // ── data ──────────────────────────────────────────────────────────────────────
@@ -101,7 +98,7 @@ const capabilities = [
   "Brand ecosystem design",
 ];
 
-// ── GlowCard — matches ServeCard border glow style exactly ───────────────────
+// ── GlowCard ──────────────────────────────────────────────────────────────────
 function GlowCard({
   children,
   className = "",
@@ -109,6 +106,7 @@ function GlowCard({
   children: React.ReactNode;
   className?: string;
 }) {
+  const { isDark } = useTheme();
   const cardRef = useRef<HTMLDivElement>(null);
   const [glow, setGlow] = useState({ x: 50, y: 50 });
   const [hovered, setHovered] = useState(false);
@@ -122,32 +120,31 @@ function GlowCard({
     });
   }, []);
 
+  // Card themes matched perfectly to the dynamic canvas style from WhoWeServe
   return (
     <div
       ref={cardRef}
       onMouseMove={onMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`relative rounded-[18px] p-[1.5px] cursor-pointer ${className}`}
-      style={{
-        background: hovered
-          ? `radial-gradient(160px circle at ${glow.x}% ${glow.y}%, rgba(34,211,238,0.7), rgba(139,92,246,0.4) 45%, var(--card-glow-base, rgba(255,255,255,0.08)) 100%)`
-          : "var(--card-glow-base, rgba(255,255,255,0.08))",
-        transition: "background 0.08s ease",
-      }}
+      className={`relative h-full w-full rounded-[24px] border transition-all duration-300 overflow-hidden ${
+        isDark 
+          ? "bg-[#090F1C] border-white/[0.05]" 
+          : "bg-white border-[#E2E8F0] shadow-sm shadow-blue-100/40"
+      } ${className}`}
     >
-      <div
-        className="relative h-full overflow-hidden rounded-[17px]"
-        style={{ background: "var(--card-inner)" }}
-      >
-        {hovered && (
-          <div
-            className="pointer-events-none absolute inset-0 rounded-[17px]"
-            style={{
-              background: `radial-gradient(200px circle at ${glow.x}% ${glow.y}%, rgba(34,211,238,0.06) 0%, transparent 70%)`,
-            }}
-          />
-        )}
+      {/* Dynamic hover lighting synced with brand colors */}
+      {hovered && (
+        <div
+          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+          style={{
+            background: isDark
+              ? `radial-gradient(200px circle at ${glow.x}% ${glow.y}%, rgba(59,130,246,0.08), transparent 80%)`
+              : `radial-gradient(200px circle at ${glow.x}% ${glow.y}%, rgba(21,93,252,0.04), transparent 80%)`,
+          }}
+        />
+      )}
+      <div className="relative h-full w-full z-10">
         {children}
       </div>
     </div>
@@ -156,104 +153,94 @@ function GlowCard({
 
 // ── page ──────────────────────────────────────────────────────────────────────
 export default function SolutionsPage() {
+  const { isDark } = useTheme();
+
+  // Color tokens extracted strictly from your WhoWeServe system configurations
+  const textPrimary = isDark ? "#ffffff" : "#1E293B";
+  const textSecondary = isDark ? "#94a3b8" : "#475569";
+  const accentColor = isDark ? "#3B82F6" : "#155DFC";
+  const labelColor = isDark ? "#64748B" : "#94A3B8";
+
+  const alternateBgStyle = {
+    background: isDark
+      ? "linear-gradient(135deg, #040814 0%, #081026 50%, #030712 100%)"
+      : "linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 50%, #ECFEFF 100%)",
+  };
+
   return (
-    <div className="w-full overflow-x-hidden" style={{ background: "var(--background)" }}>
-      <SolutionsHero />
+    <div className="w-full overflow-x-hidden min-h-screen" style={alternateBgStyle}>
+      <PageHero {...SERVICES_HERO_CONTENT} />
 
       {/* ── What We Solve ──────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 md:py-28">
-        {/* ambient glow — left */}
-        <div
-          className="pointer-events-none absolute left-0 top-1/2 h-[340px] w-[500px] -translate-y-1/2 -translate-x-1/3"
-          style={{
-            background: "radial-gradient(ellipse at center, rgba(34,211,238,0.06) 0%, transparent 65%)",
-            filter: "blur(60px)",
-          }}
-          aria-hidden
-        />
-
-        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 md:grid-cols-2">
+      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1400px] mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
           <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
-            <p
-              className="mb-5 text-xs font-semibold uppercase tracking-[0.25rem]"
-              style={{ color: "rgba(34,211,238,0.5)" }}
+            <p 
+              className="text-xs font-bold uppercase tracking-[0.2em] mb-3"
+              style={{ color: labelColor }}
             >
               What We Solve
             </p>
             <h2
-              className="mb-4 text-3xl font-semibold leading-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
+              className="font-heading font-bold text-3xl md:text-5xl tracking-tight leading-[1.15]"
+              style={{ color: textPrimary }}
             >
-              We turn fragmented operations into{" "}
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #22d3ee, #818cf8)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                connected ecosystems
-              </span>
+              We turn fragmented operations into connected ecosystems
               .
             </h2>
           </motion.div>
 
-          <motion.div variants={fadeRight} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <motion.div 
+            variants={fadeRight} 
+            initial="hidden" 
+            whileInView="show" 
+            viewport={{ once: true }}
+            className="flex flex-col gap-5 pt-2 md:pt-8"
+          >
             <p
-              className="mb-4 text-base leading-relaxed md:text-lg"
-              style={{ color: "var(--text-secondary, rgba(255,255,255,0.65))" }}
+              className="text-sm md:text-base leading-relaxed"
+              style={{ color: textSecondary }}
             >
               Our solutions sit between strategy, technology, and operational execution. Instead of building
               isolated tools, we design systems that help teams acquire users, manage workflows, interpret data,
               and scale decision making.
             </p>
-            <p className="text-sm font-medium" style={{ color: "#22d3ee" }}>
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: accentColor }}>
               Every solution is built to be repeatable, measurable, and ready for multi-domain expansion.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* thin divider */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div style={{ height: "1px", background: "rgba(34,211,238,0.08)" }} />
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+        <div style={{ height: "1px", background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }} />
       </div>
 
       {/* ── Solution Domains ───────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-16 md:py-24">
-        <div
-          className="pointer-events-none absolute right-0 top-0 h-[420px] w-[420px]"
-          style={{
-            background: "radial-gradient(circle at 80% 20%, rgba(139,92,246,0.07) 0%, transparent 60%)",
-            filter: "blur(60px)",
-          }}
-          aria-hidden
-        />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
+      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1400px] mx-auto px-4 md:px-6">
+        <div className="relative z-10">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="mb-12 text-center"
+            className="text-center mb-16"
           >
-            <p
-              className="mb-3 text-xs font-semibold uppercase tracking-[0.22em]"
-              style={{ color: "rgba(34,211,238,0.5)" }}
+            <p 
+              className="text-xs font-bold uppercase tracking-[0.2em] mb-3"
+              style={{ color: labelColor }}
             >
-              Domains
+              DOMAINS
             </p>
             <h2
-              className="mb-4 text-3xl font-semibold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
+              className="font-heading font-bold text-3xl md:text-5xl tracking-tight"
+              style={{ color: textPrimary }}
             >
               Solution Domains
             </h2>
             <p
-              className="mx-auto max-w-2xl text-sm leading-relaxed"
-              style={{ color: "var(--text-secondary, rgba(255,255,255,0.55))" }}
+              className="mx-auto max-w-2xl text-sm leading-relaxed mt-4"
+              style={{ color: textSecondary }}
             >
               Each domain is distinct, but all are powered by the same Crediple approach: structured workflows,
               intelligent data, and scalable digital infrastructure.
@@ -264,38 +251,42 @@ export default function SolutionsPage() {
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: "-60px" }}
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {solutionDomains.map((domain) => {
               const Icon = domain.icon;
               return (
-                <motion.div key={domain.title} variants={cardVariant} whileHover={{ y: -4 }}>
-                  <GlowCard className="h-full">
-                    <div className="flex h-full flex-col p-6 gap-4">
-                      <div
-                        className="flex h-11 w-11 items-center justify-center rounded-xl shrink-0"
-                        style={{
-                          background: "rgba(34,211,238,0.1)",
-                          border: "1px solid rgba(34,211,238,0.2)",
-                        }}
-                      >
-                        <Icon className="h-5 w-5" style={{ color: "#22d3ee" }} />
+                <motion.div key={domain.title} variants={cardVariant}>
+                  <GlowCard>
+                    <div className="p-8 h-full flex flex-col gap-6">
+                      <div style={{ color: accentColor }}>
+                        <Icon size={26} strokeWidth={2} />
                       </div>
-                      <div className="flex flex-col gap-1">
+                      
+                      <div className="flex flex-col gap-2 flex-1">
                         <h3
-                          className="text-[15px] font-semibold leading-snug"
-                          style={{ color: "#22d3ee" }}
+                          className="font-heading font-bold text-xl tracking-tight"
+                          style={{ color: textPrimary }}
                         >
                           {domain.title}
                         </h3>
+                        <p
+                          className="text-sm leading-relaxed"
+                          style={{ color: textSecondary }}
+                        >
+                          {domain.text}
+                        </p>
                       </div>
-                      <p
-                        className="text-[13px] leading-relaxed flex-1"
-                        style={{ color: "var(--card-text-secondary, rgba(255,255,255,0.55))" }}
+
+                      <Link 
+                        href="/solutions" 
+                        className="inline-flex items-center text-[11px] font-bold uppercase tracking-wider transition-all group/link mt-2" 
+                        style={{ color: accentColor }}
                       >
-                        {domain.text}
-                      </p>
+                        View Solutions 
+                        <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform duration-200 group-hover/link:translate-x-1" />
+                      </Link>
                     </div>
                   </GlowCard>
                 </motion.div>
@@ -305,45 +296,35 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      {/* thin divider */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div style={{ height: "1px", background: "rgba(34,211,238,0.08)" }} />
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+        <div style={{ height: "1px", background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }} />
       </div>
 
       {/* ── How We Build ──────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-16 md:py-24">
-        <div
-          className="pointer-events-none absolute bottom-0 left-1/2 h-[260px] w-[640px] -translate-x-1/2"
-          style={{
-            background: "radial-gradient(ellipse at center, rgba(34,211,238,0.05) 0%, transparent 70%)",
-            filter: "blur(50px)",
-          }}
-          aria-hidden
-        />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1400px] mx-auto px-4 md:px-6">
+        <div className="relative z-10">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="mb-12 text-center"
+            className="text-center mb-16"
           >
-            <p
-              className="mb-3 text-xs font-semibold uppercase tracking-[0.22em]"
-              style={{ color: "rgba(34,211,238,0.5)" }}
+            <p 
+              className="text-xs font-bold uppercase tracking-[0.2em] mb-3"
+              style={{ color: labelColor }}
             >
-              Our Process
+              OUR PROCESS
             </p>
             <h2
-              className="mb-4 text-3xl font-semibold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
+              className="font-heading font-bold text-3xl md:text-5xl tracking-tight"
+              style={{ color: textPrimary }}
             >
               How We Build Solutions
             </h2>
             <p
-              className="text-sm"
-              style={{ color: "var(--text-secondary, rgba(255,255,255,0.55))" }}
+              className="text-sm leading-relaxed max-w-xl mx-auto mt-4"
+              style={{ color: textSecondary }}
             >
               A system-first process from problem discovery to scalable execution.
             </p>
@@ -353,46 +334,33 @@ export default function SolutionsPage() {
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: "-60px" }}
-            className="grid gap-4 md:grid-cols-4"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
           >
             {processSteps.map((step, index) => (
-              <motion.div key={step.title} variants={cardVariant} whileHover={{ y: -4 }}>
-                <GlowCard className="h-full">
-                  <div className="flex h-full flex-col p-6 gap-4">
-                    {/* numbered badge */}
+              <motion.div key={step.title} variants={cardVariant}>
+                <GlowCard>
+                  <div className="p-8 h-full flex flex-col gap-5">
                     <div
-                      className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold shrink-0"
-                      style={{
-                        background: "rgba(34,211,238,0.1)",
-                        border: "1px solid rgba(34,211,238,0.25)",
-                        color: "#22d3ee",
-                      }}
+                      className="font-heading font-black text-2xl tracking-tight"
+                      style={{ color: accentColor }}
                     >
-                      {index + 1}
+                      {String(index + 1).padStart(2, "0")}
                     </div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-2">
                       <h3
-                        className="text-[15px] font-semibold leading-snug"
-                        style={{ color: "#22d3ee" }}
+                        className="font-heading font-bold text-xl tracking-tight"
+                        style={{ color: textPrimary }}
                       >
                         {step.title}
                       </h3>
+                      <p
+                        className="text-sm leading-relaxed"
+                        style={{ color: textSecondary }}
+                      >
+                        {step.text}
+                      </p>
                     </div>
-                    <p
-                      className="text-[13px] leading-relaxed flex-1"
-                      style={{ color: "var(--card-text-secondary, rgba(255,255,255,0.55))" }}
-                    >
-                      {step.text}
-                    </p>
-                    {/* bottom accent line — always visible as a step indicator */}
-                    <div
-                      className="h-[1.5px] rounded-full mt-auto"
-                      style={{
-                        width: `${(index + 1) * 25}%`,
-                        background: "linear-gradient(to right, #22d3ee, transparent)",
-                      }}
-                    />
                   </div>
                 </GlowCard>
               </motion.div>
@@ -401,141 +369,102 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      {/* thin divider */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div style={{ height: "1px", background: "rgba(34,211,238,0.08)" }} />
+      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+        <div style={{ height: "1px", background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }} />
       </div>
 
       {/* ── Core Capabilities ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-16 md:py-24">
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/2"
-          style={{
-            background: "radial-gradient(ellipse at center, rgba(34,211,238,0.04) 0%, transparent 65%)",
-            filter: "blur(70px)",
-          }}
-          aria-hidden
-        />
+      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1200px] mx-auto px-4 md:px-6">
+        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <GlowCard>
+            <div className="px-6 py-16 text-center sm:px-12">
+              <p 
+                className="text-xs font-bold uppercase tracking-[0.2em] mb-3"
+                style={{ color: labelColor }}
+              >
+                WHAT WE DELIVER
+              </p>
+              <h2
+                className="font-heading font-bold text-3xl md:text-5xl tracking-tight"
+                style={{ color: textPrimary }}
+              >
+                Core Capabilities
+              </h2>
+              <p
+                className="mx-auto mb-12 max-w-2xl text-sm leading-relaxed mt-4"
+                style={{ color: textSecondary }}
+              >
+                Our solutions combine design, infrastructure, automation, and intelligence into practical systems that teams can use every day.
+              </p>
 
-        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
-            <GlowCard>
-              <div className="px-6 py-10 text-center sm:px-12">
-                <p
-                  className="mb-3 text-xs font-semibold uppercase tracking-[0.22em]"
-                  style={{ color: "rgba(34,211,238,0.5)" }}
-                >
-                  What We Deliver
-                </p>
-                <h2
-                  className="mb-4 text-3xl font-semibold tracking-tight sm:text-4xl"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Core Capabilities
-                </h2>
-                <p
-                  className="mx-auto mb-10 max-w-2xl text-sm leading-relaxed"
-                  style={{ color: "var(--text-secondary, rgba(255,255,255,0.55))" }}
-                >
-                  Our solutions combine design, infrastructure, automation, and intelligence into practical
-                  systems that teams can use every day.
-                </p>
-
-                <motion.div
-                  variants={stagger}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true }}
-                  className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
-                >
-                  {capabilities.map((capability, index) => (
-                    <motion.div
-                      key={capability}
-                      variants={cardVariant}
-                      custom={index}
-                      className="flex items-center gap-3 rounded-xl px-4 py-3 text-left"
-                      style={{
-                        background: "rgba(34,211,238,0.06)",
-                        border: "1px solid rgba(34,211,238,0.15)",
-                      }}
+              <motion.div
+                variants={stagger}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {capabilities.map((capability) => (
+                  <motion.div
+                    key={capability}
+                    variants={cardVariant}
+                    className={`flex items-center gap-3 rounded-[20px] px-5 py-4 text-left border transition-all duration-300`}
+                    style={{
+                      background: isDark ? "rgba(255,255,255,0.02)" : "rgba(240,247,255,0.5)",
+                      borderColor: isDark ? "rgba(255,255,255,0.06)" : "#E2E8F0",
+                    }}
+                  >
+                    <div 
+                      className="h-5 w-5 shrink-0 rounded-md flex items-center justify-center" 
+                      style={{ background: isDark ? "rgba(59,130,246,0.15)" : "rgba(21,93,252,0.08)" }}
                     >
-                      <Check className="h-4 w-4 shrink-0" style={{ color: "#22d3ee" }} />
-                      <span
-                        className="text-sm font-medium"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        {capability}
-                      </span>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
-            </GlowCard>
-          </motion.div>
-        </div>
+                      <Check className="h-3.5 w-3.5" style={{ color: accentColor }} />
+                    </div>
+                    <span
+                      className="text-sm font-semibold tracking-tight"
+                      style={{ color: textPrimary }}
+                    >
+                      {capability}
+                    </span>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </GlowCard>
+        </motion.div>
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 text-center">
-        <div
-          className="pointer-events-none absolute left-1/2 top-0 h-[300px] w-[520px] -translate-x-1/2"
-          style={{
-            background: "radial-gradient(ellipse at center, rgba(139,92,246,0.08) 0%, transparent 65%)",
-            filter: "blur(60px)",
-          }}
-          aria-hidden
-        />
-
-        <div className="relative z-10 mx-auto max-w-2xl px-6">
-          <motion.h2
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="mb-4 text-3xl font-bold sm:text-4xl"
-            style={{ color: "var(--text-primary)" }}
+      <section className="relative overflow-hidden pb-28 text-center max-w-[1400px] mx-auto px-4 md:px-6">
+        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
+          <div 
+            className="rounded-[24px] py-16 px-6 sm:px-12 border transition-all duration-300" 
+            style={{ 
+              background: isDark ? "rgba(9,15,28,0.6)" : "rgba(255,255,255,0.7)",
+              borderColor: isDark ? "rgba(255,255,255,0.05)" : "#E2E8F0"
+            }}
           >
-            Build the system behind your next{" "}
-            <span
-              style={{
-                background: "linear-gradient(135deg, #22d3ee, #818cf8)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
+            <h2
+              className="font-heading font-bold text-3xl md:text-5xl tracking-tight max-w-2xl mx-auto leading-[1.15] mb-5"
+              style={{ color: textPrimary }}
             >
-              industry solution.
-            </span>
-          </motion.h2>
+              Build the system behind your next industry solution.
+            </h2>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={1}
-            className="mb-8 text-sm leading-relaxed"
-            style={{ color: "var(--text-secondary, rgba(255,255,255,0.55))" }}
-          >
-            Whether the challenge is visibility, workflow speed, data clarity, or scale, Crediple designs the
-            operating layer that makes progress repeatable.
-          </motion.p>
+            <p
+              className="mx-auto mb-10 max-w-2xl text-sm leading-relaxed"
+              style={{ color: textSecondary }}
+            >
+              Whether the challenge is visibility, workflow speed, data clarity, or scale, Crediple designs the operating layer that makes progress repeatable.
+            </p>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={2}
-          >
-            <Button asChild size="md" className="h-14 rounded-2xl px-7 text-sm">
+            <CredipleButton asChild size="xl" className="font-semibold text-base px-8 h-14 rounded-xl group shadow-sm">
               <Link href="/contact">
                 Contact Us
-                <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
-            </Button>
-          </motion.div>
-        </div>
+            </CredipleButton>
+          </div>
+        </motion.div>
       </section>
     </div>
   );

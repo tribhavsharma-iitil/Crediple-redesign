@@ -1,103 +1,186 @@
 "use client";
 
-import { useEffect, useState, useLayoutEffect } from "react";
-import { motion, useSpring, useTransform, useMotionValue } from "framer-motion";
-import { useTheme } from "@/context/ThemeContext";
-import enterprise_light from '@/assets/enterprise_light.png';
-import enterprise_dark from '@/assets/enterprise_dark.png';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
+import { useTheme } from "@/context/ThemeContext";
+import enterprise_light from "@/assets/enterprise_light.png";
+import enterprise_dark from "@/assets/enterprise_dark.png";
+import type { HomeIntroPhase } from "@/lib/homeIntro";
 
-
-const NAV_H        = 64;
+const NAV_H = 72;
 const SCROLL_START = 50;
-const SCROLL_END   = 240;
-const HERO_LG = 130;  const NAV_LG = 34;
-const HERO_SM = 94;  const NAV_SM = 28;
+const SCROLL_END = 240;
+const LOGO_HERO = 132;
+const LOGO_NAV = 34;
+const ANCHOR_ID = "yaka-logo-anchor";
 
 interface FloatingLogoProps {
-  loaderDone: boolean;
-  isHome?: boolean;
-  /** Called with scroll progress 0–1 so Navbar can sync its yaka icon */
-  onScrollProgress?: (p: number) => void;
+  phase: HomeIntroPhase;
+  onIntroComplete: () => void;
 }
 
-export default function FloatingLogo({ loaderDone, isHome = false, onScrollProgress }: FloatingLogoProps) {
-  const { isDark } = useTheme();
+type Rect = { x: number; y: number; width: number; height: number };
 
-  const [winW, setWinW]         = useState(0);
-  const [winH, setWinH]         = useState(0);
-  const [measured, setMeasured] = useState(false);
+function readAnchor(): Rect | null {
+  const el = document.getElementById(ANCHOR_ID);
+  if (!el) return null;
+  const r = el.getBoundingClientRect();
+  return { x: r.left, y: r.top, width: r.width, height: r.height };
+}
+
+function fallbackHero(vw: number): Rect {
+  const pad = vw < 900 ? 24 : 48;
+  return {
+    x: vw - pad - LOGO_HERO,
+    y: NAV_H + 24,
+    width: LOGO_HERO,
+    height: LOGO_HERO,
+  };
+}
+
+function viewportCenter(vw: number, vh: number): Rect {
+  return {
+    x: vw / 2 - LOGO_HERO / 2,
+    y: vh / 2 - LOGO_HERO / 2,
+    width: LOGO_HERO,
+    height: LOGO_HERO,
+  };
+}
+
+export default function FloatingLogo({
+  phase,
+  onIntroComplete,
+}: FloatingLogoProps) {
+  const { isDark } = useTheme();
+  const [vw, setVw] = useState(0);
+  const [vh, setVh] = useState(0);
+  const [heroRect, setHeroRect] = useState<Rect | null>(null);
+  const [landed, setLanded] = useState(() => phase === "ready");
+  const completeRef = useRef(phase === "ready");
 
   const rawProgress = useMotionValue(0);
-  const progress    = useSpring(rawProgress, { stiffness: 130, damping: 24, mass: 0.8 });
+  const scrollProgress = useSpring(rawProgress, {
+    stiffness: 130,
+    damping: 24,
+    mass: 0.8,
+  });
 
-  const isSm     = winW >= 768 && winW < 900;
-  const logoHero = isSm ? HERO_SM : HERO_LG;
-  const logoNav  = isSm ? NAV_SM  : NAV_LG;
-  const rightPad = winW < 900 ? 24 : 40;
-
-  const heroLeft = Math.max(0, winW - rightPad - logoHero);
-  const heroTop  = NAV_H + 16;
-
-  
-  const navRight = rightPad + 108 + 12 + 36 + 12;
-  const navLeft  = Math.max(0, winW - navRight - logoNav);
-  const navTop   = (NAV_H - logoNav) / 2;
-
-  const scrollX    = useTransform(progress, [0, 1], [heroLeft, navLeft]);
-  const scrollY    = useTransform(progress, [0, 1], [heroTop,  navTop]);
-  const scrollSize = useTransform(progress, [0, 1], [logoHero, logoNav]);
-
-  
-  const floatOpacity = useTransform(progress, [0.65, 0.80], [1, 0]);
+  const measure = useCallback(() => {
+    if (typeof window === "undefined") return;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    setVw(w);
+    setVh(h);
+    setHeroRect(readAnchor() ?? fallbackHero(w));
+  }, []);
 
   useLayoutEffect(() => {
-    if (typeof window === "undefined") return;
-    const measure = () => { setWinW(window.innerWidth); setWinH(window.innerHeight); setMeasured(true); };
     measure();
     window.addEventListener("resize", measure, { passive: true });
     return () => window.removeEventListener("resize", measure);
-  }, []);
+  }, [measure]);
 
   useEffect(() => {
-    if (!loaderDone || !measured) return;
+    if (phase !== "flying" && phase !== "ready") return;
+    measure();
+    const t = setTimeout(measure, 150);
+    return () => clearTimeout(t);
+  }, [phase, measure]);
+
+  const rightPad = vw < 900 ? 24 : 40;
+  const navX = Math.max(0, vw - rightPad - 108 - 12 - 36 - 12 - LOGO_NAV);
+  const navY = (NAV_H - LOGO_NAV) / 2;
+
+  const scrollX = useTransform(scrollProgress, [0, 1], [heroRect?.x ?? 0, navX]);
+  const scrollY = useTransform(scrollProgress, [0, 1], [heroRect?.y ?? 0, navY]);
+  const scrollSize = useTransform(scrollProgress, [0, 1], [LOGO_HERO, LOGO_NAV]);
+  const scrollOpacity = useTransform(scrollProgress, [0.65, 0.85], [1, 0]);
+
+  useEffect(() => {
+    if (!landed || phase !== "ready") return;
     const onScroll = () => {
-      const p = Math.min(1, Math.max(0, (window.scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START)));
+      const p = Math.min(
+        1,
+        Math.max(0, (window.scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START))
+      );
       rawProgress.set(p);
-      onScrollProgress?.(p);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, [loaderDone, measured, rawProgress, onScrollProgress]);
+  }, [landed, phase, rawProgress]);
 
-  if (!measured || !loaderDone || winW < 768) return null;
+  const handleLand = useCallback(() => {
+    if (completeRef.current) return;
+    completeRef.current = true;
+    setLanded(true);
+    onIntroComplete();
+  }, [onIntroComplete]);
 
-  const initX = isHome ? winW / 2 - logoHero / 2 : heroLeft;
-  const initY = isHome ? winH / 2 - logoHero / 2 : heroTop;
+  useEffect(() => {
+    if (vw > 0 && vw < 768 && phase === "flying") {
+      handleLand();
+    }
+  }, [vw, phase, handleLand]);
 
-  return (
-    <motion.div
-      initial={{ x: initX, y: initY, width: logoHero, height: logoHero, opacity: 1 }}
-      animate={{ x: heroLeft, y: heroTop, width: logoHero, height: logoHero, opacity: 1 }}
-      transition={isHome ? { type: "spring", stiffness: 110, damping: 20, mass: 1 } : { duration: 0 }}
-      style={{ position: "fixed", top: 0, left: 0, zIndex: 48, pointerEvents: "none" }}
-    >
+  if (vw < 768 || !heroRect || vh === 0) {
+    return null;
+  }
+
+  const logo = isDark ? enterprise_dark : enterprise_light;
+
+  if (phase === "flying" && !landed) {
+    const center = viewportCenter(vw, vh);
+    return (
       <motion.div
+        className="fixed z-[55] pointer-events-none"
+        initial={{
+          left: center.x,
+          top: center.y,
+          width: center.width,
+          height: center.height,
+        }}
+        animate={{
+          left: heroRect.x,
+          top: heroRect.y,
+          width: heroRect.width,
+          height: heroRect.height,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 90,
+          damping: 18,
+          mass: 1,
+        }}
+        onAnimationComplete={handleLand}
+      >
+        <Image src={logo} alt="A YAKA Enterprise" fill className="object-contain" priority />
+      </motion.div>
+    );
+  }
+
+  if (phase === "ready" && landed) {
+    return (
+      <motion.div
+        className="fixed top-0 left-0 z-[55] pointer-events-none"
         style={{
-          position: "absolute",
-          left: scrollX,
-          top:  scrollY,
-          translateX: -heroLeft,
-          translateY: -heroTop,
-          width:   scrollSize,
-          height:  scrollSize,
-          opacity: floatOpacity,
+          x: scrollX,
+          y: scrollY,
+          width: scrollSize,
+          height: scrollSize,
+          opacity: scrollOpacity,
         }}
       >
-      <Image src={isDark ? enterprise_dark : enterprise_light} alt="Crediple" fill className="object-contain" priority />
-
+        <Image src={logo} alt="A YAKA Enterprise" fill className="object-contain" priority />
       </motion.div>
-    </motion.div>
-  );
+    );
+  }
+
+  return null;
 }

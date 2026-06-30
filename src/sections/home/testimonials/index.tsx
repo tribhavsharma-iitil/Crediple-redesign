@@ -1,262 +1,186 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Header from "@/shared/header";
+import { motion } from "framer-motion";
+import { Phone, Star } from "lucide-react";
 import { TESTIMONIALS } from "@/utils/siteData";
+import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { useTheme } from "@/context/ThemeContext";
+import { fadeUp, staggerContainer, scaleIn, viewportOnce } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
-const INTERVAL = 3000;
+const DISPLAYED = TESTIMONIALS.slice(0, 3);
 
-// ── single card ───────────────────────────────────────────────────────────
-function TestimonialCard({ item }: { item: (typeof TESTIMONIALS)[0] }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [hovered, setHovered] = useState(false);
-
-  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const r = cardRef.current?.getBoundingClientRect();
-    if (!r) return;
-    setMouse({
-      x: ((e.clientX - r.left) / r.width) * 100,
-      y: ((e.clientY - r.top) / r.height) * 100,
-    });
-  }, []);
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={onMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="relative rounded-2xl overflow-hidden flex-1 min-w-0"
-      style={{ background: "var(--card-inner)" }}
-    >
-      {/* magnetic border glow */}
-      <div
-        className="absolute inset-0 rounded-2xl pointer-events-none z-0 transition-opacity duration-300"
-        style={{
-          opacity: hovered ? 1 : 0,
-          background: `radial-gradient(300px circle at ${mouse.x}% ${mouse.y}%, rgba(34,211,238,0.12) 0%, transparent 65%)`,
-        }}
-      />
-
-      {/* circular overlay from top-right */}
-      <div
-        className="absolute pointer-events-none z-10 rounded-full"
-        style={{
-          width: hovered ? "140%" : "32px",
-          height: hovered ? "140%" : "32px",
-          top: hovered ? "-20%" : "14px",
-          right: hovered ? "-20%" : "14px",
-          background: `radial-gradient(circle at center, ${item.accent}18 0%, ${item.accent}0a 40%, transparent 65%)`,
-          transition: "all 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
-          filter: "blur(2px)",
-        }}
-      />
-
-      {/* border */}
-      <div
-        className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-        style={{
-          boxShadow: hovered
-            ? `inset 0 0 0 1px rgba(34,211,238,0.25)`
-            : `inset 0 0 0 1px var(--card-border)`,
-          transition: "box-shadow 0.35s ease",
-        }}
-      />
-
-      {/* content */}
-      <div className="relative z-20 p-6 sm:p-8 flex flex-col gap-5 h-full">
-        {/* title row */}
-        <div className="flex items-start justify-between gap-4">
-          <h3
-            className="font-semibold text-[1.05rem] leading-snug flex-1"
-            style={{ color: "var(--testimonial-name)" }}
-          >
-            {item.company}
-          </h3>
-          {/* large faded quote mark */}
-          <span
-            className="text-[52px] leading-none font-serif shrink-0 select-none mt-[-6px]"
-            style={{
-              color: "var(--testimonial-quote)",
-              fontFamily: "Georgia, serif",
-            }}
-          >
-            "
-          </span>
-        </div>
-
-        {/* body text — uses CSS var so it switches in light mode */}
-        <p
-          className="text-[14px] leading-[1.85] flex-1"
-          style={{ color: "var(--testimonial-text)" }}
-        >
-          {item.text}
-        </p>
-
-        {/* author row */}
-        <div className="flex items-center gap-3 pt-1">
-          <div
-            className="w-11 h-11 rounded-full flex items-center justify-center text-[12px] font-bold shrink-0 border-2"
-            style={{
-              background: `linear-gradient(135deg, ${item.accent}40, ${item.accent}18)`,
-              borderColor: `${item.accent}50`,
-              color: item.accent,
-            }}
-          >
-            {item.avatar}
-          </div>
-          <div className="flex flex-col gap-0.5 min-w-0">
-            <span
-              className="font-bold text-[13px] uppercase tracking-wide leading-tight"
-              style={{ color: "var(--testimonial-name)" }}
-            >
-              {item.name}
-            </span>
-            <span
-              className="text-[12px] leading-tight truncate"
-              style={{ color: "var(--testimonial-role)" }}
-            >
-              {item.role}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── main ──────────────────────────────────────────────────────────────────
 export default function Testimonials() {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const total = TESTIMONIALS.length;
-
-  // On mobile show 1 card at a time, on desktop show 2
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640);
-    check();
-    window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  const perPage = isMobile ? 1 : 2;
-  const pages = Math.ceil(total / perPage);
-
-  const advance = useCallback(() => {
-    setIndex((c) => (c + 1) % pages);
-  }, [pages]);
-
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(advance, INTERVAL);
-  }, [advance]);
-
-  useEffect(() => {
-    if (paused) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      return;
-    }
-    timerRef.current = setInterval(advance, INTERVAL);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [paused, advance]);
-
-  // Reset index when perPage changes so we don't land out of bounds
-  useEffect(() => {
-    setIndex(0);
-  }, [perPage]);
-
-  const goTo = (i: number) => {
-    setIndex(i);
-    resetTimer();
-  };
-
-  // Slice the visible cards for current page
-  const visibleCards = Array.from({ length: perPage }, (_, i) =>
-    TESTIMONIALS[(index * perPage + i) % total]
-  );
+  const { isDark } = useTheme();
 
   return (
-    <section
-      className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden"
-      style={{ background: "var(--background)" }}
+    <div 
+      bg="alt"
+      className="w-full"
     >
-      {/* ambient glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(34,211,238,0.04) 0%, transparent 65%)",
-          filter: "blur(50px)",
-        }}
-        aria-hidden
-      />
-
-      <div className="max-w-6xl mx-auto">
-        <Header
-          heading="What Our"
-          highlight="Clients Say"
-          subheading="Trusted by professionals across healthcare, finance, legal and tech."
-        />
-
-        {/* slider */}
-        <div
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          className="relative"
-          style={{ minHeight: 260 }}
+      {/* Testimonials Grid Section */}
+      <SectionWrapper id="testimonials" className="py-20 md:py-24">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="max-w-[1300px] mx-auto px-4 md:px-6"
         >
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.div
-              key={`${index}-${perPage}`}
-              initial={{ opacity: 0, x: 80, scale: 0.96 }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                scale: 1,
-                transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
-              }}
-              exit={{
-                opacity: 0,
-                x: -80,
-                scale: 0.95,
-                transition: { duration: 0.45, ease: [0.4, 0, 0.6, 1] as const },
-              }}
-              className="flex gap-4 sm:gap-5 w-full"
-            >
-              {visibleCards.map((card, i) => (
-                <TestimonialCard key={`${index}-${i}`} item={card} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+          <motion.h2
+            variants={fadeUp}
+            className={cn(
+              "font-heading font-bold text-3xl md:text-5xl text-center tracking-tight",
+              isDark ? "text-white" : "text-[#1E293B]"
+            )}
+          >
+            What Our Clients Say
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            className={cn(
+              "text-xs font-bold uppercase tracking-[0.2em] text-center mt-4 mb-16 max-w-2xl mx-auto",
+              isDark ? "text-slate-500" : "text-slate-400"
+            )}
+          >
+            TRUSTED BY PROFESSIONALS ACROSS HEALTHCARE, FINANCE, LEGAL AND TECH.
+          </motion.p>
 
-        {/* dots */}
-        <div className="flex flex-col items-center gap-3 mt-8">
-          <div className="flex items-center gap-2">
-            {Array.from({ length: pages }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                aria-label={`Slide ${i + 1}`}
-                className="rounded-full focus:outline-none transition-all duration-300"
-                style={{
-                  width: i === index ? 24 : 7,
-                  height: 7,
-                  background:
-                    i === index
-                      ? "linear-gradient(135deg, #22d3ee, #3b82f6)"
-                      : "var(--border)",
-                }}
-              />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {DISPLAYED.map((item) => (
+              <motion.div key={item.name} variants={fadeUp}>
+                <div className={cn(
+                  "p-8 h-full flex flex-col rounded-[20px] border transition-all duration-300 shadow-none",
+                  isDark 
+                    ? "bg-[#090F1C] border-white/[0.04]" 
+                    : "bg-white border-slate-100 shadow-sm shadow-indigo-100/30"
+                )}>
+                  {/* Top Header Block matching the screenshot layouts */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex gap-1">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          size={13}
+                          className="fill-[#EAB308] text-[#EAB308]"
+                        />
+                      ))}
+                    </div>
+                    <span className="text-4xl font-serif font-black leading-none text-[#155DFC] select-none opacity-80">
+                      99
+                    </span>
+                  </div>
+
+                  {/* Main Quote Content Text block */}
+                  <p className={cn(
+                    "text-sm leading-relaxed flex-1 font-medium",
+                    isDark ? "text-slate-400" : "text-[#475569]"
+                  )}>
+                    &ldquo;{item.text}&rdquo;
+                  </p>
+
+                  {/* Identity Footer section block */}
+                  <div className="flex items-center gap-4 mt-8 pt-5 border-t border-slate-100/10 dark:border-white/5">
+                    <div
+                      className="w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold shrink-0 overflow-hidden"
+                      style={{
+                        background: `${item.accent || '#155DFC'}15`,
+                        color: item.accent || '#155DFC',
+                        border: `1px solid ${item.accent || '#155DFC'}30`
+                      }}
+                    >
+                      {item.avatar || item.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className={cn(
+                        "font-bold text-sm tracking-tight",
+                        isDark ? "text-white" : "text-[#1E293B]"
+                      )}>
+                        {item.name}
+                      </p>
+                      <p className={cn(
+                        "text-xs font-medium mt-0.5", 
+                        isDark ? "text-slate-500" : "text-slate-400"
+                      )}>
+                        {item.role}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
+        </motion.div>
+      </SectionWrapper>
+
+      {/* Institutional CTA Callout Section */}
+      <SectionWrapper className="pb-24 pt-4">
+        <div className="max-w-[1300px] mx-auto px-4 md:px-6">
+          <motion.div
+            variants={scaleIn}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            className={cn(
+              "rounded-[32px] p-10 md:p-16 text-center border relative overflow-hidden transition-all duration-300",
+              isDark
+                ? "bg-[#070D19] border-white/[0.05] shadow-2xl"
+                : "bg-gradient-to-r from-[#00A3C4] via-[#1D4ED8] to-[#2563EB] text-white border-transparent shadow-xl shadow-blue-600/10"
+            )}
+          >
+            <h2 className={cn(
+              "font-heading font-bold text-3xl md:text-5xl mb-5 tracking-tight max-w-2xl mx-auto leading-[1.15]",
+              isDark ? "text-white" : "text-white"
+            )}>
+              Ready for Institutional Excellence?
+            </h2>
+            
+            <p className={cn(
+              "text-sm md:text-base max-w-2xl mx-auto mb-10 leading-relaxed font-medium",
+              isDark ? "text-slate-400" : "text-white/85"
+            )}>
+              Join the ecosystem that&apos;s redefining the future of global industry.
+              Let&apos;s discuss your next strategic move.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+              {isDark ? (
+                <>
+                  <a
+                    href="/contact"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-[14px] bg-[#93C5FD] text-[#030712] font-bold text-sm hover:bg-[#BFDBFE] transition-colors no-underline shadow-lg shadow-blue-500/10"
+                  >
+                    Schedule Consultation
+                  </a>
+                  <a
+                    href="/contact"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[14px] border border-white/20 bg-white/[0.02] text-white font-bold text-sm hover:bg-white/[0.06] transition-colors no-underline"
+                  >
+                    <Phone size={15} strokeWidth={2.5} />
+                    Schedule a Call
+                  </a>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="/contact"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-[14px] bg-white text-[#155DFC] font-bold text-sm hover:bg-slate-50 transition-colors no-underline shadow-md"
+                  >
+                    Schedule Consultation
+                  </a>
+                  <a
+                    href="/contact"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[14px] border border-white/30 bg-white/10 text-white font-bold text-sm hover:bg-white/15 transition-colors no-underline"
+                  >
+                    <Phone size={15} strokeWidth={2.5} />
+                    Schedule a Call
+                  </a>
+                </>
+              )}
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </section>
+      </SectionWrapper>
+    </div>
   );
 }

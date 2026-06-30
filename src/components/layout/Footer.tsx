@@ -1,43 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaLinkedinIn, FaInstagram, FaFacebookF } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { Share2, Mail } from "lucide-react";
 import {
   FOOTER_COL1,
   FOOTER_COL2,
   FOOTER_COL3,
-  FOOTER_COL4,
   FOOTER_TAGLINE,
-  FOOTER_COPYRIGHT,
 } from "@/utils/siteData";
-import crediple_light from "@/assets/crediple_light.png";
-import crediple_dark from "@/assets/crediple_dark.png";
-import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
+import { fadeUp, staggerContainer, viewportOnce } from "@/lib/animations";
+import { cn } from "@/lib/utils";
+import credipleDark from "@/assets/crediple_dark.png";
+import credipleLight from "@/assets/crediple_light.png";
+import Image from "next/image";
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
-
-const SOCIALS = [
-  { Icon: FaXTwitter, href: "#", label: "X / Twitter" },
-  { Icon: FaInstagram, href: "#", label: "Instagram" },
-  { Icon: FaFacebookF, href: "#", label: "Facebook" },
-  { Icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
-];
 
 function LinkColumn({
   title,
@@ -46,40 +24,58 @@ function LinkColumn({
   title: string;
   links: { label: string; href: string }[];
 }) {
+  const { isDark } = useTheme();
+
   return (
-    <motion.div variants={fadeUp} className="flex flex-col gap-0">
-      {title && (
-        <h4
-          className="text-[14px] sm:text-[15px] font-semibold mb-4 sm:mb-5 tracking-wide"
-          style={{ color: "var(--text-primary)" }}
-        >
-          {title}
-        </h4>
-      )}
-      <ul className="flex flex-col gap-3 sm:gap-[14px]">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              {...(link.href.startsWith("http")
-                ? {
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                  }
-                : {})}
-              className="text-[13px] sm:text-[14px] leading-none transition-colors duration-150 no-underline"
-              style={{ color: "var(--text-secondary)" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "var(--accent-color)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "var(--text-secondary)")
-              }
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
+    <motion.div variants={fadeUp} className="flex flex-col gap-5">
+      <h4
+        className={cn(
+          "text-[11px] font-bold uppercase tracking-[0.15em]",
+          isDark ? "text-white" : "text-[#0F172A]"
+        )}
+      >
+        {title}
+      </h4>
+      <ul className="flex flex-col gap-3">
+        {links.map((link) => {
+          // Define which exact links are allowed to navigate
+          const allowedLabels = ["Home", "About Us", "Solutions", "Contact", "Iitil", "Eatskart"];
+          const isClickable = allowedLabels.includes(link.label);
+
+          return (
+            <li key={link.label + link.href}>
+              {isClickable ? (
+                /* Active Link */
+                <Link
+                  href={link.href}
+                  {...(link.href.startsWith("https")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className={cn(
+                    "text-[13px] font-medium no-underline transition-colors hover:opacity-100",
+                    isDark 
+                      ? "text-slate-400 hover:text-white" 
+                      : "text-[#64748B] hover:text-[#1E293B]"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                /* Disabled / Non-clickable Text */
+                <span
+                  className={cn(
+                   "text-[13px] font-medium no-underline transition-colors hover:opacity-100",
+                    isDark 
+                      ? "text-slate-400 hover:text-white" 
+                      : "text-[#64748B] hover:text-[#1E293B]"
+                  )}
+                >
+                  {link.label}
+                </span>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </motion.div>
   );
@@ -90,153 +86,125 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden"
-      style={{
-        background: isDark
-          ? "linear-gradient(180deg, rgba(3,7,18,0.95) 0%, rgba(2,6,23,1) 100%)"
-          : "linear-gradient(180deg, #e8f0ff 0%, #eef4ff 100%)",
-        borderTop: `1px solid ${isDark ? "rgba(147,197,253,0.1)" : "rgba(29,78,216,0.1)"}`,
-        transition: "background 0.5s ease, border-color 0.5s ease",
-      }}
+      className={cn(
+        "relative py-16 md:py-20 overflow-hidden",
+        isDark ? "bg-[#040814]" : "bg-[#FBF8FF]"
+      )}
     >
-      {/* Top ambient glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[220px] w-[600px] -translate-x-1/2"
-        style={{
-          background: isDark
-            ? "radial-gradient(ellipse at center, rgba(96,165,250,0.14), transparent 66%)"
-            : "radial-gradient(ellipse at center, rgba(29,78,216,0.08), transparent 66%)",
-          filter: "blur(54px)",
-          transition: "background 0.5s ease",
-        }}
-      />
-
-      {/* Main content */}
-      <div className="relative z-10 py-12 sm:py-14 px-5 sm:px-8">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-8">
         <motion.div
-          className="max-w-6xl mx-auto flex flex-col md:flex-row md:justify-between gap-10 sm:gap-12 md:gap-6"
-          variants={containerVariants}
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={viewportOnce}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 lg:gap-8 pb-16"
         >
-          {/* Brand block */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-col gap-4 max-w-[280px] sm:max-w-[300px]"
-          >
-            <div className="inline-flex items-start gap-2 flex-col">
+          {/* Column 1: Main Info Branding Container */}
+          <motion.div variants={fadeUp} className="flex flex-col items-start md:col-span-1">
+            <Link href="/" className="flex items-center shrink-0 no-underline transition-opacity duration-200 hover:opacity-90">
               <Image
-                src={isDark ? crediple_dark : crediple_light}
-                alt="Crediple"
-                width={100}
+                src={isDark ? credipleDark : credipleLight}
+                alt="Crediple Logo"
+                height={28}
+                className="w-auto h-9 object-contain"
+                priority
               />
-              <p style={{ color: "var(--text-secondary)", fontSize: "12px" }}>
-                A{" "}
-                <span style={{ fontWeight: 700, color: "var(--text-primary)" }}>
-                  YAKA
-                </span>{" "}
-                Enterprise
-              </p>
-            </div>
-
-            {/* Tagline */}
-            <p
-              className="text-[13px] leading-[1.75]"
-              style={{
-                color: "var(--text-secondary)",
-                transition: "color 0.4s ease",
-              }}
-            >
-              {FOOTER_TAGLINE}
+            </Link>
+            
+            <p className={cn(
+              "text-[13px] font-medium mt-3 tracking-wide",
+              isDark ? "text-slate-400" : "text-[#475569]"
+            )}>
+              A <span className={cn("font-bold", isDark ? "text-white" : "text-[#0F172A]")}>YAKA</span> Enterprise
+            </p>
+            
+            <p className={cn(
+              "text-[13px] leading-relaxed mt-4 max-w-xs font-medium",
+              isDark ? "text-slate-400" : "text-[#64748B]"
+            )}>
+              {FOOTER_TAGLINE || "Precision in Excellence. The holding company for the next era of enterprise technology."}
             </p>
 
-            {/* Social icons — each opens in a new tab */}
-            <div className="flex items-center gap-2 mt-1 flex-wrap">
-              {SOCIALS.map(({ Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  whileHover={{ scale: 1.12, y: -2 }}
-                  whileTap={{ scale: 0.92 }}
-                  transition={{ type: "spring", stiffness: 320, damping: 20 }}
-                  className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full cursor-pointer"
-                  style={{
-                    border: `1px solid ${isDark ? "rgba(147,197,253,0.14)" : "rgba(29,78,216,0.14)"}`,
-                    color: isDark
-                      ? "rgba(255,255,255,0.55)"
-                      : "rgba(12,26,53,0.55)",
-                    background: isDark
-                      ? "rgba(255,255,255,0.05)"
-                      : "rgba(29,78,216,0.06)",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.color = isDark ? "#93c5fd" : "#1d4ed8";
-                    el.style.borderColor = isDark
-                      ? "rgba(147,197,253,0.4)"
-                      : "rgba(29,78,216,0.4)";
-                    el.style.background = isDark
-                      ? "rgba(96,165,250,0.1)"
-                      : "rgba(29,78,216,0.09)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.color = isDark
-                      ? "rgba(255,255,255,0.55)"
-                      : "rgba(12,26,53,0.55)";
-                    el.style.borderColor = isDark
-                      ? "rgba(147,197,253,0.14)"
-                      : "rgba(29,78,216,0.14)";
-                    el.style.background = isDark
-                      ? "rgba(255,255,255,0.05)"
-                      : "rgba(29,78,216,0.06)";
-                  }}
-                >
-                  <Icon size={14} />
-                </motion.a>
-              ))}
+            {/* Micro Pill Sharing Actions */}
+            <div className="flex items-center gap-2.5 mt-8">
+              <a
+                href="#"
+                aria-label="Share"
+                className={cn(
+                  "w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-105",
+                  isDark
+                    ? "bg-white/[0.04] text-slate-400 border border-white/[0.05] hover:text-white"
+                    : "bg-[#EFF6FF] text-[#0047AB] hover:opacity-90"
+                )}
+              >
+                <Share2 size={13} strokeWidth={2.5} />
+              </a>
+              <a
+                href="mailto:hello@crediple.com"
+                aria-label="Email"
+                className={cn(
+                  "w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-105",
+                  isDark
+                    ? "bg-white/[0.04] text-slate-400 border border-white/[0.05] hover:text-white"
+                    : "bg-[#EFF6FF] text-[#0047AB] hover:opacity-90"
+                )}
+              >
+                <Mail size={13} strokeWidth={2.5} />
+              </a>
             </div>
           </motion.div>
 
-          {/* Link columns */}
-          <div className="flex flex-row gap-8 sm:gap-12 md:gap-16 lg:gap-20 md:ml-auto flex-wrap">
+          {/* Column 2: Navigation Links */}
+          <div className="md:col-span-1 md:ml-20 ">
             <LinkColumn title="" links={FOOTER_COL1} />
+          </div>
+          
+          {/* Column 3: Brand Links Group A */}
+          <div className="md:col-span-1">
             <LinkColumn title="" links={FOOTER_COL2} />
+          </div>
+
+          {/* Column 4: Brand Links Group B */}
+          <div className="md:col-span-1">
             <LinkColumn title="" links={FOOTER_COL3} />
-            <LinkColumn title="" links={FOOTER_COL4} />
           </div>
         </motion.div>
-      </div>
 
-      {/* Divider */}
-      <div
-        className="mx-5 sm:mx-8"
-        style={{
-          height: 1,
-          background: isDark ? "rgba(147,197,253,0.1)" : "rgba(29,78,216,0.1)",
-          transition: "background 0.4s ease",
-        }}
-      />
-
-      {/* Bottom bar */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p
-          className="text-[12px] sm:text-[13px] order-2 sm:order-1 text-center sm:text-left"
-          style={{ color: "var(--text-muted)", transition: "color 0.4s ease" }}
+        {/* Sub-footer Metadata Bottom Bar */}
+        <div
+          className={cn(
+            "pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4",
+            isDark ? "border-white/[0.05]" : "border-slate-200/60"
+          )}
         >
-          © 2024 All Rights Reserved.
-        </p>
-        <p
-          className="text-[12px] sm:text-[13px] order-1 sm:order-2 text-center sm:text-right"
-          style={{ color: "var(--text-muted)", transition: "color 0.4s ease" }}
-        >
-          Crediple India Private Limited (CIPL)
-        </p>
+          <p className={cn(
+            "text-[12px] font-medium tracking-wide",
+            isDark ? "text-slate-500" : "text-[#94A3B8]"
+          )}>
+            &copy; 2018 All rights reserved. Crediple India Private Limited (CIPL)
+          </p>
+          
+          <div className="flex items-center gap-6">
+            <Link
+              href="/legal#privacy-policy"
+              className={cn(
+                "text-[12px] font-medium no-underline transition-colors",
+                isDark ? "text-slate-500 hover:text-white" : "text-[#94A3B8] hover:text-[#1E293B]"
+              )}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/legal#terms-of-service"
+              className={cn(
+                "text-[12px] font-medium no-underline transition-colors",
+                isDark ? "text-slate-500 hover:text-white" : "text-[#94A3B8] hover:text-[#1E293B]"
+              )}
+            >
+              Terms of Service
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

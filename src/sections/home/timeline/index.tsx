@@ -1,506 +1,265 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView, AnimatePresence, useAnimation } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Calendar, BarChart3, Zap } from "lucide-react";
+import Image from "next/image";
 import { TIMELINE } from "@/utils/siteData";
+import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { useTheme } from "@/context/ThemeContext";
+import { fadeUp, viewportOnce } from "@/lib/animations";
+import { cn } from "@/lib/utils";
+import card_1 from "@/assets/timeline_bg.png";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
-};
+gsap.registerPlugin(ScrollTrigger);
 
 const TIMELINE_DETAILS: Record<
   string,
-  {
-    headline: string;
-    highlights: string[];
-    metric?: string;
-    metricLabel?: string;
-  }
+  { highlights: string[]; metric?: string; metricLabel?: string }
 > = {
   "2018-2019": {
-    headline: "Foundation & Concept Stage",
     highlights: [
-      "Ideation of an OPC model built as a Loan Proposal Aggregator ecosystem",
-      "Research on credit bureaus, scoring systems, and lending behaviour in India",
-      "Development of core philosophy around credit correction, optimisation, and financial inclusion",
-      "Early validation of credit pain points among individuals and small businesses",
-      "Formation of the foundational team and advisory discussions initiated",
+      "Crediple incorporated to simplify financial access for Indian SMEs and individuals",
+      "Core founding team assembled across FinTech, LegalTech & HealthTech domains",
+      "Seed funding secured; operations commenced from Udaipur, Rajasthan",
     ],
     metric: "2018",
-    metricLabel: "Inception Year",
+    metricLabel: "YEAR FOUNDED",
   },
   "2020-2022": {
-    headline: "Research, Design & Early Structuring",
     highlights: [
       "Deep research driven development of credit improvement methodologies",
       "Structuring service frameworks for credit audit, correction, and score enhancement",
-      "Mapping relationships between lenders, credit bureaus, and credit behaviour patterns",
       "Building the initial operational blueprint and service lifecycle design",
-      "Establishing internal processes for credit analysis and integrated aggregator framework",
     ],
     metric: "Core",
     metricLabel: "Methodology Built",
   },
   "2022-2024": {
-    headline: "Platform Building & Service Expansion",
     highlights: [
       "Transition from concept to a structured credit services platform ecosystem",
       "Service lines expansion of credit audit, correction, score improvement, and optimisation",
-      "Design of customer journey workflows with SRN based service lifecycle",
-      "Strengthening channel driven service delivery model across partners",
       "Development of training frameworks for credit partners and internal teams",
     ],
-    metric: "SRN",
-    metricLabel: "Lifecycle Deployed",
   },
   "2025-2026": {
-    headline: "Scale, Automation & Ecosystem Growth",
     highlights: [
       "6 years of primary market research across multiple verticals, channels, and customer segments",
-      "Deep understanding of market dynamics, resource gaps, challenges, and execution risks",
       "Development of a multi domain enterprise ecosystem across health, finance, law, technology, data, HR, and property management",
       "Phased launch of multiple brands through structured and controlled market entry",
-      "Ecosystem-led strategy designed to overcome typical startup and brand launch challenges",
     ],
-    metric: "7+",
-    metricLabel: "Domains Integrated",
   },
 };
 
-// Smooth expand using measured pixel height — avoids the height:"auto" snap bug
-function ExpandPanel({
-  isOpen,
-  details,
-}: {
-  isOpen: boolean;
-  details: (typeof TIMELINE_DETAILS)[string] | undefined;
-}) {
-  const controls = useAnimation();
-  const innerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!innerRef.current) return;
-
-    if (isOpen) {
-      // Measure actual content height, then animate from 0 → that value
-      const fullHeight = innerRef.current.scrollHeight;
-      controls.start({
-        height: fullHeight,
-        opacity: 1,
-        transition: {
-          height: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-          opacity: { duration: 0.6, ease: "easeOut", delay: 0.1 },
-        },
-      });
-    } else {
-      controls.start({
-        height: 0,
-        opacity: 0,
-        transition: {
-          height: { duration: 0.7, ease: [0.4, 0, 0.2, 1] },
-          opacity: { duration: 0.3, ease: "easeIn" },
-        },
-      });
-    }
-  }, [isOpen, controls]);
-
-  if (!details) return null;
-
-  return (
-    <motion.div
-      initial={{ height: 0, opacity: 0 }}
-      animate={controls}
-      style={{ overflow: "hidden", width: "100%" }}
-    >
-      {/* Inner wrapper — always rendered so scrollHeight is measurable */}
-      <div ref={innerRef} style={{ width: "100%", padding: "0 24px", boxSizing: "border-box" }}>
-        <div className="pt-4 pb-2" style={{ width: "100%" }}>
-          <div
-            style={{
-              height: 1,
-              background: "rgba(34,211,238,0.15)",
-              marginBottom: 20,
-            }}
-          />
-
-          {details.metric && (
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                background: "rgba(34,211,238,0.07)",
-                border: "1px solid rgba(34,211,238,0.15)",
-                borderRadius: 999,
-                padding: "4px 14px",
-                marginBottom: 20,
-              }}
-            >
-              <span
-                style={{
-                  fontSize: 14,
-                  fontWeight: 800,
-                  backgroundImage: "linear-gradient(135deg, #22d3ee, #60a5fa)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                {details.metric}
-              </span>
-              <span
-                style={{
-                  fontSize: 9,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "var(--text-muted, rgba(148,163,184,0.7))",
-                }}
-              >
-                {details.metricLabel}
-              </span>
-            </div>
-          )}
-
-          {/* Staggered highlight rows */}
-          {details.highlights.map((h, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 8 }}
-              animate={
-                isOpen
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 8 }
-              }
-              transition={{
-                duration: 0.5,
-                ease: [0.16, 1, 0.3, 1],
-                delay: isOpen ? 0.35 + i * 0.1 : 0,
-              }}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 10,
-                marginBottom: i < details.highlights.length - 1 ? 12 : 0,
-              }}
-            >
-              <span
-                style={{
-                  marginTop: 7,
-                  width: 5,
-                  height: 5,
-                  borderRadius: "50%",
-                  flexShrink: 0,
-                  background: "rgba(34,211,238,0.6)",
-                }}
-              />
-              <p
-                style={{
-                  fontSize: 12.5,
-                  lineHeight: 1.6,
-                  color: "rgba(226, 232, 240, 0.95)",
-                  margin: 0,
-                  textAlign: "left",
-                }}
-              >
-                {h}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-function TimelineCard({
-  item,
-  isHovered,
-  isAnyHovered,
-  onHoverStart,
-  onHoverEnd,
-}: {
-  item: (typeof TIMELINE)[number];
-  isHovered: boolean;
-  isAnyHovered: boolean;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
-}) {
-  const details = TIMELINE_DETAILS[item.period];
-
-  return (
-    <motion.div
-      variants={itemVariants}
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
-      className="w-full select-none"
-      style={{ cursor: "pointer", height: "100%" }}
-    >
-      <motion.div
-        animate={{
-          borderColor: isHovered ? "rgba(34,211,238,0.35)" : "rgba(34,211,238,0.08)",
-          backgroundColor: isHovered ? "rgba(10,18,40,0.95)" : "rgba(10,18,40,0.15)",
-          boxShadow: isHovered
-            ? "0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(34,211,238,0.2)"
-            : "0 0px 0px rgba(0,0,0,0)",
-          opacity: !isHovered && isAnyHovered ? 0.35 : 1,
-          scale: !isHovered && isAnyHovered ? 0.97 : 1,
-        }}
-        transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          border: "1px solid",
-          borderRadius: 24,
-          padding: "32px 24px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-          position: "relative",
-          zIndex: isHovered ? 50 : 10,
-          backdropFilter: isHovered ? "blur(20px)" : "none",
-          overflow: "hidden",
-          minHeight: 280,
-          height: "100%",
-          boxSizing: "border-box",
-        }}
-      >
-        {/* Ambient Top Glow */}
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              key="glow"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              aria-hidden
-              style={{
-                position: "absolute",
-                top: -40,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: 220,
-                height: 90,
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(ellipse, rgba(34,211,238,0.2), transparent 70%)",
-                filter: "blur(16px)",
-                pointerEvents: "none",
-              }}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* ── Circle to Rectangle Morph ── */}
-        <motion.div
-          animate={{
-            width: isHovered ? "100%" : 56,
-            height: isHovered ? 44 : 56,
-            borderRadius: isHovered ? 12 : 999,
-            borderColor: isHovered
-              ? "rgba(34,211,238,0.5)"
-              : "rgba(34,211,238,0.2)",
-            backgroundColor: isHovered
-              ? "rgba(34,211,238,0.07)"
-              : "rgba(10,18,40,0.5)",
-          }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            border: "1.5px solid",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 24,
-            flexShrink: 0,
-          }}
-        >
-          <AnimatePresence mode="wait">
-            {isHovered ? (
-              <motion.span
-                key="tag"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: item.tagColor,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {item.tag}
-              </motion.span>
-            ) : (
-              <motion.div
-                key="dot"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  background: "var(--timeline-inner-dot, #22d3ee)",
-                  boxShadow: "0 0 8px rgba(34,211,238,0.7)",
-                }}
-              />
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* ── Period ── */}
-        <span
-          style={{
-            fontFamily: "Jost, sans-serif",
-            fontWeight: 700,
-            fontSize: "clamp(1.4rem, 2vw, 1.75rem)",
-            backgroundImage:
-              "var(--timeline-period, linear-gradient(to right, #fff, #94a3b8))",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            color: "transparent",
-            display: "inline-block",
-            marginBottom: 8,
-            lineHeight: 1.2,
-          }}
-        >
-          {item.period}
-        </span>
-
-        {/* ── Tag label (visible only when NOT hovered) ── */}
-        <motion.div
-          animate={{
-            opacity: isHovered ? 0 : 1,
-            height: isHovered ? 0 : "auto",
-            marginBottom: isHovered ? 0 : 8,
-          }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          style={{ overflow: "hidden" }}
-        >
-          <span
-            style={{
-              fontWeight: 600,
-              fontSize: 11,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: item.tagColor,
-            }}
-          >
-            {item.tag}
-          </span>
-        </motion.div>
-
-        {/* ── Title ── */}
-        <motion.p
-          animate={{
-            color: isHovered ? "#fff" : "var(--timeline-text, #cbd5e1)",
-          }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          style={{
-            fontSize: 14,
-            lineHeight: 1.6,
-            maxWidth: isHovered ? "100%" : "170px",
-            margin: "0 auto",
-          }}
-        >
-          {details?.headline || item.title}
-        </motion.p>
-
-        {/* ── Smooth Expand Panel ── */}
-        <ExpandPanel isOpen={isHovered} details={details} />
-      </motion.div>
-    </motion.div>
-  );
-}
+const ICONS = [Calendar, BarChart3, Zap, Zap];
 
 export default function Timeline() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const HOVER_DELAY_MS = 120;
-
-  const handleHoverStart = (index: number) => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setHoveredIndex(index);
-    }, HOVER_DELAY_MS);
-  };
-
-  const handleHoverEnd = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setHoveredIndex(null);
-  };
+  const { isDark } = useTheme();
+  const [active, setActive] = useState<number>(0);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
+    if (!lineRef.current || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        lineRef.current,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+            end: "bottom 30%",
+            scrub: true,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
-  const getGridTemplateColumns = () => {
-    if (hoveredIndex === null) return "1fr 1fr 1fr 1fr";
-    return TIMELINE.map((_, i) =>
-      i === hoveredIndex ? "2.2fr" : "0.6fr",
-    ).join(" ");
-  };
-
   return (
-    <section
-      ref={ref}
-      className="relative pt-24 pb-32 px-6"
-      style={{ minHeight: "450px" }}
-    >
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse at center, rgba(34,211,238,0.03) 0%, transparent 75%)",
-          filter: "blur(60px)",
-        }}
-        aria-hidden
-      />
-
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          variants={containerVariants}
+    <SectionWrapper id="timeline" bg="alt">
+      <div ref={sectionRef} className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
+        <motion.h2
+          variants={fadeUp}
           initial="hidden"
-          animate={inView ? "show" : "hidden"}
-          className="grid grid-cols-1 md:transition-[grid-template-columns] md:duration-[1200ms] md:ease-[cubic-bezier(0.16,1,0.3,1)] gap-5 items-stretch"
-          style={{
-            gridTemplateColumns:
-              typeof window !== "undefined" && window.innerWidth >= 768
-                ? getGridTemplateColumns()
-                : "1fr",
-          }}
+          whileInView="visible"
+          viewport={viewportOnce}
+          className={cn(
+            "font-heading font-bold text-3xl md:text-5xl text-center mb-16 tracking-tight",
+            isDark ? "text-white" : "text-slate-900"
+          )}
         >
-          {TIMELINE.map((item, i) => (
-            <TimelineCard
-              key={item.period}
-              item={item}
-              isHovered={hoveredIndex === i}
-              isAnyHovered={hoveredIndex !== null}
-              onHoverStart={() => handleHoverStart(i)}
-              onHoverEnd={handleHoverEnd}
-            />
-          ))}
-        </motion.div>
+          Company History
+        </motion.h2>
+
+        <div className="relative pl-10 md:pl-20">
+          {/* Central Track Line - Perfectly aligned to pass through the absolute center of the dots */}
+          <div
+            ref={lineRef}
+            className="absolute left-[12px] md:left-[28px] top-0 bottom-0 w-[3px] origin-top bg-gradient-to-b from-[#155DFC] via-[#00D3F3] to-[#155DFC] rounded-full z-0"
+          />
+
+          <div className="flex flex-col gap-8">
+            {TIMELINE.map((item, i) => {
+              const details = TIMELINE_DETAILS[item.period];
+              const Icon = ICONS[i] ?? Calendar;
+              const isActive = active === i;
+
+              return (
+                <div key={item.period} className="relative">
+                  
+                  {/* Glowing Circular Border Node - Centered with outer neon shadow radial bloom */}
+                  <div
+                    className={cn(
+                      "absolute left-[-40px] md:left-[-62px] top-8 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 z-10",
+                      isDark 
+                        ? "border-[#00D3F3] bg-[#060f21] shadow-[0_0_15px_rgba(0,211,243,0.45)]" 
+                        : "border-[#155DFC] bg-white shadow-[0_0_15px_rgba(21,93,252,0.45)]",
+                      isActive && (isDark ? "shadow-[0_0_22px_rgba(0,211,243,0.7)]" : "shadow-[0_0_22px_rgba(21,93,252,0.7)]")
+                    )}
+                  >
+                    {/* Inner Core Solid Circle Point */}
+                    <div 
+                      className={cn(
+                        "w-2.5 h-2.5 rounded-full transition-transform duration-300",
+                        isDark ? "bg-[#00D3F3]" : "bg-[#155DFC]",
+                        isActive && "scale-125"
+                      )}
+                    />
+                  </div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={viewportOnce}
+                    onMouseEnter={() => setActive(i)}
+                    className="group relative z-10"
+                  >
+                    <motion.div
+                      layout
+                      transition={{ type: "spring", stiffness: 180, damping: 26 }}
+                      className={cn(
+                        "rounded-xl border transition-colors duration-300 overflow-hidden shadow-none",
+                        isDark 
+                          ? "bg-[#0B122099] border-white/[0.06]" 
+                          : "bg-white border-[#BEDBFF]",
+                        "w-full lg:max-w-xl", 
+                        isActive && "lg:max-w-full lg:border-[#155DFC]/40"
+                      )}
+                    >
+                      <div className="flex flex-col lg:flex-row items-stretch justify-between relative min-h-[160px]">
+                        
+                        {/* Segment 1: Heading Core Block Info */}
+                        <div className={cn(
+                          "px-6 md:px-8 flex flex-col justify-between shrink-0 w-full lg:w-[380px] transition-all duration-500 ease-out",
+                          isActive ? "py-9 md:py-12" : "py-6 md:py-8"
+                        )}>
+                          <div>
+                            <div className="flex items-center gap-4 mb-4">
+                              <div
+                                className={cn(
+                                  "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border",
+                                  isDark
+                                    ? "bg-white/5 border-white/10 text-[#00D3F3]"
+                                    : "bg-[#E0F7F9] border-[#BEDBFF] text-[#155DFC]"
+                                )}
+                              >
+                                <Icon size={22} strokeWidth={2.2} />
+                              </div>
+                              <div>
+                                <h3 className="font-heading font-black text-2xl md:text-3xl text-[#155DFC] tracking-wide">
+                                  {item.period}
+                                </h3>
+                                <p className="text-[10px] font-bold uppercase tracking-widest text-amber-500 mt-0.5">
+                                  {item.tag}
+                                </p>
+                              </div>
+                            </div>
+
+                            <hr className={cn("my-4", isDark ? "border-white/10" : "border-slate-100")} />
+
+                            <p className={cn(
+                              "text-sm font-medium leading-relaxed mb-4",
+                              isDark ? "text-[#90A1B9]" : "text-[#45556C]"
+                            )}>
+                              {item.title}
+                            </p>
+                          </div>
+
+                          {details?.metric && (
+                            <div className="mt-auto pt-2">
+                              <span
+                                className={cn(
+                                  "inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border",
+                                  isDark
+                                    ? "bg-white/5 border-white/10 text-[#00D3F3]"
+                                    : "bg-[#EFF6FF] border-[#BEDBFF] text-[#155DFC]"
+                                )}
+                              >
+                                {details.metric} {details.metricLabel}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Segment 2: Bulleted Highlights Content List */}
+                        <div className={cn(
+                          "w-full flex-1 px-6 md:px-8 transition-all duration-500 ease-out self-center",
+                          "block opacity-100 h-auto py-6",
+                          "lg:hidden lg:opacity-0 lg:max-w-0 lg:overflow-hidden lg:py-0",
+                          isActive && "lg:block lg:opacity-100 lg:max-w-3xl lg:py-9"
+                        )}>
+                          <ul className="space-y-4">
+                            {details?.highlights.map((bullet) => (
+                              <li
+                                key={bullet}
+                                className={cn(
+                                  "text-xs md:text-sm flex gap-3 font-normal leading-relaxed",
+                                  isDark ? "text-[#DCE2F6]" : "text-[#45556C]"
+                                )}
+                              >
+                                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#155DFC] shrink-0" />
+                                <span className="flex-1">{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Segment 3: Graphical Image Block */}
+                        <div className={cn(
+                          "relative min-h-[200px] lg:min-h-full transition-all duration-500 self-stretch overflow-hidden shrink-0",
+                          "w-full lg:w-0 lg:opacity-0",
+                          isActive && "lg:w-[320px] xl:w-[420px] lg:opacity-100 rounded-r-xl"
+                        )}>
+                          <Image
+                            src={card_1}
+                            alt="Timeline illustration"
+                            fill
+                            className="object-cover object-left"
+                            style={{
+                              maskImage: "linear-gradient(to right, transparent 0%, black 25%)",
+                              WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 25%)",
+                            }}
+                          />
+                        </div>
+
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
-    </section>
+    </SectionWrapper>
   );
 }

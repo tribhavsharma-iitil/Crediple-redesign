@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import enterprise_light from '@/assets/enterprise_light.png';
-import enterprise_dark from '@/assets/enterprise_dark.png';
+import enterprise_light from "@/assets/enterprise_light.png";
+import enterprise_dark from "@/assets/enterprise_dark.png";
 import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -10,37 +11,44 @@ interface LoaderProps {
   onComplete: () => void;
 }
 
+const VISIBLE_MS = 3200;
+const EXIT_MS = 600;
+
 export default function Loader({ onComplete }: LoaderProps) {
   const [visible, setVisible] = useState(true);
   const { isDark } = useTheme();
+  const finishedRef = useRef(false);
 
-
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
-  useEffect(() => {
-    const t1 = setTimeout(() => setVisible(false), 3000);
-    const t2 = setTimeout(() => onComplete(),      3600);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+  const finish = useCallback(() => {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
+    onComplete();
   }, [onComplete]);
 
-  const logoSrc = mounted
-    ? (isDark ? enterprise_dark : enterprise_light)
-    : enterprise_dark; // matches the SSR default (html.dark)
+  useEffect(() => {
+    const hideTimer = setTimeout(() => setVisible(false), VISIBLE_MS);
+    const fallbackTimer = setTimeout(finish, VISIBLE_MS + EXIT_MS + 200);
+    return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(fallbackTimer);
+    };
+  }, [finish]);
+
+  const logoSrc = isDark ? enterprise_dark : enterprise_light;
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait" onExitComplete={finish}>
       {visible && (
         <motion.div
-          key="loader"
+          key="intro-loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+          transition={{ duration: EXIT_MS / 1000, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[9999] flex items-center justify-center"
           style={{ backgroundColor: "var(--loader-bg)" }}
         >
-          {/* Ambient glow */}
           <motion.div
+            aria-hidden
             initial={{ opacity: 0, scale: 0.4 }}
             animate={{ opacity: 0.6, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -56,14 +64,12 @@ export default function Loader({ onComplete }: LoaderProps) {
 
           <motion.div
             initial={{ scale: 3.5, opacity: 0, filter: "blur(18px)" }}
-            animate={{ scale: 1,   opacity: 1, filter: "blur(0px)"  }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
+            animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex flex-col items-center gap-5"
           >
-            <div style={{ width: 180, height: 180, position: "relative" }}>
-           
+            <div className="relative w-[180px] h-[180px]">
               <Image
-                key={String(mounted && isDark)}
                 src={logoSrc}
                 alt="Crediple"
                 fill
@@ -72,7 +78,6 @@ export default function Loader({ onComplete }: LoaderProps) {
               />
             </div>
 
-            {/* Shimmer progress bar */}
             <div
               className="rounded-full overflow-hidden"
               style={{ width: 80, height: 2, background: "var(--border)" }}

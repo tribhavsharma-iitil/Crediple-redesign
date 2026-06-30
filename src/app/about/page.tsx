@@ -3,11 +3,13 @@
 import { motion } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
 import { Check } from "lucide-react";
-import About from "@/sections/about/hero";
+import PageHero from "@/components/layout/PageHero";
+import { ABOUT_HERO_CONTENT } from "@/utils/siteData";
 import crediple_light from "@/assets/crediple_light.png";
 import crediple_dark from "@/assets/crediple_dark.png";
 import { useTheme } from "@/context/ThemeContext";
 import Image from "next/image";
+
 // ─── Reusable animation variants ───────────────────────────────────────────
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -45,7 +47,7 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-// ─── Glow Card ───────────────────────────────────────────────────────────────
+// ─── Glow Card (Matching Homepage System) ────────────────────────────────────
 function GlowCard({
   children,
   className = "",
@@ -74,7 +76,7 @@ function GlowCard({
       onMouseMove={onMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`relative rounded-[18px] p-[1.5px] ${className}`}
+      className={`relative rounded-[24px] p-[1.5px] ${className}`}
       style={{
         background: hovered
           ? `radial-gradient(160px circle at ${glow.x}% ${glow.y}%, ${glowVar}, var(--glow-secondary) 45%, var(--card-glow-base) 100%)`
@@ -83,12 +85,12 @@ function GlowCard({
       }}
     >
       <div
-        className="relative rounded-[17px] h-full overflow-hidden"
-        style={{ background: "var(--card-inner)" }}
+        className="relative rounded-[23px] h-full overflow-hidden"
+        style={{ background: "var(--card-inner)", border: "1px solid var(--border-subtle)" }}
       >
         {hovered && (
           <div
-            className="absolute inset-0 pointer-events-none rounded-[17px]"
+            className="absolute inset-0 pointer-events-none rounded-[23px]"
             style={{
               background: `radial-gradient(200px circle at ${glow.x}% ${glow.y}%, color-mix(in srgb, var(--icon-accent) 5%, transparent) 0%, transparent 70%)`,
             }}
@@ -100,8 +102,7 @@ function GlowCard({
   );
 }
 
-// ─── Accent Card (replaces gradient cards that had invisible text) ─────────
-// Uses icon-accent-bg + icon-accent colour — same palette as ServeCard chips
+// ─── Accent Card (Matching Homepage Specs) ───────────────────────────────────
 function AccentCard({
   children,
   className = "",
@@ -111,7 +112,7 @@ function AccentCard({
 }) {
   return (
     <div
-      className={`rounded-[18px] h-full ${className}`}
+      className={`rounded-[24px] h-full ${className}`}
       style={{
         background: "var(--icon-accent-bg)",
         border: "1px solid var(--icon-accent-border)",
@@ -126,21 +127,25 @@ export default function AboutUs() {
   const { isDark } = useTheme();
 
   return (
-    // Single unified background for the entire page — no more striping
     <div
       className="w-full overflow-x-hidden"
       style={{ background: "var(--background)" }}
     >
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <About />
+      {/* ── HERO SECTION (Refactored to match split layout from Screenshot 2026-06-27 193006.jpg) ── */}
+      <PageHero {...ABOUT_HERO_CONTENT} />
+
+
+      {/* ── DIVIDER ──────────────────────────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="h-px" style={{ background: "var(--border-subtle)" }} />
+      </div>
 
       {/* ── FOUNDATION ───────────────────────────────────────────────────── */}
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div
           className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[300px] pointer-events-none"
           style={{
-            background:
-              "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
+            background: "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
             filter: "blur(60px)",
           }}
           aria-hidden
@@ -159,20 +164,11 @@ export default function AboutUs() {
               Our Foundation
             </p>
             <h2
-              className="text-3xl sm:text-4xl font-semibold leading-tight mb-3"
+              className="text-3xl sm:text-4xl font-bold leading-tight mb-3"
               style={{ color: "var(--text-primary)" }}
             >
-              More Than a{" "}
-              <span
-                style={{
-                  background: "var(--heading-gradient)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Holding <br /> Company.
-              </span>{" "}
+              More Than a Holding  Company.<br/>
+  
               A system builder across industries
             </h2>
           </motion.div>
@@ -184,15 +180,15 @@ export default function AboutUs() {
             viewport={{ once: true }}
           >
             <p
-              className="text-lg md:text-xl leading-relaxed mb-4 font-medium"
-              style={{ color: "var(--text-primary)" }}
+              className="text-lg md:text-xl leading-relaxed mb-4 font-normal"
+              style={{ color: "var(--text-secondary)" }}
             >
               Crediple transforms traditional business models into scalable,
               technology driven ecosystems. We bring structure, intelligence,
               and scalability to every industry we build in.
             </p>
             <p
-              className="text-sm font-light text-center"
+              className="text-sm font-medium text-left"
               style={{ color: "var(--icon-accent)" }}
             >
               We are not just building Brands. We are building systems that
@@ -202,7 +198,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* ── divider ──────────────────────────────────────────────────────── */}
+      {/* ── DIVIDER ──────────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="h-px" style={{ background: "var(--border-subtle)" }} />
       </div>
@@ -212,8 +208,7 @@ export default function AboutUs() {
         <div
           className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[400px] h-[300px] pointer-events-none"
           style={{
-            background:
-              "radial-gradient(ellipse at center, var(--glow-secondary) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse at center, var(--glow-secondary) 0%, transparent 70%)",
             filter: "blur(50px)",
           }}
           aria-hidden
@@ -224,7 +219,7 @@ export default function AboutUs() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="text-3xl text-center mb-4 sm:text-4xl font-semibold tracking-tight"
+            className="text-3xl text-center mb-4 sm:text-4xl font-bold tracking-tight"
             style={{ color: "var(--text-primary)" }}
           >
             Our Operating Philosophy
@@ -250,10 +245,10 @@ export default function AboutUs() {
             custom={2}
           >
             <GlowCard glowVar="var(--glow-cyan)">
-              <div className="px-6 sm:px-8 py-8">
+              <div className="px-6 sm:px-8 py-10">
                 <p
-                  className="text-center text-sm mb-12"
-                  style={{ color: "var(--text-secondary)" }}
+                  className="text-center text-sm mb-12 uppercase tracking-wider font-semibold"
+                  style={{ color: "var(--text-muted)" }}
                 >
                   Every vertical we enter is evaluated on three principles:
                 </p>
@@ -270,19 +265,20 @@ export default function AboutUs() {
                       whileInView="show"
                       viewport={{ once: true }}
                       custom={i}
-                      className="flex flex-col items-center text-center gap-4"
+                      className="flex flex-col items-center text-center gap-5"
                     >
                       <div
-                        className="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold shadow-md"
+                        className="w-12 h-12 rounded-xl flex items-center justify-center text-base font-bold shadow-md border"
                         style={{
-                          background: "var(--heading-gradient)",
-                          color: "var(--primary-foreground)",
+                          background: "var(--icon-accent-bg)",
+                          color: "var(--icon-accent)",
+                          borderColor: "var(--icon-accent-border)"
                         }}
                       >
-                        {i + 1}
+                        {String(i + 1).padStart(2, '0')}
                       </div>
                       <p
-                        className="text-sm font-semibold leading-snug max-w-[160px]"
+                        className="text-sm font-semibold leading-snug max-w-[200px]"
                         style={{ color: "var(--text-primary)" }}
                       >
                         {text}
@@ -291,11 +287,11 @@ export default function AboutUs() {
                   ))}
                 </div>
                 <div
-                  className="border-t mb-4"
+                  className="border-t mb-6 mt-8"
                   style={{ borderColor: "var(--border-subtle)" }}
                 />
                 <p
-                  className="text-center font-bold text-base md:text-lg"
+                  className="text-center font-bold text-base md:text-lg tracking-wide uppercase"
                   style={{ color: "var(--icon-accent)" }}
                 >
                   If the answer is yes — we build it.
@@ -303,547 +299,8 @@ export default function AboutUs() {
               </div>
             </GlowCard>
           </motion.div>
-        </div>
-      </section>
 
-      {/* ── divider ──────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="h-px" style={{ background: "var(--border-subtle)" }} />
-      </div>
 
-      {/* ── APPROACH ─────────────────────────────────────────────────────── */}
-      <section className="relative py-16 md:py-20 overflow-hidden">
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, var(--hero-glow) 0%, transparent 70%)",
-            filter: "blur(50px)",
-          }}
-          aria-hidden
-        />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2
-              className="text-3xl text-center mb-4 sm:text-4xl font-semibold tracking-tight"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Our Approach
-            </h2>
-            <p
-              className="font-medium text-lg"
-              style={{ color: "var(--icon-accent)" }}
-            >
-              A system-first approach, not a product-first approach
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            {/* ✕ card — was using heading-gradient causing invisible text */}
-            <motion.div
-              variants={fadeLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-            >
-              <GlowCard glowVar="var(--glow-secondary)" className="h-full">
-                <div className="p-8 h-full">
-                  <span
-                    className="text-2xl font-bold mb-4 block"
-                    style={{ color: "var(--destructive)" }}
-                  >
-                    ✕
-                  </span>
-                  <h3
-                    className="text-base font-bold mb-3"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    Instead of asking:
-                  </h3>
-                  <p
-                    className="text-sm italic"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    What service should we offer?
-                  </p>
-                </div>
-              </GlowCard>
-            </motion.div>
-
-            {/* ✓ card — replaced gradient bg with AccentCard for readable text */}
-            <motion.div
-              variants={fadeRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-            >
-              <AccentCard className="p-8">
-                <span
-                  className="text-2xl font-bold mb-4 block"
-                  style={{ color: "var(--icon-accent)" }}
-                >
-                  ✓
-                </span>
-                <h3
-                  className="text-base font-bold mb-3"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  We ask:
-                </h3>
-                <p
-                  className="text-sm italic"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  What system needs to exist to solve this industry problem at
-                  scale?
-                </p>
-              </AccentCard>
-            </motion.div>
-          </div>
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={2}
-          >
-            <GlowCard glowVar="var(--glow-cyan)">
-              <div className="px-8 py-8 flex flex-col items-center gap-5">
-                <p
-                  className="text-sm"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  This approach allows us to build:
-                </p>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {[
-                    "Long-term infrastructure",
-                    "Repeatable models",
-                    "Scalable ecosystems",
-                  ].map((label) => (
-                    <span
-                      key={label}
-                      className="px-6 py-3 rounded-full text-sm font-medium"
-                      style={{
-                        background: "var(--icon-accent-bg)",
-                        color: "var(--icon-accent)",
-                        border: "1px solid var(--icon-accent-border)",
-                      }}
-                    >
-                      {label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </GlowCard>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── divider ──────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="h-px" style={{ background: "var(--border-subtle)" }} />
-      </div>
-
-      {/* ── DIFFERENT ────────────────────────────────────────────────────── */}
-      <section className="relative py-16 md:py-20 overflow-hidden">
-        <div
-          className="absolute top-0 right-0 w-[400px] h-[400px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle at 80% 20%, var(--glow-primary) 0%, transparent 60%)",
-            filter: "blur(60px)",
-          }}
-          aria-hidden
-        />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2
-              className="text-3xl text-center mb-4 sm:text-4xl font-semibold tracking-tight"
-              style={{ color: "var(--text-primary)" }}
-            >
-              What Makes Crediple Different
-            </h2>
-          </motion.div>
-
-          <div className="flex flex-col gap-4">
-            {[
-              {
-                left: "Most companies operate vertically",
-                right: "We operate horizontally across industries",
-              },
-              {
-                left: "Most brands sell services",
-                right: "We design frameworks that deliver services at scale",
-              },
-              {
-                left: "Most systems are disconnected",
-                right: "We connect intelligence across domains",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                custom={i}
-              >
-                <GlowCard glowVar="var(--glow-cyan)" className="w-full">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 rounded-[17px] overflow-hidden">
-                    <div
-                      className="px-6 sm:px-8 py-6 flex items-center"
-                      style={{ background: "var(--card-inner)" }}
-                    >
-                      <p
-                        className="text-sm"
-                        style={{ color: "var(--text-secondary)" }}
-                      >
-                        {item.left}
-                      </p>
-                    </div>
-                    <div
-                      className="relative overflow-hidden flex items-center px-6 sm:px-8 py-6"
-                      style={{ background: "var(--icon-accent-bg)" }}
-                    >
-                      <div
-                        className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-2/3"
-                        style={{ background: "var(--border)" }}
-                      />
-                      <p
-                        className="font-semibold text-sm pl-4 sm:pl-0"
-                        style={{ color: "var(--icon-accent)" }}
-                      >
-                        {item.right}
-                      </p>
-                    </div>
-                  </div>
-                </GlowCard>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── divider ──────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="h-px" style={{ background: "var(--border-subtle)" }} />
-      </div>
-
-      {/* ── STRUCTURE ────────────────────────────────────────────────────── */}
-      <section className="relative py-16 md:py-20 overflow-hidden">
-        {/* Background glow */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, var(--glow-primary) 0%, transparent 65%)",
-            filter: "blur(70px)",
-          }}
-          aria-hidden
-        />
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          {/* Heading */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2
-              className="text-3xl text-center mb-4 sm:text-4xl font-semibold tracking-tight"
-              style={{ color: "var(--text-primary)" }}
-            >
-              How We Are Structured
-            </h2>
-            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-              Crediple operates through a Hub &amp; Ecosystem model
-            </p>
-          </motion.div>
-
-          {/* Two-column grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {/* LEFT — Central Intelligence Layer */}
-            <motion.div
-              variants={fadeLeft}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="h-full"
-            >
-              <GlowCard glowVar="var(--glow-blue)" className="h-full">
-                <div className="p-8 h-full flex flex-col">
-                  {/* Icon badge */}
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 shrink-0"
-                    style={{
-                      background: "var(--icon-accent-bg)",
-                      border: "1px solid var(--icon-accent-border)",
-                    }}
-                  >
-                    <span style={{ fontSize: 18 }}>🧠</span>
-                  </div>
-
-                  <h3
-                    className="text-xl font-bold mb-3"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    Central Intelligence Layer
-                  </h3>
-                  <p
-                    className="text-sm mb-5"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    A unified strategic and technology backbone that governs:
-                  </p>
-
-                  <ul className="space-y-3 mb-6">
-                    {[
-                      "Product architecture",
-                      "Data systems",
-                      "Brand frameworks",
-                      "Growth strategy",
-                    ].map((item) => (
-                      <li
-                        key={item}
-                        className="flex items-center gap-2 text-sm"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        <span
-                          className="w-2 h-2 rounded-full flex-shrink-0"
-                          style={{ background: "var(--icon-accent)" }}
-                        />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div
-                    className="border-t pt-4 mt-auto"
-                    style={{ borderColor: "var(--border-subtle)" }}
-                  >
-                    <p
-                      className="text-sm font-semibold mb-2"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      The layer ensures:
-                    </p>
-                    <ul className="space-y-1">
-                      {[
-                        "Consistent quality standards",
-                        "Shared infrastructure & tooling",
-                        "Cross-brand synergy & insights",
-                      ].map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-center gap-1 my-2 text-xs"
-                          style={{ color: "var(--text-secondary)" }}
-                        >
-                          <span style={{ color: "var(--icon-accent)" }}>→</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </GlowCard>
-            </motion.div>
-
-            {/* RIGHT — Brand Ecosystem */}
-            <motion.div
-              variants={fadeRight}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="h-full"
-            >
-              <GlowCard glowVar="var(--glow-primary)" className="h-full">
-                <div className="p-8 h-full flex flex-col">
-                  {/* Icon badge */}
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 shrink-0"
-                    style={{
-                      background: "var(--icon-accent-bg)",
-                      border: "1px solid var(--icon-accent-border)",
-                    }}
-                  >
-                    <span style={{ fontSize: 18 }}>🌐</span>
-                  </div>
-
-                  <h3
-                    className="text-xl font-bold mb-3"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    Brand Ecosystem
-                  </h3>
-                  <p
-                    className="text-sm mb-5"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    Independent brands operating across key verticals, each
-                    solving a focused problem:
-                  </p>
-
-                  <ul className="space-y-3 mb-6">
-                    {[
-                      {
-                        name: "Iitil",
-                        desc: "Data intelligence & business decision systems",
-                      },
-                      {
-                        name: "Lawvix",
-                        desc: "LegalTech & documentation automation",
-                      },
-                      { name: "Orgatry", desc: "HRMS & workforce management" },
-                      {
-                        name: "Propertizor",
-                        desc: "AI-driven real estate insights",
-                      },
-                      {
-                        name: "Loan Konnekt",
-                        desc: "Lending & NBFC partnerships",
-                      },
-                      {
-                        name: "My Doctor Capsule",
-                        desc: "Healthcare & digital patient acquisition",
-                      },
-                    ].map((brand) => (
-                      <li
-                        key={brand.name}
-                        className="flex items-start gap-2 text-sm"
-                      >
-                        <span
-                          className="w-2 h-2 rounded-full flex-shrink-0 mt-[5px]"
-                          style={{ background: "var(--icon-accent)" }}
-                        />
-                        <span>
-                          <span
-                            className="font-semibold"
-                            style={{ color: "var(--text-primary)" }}
-                          >
-                            {brand.name}
-                          </span>
-                          <span
-                            className="ml-1"
-                            style={{ color: "var(--text-secondary)" }}
-                          >
-                            — {brand.desc}
-                          </span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div
-                    className="border-t pt-4 mt-auto"
-                    style={{ borderColor: "var(--border-subtle)" }}
-                  >
-                    <p
-                      className="text-sm font-semibold mb-2"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      Each brand delivers:
-                    </p>
-                    <ul className="space-y-1">
-                      {[
-                        "Specialised user experiences",
-                        "Vertical-specific product depth",
-                        "Scalable, independent growth",
-                      ].map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-center gap-1 my-2 text-xs"
-                          style={{ color: "var(--text-secondary)" }}
-                        >
-                          <span style={{ color: "var(--icon-accent)" }}>→</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </GlowCard>
-            </motion.div>
-          </div>
-
-          {/* Bottom banner */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            custom={2}
-            className="p-5 rounded-2xl text-center"
-            style={{
-              background: "var(--icon-accent-bg)",
-              border: "1px solid var(--icon-accent-border)",
-            }}
-          >
-            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-              Independent brands, unified vision — all powered by the{" "}
-              <span
-                className="font-semibold"
-                style={{ color: "var(--icon-accent)" }}
-              >
-                same core intelligence layer
-              </span>
-              .
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── divider ──────────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="h-px" style={{ background: "var(--border-subtle)" }} />
-      </div>
-
-      {/* ── COMMITMENT ───────────────────────────────────────────────────── */}
-      <section className="relative py-16 md:py-20 overflow-hidden">
-        <div
-          className="absolute bottom-0 right-1/4 w-[400px] h-[300px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, var(--glow-secondary) 0%, transparent 65%)",
-            filter: "blur(55px)",
-          }}
-          aria-hidden
-        />
-
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
-          {/* Heading */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="text-center mb-10"
-          >
-            <h2
-              className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Our Commitment
-            </h2>
-            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-              We are committed to building:
-            </p>
-          </motion.div>
 
           {/* Cards grid */}
           <motion.div
@@ -851,7 +308,7 @@ export default function AboutUs() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="grid sm:grid-cols-2 gap-4"
+            className="grid sm:grid-cols-2 gap-4 mt-8"
           >
             {[
               {

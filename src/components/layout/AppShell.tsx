@@ -1,20 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useSpring,
-} from "framer-motion";
-
+import { motion, useScroll, useSpring } from "framer-motion";
 import Loader from "@/components/animations/Loader";
 import FloatingLogo from "@/components/animations/FloatingLogo";
 import ScrollButton from "@/components/ui/ScrollButton";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CookieConsent from "@/components/cookies/CookieConsent";
+import {
+  getInitialIntroPhase,
+  isHomeIntroCompleted,
+  markHomeIntroCompleted,
+  type HomeIntroPhase,
+} from "@/lib/homeIntro";
 
 export default function AppShell({
   children,
@@ -24,123 +24,68 @@ export default function AppShell({
   const pathname = usePathname();
   const isHome = pathname === "/";
 
-  /**
-   * Prevent:
-   * - loader replay
-   * - blank screen on back button
-   * - bfcache restore issues
-   */
-  const [loaderDone, setLoaderDone] = useState<boolean>(() => {
-    if (typeof window === "undefined") {
-      return !isHome;
-    }
+  const [phase, setPhase] = useState<HomeIntroPhase>(() =>
+    getInitialIntroPhase(isHome)
+  );
 
-    const alreadyRan =
-      sessionStorage.getItem("crediple-loader-done") === "1";
+  const loaderDoneRef = useRef(false);
 
-    return !isHome || alreadyRan;
-  });
-
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  /**
-   * Global page scroll progress
-   */
-  const { scrollYProgress } = useScroll();
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 200,
-    damping: 30,
-  });
-
-  /**
-   * Fix external-site back navigation blank screen
-   */
   useEffect(() => {
-    const handlePageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) {
-        setLoaderDone(true);
-      }
-    };
+    if (!isHome) return;
+    if (isHomeIntroCompleted()) {
+      setPhase("ready");
+    } else {
+      loaderDoneRef.current = false;
+      setPhase("loading");
+    }
+  }, [isHome]);
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        setLoaderDone(true);
-      }
-    };
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
 
-    window.addEventListener("pageshow", handlePageShow);
-
-    document.addEventListener(
-      "visibilitychange",
-      handleVisibilityChange
-    );
-
-    return () => {
-      window.removeEventListener(
-        "pageshow",
-        handlePageShow
-      );
-
-      document.removeEventListener(
-        "visibilitychange",
-        handleVisibilityChange
-      );
-    };
+  const handleLoaderComplete = useCallback(() => {
+    if (loaderDoneRef.current) return;
+    loaderDoneRef.current = true;
+    setPhase("flying");
   }, []);
 
-  /**
-   * Save loader completion
-   */
-  const handleLoaderComplete = () => {
-    sessionStorage.setItem("crediple-loader-done", "1");
-    setLoaderDone(true);
-  };
+  const handleIntroComplete = useCallback(() => {
+    markHomeIntroCompleted();
+    setPhase("ready");
+  }, []);
+
+  const contentReady = !isHome || phase === "ready";
 
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 right-0 z-[60] origin-left h-[3px] pointer-events-none"
-        style={{
-          scaleX,
-          background:
-            "linear-gradient(90deg, #22d3ee, #3b82f6, #8b5cf6)",
-        }}
+        className="fixed top-0 left-0 right-0 z-[60] origin-left h-[2px] pointer-events-none bg-brand-blue"
+        style={{ scaleX }}
       />
 
-      {isHome && !loaderDone && (
+      {isHome && phase === "loading" && (
         <Loader onComplete={handleLoaderComplete} />
       )}
 
-      <FloatingLogo
-        loaderDone={loaderDone}
-        isHome={isHome}
-        onScrollProgress={setScrollProgress}
-      />
+      {isHome && (phase === "flying" || phase === "ready") && (
+        <FloatingLogo phase={phase} onIntroComplete={handleIntroComplete} />
+      )}
 
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 0.3,
-          }}
-          style={{
-            visibility: loaderDone ? "visible" : "hidden",
-          }}
-          className="relative flex min-h-screen flex-col overflow-hidden"
-        >
-          <div className="relative z-10 flex min-h-screen flex-col">
-            <Navbar scrollProgress={scrollProgress} />
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: contentReady ? 1 : 0,
+        }}
+        transition={{ duration: contentReady ? 0.4 : 0, delay: contentReady ? 0.1 : 0 }}
+        style={{ pointerEvents: contentReady ? "auto" : "none" }}
+        className="relative flex min-h-screen flex-col"
+        aria-hidden={!contentReady}
+      >
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </motion.div>
 
-            <main className="flex-1">{children}</main>
-
-            <Footer />
-          </div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Scroll To Top */}
       <ScrollButton />
       <CookieConsent />
     </>

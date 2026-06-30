@@ -26,7 +26,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { BRANDS_PAGE_DATA, UNIFIED_ADVANTAGE } from "@/utils/siteData";
-import BrandHero from "@/sections/brand/hero";
+import PageHero from "@/components/layout/PageHero";
+import { BRANDS_HERO_CONTENT } from "@/utils/siteData";
 import Image from "next/image";
 
 // ─── Animation Variants ──────────────────────────────────────────────────────
@@ -275,7 +276,7 @@ function DeliverableCard({ label }: { label: string }) {
             border: "1px solid rgba(34,211,238,0.2)",
           }}
         >
-          <Icon size={18} style={{ color: "#22d3ee" }} />
+          <Icon size={18} style={{ color: "#155DFC" }} />
         </div>
 
         {/* Label + subtitle */}
@@ -296,11 +297,11 @@ function DeliverableCard({ label }: { label: string }) {
 
         {/* Tag pill */}
         <span
-          className="text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full w-fit"
+          className="text-[12px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full w-fit"
           style={{
             background: "rgba(34,211,238,0.08)",
             border: "1px solid rgba(34,211,238,0.18)",
-            color: "#22d3ee",
+            color: "#155DFC",
           }}
         >
           {tag}
@@ -316,9 +317,9 @@ export default function BrandsPage() {
   return (
     <div
       className="w-full overflow-x-hidden"
-      style={{ background: "var(--background)" }}
+      bg="alt"
     >
-      <BrandHero />
+      <PageHero {...BRANDS_HERO_CONTENT} />
 
       {/* ── BRAND SECTIONS ──────────────────────────────────────────────── */}
       {BRANDS_PAGE_DATA.map((brand, index) => {
@@ -329,7 +330,7 @@ export default function BrandsPage() {
           <div key={brand.id} id={`brand-${brand.id}`}>
             {/* divider between brand blocks */}
             {index > 0 && (
-              <div className="mx-auto max-w-7xl px-4 sm:px-6">
+              <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
                 <div
                   style={{ height: "1px", background: "rgba(34,211,238,0.08)" }}
                 />
@@ -365,14 +366,14 @@ export default function BrandsPage() {
                     className="w-full md:w-1/2 flex flex-col justify-center"
                   >
                     <p
-                      className="mb-3 text-xs font-semibold uppercase tracking-[0.22em]"
-                      style={{ color: "rgb(34, 156, 238)" }}
+                      className="mb-3 text-md font-semibold uppercase tracking-[0.22em]"
+                      style={{ color: "#155DFC" }}
                     >
                       Brand 0{index + 1}
                     </p>
 
                     <h2
-                      className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5"
+                      className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5"
                       style={{ color: "var(--text-primary)" }}
                     >
                       {brand.name}
@@ -382,8 +383,8 @@ export default function BrandsPage() {
                       {brand.taglines.map((line) => (
                         <p
                           key={line}
-                          className="text-[11px] font-semibold uppercase tracking-[0.16rem]"
-                          style={{ color: "rgb(34, 156, 238)" }}
+                          className="text-[12px] font-semibold uppercase tracking-[0.16rem]"
+                          style={{ color: "#155DFC" }}
                         >
                           {line}
                         </p>

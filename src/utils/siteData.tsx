@@ -5,12 +5,14 @@ import brand_icon_3 from "@/assets/brand_icon_3.png";
 import brand_icon_4 from "@/assets/brand_icon_4.png";
 import brand_icon_5 from "@/assets/brand_icon_5.png";
 import brand_icon_6 from "@/assets/brand_icon_6.png";
+import brand_icon_7 from "@/assets/brand_icon_7.png";
 import brand_icon_dark_1 from "@/assets/brand_icon_dark_1.png";
 import brand_icon_dark_2 from "@/assets/brand_icon_dark_2.png";
 import brand_icon_dark_3 from "@/assets/brand_icon_dark_3.png";
 import brand_icon_dark_4 from "@/assets/brand_icon_dark_4.png";
 import brand_icon_dark_5 from "@/assets/brand_icon_dark_5.png";
 import brand_icon_dark_6 from "@/assets/brand_icon_dark_6.png";
+import brand_icon_dark_7 from "@/assets/brand_icon_dark_7.png";
 import { BsBarChartFill } from "react-icons/bs";
 import { GiBrain } from "react-icons/gi";
 import { FaDatabase } from "react-icons/fa6";
@@ -21,6 +23,12 @@ import card_3 from "@/assets/card_3.png";
 import card_4 from "@/assets/card_4.png";
 import card_5 from "@/assets/card_5.png";
 import card_6 from "@/assets/card_6.png";
+import card_7 from "@/assets/card_7.png";
+import home_hero_img from "@/assets/home_hero.png";
+import about_hero_img from "@/assets/about_hero.png";
+import brands_hero_img from "@/assets/brands_hero.png";
+import solutions_hero_img from "@/assets/solutions_hero.jpg";
+import contact_hero_img from "@/assets/contact_hero.png";
 
 export const NAV_LINKS = [
   { label: "Home", href: "/", hasDropdown: false },
@@ -35,6 +43,8 @@ export const HERO_CONTENT = {
   title: "One Holding.",
 
   highlight: "Multiple Innovations.",
+
+  img: home_hero_img,
 
   subtitle:
     "Crediple powers scalable brands across healthcare, finance, legal, and data intelligence.",
@@ -59,6 +69,8 @@ export const ABOUT_HERO_CONTENT = {
 
   highlight: "Technology & Strategy.",
 
+  img: about_hero_img,
+
   subtitle:
     "Crediple creates scalable digital ecosystems for modern industries and future-ready growth.",
 
@@ -81,6 +93,8 @@ export const BRANDS_HERO_CONTENT = {
   title: "Specialized Brands.",
 
   highlight: "Unified Vision.",
+
+  img: brands_hero_img,
 
   subtitle:
     "Each Crediple brand solves industry-specific challenges with scalable digital solutions.",
@@ -105,6 +119,8 @@ export const SERVICES_HERO_CONTENT = {
 
   highlight: "Modern Businesses.",
 
+  img: solutions_hero_img,
+
   subtitle:
     "We build intelligent platforms, automation systems, and enterprise-ready digital infrastructure.",
 
@@ -127,6 +143,8 @@ export const CONTACT_HERO_CONTENT = {
   title: "Create The Future With",
 
   highlight: "Crediple.",
+
+  img: contact_hero_img,
 
   subtitle:
     "Partner with us to build scalable digital solutions and high-impact business ecosystems.",
@@ -152,12 +170,12 @@ export const BRANDS = [
     icon: brand_icon_4,
     iconDark: brand_icon_dark_4,
   },
-  {
-    name: "Lawvix",
-    description: "LegalTech platform focused on structured legal workflows, documentation automation, and digital legal access.",
-    href: "https://www.lawvix.com",
-    icon: brand_icon_3,
-    iconDark: brand_icon_dark_3,
+ {
+    name: "Eatskart",
+    description: "Your food, your way. Explore top restaurants, track orders in real time, and enjoy fast, reliable delivery to your doorstep.",
+    href: "https://eatskart.com/",
+    icon: brand_icon_7,
+    iconDark: brand_icon_dark_7,
   },
   {
     name: "Orgatry",
@@ -167,11 +185,11 @@ export const BRANDS = [
     iconDark: brand_icon_dark_5,
   },
   {
-    name: "Propertizor",
-    description: "Intelligent property platform connecting buyers, sellers, and agents with data-driven real estate insights.",
-    href: "https://propertizor.com",
-    icon: brand_icon_6,
-    iconDark: brand_icon_dark_6,
+    name: "My Doctor Capsule",
+    description: "Healthcare ecosystem focused on digital patient acquisition, healthcare visibility, and modern clinical growth systems.",
+    href: "https://www.mydoctorcapsule.com",
+    icon: brand_icon_1,
+    iconDark: brand_icon_dark_1,
   },
   {
     name: "Loan Konnekt",
@@ -181,11 +199,18 @@ export const BRANDS = [
     iconDark: brand_icon_dark_2,
   },
   {
-    name: "My Doctor Capsule",
-    description: "Healthcare ecosystem focused on digital patient acquisition, healthcare visibility, and modern clinical growth systems.",
-    href: "https://www.mydoctorcapsule.com",
-    icon: brand_icon_1,
-    iconDark: brand_icon_dark_1,
+    name: "Lawvix",
+    description: "LegalTech platform focused on structured legal workflows, documentation automation, and digital legal access.",
+    href: "https://www.lawvix.com",
+    icon: brand_icon_3,
+    iconDark: brand_icon_dark_3,
+  },
+  {
+    name: "Propertizor",
+    description: "Intelligent property platform connecting buyers, sellers, and agents with data-driven real estate insights.",
+    href: "https://propertizor.com",
+    icon: brand_icon_6,
+    iconDark: brand_icon_dark_6,
   },
 ];
 
@@ -361,15 +386,15 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 2,
-    name: "Lawvix",
-    taglines: ["Digitizing Legal Access Through", "Structured Workflow Systems"],
+    name: "Eatskart",
+    taglines: ["Your Food, Your Way Through", "Intelligent On-Demand Delivery"],
     description: [
-      "Lawvix is a legalTech ecosystem focused on simplifying legal access, improving case management and enabling structured legal service delivery through digital transformation.",
-      "Legal systems are often slow, fragmented and difficult to navigate. Lawvix is designed to bring structure, transparency, and accessibility into legal workflows using technology-enabled systems.",
+      "Eatskart is a modern food delivery ecosystem designed to give you your food, your way, by connecting consumers with top-rated local restaurants and diverse cuisines effortlessly.",
+      "Explore trending menus, discover fresh culinary choices, track your order in real time, and enjoy fast, reliable delivery brought straight to your doorstep via a seamless, few-tap workflow.",
     ],
-    image: card_3,
-    whatWeBuild: ["Digital case management", "Client onboarding workflows", "Legal documentation automation", "Legal service access platforms", "Workflow optimization tools"],
-    coreFocus: "We enable a shift from traditional legal handling to structured, process-driven legal ecosystems that improve efficiency, clarity, and accessibility.",
+    image: card_7, 
+    whatWeBuild: ["On-demand food delivery networks", "Real-time order tracking engines", "Restaurant discovery interfaces", "Localized marketplace systems", "Secure checkout workflows"],
+    coreFocus: "We transform local dining into a structured, highly reliable delivery ecosystem that prioritizes convenience, speed, and absolute meal satisfaction.",
   },
   {
     id: 3,
@@ -385,15 +410,15 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 4,
-    name: "Propertizor",
-    taglines: ["Connecting Buyers, Sellers & Agents Through", "Intelligent Real Estate Systems"],
+    name: "My Doctor Capsule",
+    taglines: ["Transforming Healthcare Services", "Into a Digital First Patient Ecosystem"],
     description: [
-      "Propertizor is a data-driven real estate platform built to bridge the gap between property seekers, sellers, and agents through structured discovery, smart listings, and intelligent market insights.",
-      "The real estate market is noisy and opaque. Propertizor brings clarity through structured property data, verified listings, and analytical tools that help all stakeholders make confident, informed decisions.",
+      "My Doctor Capsule is designed to transform how healthcare service providers connect with, engage and grow their patient base in a digitally driven world. It focuses on building a complete healthcare visibility and patient acquisition ecosystem for clinics, hospitals, and independent practitioners.",
+      "In today's healthcare environment, trust, visibility, and accessibility are as important as treatment itself. My Doctor Capsule bridges this gap by enabling healthcare providers to establish a strong and credible digital identity.",
     ],
-    image: card_6,
-    whatWeBuild: ["Smart property listing systems", "Buyer & seller matching engines", "Agent management platforms", "Market analytics dashboards", "Property valuation frameworks"],
-    coreFocus: "We transform fragmented real estate experiences into structured, insight-driven ecosystems that accelerate transactions and build lasting property trust.",
+    image: card_1,
+    whatWeBuild: ["End-to-end digital presence systems", "Structured patient acquisition funnels", "Healthcare branding", "Profile optimization", "Engagement systems"],
+    coreFocus: "We do not just market healthcare services — we build structured patient connection systems that improve discovery, trust, and conversion into care.",
   },
   {
     id: 5,
@@ -409,15 +434,27 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 6,
-    name: "My Doctor Capsule",
-    taglines: ["Transforming Healthcare Services", "Into a Digital First Patient Ecosystem"],
+    name: "Lawvix",
+    taglines: ["Digitizing Legal Access Through", "Structured Workflow Systems"],
     description: [
-      "My Doctor Capsule is designed to transform how healthcare service providers connect with, engage and grow their patient base in a digitally driven world. It focuses on building a complete healthcare visibility and patient acquisition ecosystem for clinics, hospitals, and independent practitioners.",
-      "In today's healthcare environment, trust, visibility, and accessibility are as important as treatment itself. My Doctor Capsule bridges this gap by enabling healthcare providers to establish a strong and credible digital identity.",
+      "Lawvix is a legalTech ecosystem focused on simplifying legal access, improving case management and enabling structured legal service delivery through digital transformation.",
+      "Legal systems are often slow, fragmented and difficult to navigate. Lawvix is designed to bring structure, transparency, and accessibility into legal workflows using technology-enabled systems.",
     ],
-    image: card_1,
-    whatWeBuild: ["End-to-end digital presence systems", "Structured patient acquisition funnels", "Healthcare branding", "Profile optimization", "Engagement systems"],
-    coreFocus: "We do not just market healthcare services — we build structured patient connection systems that improve discovery, trust, and conversion into care.",
+    image: card_3,
+    whatWeBuild: ["Digital case management", "Client onboarding workflows", "Legal documentation automation", "Legal service access platforms", "Workflow optimization tools"],
+    coreFocus: "We enable a shift from traditional legal handling to structured, process-driven legal ecosystems that improve efficiency, clarity, and accessibility.",
+  },
+  {
+    id: 7,
+    name: "Propertizor",
+    taglines: ["Connecting Buyers, Sellers & Agents Through", "Intelligent Real Estate Systems"],
+    description: [
+      "Propertizor is a data-driven real estate platform built to bridge the gap between property seekers, sellers, and agents through structured discovery, smart listings, and intelligent market insights.",
+      "The real estate market is noisy and opaque. Propertizor brings clarity through structured property data, verified listings, and analytical tools that help all stakeholders make confident, informed decisions.",
+    ],
+    image: card_6,
+    whatWeBuild: ["Smart property listing systems", "Buyer & seller matching engines", "Agent management platforms", "Market analytics dashboards", "Property valuation frameworks"],
+    coreFocus: "We transform fragmented real estate experiences into structured, insight-driven ecosystems that accelerate transactions and build lasting property trust.",
   },
 ];
 
@@ -432,26 +469,23 @@ export const UNIFIED_ADVANTAGE = [
 export const FOOTER_COL1 = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "Brands", href: "/brands" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const FOOTER_COL2 = [
-  { label: "Solutions", href: "/solutions" },
-  { label: "Contact", href: "/contact" },
-  { label: "Legal", href: "/legal" },
+  { label: "Iitil", href: "https://www.iitil.com/" },
+  { label: "Eatskart", href: "https://eatskart.com/" },
+  { label: "Orgatry", href: "https://orgatry.com/" },
+  { label: "My Doctor Capsule", href: "https://www.mydoctorcapsule.com/" },
 ];
 
 export const FOOTER_COL3 = [
-  { label: "Iitil", href: "https://www.iitil.com/" },
   { label: "Lawvix", href: "https://www.lawvix.com/" },
-  { label: "Orgatry", href: "https://orgatry.com/" },
-];
-
-export const FOOTER_COL4 = [
   { label: "Propertizor", href: "https://propertizor.com/" },
   { label: "Loan Konnekt", href: "https://www.loankonnekt.com/" },
-  { label: "My Doctor Capsule", href: "https://www.mydoctorcapsule.com/" },
 ];
+
 export const FOOTER_TAGLINE =
   "Building the future through innovation, excellence, and unified brand power. The Core That Connects Every Venture.";
 

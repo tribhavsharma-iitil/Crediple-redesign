@@ -9,10 +9,7 @@ export const metadata: Metadata = createPageMetadata({
   path: "/solutions",
 });
 
-export default function SolutionsLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function SolutionsLayout({ children }: { children: ReactNode }) {
   return children;
 }
+

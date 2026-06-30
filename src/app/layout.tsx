@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Inter, Jost } from "next/font/google";
+import { Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, ThemeScript } from "@/context/ThemeContext";
 import AppShell from "@/components/layout/AppShell";
@@ -24,10 +24,11 @@ const inter = Inter({
   display: "swap",
 });
 
-const jost = Jost({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-jost",
+  variable: "--font-jakarta",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -98,7 +99,6 @@ export const metadata: Metadata = {
     icon: [
       { url: "/favicon.ico" },
       { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
     apple: [
       {
@@ -120,15 +120,15 @@ export const metadata: Metadata = {
     telephone: false,
   },
   other: {
-    "msapplication-TileColor": "#020617",
+    "msapplication-TileColor": "#020B1A",
     "msapplication-config": "/browserconfig.xml",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#020617" },
-    { media: "(prefers-color-scheme: light)", color: "#eef4ff" },
+    { media: "(prefers-color-scheme: dark)", color: "#020B1A" },
+    { media: "(prefers-color-scheme: light)", color: "#EFF6FF" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -193,7 +193,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistMono.variable} ${inter.variable} ${jost.variable} h-full antialiased`}
+      className={`${geistMono.variable} ${inter.variable} ${plusJakarta.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -212,11 +212,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-full flex flex-col"
+        className="min-h-full flex flex-col dark:bg-dark-bg light:bg-white"
         style={{ background: "var(--background)", color: "var(--foreground)" }}
       >
         <ThemeProvider>
-          <AppShell>{children}</AppShell>
+            <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>

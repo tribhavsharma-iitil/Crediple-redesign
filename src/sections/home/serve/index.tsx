@@ -1,212 +1,203 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  HeartPulse, BarChart2, Scale, Rocket, GraduationCap, Building2,
+  HeartPulse,
+  BarChart2,
+  Scale,
+  GraduationCap,
+  Building2,
 } from "lucide-react";
-import Header from "@/shared/header";
 import { WHO_WE_SERVE } from "@/utils/siteData";
+import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { useTheme } from "@/context/ThemeContext";
+import { fadeUp, staggerContainer, viewportOnce } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
-// ── icon map ─────────────────────────────────────────────────────────────────
+// Custom mapping to match Lucide icons exactly to the styles in the provided mockups
 const ICONS: Record<string, React.ReactNode> = {
-  "heart-pulse":    <HeartPulse    size={22} />,
-  "bar-chart-2":    <BarChart2     size={22} />,
-  "scale":          <Scale         size={22} />,
-  "rocket":         <Rocket        size={22} />,
-  "graduation-cap": <GraduationCap size={22} />,
-  "building-2":     <Building2     size={22} />,
+  "bar-chart-2": <BarChart2 size={26} strokeWidth={2} />,
+  "heart-pulse": <HeartPulse size={26} strokeWidth={2} />,
+  "scale": <Scale size={26} strokeWidth={2} />,
+  "building-2": <Building2 size={26} strokeWidth={2} />,
+  "graduation-cap": <GraduationCap size={26} strokeWidth={2} />,
 };
 
-// ── variants ─────────────────────────────────────────────────────────────────
-const gridVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-};
+// Explicit values mapping extracted directly from Screenshot 2026-06-27 193447.png
+const BRAND_COUNTS = [
+  "12 ACTIVE BRANDS", // FinTech
+  "8 ACTIVE BRANDS",  // HealthTech
+  "5 ACTIVE BRANDS",  // LegalTech
+  "4 ACTIVE BRANDS",  // EduTech
+];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 44, scale: 0.97 },
-  show:   { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
-};
+export default function WhoWeServe() {
+  const { isDark } = useTheme();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, viewportOnce);
 
-const iconVariants = {
-  hidden: { opacity: 0, scale: 0.5 },
-  show:   { opacity: 1, scale: 1, transition: { duration: 0.45, ease: [0.34, 1.56, 0.64, 1] as const } },
-};
-
-// ── glow card ─────────────────────────────────────────────────────────────────
-function ServeCard({ item, glowVar = "var(--glow-cyan)", }: { item: typeof WHO_WE_SERVE[0], glowVar?: string; }) {
-  const cardRef                     = useRef<HTMLDivElement>(null);
-  const [glow, setGlow]             = useState({ x: 50, y: 50 });
-  const [hovered, setHovered]       = useState(false);
-
-  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const r = cardRef.current?.getBoundingClientRect();
-    if (!r) return;
-    setGlow({
-      x: ((e.clientX - r.left) / r.width)  * 100,
-      y: ((e.clientY - r.top)  / r.height) * 100,
-    });
-  }, []);
+  // Safely mapping indices based on layout structure in mockups
+  const finTechItem = WHO_WE_SERVE.find(item => item.icon === "bar-chart-2") || WHO_WE_SERVE[1];
+  const healthTechItem = WHO_WE_SERVE.find(item => item.icon === "heart-pulse") || WHO_WE_SERVE[0];
+  const legalTechItem = WHO_WE_SERVE.find(item => item.icon === "scale") || WHO_WE_SERVE[2];
+  const enterpriseItem = WHO_WE_SERVE.find(item => item.icon === "building-2") || WHO_WE_SERVE[5];
+  const eduTechItem = WHO_WE_SERVE.find(item => item.icon === "graduation-cap") || WHO_WE_SERVE[4];
 
   return (
-    <motion.div
-      variants={cardVariants}
-      ref={cardRef}
-      onMouseMove={onMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      whileHover={{ scale: 1.03, y: -4, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const } }}
-      className="relative rounded-[18px] p-[1.5px] cursor-pointer"
+    <SectionWrapper 
+      id="serve"
       style={{
-        background: hovered
-          ? `radial-gradient(160px circle at ${glow.x}% ${glow.y}%, ${glowVar}, var(--glow-secondary) 45%, var(--card-glow-base) 100%)`
-          : "var(--card-glow-base)",
-        transition: "background 0.08s ease",
+        background: isDark 
+          ? "linear-gradient(135deg, #040814 0%, #081026 50%, #030712 100%)"
+          : "linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 50%, #ECFEFF 100%)"
       }}
+      className="py-20 md:py-28"
     >
-      {/* inner */}
-      <div
-        className="relative rounded-[17px] h-full p-6 flex flex-col gap-4 overflow-hidden"
-         style={{ background: "var(--card-inner)" }}
+      {/* Header Block */}
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        viewport={viewportOnce}
+        className="text-center mb-16"
       >
-        {/* inner glow */}
-        {hovered && (
-          <div
-            className="absolute inset-0 rounded-[17px] pointer-events-none"
-            style={{
-              background: `radial-gradient(200px circle at ${glow.x}% ${glow.y}%, color-mix(in srgb, var(--icon-accent) 5%, transparent) 0%, transparent 70%)`,
-            }}
-          />
-        )}
-
-        {/* icon */}
-        <motion.div
-          variants={iconVariants}
-          className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-          style={{
-            background: "rgba(34,211,238,0.1)",
-            border: "1px solid rgba(34,211,238,0.2)",
-            color: "#22d3ee",
-          }}
+        <p className={cn(
+          "text-xs font-bold uppercase tracking-[0.2em] mb-3",
+          isDark ? "text-slate-500" : "text-slate-400"
+        )}>
+          WHY US?
+        </p>
+        <h2
+          className={cn(
+            "font-heading font-bold text-3xl md:text-5xl tracking-tight",
+            isDark ? "text-white" : "text-[#1E293B]"
+          )}
         >
-          {ICONS[item.icon]}
+          Who We Serve
+        </h2>
+      </motion.div>
+
+      {/* Grid Canvas Wrapper */}
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1400px] mx-auto px-4 md:px-6"
+      >
+        {/* Row 1: FinTech Card */}
+        <motion.div variants={fadeUp}>
+          <ServeCard item={finTechItem} footer={BRAND_COUNTS[0]} isDark={isDark} />
         </motion.div>
 
-        {/* title */}
-        <div className="flex flex-col gap-1">
-          <h3
-            className="font-semibold text-[15px] leading-snug"
-            style={{ color: "#22d3ee" }}
-          >
-            {item.title}
-          </h3>
-          <p className="text-[13px] font-medium leading-snug" style={{ color: "var(--icon-accent)" }}>
-            {item.heading}
-          </p>
-        </div>
+        {/* Row 1: HealthTech Card */}
+        <motion.div variants={fadeUp}>
+          <ServeCard item={healthTechItem} footer={BRAND_COUNTS[1]} isDark={isDark} />
+        </motion.div>
 
-        {/* desc */}
-        <p className="text-[13px] leading-relaxed flex-1" style={{ color: "var(--card-text-secondary)" }}>
-          {item.desc}
-        </p>
+        {/* Row 1: LegalTech Card */}
+        <motion.div variants={fadeUp}>
+          <ServeCard item={legalTechItem} footer={BRAND_COUNTS[2]} isDark={isDark} />
+        </motion.div>
 
-        {/* bottom accent line */}
-        <motion.div
-          className="h-[1.5px] w-0 rounded-full mt-auto"
-          animate={{ width: hovered ? "40%" : "0%" }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          style={{ background: "linear-gradient(to right, #22d3ee, transparent)" }}
-        />
-      </div>
-    </motion.div>
+        {/* Row 2: Enterprise & Corporates (Spans 2 columns wide) */}
+        <motion.div variants={fadeUp} className="md:col-span-2">
+          <div className={cn(
+            "p-8 md:p-10 h-full rounded-[24px] border flex flex-col sm:flex-row gap-8 justify-between items-start sm:items-center transition-all duration-300",
+            isDark 
+              ? "bg-[#090F1C] border-white/[0.05]" 
+              : "bg-white border-[#E2E8F0] shadow-sm shadow-blue-100/40"
+          )}>
+            <div className="flex-1">
+              <div className={cn("mb-5", isDark ? "text-[#3B82F6]" : "text-[#155DFC]")}>
+                {ICONS[enterpriseItem.icon]}
+              </div>
+              <h3
+                className={cn(
+                  "font-heading font-bold text-xl md:text-2xl mb-3 tracking-tight",
+                  isDark ? "text-white" : "text-[#1E293B]"
+                )}
+              >
+                {enterpriseItem.title}
+              </h3>
+              <p className={cn("text-sm leading-relaxed max-w-xl", isDark ? "text-slate-400" : "text-[#475569]")}>
+                {enterpriseItem.desc}
+              </p>
+            </div>
+
+            {/* Inner Feature Badge Layout block */}
+            <div
+              className={cn(
+                "rounded-[20px] p-6 text-center min-w-[160px] w-full sm:w-auto border transition-all duration-300",
+                isDark 
+                  ? "bg-white/[0.03] border-white/10" 
+                  : "bg-[#F0F7FF] border-[#E2E8F0]"
+              )}
+            >
+              <p
+                className={cn(
+                  "font-heading font-black text-4xl tracking-tight",
+                  isDark ? "text-white" : "text-[#155DFC]"
+                )}
+              >
+                50+
+              </p>
+              <p className={cn(
+                "text-[10px] font-bold uppercase tracking-widest mt-2",
+                isDark ? "text-slate-400" : "text-[#155DFC]"
+              )}>
+                GLOBAL BRANDS
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Row 2: EduTech Card */}
+        <motion.div variants={fadeUp}>
+          <ServeCard item={eduTechItem} footer={BRAND_COUNTS[3]} isDark={isDark} />
+        </motion.div>
+      </motion.div>
+    </SectionWrapper>
   );
 }
 
-// ── main ──────────────────────────────────────────────────────────────────────
-export default function WhoWeServe() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const gridRef    = useRef<HTMLDivElement>(null);
-  const inView     = useInView(sectionRef, { once: true, margin: "-60px" });
-  const gridInView = useInView(gridRef,    { once: true, margin: "-60px" });
-
+// Reusable standard layout grid card
+function ServeCard({
+  item,
+  footer,
+  isDark,
+}: {
+  item: any;
+  footer: string;
+  isDark: boolean;
+}) {
   return (
-    <section
-      ref={sectionRef}
-      className="relative py-24 px-6 overflow-hidden"
-    >
-      {/* ambient top glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[280px] pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at 50% 0%, rgba(34,211,238,0.05) 0%, transparent 65%)",
-          filter: "blur(40px)",
-        }}
-        aria-hidden
-      />
-
-      {/* decorative side blobs */}
-      <div
-        className="absolute top-1/3 -left-32 w-64 h-64 rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-        aria-hidden
-      />
-      <div
-        className="absolute bottom-1/4 -right-32 w-64 h-64 rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(34,211,238,0.05) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-        aria-hidden
-      />
-
-      <div className="max-w-5xl mx-auto">
-
-        {/* header */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-        >
-          <Header
-            heading="Who We"
-            highlight="Serve"
-            subheading="Powering professionals across every major industry with scalable, trusted digital solutions."
-          />
-        </motion.div>
-
-        {/* eyebrow tag */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] as const }}
-          className="flex justify-center mb-10 -mt-6"
-        >
-          <span
-            className="text-[11px] font-semibold uppercase tracking-[0.22em]"
-            style={{ color: "rgba(34,211,238,0.5)" }}
-          >
-            WHY US?
-          </span>
-        </motion.div>
-
-        {/* grid */}
-        <motion.div
-          ref={gridRef}
-          variants={gridVariants}
-          initial="hidden"
-          animate={gridInView ? "show" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
-          {WHO_WE_SERVE.map((item) => (
-            <ServeCard key={item.title} item={item} />
-          ))}
-        </motion.div>
-
+    <div className={cn(
+      "p-8 h-full flex flex-col rounded-[24px] border transition-all duration-300",
+      isDark 
+        ? "bg-[#090F1C] border-white/[0.05]" 
+        : "bg-white border-[#E2E8F0] shadow-sm shadow-blue-100/40"
+    )}>
+      <div className={cn("mb-5", isDark ? "text-[#3B82F6]" : "text-[#155DFC]")}>
+        {ICONS[item.icon] || <BarChart2 size={26} />}
       </div>
-    </section>
+      <h3
+        className={cn(
+          "font-heading font-bold text-xl mb-3 tracking-tight",
+          isDark ? "text-white" : "text-[#1E293B]"
+        )}
+      >
+        {item.title}
+      </h3>
+      <p className={cn("text-sm leading-relaxed flex-1 mb-6", isDark ? "text-slate-400" : "text-[#475569]")}>
+        {item.desc}
+      </p>
+      <p className={cn(
+        "text-[11px] font-bold uppercase tracking-wider",
+        isDark ? "text-[#3B82F6]" : "text-[#155DFC]"
+      )}>
+        {footer}
+      </p>
+    </div>
   );
 }

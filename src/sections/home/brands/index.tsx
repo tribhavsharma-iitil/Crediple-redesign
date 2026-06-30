@@ -2,147 +2,144 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BRANDS } from "@/utils/siteData";
-import Header from "@/shared/header";
+import { useTheme } from "@/context/ThemeContext";
+import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import BrandCard from "./brandCard";
+import { staggerContainer } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
 const INTERVAL = 5000;
 
-const sectionVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.13, delayChildren: 0.1 } },
-};
-
-// Responsive visible count based on window width
 function useVisibleCount() {
   const [count, setCount] = useState(4);
-
   useEffect(() => {
-    function update() {
+    const update = () => {
       const w = window.innerWidth;
       if (w < 640) setCount(1);
-      else if (w < 768) setCount(2);
-      else if (w < 1024) setCount(3);
+      else if (w < 1024) setCount(2);
       else setCount(4);
-    }
+    };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
-
   return count;
 }
 
 export default function Brands() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
-
-  const [current, setCurrent] = useState(0);
-  const [progressKey, setProgressKey] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
+  const { isDark } = useTheme();
   const visible = useVisibleCount();
   const maxIndex = Math.max(0, BRANDS.length - visible);
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goTo = useCallback(
-    (idx: number) => {
-      const next = Math.max(0, Math.min(idx, maxIndex));
-      setCurrent(next);
-      setProgressKey((k) => k + 1);
-    },
+    (idx: number) => setCurrent(Math.max(0, Math.min(idx, maxIndex))),
     [maxIndex]
   );
-
-  // Clamp current when visible count changes (e.g. resize)
-  useEffect(() => {
-    setCurrent((c) => Math.min(c, maxIndex));
-  }, [maxIndex]);
 
   const startAuto = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      setCurrent((c) => {
-        const next = c < maxIndex ? c + 1 : 0;
-        setProgressKey((k) => k + 1);
-        return next;
-      });
+      setCurrent((c) => (c < maxIndex ? c + 1 : 0));
     }, INTERVAL);
   }, [maxIndex]);
 
   useEffect(() => {
-    startAuto();
+    if (!paused) startAuto();
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [startAuto]);
+  }, [paused, startAuto]);
 
-  const handleNav = (dir: "prev" | "next") => {
-    goTo(
-      dir === "prev"
-        ? current > 0 ? current - 1 : maxIndex
-        : current < maxIndex ? current + 1 : 0
-    );
-    startAuto();
-  };
-
-  // Each card takes (100 / visible)% width; track shifts by that per step
   const cardWidthPct = 100 / visible;
   const trackX = -(current * cardWidthPct);
+  const pageCount = maxIndex + 1;
 
   return (
-    <section ref={sectionRef} className="relative py-24 px-4 sm:px-6 overflow-hidden">
-      {/* Background glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.07) 0%, transparent 65%)",
-          filter: "blur(40px)",
-        }}
-        aria-hidden
-      />
-
-      <motion.div
-        variants={sectionVariants}
-        initial="hidden"
-        animate={isInView ? "show" : "hidden"}
-        className="max-w-6xl mx-auto"
+    <SectionWrapper bg="alt" id="ecosystem">
+      <div 
+        ref={sectionRef} 
+        className="w-full max-w-[1400px] xl:w-[1400px] mx-auto px-6 lg:px-0"
       >
-        <Header
-          heading="Our"
-          highlight="Brands"
-          subheading="Access specialized solutions, unified under one powerful ecosystem"
-        />
-
-        {/* ── Carousel ── */}
-        <div className="relative">
-          {/* Progress bar */}
-          <div
-            className="absolute -top-2 left-0 right-0 h-[2px] rounded-full overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.06)" }}
-          >
-            <motion.div
-              key={progressKey}
-              className="h-full rounded-full"
-              style={{ background: "rgba(59,130,246,0.7)" }}
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: INTERVAL / 1000, ease: "linear" }}
-            />
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+          <div>
+            <h2
+              className={cn(
+                "font-heading font-black text-4xl md:text-5xl tracking-tight",
+                isDark ? "text-white" : "text-slate-900"
+              )}
+            >
+              Our Ecosystem
+            </h2>
+            <p
+              className={cn(
+                "text-sm mt-2 font-medium tracking-wide",
+                isDark ? "text-slate-400" : "text-slate-500"
+              )}
+            >
+              The power of diverse industries, unified by data.
+            </p>
           </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                goTo(current > 0 ? current - 1 : maxIndex);
+                startAuto();
+              }}
+              aria-label="Previous"
+              className={cn(
+                "w-10 h-10 rounded-full border flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 active:scale-95",
+                isDark
+                  ? "border-white/10 text-slate-300"
+                  : "border-slate-200 text-slate-600"
+              )}
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                goTo(current < maxIndex ? current + 1 : 0);
+                startAuto();
+              }}
+              aria-label="Next"
+              className={cn(
+                "w-10 h-10 rounded-full border flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 active:scale-95",
+                isDark
+                  ? "border-white/10 text-slate-300"
+                  : "border-slate-200 text-slate-600"
+              )}
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        </div>
 
-          {/* Track */}
-          <div className="overflow-hidden">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="overflow-hidden mix-blend-normal">
             <motion.div
-              className="flex"
+              className="flex -mx-2"
               animate={{ x: `${trackX}%` }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               {BRANDS.map((brand, i) => (
                 <div
                   key={brand.name}
-                  className="px-2 shrink-0"
                   style={{ width: `${cardWidthPct}%`, flex: `0 0 ${cardWidthPct}%` }}
+                  className="px-2"
                 >
                   <BrandCard brand={brand} index={i} />
                 </div>
@@ -150,85 +147,29 @@ export default function Brands() {
             </motion.div>
           </div>
 
-          {/* Nav buttons */}
-          <button
-            onClick={() => handleNav("prev")}
-            className="absolute -left-4 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-150"
-            style={{
-              border: "1px solid var(--border)",
-              background: "var(--card-inner)",
-              color: "var(--text-secondary)",
-            }}
-            aria-label="Previous slide"
-          >
-            ‹
-          </button>
-          <button
-            onClick={() => handleNav("next")}
-            className="absolute -right-4 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-150"
-            style={{
-              border: "1px solid var(--border)",
-              background: "var(--card-inner)",
-              color: "var(--text-secondary)",
-            }}
-            aria-label="Next slide"
-          >
-            ›
-          </button>
-        </div>
-
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-6">
-          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => { goTo(i); startAuto(); }}
-              className="rounded-full transition-all duration-250"
-              style={{
-                width: i === current ? "20px" : "6px",
-                height: "6px",
-                background:
+          {/* Carousel Pagination Dots */}
+          <div className="flex justify-center gap-2 mt-8">
+            {Array.from({ length: pageCount }).map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Page ${i + 1}`}
+                className={cn(
+                  "h-1 rounded-full transition-all duration-300",
                   i === current
-                    ? "rgba(59,130,246,0.8)"
-                    : "rgba(255,255,255,0.2)",
-              }}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Ticker */}
-        <div
-          className="relative mt-10 overflow-hidden rounded-full border py-3"
-          style={{
-            borderColor: "var(--border)",
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(96,165,250,0.04))",
-            maskImage:
-              "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
-          }}
-        >
-          <motion.div
-            className="flex w-max items-center gap-3"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-          >
-            {[...BRANDS, ...BRANDS].map((brand, index) => (
-              <span
-                key={`${brand.name}-${index}`}
-                className="rounded-full border px-5 py-2 text-xs font-medium uppercase tracking-[0.18em]"
-                style={{
-                  color: "var(--text-secondary)",
-                  borderColor: "var(--border-subtle)",
-                  background: "rgba(255,255,255,0.04)",
-                }}
-              >
-                {brand.name}
-              </span>
+                    ? isDark
+                      ? "w-8 bg-white"
+                      : "w-8 bg-blue-600"
+                    : isDark
+                    ? "w-4 bg-white/10"
+                    : "w-4 bg-slate-200"
+                )}
+              />
             ))}
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
+          </div>
+        </motion.div>
+      </div>
+    </SectionWrapper>
   );
 }

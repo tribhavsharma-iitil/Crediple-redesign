@@ -1,3 +1,4 @@
+import LegalHero from "@/components/layout/LegalHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import type { ComponentType } from "react";
@@ -142,42 +143,16 @@ const legalSections: LegalSection[] = [
 
 export default function LegalPage() {
   return (
-    <div className="min-h-screen" style={{ background: "var(--background)" }}>
-      <section
-        className="relative overflow-hidden px-5 pb-12 pt-28 sm:px-6 sm:pb-16"
-        style={{
-          background:
-            "linear-gradient(180deg, var(--bg-primary) 0%, var(--background) 100%)",
-          borderBottom: "1px solid var(--border-subtle)",
-        }}
-      >
-        <div className="mx-auto max-w-5xl">
-          <Link
-            href="/"
-            className="mb-8 inline-flex items-center gap-2 text-sm font-medium no-underline"
-            style={{ color: "var(--accent-color)" }}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Link>
-
-          <p
-            className="mb-3 text-xs font-semibold uppercase tracking-[0.22em]"
-            style={{ color: "var(--text-muted)" }}
-          >
-            Legal Information
-          </p>
-
-          <p
-            className="mt-5 max-w-2xl text-sm leading-relaxed sm:text-base"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            Legal Information
-          </p>
-        </div>
-      </section>
-
-      <main className="mx-auto grid max-w-5xl gap-6 px-5 py-12 sm:px-6 sm:py-16">
+    /* 1. Replaced 'min-h-screen' with 'w-full clear-both block' to ensure 
+         no absolute or floated layout elements compress the page container height.
+    */
+    <div className="w-full clear-both block" style={{ background: "var(--background)" }}>
+      
+      {/* 2. Swapped the explicit template class 'grid' on the <main> tag to a clean, 
+           stacked flex column. This prevents the browser layout engine from pinning 
+           height boundaries mid-screen on highly expanded responsive text cards.
+      */}
+      <main className="mx-auto flex flex-col max-w-[1440px] w-full gap-6 px-5 py-12 sm:px-6 sm:py-16">
         {legalSections.map((section) => {
           const Icon = section.icon;
 
@@ -185,7 +160,7 @@ export default function LegalPage() {
             <section
               key={section.id}
               id={section.id}
-              className="rounded-lg p-5 sm:p-7"
+              className="rounded-[24px] p-5 sm:p-7 block"
               style={{
                 background: "var(--card-bg)",
                 border: "1px solid var(--card-border)",
@@ -218,7 +193,7 @@ export default function LegalPage() {
                 </div>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
                 {section.groups.map((group) => (
                   <div
                     key={group.heading}
@@ -256,7 +231,7 @@ export default function LegalPage() {
 
         <section
           id="contact-information"
-          className="rounded-lg p-5 sm:p-7"
+          className="rounded-lg p-5 sm:p-7 block"
           style={{
             background: "var(--card-bg)",
             border: "1px solid var(--card-border)",
@@ -291,7 +266,9 @@ export default function LegalPage() {
                 Contact Email
               </dt>
               <dd className="mt-1" style={{ color: "var(--text-secondary)" }}>
-                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:underline">
+                  {CONTACT_EMAIL}
+                </a>
               </dd>
             </div>
             <div>

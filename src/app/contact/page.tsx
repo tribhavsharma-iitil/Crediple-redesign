@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, MapPin, Clock, Building2, Map, Sparkles } from "lucide-react";
+import PageHero from "@/components/layout/PageHero";
+import { CONTACT_HERO_CONTENT } from "@/utils/siteData";
 import { Button } from "@/components/ui/Button";
 import AnimatedInput from "@/components/ui/AnimatedInput";
 
@@ -197,7 +199,7 @@ export default function ContactPage() {
 
   return (
     <div className="overflow-x-hidden font-sans" style={{ background: "var(--background)" }}>
-      <ContactHero />
+      <PageHero {...CONTACT_HERO_CONTENT} />
 
       {/* ── Contact Form ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden py-16 sm:py-20" style={{ background: "var(--bg-secondary)" }}>
