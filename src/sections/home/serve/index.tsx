@@ -46,14 +46,14 @@ export default function WhoWeServe() {
 
   return (
     <SectionWrapper 
-      id="serve"
-      style={{
-        background: isDark 
-          ? "linear-gradient(135deg, #040814 0%, #081026 50%, #030712 100%)"
-          : "linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 50%, #ECFEFF 100%)"
-      }}
-      className="py-20 md:py-28"
-    >
+    id="serve"
+    className={cn(
+      "relative overflow-hidden", 
+      isDark 
+        ? "bg-[linear-gradient(135deg,#040814_0%,#081026_50%,#030712_100%)]" 
+        : "bg-[linear-gradient(135deg,#EFF6FF_0%,#FFFFFF_50%,#ECFEFF_100%)]"
+    )}
+  >
       {/* Header Block */}
       <motion.div
         ref={ref}

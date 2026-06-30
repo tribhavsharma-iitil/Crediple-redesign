@@ -317,7 +317,6 @@ export default function BrandsPage() {
   return (
     <div
       className="w-full overflow-x-hidden"
-      bg="alt"
     >
       <PageHero {...BRANDS_HERO_CONTENT} />
 

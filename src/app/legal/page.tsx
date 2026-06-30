@@ -1,4 +1,3 @@
-import LegalHero from "@/components/layout/LegalHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import type { ComponentType } from "react";

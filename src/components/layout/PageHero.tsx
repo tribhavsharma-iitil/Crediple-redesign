@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { CredipleButton } from "@/components/ui/CredipleButton";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,7 @@ import enterprise_light from "@/assets/enterprise_light.png";
 import enterprise_dark from "@/assets/enterprise_dark.png";
 
 // ── FIXED LOCAL ANIMATION VARIANTS ──────────────────────────────────────────
-const localFadeLeft = {
+const localFadeLeft: Variants = {
   hidden: { opacity: 0, x: -40 },
   show: { 
     opacity: 1, 
@@ -19,7 +19,7 @@ const localFadeLeft = {
   },
 };
 
-const localFadeRight = {
+const localFadeRight: Variants = {
   hidden: { opacity: 0, x: 40 },
   show: { 
     opacity: 1, 
@@ -32,7 +32,7 @@ interface HeroProps {
   eyebrow: string;
   title: string;
   highlight: string;
-  img?: string;
+  img: string | StaticImageData;
   subtitle: string;
   subtitle2?: string;
   cta1?: { label: string; href: string };
@@ -116,12 +116,12 @@ export default function Hero({
             {eyebrow}
           </div>
 
-          {/* Unified Monochromatic Header Title (Black on Light Mode / Light Purple on Dark Mode) */}
+          {/* Unified Monochromatic Header Title */}
           <h1
              className={cn(
-                "font-heading font-[700] text-3xl sm:text-4xl md:text-5xl xl:text-6xl mb-8 leading-[1.15] md:leading-[1.1] tracking-tight",
-                isDark ? "text-[#DCE2F6]" : "text-black"
-              )}
+               "font-heading font-[700] text-3xl sm:text-4xl md:text-5xl xl:text-6xl mb-8 leading-[1.15] md:leading-[1.1] tracking-tight",
+               isDark ? "text-[#DCE2F6]" : "text-black"
+             )}
           >
             {title} {highlight}
           </h1>

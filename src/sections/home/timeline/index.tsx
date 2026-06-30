@@ -85,7 +85,10 @@ export default function Timeline() {
   }, []);
 
   return (
-    <SectionWrapper id="timeline" bg="alt">
+    <SectionWrapper 
+      id="timeline" 
+      className={cn(isDark ? "bg-[#040814]" : "bg-slate-50/70")}
+    >
       <div ref={sectionRef} className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
         <motion.h2
           variants={fadeUp}
@@ -101,7 +104,7 @@ export default function Timeline() {
         </motion.h2>
 
         <div className="relative pl-10 md:pl-20">
-          {/* Central Track Line - Perfectly aligned to pass through the absolute center of the dots */}
+          {/* Central Track Line */}
           <div
             ref={lineRef}
             className="absolute left-[12px] md:left-[28px] top-0 bottom-0 w-[3px] origin-top bg-gradient-to-b from-[#155DFC] via-[#00D3F3] to-[#155DFC] rounded-full z-0"
@@ -116,7 +119,7 @@ export default function Timeline() {
               return (
                 <div key={item.period} className="relative">
                   
-                  {/* Glowing Circular Border Node - Centered with outer neon shadow radial bloom */}
+                  {/* Glowing Circular Border Node */}
                   <div
                     className={cn(
                       "absolute left-[-40px] md:left-[-62px] top-8 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 z-10",

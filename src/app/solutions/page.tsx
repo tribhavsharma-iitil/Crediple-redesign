@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // ◄ Added Variants import
 import {
   ArrowRight,
   CircleDollarSign,
@@ -11,13 +11,13 @@ import {
   Scale,
   Check,
 } from "lucide-react";
-import { CredipleButton } from "@/components/ui/CredipleButton";
+import { Button } from "@/components/ui/Button";
 import PageHero from "@/components/layout/PageHero";
 import { SERVICES_HERO_CONTENT } from "@/utils/siteData";
 import { useTheme } from "@/context/ThemeContext";
 
 // ── animation variants ────────────────────────────────────────────────────────
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: (i = 0) => ({
     opacity: 1,
@@ -26,22 +26,22 @@ const fadeUp = {
   }),
 };
 
-const fadeLeft = {
+const fadeLeft: Variants = {
   hidden: { opacity: 0, x: -20 },
   show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const fadeRight = {
+const fadeRight: Variants = {
   hidden: { opacity: 0, x: 20 },
   show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.06 } },
 };
 
-const cardVariant = {
+const cardVariant: Variants = {
   hidden: { opacity: 0, y: 15 },
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
 };
@@ -120,7 +120,6 @@ function GlowCard({
     });
   }, []);
 
-  // Card themes matched perfectly to the dynamic canvas style from WhoWeServe
   return (
     <div
       ref={cardRef}
@@ -133,7 +132,6 @@ function GlowCard({
           : "bg-white border-[#E2E8F0] shadow-sm shadow-blue-100/40"
       } ${className}`}
     >
-      {/* Dynamic hover lighting synced with brand colors */}
       {hovered && (
         <div
           className="pointer-events-none absolute inset-0 transition-opacity duration-300"
@@ -155,7 +153,6 @@ function GlowCard({
 export default function SolutionsPage() {
   const { isDark } = useTheme();
 
-  // Color tokens extracted strictly from your WhoWeServe system configurations
   const textPrimary = isDark ? "#ffffff" : "#1E293B";
   const textSecondary = isDark ? "#94a3b8" : "#475569";
   const accentColor = isDark ? "#3B82F6" : "#155DFC";
@@ -185,8 +182,7 @@ export default function SolutionsPage() {
               className="font-heading font-bold text-3xl md:text-5xl tracking-tight leading-[1.15]"
               style={{ color: textPrimary }}
             >
-              We turn fragmented operations into connected ecosystems
-              .
+              We turn fragmented operations into connected ecosystems.
             </h2>
           </motion.div>
 
@@ -408,7 +404,7 @@ export default function SolutionsPage() {
                   <motion.div
                     key={capability}
                     variants={cardVariant}
-                    className={`flex items-center gap-3 rounded-[20px] px-5 py-4 text-left border transition-all duration-300`}
+                    className="flex items-center gap-3 rounded-[20px] px-5 py-4 text-left border transition-all duration-300"
                     style={{
                       background: isDark ? "rgba(255,255,255,0.02)" : "rgba(240,247,255,0.5)",
                       borderColor: isDark ? "rgba(255,255,255,0.06)" : "#E2E8F0",
@@ -458,11 +454,11 @@ export default function SolutionsPage() {
               Whether the challenge is visibility, workflow speed, data clarity, or scale, Crediple designs the operating layer that makes progress repeatable.
             </p>
 
-            <CredipleButton asChild size="xl" className="font-semibold text-base px-8 h-14 rounded-xl group shadow-sm">
+            <Button asChild size="xl" className="font-semibold text-base px-8 h-14 rounded-xl group shadow-sm">
               <Link href="/contact">
                 Contact Us
               </Link>
-            </CredipleButton>
+            </Button>
           </div>
         </motion.div>
       </section>

@@ -15,7 +15,6 @@ export default function Testimonials() {
 
   return (
     <div 
-      bg="alt"
       className="w-full"
     >
       {/* Testimonials Grid Section */}

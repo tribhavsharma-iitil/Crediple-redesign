@@ -135,7 +135,6 @@ export default function AboutUs() {
       <PageHero {...ABOUT_HERO_CONTENT} />
 
 
-      {/* ── DIVIDER ──────────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="h-px" style={{ background: "var(--border-subtle)" }} />
       </div>
@@ -198,7 +197,6 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* ── DIVIDER ──────────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="h-px" style={{ background: "var(--border-subtle)" }} />
       </div>
@@ -357,7 +355,6 @@ export default function AboutUs() {
           </motion.div>
         </div>
       </section>
-      {/* ── divider ──────────────────────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="h-px" style={{ background: "var(--border-subtle)" }} />
       </div>
