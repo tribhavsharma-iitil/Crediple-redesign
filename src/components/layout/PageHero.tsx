@@ -65,12 +65,15 @@ export default function Hero({
         isDark ? "bg-[#020B1A] section-dark-glow" : "bg-[#F8FAFC]"
       )}
     >
-      {/* Absolute Brand Logo Watermark */}
+      {/* 
+        YAKA Logo: Positioned at the top right side.
+        Reduced dimensions and optimized bounding spaces prevent overlapping with the content below.
+      */}
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={showYaka ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
         transition={{ duration: 0.5 }}
-        className="absolute top-20 md:top-24 right-4 md:right-6 xl:right-12 z-20 hidden md:block"
+        className="absolute top-10 right-4 md:top-12 md:right-6 xl:right-12 z-20 hidden md:block pointer-events-none"
       >
         <Image
           src={isDark ? enterprise_dark : enterprise_light}
@@ -92,12 +95,12 @@ export default function Hero({
         />
       )}
 
-      {/* Outer bounds max-w-[1400px] with amplified tracking column gaps */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 grid lg:grid-cols-12 gap-16 lg:gap-24 items-center relative z-10">
+      {/* Main Structural Grid aligned to max-w-[1260px] */}
+      <div className="max-w-[1260px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
         {/* Left Column: Content Text and CTAs */}
         <motion.div
-          className="lg:col-span-7 flex flex-col items-start text-left"
+          className="lg:col-span-7 flex flex-col items-start text-left relative w-full"
           variants={localFadeLeft}
           initial="hidden"
           whileInView="show"
@@ -160,48 +163,50 @@ export default function Hero({
           )}
         </motion.div>
 
-        {/* Right Column: Sleeker, Taller Image Card Workspace Layout */}
+        {/* Right Column: Matched sizes and aspect ratios from home page hero layout */}
         <motion.div
-          className="lg:col-span-5 relative w-full h-[450px] sm:h-[550px] lg:h-[600px] max-w-[400px] mx-auto lg:ml-auto lg:mr-0"
+          className="lg:col-span-5 w-full flex justify-center lg:justify-end"
           variants={localFadeRight}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <div
-            className="w-full h-full rounded-[32px] overflow-hidden relative shadow-2xl border"
-            style={{ borderColor: "var(--border-subtle)" }}
-          >
+          <div className="relative rounded-[24px] md:rounded-[28px] overflow-hidden aspect-[4/5] w-full max-w-[440px] shadow-2xl border" style={{ borderColor: "var(--border-subtle)" }}>
             <Image
               src={img}
               alt="Crediple team collaboration inside ecosystem framework"
               fill
               priority
-              className="object-cover"
+              sizes="(max-w-1024px) 100vw, 440px"
+              className="object-cover object-center transform scale-100 hover:scale-[1.02] transition-transform duration-700 ease-out"
             />
             
             {/* Interactive Node Map Glassmorphic Overlay */}
             <div
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 backdrop-blur-md px-4 py-2.5 rounded-xl flex items-center gap-3 border"
-              style={{
-                background: "rgba(15, 23, 42, 0.35)",
-                borderColor: "rgba(255, 255, 255, 0.1)",
-              }}
+              className={cn(
+                "absolute bottom-4 right-4 left-4 sm:left-auto px-4 py-2.5 rounded-[16px] text-[10px] font-bold uppercase tracking-widest backdrop-blur-md flex items-center justify-between sm:justify-start gap-3.5 border transition-colors duration-300",
+                isDark
+                  ? "bg-black/40 text-white/90 border-white/10"
+                  : "bg-white/70 text-[#020B1A] border-black/5"
+              )}
             >
-              <div className="flex -space-x-2">
-                <span className="w-6 h-6 rounded-full bg-blue-500/80 border border-white/20 flex items-center justify-center text-[9px] font-bold text-white">
-                  H
-                </span>
-                <span className="w-6 h-6 rounded-full bg-purple-500/80 border border-white/20 flex items-center justify-center text-[9px] font-bold text-white">
-                  F
-                </span>
-                <span className="w-6 h-6 rounded-full bg-cyan-500/80 border border-white/20 flex items-center justify-center text-[9px] font-bold text-white">
-                  L
-                </span>
+              <div className="flex items-center isolate -space-x-1.5 pointer-events-none select-none">
+                {["H", "F", "L"].map((c, index) => (
+                  <div
+                    key={c}
+                    className={cn(
+                      "w-5 h-5 rounded-full text-[9px] font-extrabold flex items-center justify-center border shrink-0 shadow-sm",
+                      isDark 
+                        ? "bg-[#1E293B] text-[#38BDF8] border-[#020B1A]" 
+                        : "bg-[#EFF6FF] text-[#2563EB] border-white"
+                    )}
+                    style={{ zIndex: 10 - index }}
+                  >
+                    {c}
+                  </div>
+                ))}
               </div>
-              <span className="text-[10px] font-semibold tracking-wider uppercase text-white/90 whitespace-nowrap">
-                Interactive Node Map
-              </span>
+              <span className="font-semibold tracking-wider opacity-90 text-[10px]">Interactive Node Map</span>
             </div>
           </div>
         </motion.div>

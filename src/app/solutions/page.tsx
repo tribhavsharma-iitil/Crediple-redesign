@@ -169,7 +169,7 @@ export default function SolutionsPage() {
       <PageHero {...SERVICES_HERO_CONTENT} />
 
       {/* ── What We Solve ──────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1400px] mx-auto px-4 md:px-6">
+      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1260px] mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
           <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <p 
@@ -208,12 +208,12 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+      <div className="mx-auto max-w-[1260px] px-4 md:px-6">
         <div style={{ height: "1px", background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }} />
       </div>
 
       {/* ── Solution Domains ───────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1400px] mx-auto px-4 md:px-6">
+      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1260px] mx-auto px-4 md:px-6">
         <div className="relative z-10">
           <motion.div
             variants={fadeUp}
@@ -292,12 +292,12 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+      <div className="mx-auto max-w-[1260px] px-4 md:px-6">
         <div style={{ height: "1px", background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }} />
       </div>
 
       {/* ── How We Build ──────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1400px] mx-auto px-4 md:px-6">
+      <section className="relative overflow-hidden py-20 md:py-28 max-w-[1260px] mx-auto px-4 md:px-6">
         <div className="relative z-10">
           <motion.div
             variants={fadeUp}
@@ -365,7 +365,7 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+      <div className="mx-auto max-w-[1260px] px-4 md:px-6">
         <div style={{ height: "1px", background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }} />
       </div>
 
@@ -431,7 +431,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pb-28 text-center max-w-[1400px] mx-auto px-4 md:px-6">
+      <section className="relative overflow-hidden pb-28 text-center max-w-[1260px] mx-auto px-4 md:px-6">
         <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <div 
             className="rounded-[24px] py-16 px-6 sm:px-12 border transition-all duration-300" 

@@ -65,7 +65,7 @@ export default function Brands() {
     <SectionWrapper bg="alt" id="ecosystem">
       <div 
         ref={sectionRef} 
-        className="w-full max-w-[1400px] xl:w-[1400px] mx-auto px-6 lg:px-0"
+        className="w-full max-w-[1260px] xl:w-[1260px] mx-auto px-6 lg:px-0"
       >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
           <div>

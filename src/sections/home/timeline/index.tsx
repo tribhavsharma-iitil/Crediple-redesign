@@ -60,11 +60,15 @@ export default function Timeline() {
   const [active, setActive] = useState<number>(0);
   const lineRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  
+  // Array of refs to keep track of individual timeline block targets
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (!lineRef.current || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      // 1. Existing Track Line Progress Animation
       gsap.fromTo(
         lineRef.current,
         { scaleY: 0 },
@@ -79,6 +83,26 @@ export default function Timeline() {
           },
         }
       );
+
+      // 2. New Scroll-based Active State Toggling
+      itemsRef.current.forEach((item, index) => {
+        if (!item) return;
+
+        ScrollTrigger.create({
+          trigger: item,
+          // Triggers when the top of the card hits 55% from the top of the viewport
+          start: "top 55%", 
+          // Triggers until the bottom of the card leaves 45% from the top of the viewport
+          end: "bottom 45%",
+          // toggleClass isn't dynamic enough for react state, so we use onToggle
+          onToggle: (self) => {
+            if (self.isActive) {
+              setActive(index);
+            }
+          },
+        });
+      });
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -89,7 +113,7 @@ export default function Timeline() {
       id="timeline" 
       className={cn(isDark ? "bg-[#040814]" : "bg-slate-50/70")}
     >
-      <div ref={sectionRef} className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
+      <div ref={sectionRef} className="w-full max-w-[1260px] mx-auto px-4 md:px-6">
         <motion.h2
           variants={fadeUp}
           initial="hidden"
@@ -117,7 +141,11 @@ export default function Timeline() {
               const isActive = active === i;
 
               return (
-                <div key={item.period} className="relative">
+                <div 
+                  key={item.period} 
+                  ref={(el) => { itemsRef.current[i] = el; }} // Assign individual ref here
+                  className="relative"
+                >
                   
                   {/* Glowing Circular Border Node */}
                   <div
@@ -139,11 +167,11 @@ export default function Timeline() {
                     />
                   </div>
 
+                  {/* Removed onMouseEnter from here */}
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={viewportOnce}
-                    onMouseEnter={() => setActive(i)}
                     className="group relative z-10"
                   >
                     <motion.div

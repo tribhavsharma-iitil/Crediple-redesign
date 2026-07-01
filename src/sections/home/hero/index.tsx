@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Circle } from "lucide-react";
 import { HERO_CONTENT, STATS } from "@/utils/siteData";
@@ -16,6 +16,8 @@ import {
   scaleIn,
 } from "@/lib/animations";
 import home_hero from "@/assets/home_hero.png";
+import enterprise_light from "@/assets/enterprise_light.png";
+import enterprise_dark from "@/assets/enterprise_dark.png";
 import { cn } from "@/lib/utils";
 
 function StatItem({ value, label }: { value: string; label: string }) {
@@ -48,6 +50,12 @@ function StatItem({ value, label }: { value: string; label: string }) {
 
 export default function Hero() {
   const { isDark } = useTheme();
+  const [showYaka, setShowYaka] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowYaka(true), 600);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section
@@ -57,12 +65,24 @@ export default function Hero() {
         isDark ? "bg-[#020B1A] section-dark-glow" : "bg-[#F8FAFC]"
       )}
     >
-      {/* Destination anchor for FloatingLogo intro animation (desktop) */}
-      <div
-        id="yaka-logo-anchor"
-        aria-hidden
-        className="absolute top-20 md:top-24 right-4 md:right-6 xl:right-12 w-[132px] h-[132px] pointer-events-none hidden md:block"
-      />
+      {/* 
+        YAKA Brand Logo: Placed directly in top right side 
+        to ensure visibility independent of external teleports.
+      */}
+      <motion.div 
+        initial={{ opacity: 0, y: -10 }}
+        animate={showYaka ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+        transition={{ duration: 0.5 }}
+        className="absolute top-20 md:top-24 right-4 md:right-6 xl:right-12 z-20 hidden md:block pointer-events-none"
+      >
+        <Image
+          src={isDark ? enterprise_dark : enterprise_light}
+          alt="A YAKA Enterprise"
+          width={132}
+          height={132}
+          priority
+        />
+      </motion.div>
 
       {isDark && (
         <div
@@ -77,7 +97,7 @@ export default function Hero() {
       )}
 
       {/* Container horizontal padding tailored: 12px on mobile, none on desktop/tablet */}
-      <div className="w-full max-w-[1400px] mt-6 md:mt-10 mx-auto px-6 md:px-0 relative z-10">
+      <div className="w-full max-w-[1260px] mt-6 md:mt-10 mx-auto px-6 md:px-0 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
           
           {/* Left Text/Actions Column block */}

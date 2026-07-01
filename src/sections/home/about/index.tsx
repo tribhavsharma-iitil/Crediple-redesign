@@ -29,8 +29,7 @@ export default function About() {
 
   return (
     <SectionWrapper bg="hero" id="about">
-      {/* Container aligned strictly to max-w-[1400px] responsive grid specs */}
-      <div className="w-full max-w-[1400px] xl:w-[1400px] mx-auto px-6 lg:px-0">
+      <div className="w-full max-w-[1260px] xl:w-[1260px] mx-auto px-6 lg:px-0">
         
         <h2
           className={cn(

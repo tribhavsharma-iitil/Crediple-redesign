@@ -83,7 +83,7 @@ export default function WhoWeServe() {
         variants={staggerContainer}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1400px] mx-auto px-4 md:px-6"
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1260px] mx-auto px-4 md:px-6"
       >
         {/* Row 1: FinTech Card */}
         <motion.div variants={fadeUp}>

@@ -91,7 +91,7 @@ export default function Footer() {
         isDark ? "bg-[#040814]" : "bg-[#FBF8FF]"
       )}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-8">
+      <div className="max-w-[1260px] mx-auto px-6 md:px-8">
         <motion.div
           variants={staggerContainer}
           initial="hidden"

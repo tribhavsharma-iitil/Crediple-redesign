@@ -329,7 +329,7 @@ export default function BrandsPage() {
           <div key={brand.id} id={`brand-${brand.id}`}>
             {/* divider between brand blocks */}
             {index > 0 && (
-              <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+              <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
                 <div
                   style={{ height: "1px", background: "rgba(34,211,238,0.08)" }}
                 />

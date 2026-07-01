@@ -77,7 +77,7 @@ export default function Navbar() {
             : "bg-transparent border-b border-transparent",
         )}
       >
-        <div className="max-w-[1400px] mx-auto h-16 md:h-[72px] grid grid-cols-2 md:grid-cols-3 items-center relative">
+        <div className="max-w-[1260px] mx-auto h-16 md:h-[72px] grid grid-cols-2 md:grid-cols-3 items-center relative">
           {/* Column 1: Left Brand Area */}
           <div className="flex items-center justify-start">
             <Link
@@ -97,7 +97,11 @@ export default function Navbar() {
           {/* Column 2: Center Desktop Navigation */}
           <nav className="hidden md:flex items-center justify-center gap-8">
             {NAV_LINKS.map((link) => {
-              const active = pathname === link.href;
+              // Fixed: Ensures correct matching for root path vs sub-paths
+              const active = link.href === "/" 
+                ? pathname === "/" 
+                : pathname.startsWith(link.href);
+
               return (
                 <Link
                   key={link.href}
@@ -221,7 +225,11 @@ export default function Navbar() {
                 className="flex flex-col gap-2"
               >
                 {NAV_LINKS.map((link) => {
-                  const active = pathname === link.href;
+                  // Fixed: Ensures correct matching here as well
+                  const active = link.href === "/" 
+                    ? pathname === "/" 
+                    : pathname.startsWith(link.href);
+
                   return (
                     <motion.div key={link.href} variants={drawerItem}>
                       <Link
