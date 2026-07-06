@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useSpring } from "framer-motion";
 import Loader from "@/components/animations/Loader";
@@ -15,6 +15,10 @@ import {
   markHomeIntroCompleted,
   type HomeIntroPhase,
 } from "@/lib/homeIntro";
+
+// 1. Create a lightweight context to share the animation state with inner child layout nodes
+const IntroContext = createContext<{ phase: HomeIntroPhase }>({ phase: "ready" });
+export const useIntroPhase = () => useContext(IntroContext);
 
 export default function AppShell({
   children,
@@ -38,7 +42,7 @@ export default function AppShell({
       loaderDoneRef.current = false;
       setPhase("loading");
     }
-  }, [isHome]);
+  }, [isHome, pathname]); // Added pathname fallback trigger tracking
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
@@ -57,7 +61,7 @@ export default function AppShell({
   const contentReady = !isHome || phase === "ready";
 
   return (
-    <>
+    <IntroContext.Provider value={{ phase }}>
       <motion.div
         className="fixed top-0 left-0 right-0 z-[60] origin-left h-[2px] pointer-events-none bg-brand-blue"
         style={{ scaleX }}
@@ -88,6 +92,6 @@ export default function AppShell({
 
       <ScrollButton />
       <CookieConsent />
-    </>
+    </IntroContext.Provider>
   );
 }

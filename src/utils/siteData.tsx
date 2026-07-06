@@ -27,7 +27,7 @@ import card_7 from "@/assets/card_7.png";
 import home_hero_img from "@/assets/home_hero.png";
 import about_hero_img from "@/assets/about_hero.png";
 import brands_hero_img from "@/assets/brands_hero.png";
-import solutions_hero_img from "@/assets/solutions_hero.jpg";
+import solutions_hero_img from "@/assets/solutions_hero.png";
 import contact_hero_img from "@/assets/contact_hero.png";
 
 export const NAV_LINKS = [
@@ -82,8 +82,8 @@ export const ABOUT_HERO_CONTENT = {
   },
 
   cta2: {
-    label: "Learn More",
-    href: "/about",
+    label: "Contact Us",
+    href: "/contact",
   },
 };
 
@@ -102,8 +102,8 @@ export const BRANDS_HERO_CONTENT = {
   subtitle2: "Built to lead modern industries.",
 
   cta1: {
-    label: "View Brands",
-    href: "/brands",
+    label: "About Us",
+    href: "/about",
   },
 
   cta2: {
@@ -127,8 +127,8 @@ export const SERVICES_HERO_CONTENT = {
   subtitle2: "Fast. Scalable. Future-ready.",
 
   cta1: {
-    label: "Our Solutions",
-    href: "/solutions",
+    label: "Our Brands",
+    href: "/brands",
   },
 
   cta2: {
@@ -152,8 +152,8 @@ export const CONTACT_HERO_CONTENT = {
   subtitle2: "Innovation starts here.",
 
   cta1: {
-    label: "Get In Touch",
-    href: "/contact",
+    label: "Know About Us",
+    href: "/about",
   },
 
   cta2: {

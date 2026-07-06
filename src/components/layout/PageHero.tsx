@@ -61,26 +61,24 @@ export default function Hero({
     <section
       id="hero"
       className={cn(
-        "relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden select-none",
+        "relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden select-none px-4 sm:px-6",
         isDark ? "bg-[#020B1A] section-dark-glow" : "bg-[#F8FAFC]"
       )}
     >
-      {/* 
-        YAKA Logo: Positioned at the top right side.
-        Reduced dimensions and optimized bounding spaces prevent overlapping with the content below.
-      */}
+  
       <motion.div 
         initial={{ opacity: 0, y: -10 }}
         animate={showYaka ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
         transition={{ duration: 0.5 }}
-        className="absolute top-10 right-4 md:top-12 md:right-6 xl:right-12 z-20 hidden md:block pointer-events-none"
+        className="absolute top-8 right-4 sm:top-10 sm:right-6 xl:top-12 xl:right-12 z-20 pointer-events-none w-20 md:w-28 xl:w-32 aspect-square"
       >
         <Image
           src={isDark ? enterprise_dark : enterprise_light}
           alt="A YAKA Enterprise"
-          width={132}
-          height={132}
+          fill
           priority
+          sizes="(max-w-768px) 80px, (max-w-1200px) 112px, 128px"
+          className="object-contain"
         />
       </motion.div>
 
@@ -95,12 +93,12 @@ export default function Hero({
         />
       )}
 
-      {/* Main Structural Grid aligned to max-w-[1260px] */}
-      <div className="max-w-[1260px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+      {/* Main Structural Grid with robust layout safe-edges */}
+      <div className="max-w-[1260px] mx-auto px-2 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
-        {/* Left Column: Content Text and CTAs */}
+        {/* Left Column: Full layout width on mobile/tablet */}
         <motion.div
-          className="lg:col-span-7 flex flex-col items-start text-left relative w-full"
+          className="col-span-1 lg:col-span-7 flex flex-col items-start text-left relative w-full"
           variants={localFadeLeft}
           initial="hidden"
           whileInView="show"
@@ -108,11 +106,16 @@ export default function Hero({
         >
           {/* Decorative Accent Eyebrow */}
           <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium uppercase tracking-wider mb-6"
+            className={cn(
+              "inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full text-[10px] font-semibold tracking-widest uppercase border transition-all duration-300",
+              isDark
+                ? "border-[#B4C5FF15] text-[#94A3B8]"
+                : "border-[#3B82F620] text-[#2563EB]"
+            )}
             style={{
-              background: "var(--icon-accent-bg)",
-              color: "var(--icon-accent)",
-              border: "1px solid var(--icon-accent-border)",
+              background: isDark
+                ? "#B4C5FF1A"
+                : "linear-gradient(90deg, #DBEAFE 0%, #CEFAFE 100%)",
             }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-current" />
@@ -122,7 +125,7 @@ export default function Hero({
           {/* Unified Monochromatic Header Title */}
           <h1
              className={cn(
-               "font-heading font-[700] text-3xl sm:text-4xl md:text-5xl xl:text-6xl mb-8 leading-[1.15] md:leading-[1.1] tracking-tight",
+               "font-heading font-[700] text-3xl sm:text-4xl md:text-5xl xl:text-6xl mb-6 sm:mb-8 leading-[1.15] md:leading-[1.1] tracking-tight pr-12 sm:pr-0",
                isDark ? "text-[#DCE2F6]" : "text-black"
              )}
           >
@@ -131,7 +134,7 @@ export default function Hero({
 
           {/* Description Paragraph */}
           <p
-            className="text-base sm:text-lg md:text-lg font-normal leading-relaxed mb-4 max-w-xl text-left"
+            className="text-base sm:text-lg font-normal leading-relaxed mb-4 max-w-xl text-left"
             style={{ color: "var(--text-secondary)" }}
           >
             {subtitle}
@@ -163,51 +166,23 @@ export default function Hero({
           )}
         </motion.div>
 
-        {/* Right Column: Matched sizes and aspect ratios from home page hero layout */}
+        {/* Right Column: Safely hides the main image completely when switching to a single vertical row */}
         <motion.div
-          className="lg:col-span-5 w-full flex justify-center lg:justify-end"
+          className="hidden lg:flex lg:col-span-5 w-full justify-center lg:justify-end"
           variants={localFadeRight}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <div className="relative rounded-[24px] md:rounded-[28px] overflow-hidden aspect-[4/5] w-full max-w-[440px] shadow-2xl border" style={{ borderColor: "var(--border-subtle)" }}>
+          <div className="relative aspect-[4/4] w-full " >
             <Image
               src={img}
               alt="Crediple team collaboration inside ecosystem framework"
               fill
               priority
-              sizes="(max-w-1024px) 100vw, 440px"
-              className="object-cover object-center transform scale-100 hover:scale-[1.02] transition-transform duration-700 ease-out"
+              sizes="440px"
+              className="object-cover"
             />
-            
-            {/* Interactive Node Map Glassmorphic Overlay */}
-            <div
-              className={cn(
-                "absolute bottom-4 right-4 left-4 sm:left-auto px-4 py-2.5 rounded-[16px] text-[10px] font-bold uppercase tracking-widest backdrop-blur-md flex items-center justify-between sm:justify-start gap-3.5 border transition-colors duration-300",
-                isDark
-                  ? "bg-black/40 text-white/90 border-white/10"
-                  : "bg-white/70 text-[#020B1A] border-black/5"
-              )}
-            >
-              <div className="flex items-center isolate -space-x-1.5 pointer-events-none select-none">
-                {["H", "F", "L"].map((c, index) => (
-                  <div
-                    key={c}
-                    className={cn(
-                      "w-5 h-5 rounded-full text-[9px] font-extrabold flex items-center justify-center border shrink-0 shadow-sm",
-                      isDark 
-                        ? "bg-[#1E293B] text-[#38BDF8] border-[#020B1A]" 
-                        : "bg-[#EFF6FF] text-[#2563EB] border-white"
-                    )}
-                    style={{ zIndex: 10 - index }}
-                  >
-                    {c}
-                  </div>
-                ))}
-              </div>
-              <span className="font-semibold tracking-wider opacity-90 text-[10px]">Interactive Node Map</span>
-            </div>
           </div>
         </motion.div>
 

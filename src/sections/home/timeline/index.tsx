@@ -268,13 +268,13 @@ export default function Timeline() {
                         <div className={cn(
                           "relative min-h-[200px] lg:min-h-full transition-all duration-500 self-stretch overflow-hidden shrink-0",
                           "w-full lg:w-0 lg:opacity-0",
-                          isActive && "lg:w-[320px] xl:w-[420px] lg:opacity-100 rounded-r-xl"
+                          isActive && "lg:w-[280px] xl:w-[380px] lg:opacity-100 rounded-r-xl"
                         )}>
                           <Image
                             src={card_1}
                             alt="Timeline illustration"
                             fill
-                            className="object-cover object-left"
+                            className=" object-left"
                             style={{
                               maskImage: "linear-gradient(to right, transparent 0%, black 25%)",
                               WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 25%)",

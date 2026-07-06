@@ -9,6 +9,7 @@ import { HERO_CONTENT, STATS } from "@/utils/siteData";
 import { CredipleButton } from "@/components/ui/CredipleButton";
 import { useTheme } from "@/context/ThemeContext";
 import { useCountUp } from "@/hooks/useCountUp";
+import { useIntroPhase } from "@/components/layout/AppShell";
 import {
   fadeUp,
   fadeRight,
@@ -50,12 +51,17 @@ function StatItem({ value, label }: { value: string; label: string }) {
 
 export default function Hero() {
   const { isDark } = useTheme();
+  const { phase } = useIntroPhase();
   const [showYaka, setShowYaka] = useState(false);
 
+  // Sync internal layout transitions nicely alongside root timings
   useEffect(() => {
     const t = setTimeout(() => setShowYaka(true), 600);
     return () => clearTimeout(t);
   }, []);
+
+  // Structural check: Only show native fallback elements if the flying introduction is completed
+  const showStaticLogo = phase === "ready";
 
   return (
     <section
@@ -66,23 +72,32 @@ export default function Hero() {
       )}
     >
       {/* 
-        YAKA Brand Logo: Placed directly in top right side 
-        to ensure visibility independent of external teleports.
+        YAKA Brand Logo Target Bounding Box.
+        This stays locked in the top-right corner on all screens, matches the anchor target layout coordinates 
+        perfectly, and avoids duplication issues by rendering purely when phase === "ready".
       */}
-      <motion.div 
-        initial={{ opacity: 0, y: -10 }}
-        animate={showYaka ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
-        transition={{ duration: 0.5 }}
-        className="absolute top-20 md:top-24 right-4 md:right-6 xl:right-12 z-20 hidden md:block pointer-events-none"
+      <div 
+        id="yaka-logo-anchor" 
+        className="absolute top-20 md:top-24 right-4 md:right-6 xl:right-12 z-20 w-20 md:w-28 xl:w-32 aspect-square pointer-events-none"
       >
-        <Image
-          src={isDark ? enterprise_dark : enterprise_light}
-          alt="A YAKA Enterprise"
-          width={132}
-          height={132}
-          priority
-        />
-      </motion.div>
+        {showStaticLogo && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={showYaka ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className="w-full h-full"
+          >
+            <Image
+              src={isDark ? enterprise_dark : enterprise_light}
+              alt="A YAKA Enterprise"
+              fill
+              priority
+              sizes="(max-w-768px) 80px, (max-w-1200px) 112px, 128px"
+              className="object-contain"
+            />
+          </motion.div>
+        )}
+      </div>
 
       {isDark && (
         <div
@@ -96,8 +111,8 @@ export default function Hero() {
         />
       )}
 
-      {/* Container horizontal padding tailored: 12px on mobile, none on desktop/tablet */}
-      <div className="w-full max-w-[1260px] mt-6 md:mt-10 mx-auto px-6 md:px-0 relative z-10">
+      {/* Main Structural Layout Wrapper providing custom clean gaps for fluid sizing */}
+      <div className="w-full max-w-[1260px] sm:px-10 md:px-10 lg:px-10 xl:px-0 mt-6 md:mt-10 mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
           
           {/* Left Text/Actions Column block */}
@@ -105,7 +120,7 @@ export default function Hero() {
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
-            className="flex flex-col gap-6 lg:col-span-7 xl:col-span-7 max-w-2xl lg:max-w-none w-full"
+            className="flex flex-col gap-6 col-span-1 lg:col-span-7 xl:col-span-7 max-w-2xl lg:max-w-none w-full"
           >
             {/* Dynamic Segment Capsule */}
             <motion.div variants={fadeUp} className="w-fit">
@@ -131,7 +146,7 @@ export default function Hero() {
             <motion.h1
               variants={fadeUp}
               className={cn(
-                "font-heading font-[900] text-4xl sm:text-5xl md:text-6xl xl:text-7xl leading-[1.15] md:leading-[1.1] tracking-tight",
+                "font-heading font-[900] text-4xl sm:text-5xl md:text-6xl xl:text-7xl leading-[1.15] md:leading-[1.1] tracking-tight pr-12 sm:pr-0",
                 isDark ? "text-[#DCE2F6]" : "text-black"
               )}
             >
@@ -163,7 +178,7 @@ export default function Hero() {
               
               <CredipleButton
                 variant="outlined"
-                href="/consultation"
+                href="/contact"
                 className={cn(
                   "px-8 h-12 rounded-[12px] font-semibold text-center justify-center border bg-transparent transition-all",
                   isDark 
@@ -189,51 +204,22 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Layout Image Column block */}
+          {/* Right Layout Image Column block: Kept completely hidden until lg breakpoint to avoid wrapping row collisions */}
           <motion.div
             variants={fadeRight}
             initial="hidden"
             animate="visible"
-            className="relative lg:col-span-5 xl:col-span-5 w-full flex justify-center lg:justify-end"
+            className="hidden lg:flex lg:col-span-5 xl:col-span-5 w-full justify-center lg:justify-end"
           >
-            <div className="relative rounded-[24px] md:rounded-[28px] overflow-hidden aspect-[4/5] w-full max-w-[440px]">
+            <div className="relative aspect-[4/4] w-full max-w-[440px]">
               <Image
                 src={home_hero}
                 alt="Crediple team collaboration inside ecosystem framework"
                 fill
-                sizes="(max-w-1024px) 100vw, 440px"
-                className="object-cover object-center transform scale-100 hover:scale-[1.02] transition-transform duration-700 ease-out"
+                sizes="440px"
+                className="object-cover"
                 priority
               />
-              
-              {/* Overlaid Floating Node Map Indicator */}
-              <div
-                className={cn(
-                  "absolute bottom-4 right-4 left-4 sm:left-auto px-4 py-2.5 rounded-[16px] text-[10px] font-bold uppercase tracking-widest backdrop-blur-md flex items-center justify-between sm:justify-start gap-3.5 border transition-colors duration-300",
-                  isDark
-                    ? "bg-black/40 text-white/90 border-white/10"
-                    : "bg-white/70 text-[#020B1A] border-black/5"
-                )}
-              >
-                {/* Overlay Layered Avatars */}
-                <div className="flex items-center isolate -space-x-1.5 pointer-events-none select-none">
-                  {["H", "F", "L"].map((c, index) => (
-                    <div
-                      key={c}
-                      className={cn(
-                        "w-5 h-5 rounded-full text-[9px] font-extrabold flex items-center justify-center border shrink-0 shadow-sm",
-                        isDark 
-                          ? "bg-[#1E293B] text-[#38BDF8] border-[#020B1A]" 
-                          : "bg-[#EFF6FF] text-[#2563EB] border-white"
-                      )}
-                      style={{ zIndex: 10 - index }}
-                    >
-                      {c}
-                    </div>
-                  ))}
-                </div>
-                <span className="font-semibold tracking-wider opacity-90 text-[10px]">Interactive Node Map</span>
-              </div>
             </div>
           </motion.div>
 
