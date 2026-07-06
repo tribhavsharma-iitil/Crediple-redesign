@@ -125,33 +125,6 @@ export default function Footer() {
               {FOOTER_TAGLINE || "Precision in Excellence. The holding company for the next era of enterprise technology."}
             </p>
 
-            {/* Micro Pill Sharing Actions */}
-            <div className="flex items-center gap-2.5 mt-8">
-              <a
-                href="#"
-                aria-label="Share"
-                className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-105",
-                  isDark
-                    ? "bg-white/[0.04] text-slate-400 border border-white/[0.05] hover:text-white"
-                    : "bg-[#EFF6FF] text-[#0047AB] hover:opacity-90"
-                )}
-              >
-                <Share2 size={13} strokeWidth={2.5} />
-              </a>
-              <a
-                href="mailto:hello@crediple.com"
-                aria-label="Email"
-                className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-105",
-                  isDark
-                    ? "bg-white/[0.04] text-slate-400 border border-white/[0.05] hover:text-white"
-                    : "bg-[#EFF6FF] text-[#0047AB] hover:opacity-90"
-                )}
-              >
-                <Mail size={13} strokeWidth={2.5} />
-              </a>
-            </div>
           </motion.div>
 
           {/* Column 2: Navigation Links */}
