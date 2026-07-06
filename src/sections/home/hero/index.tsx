@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Circle } from "lucide-react";
 import { HERO_CONTENT, STATS } from "@/utils/siteData";
@@ -52,15 +52,8 @@ function StatItem({ value, label }: { value: string; label: string }) {
 export default function Hero() {
   const { isDark } = useTheme();
   const { phase } = useIntroPhase();
-  const [showYaka, setShowYaka] = useState(false);
 
-  // Sync internal layout transitions nicely alongside root timings
-  useEffect(() => {
-    const t = setTimeout(() => setShowYaka(true), 600);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Structural check: Only show native fallback elements if the flying introduction is completed
+  // Displays instantly when the landing animation phase is complete
   const showStaticLogo = phase === "ready";
 
   return (
@@ -73,8 +66,7 @@ export default function Hero() {
     >
       {/* 
         YAKA Brand Logo Target Bounding Box.
-        This stays locked in the top-right corner on all screens, matches the anchor target layout coordinates 
-        perfectly, and avoids duplication issues by rendering purely when phase === "ready".
+        This provides the matching structural targets for the layout positioning.
       */}
       <div 
         id="yaka-logo-anchor" 
@@ -82,9 +74,9 @@ export default function Hero() {
       >
         {showStaticLogo && (
           <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={showYaka ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.35 }}
             className="w-full h-full"
           >
             <Image
@@ -111,7 +103,6 @@ export default function Hero() {
         />
       )}
 
-      {/* Main Structural Layout Wrapper providing custom clean gaps for fluid sizing */}
       <div className="w-full max-w-[1260px] sm:px-10 md:px-10 lg:px-10 xl:px-0 mt-6 md:mt-10 mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
           
@@ -204,7 +195,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Layout Image Column block: Kept completely hidden until lg breakpoint to avoid wrapping row collisions */}
+          {/* Right Layout Image Column block */}
           <motion.div
             variants={fadeRight}
             initial="hidden"

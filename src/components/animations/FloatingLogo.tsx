@@ -165,21 +165,10 @@ export default function FloatingLogo({
     );
   }
 
+  // FIXED: The internal calculation states stay live, but rendering outputs nothing.
+  // This hands off visual presentation seamlessly over to the native Home Hero section box.
   if (phase === "ready" && landed) {
-    return (
-      <motion.div
-        className="fixed top-0 left-0 z-[55] pointer-events-none"
-        style={{
-          x: scrollX,
-          y: scrollY,
-          width: scrollSize,
-          height: scrollSize,
-          opacity: scrollOpacity,
-        }}
-      >
-        <Image src={logo} alt="A YAKA Enterprise" fill className="object-contain" priority />
-      </motion.div>
-    );
+    return null;
   }
 
   return null;
