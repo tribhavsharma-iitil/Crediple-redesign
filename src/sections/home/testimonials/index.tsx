@@ -1,19 +1,23 @@
 "use client";
 
+import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
   homeFadeUp,
+  homeFadeLeft,
   homeScaleIn,
   homeStagger,
-  homeViewport,
 } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 import ctaBg from "@/assets/gradient.png";
 
+const INTERVAL = 5000;
 const { testimonials, cta } = homeContent;
 const C = homeColors;
 
@@ -26,6 +30,22 @@ const T = {
   muted: "#7B8494",
   star: "#3E66DF",
 } as const;
+
+function useVisibleCount() {
+  const [count, setCount] = useState(1);
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 640) setCount(1);
+      else if (w < 1024) setCount(2);
+      else setCount(3);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return count;
+}
 
 function BlueStar() {
   return (
@@ -62,7 +82,42 @@ function Ball({
 }
 
 export default function Testimonials() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
   const { isDark } = useTheme();
+  const visible = useVisibleCount();
+  const items = testimonials.items;
+  const maxIndex = Math.max(0, items.length - visible);
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const goTo = useCallback(
+    (idx: number) => setCurrent(Math.max(0, Math.min(idx, maxIndex))),
+    [maxIndex]
+  );
+
+  const startAuto = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setCurrent((c) => (c < maxIndex ? c + 1 : 0));
+    }, INTERVAL);
+  }, [maxIndex]);
+
+  useEffect(() => {
+    if (!paused && maxIndex > 0) startAuto();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [paused, startAuto, maxIndex]);
+
+  useEffect(() => {
+    setCurrent((c) => Math.min(c, maxIndex));
+  }, [maxIndex]);
+
+  const cardWidthPct = 100 / visible;
+  const trackX = -(current * cardWidthPct);
+  const pageCount = maxIndex + 1;
 
   return (
     <div className="w-full">
@@ -71,22 +126,18 @@ export default function Testimonials() {
         className="relative py-16 md:py-24 overflow-hidden"
         style={{ background: isDark ? T.bg : "#FFFFFF" }}
       >
-        {/* Full-bleed balls relative to section (matches PDF frame) */}
         {isDark && (
           <div aria-hidden className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            {/* Left big — cut off by left/bottom, sits behind card 1 */}
             <Ball
               size={180}
               style={{ left: -40, bottom: 40 }}
               className="sm:!w-[250px] sm:!h-[250px] sm:!-left-[50px] sm:!bottom-[50px]"
             />
-            {/* Top-right — beside the heading */}
             <Ball
               size={80}
               style={{ right: "6%", top: 48 }}
               className="sm:!w-[130px] sm:!h-[130px] sm:!right-[8%] sm:!top-[72px]"
             />
-            {/* Bottom-right — small peek */}
             <Ball
               size={64}
               style={{ right: 24, bottom: 40 }}
@@ -95,85 +146,166 @@ export default function Testimonials() {
           </div>
         )}
 
-        <div className="relative z-10 w-full max-w-[1260px] mx-auto px-4 sm:px-6">
+        <div
+          ref={sectionRef}
+          className="relative z-10 w-full max-w-[1260px] mx-auto px-4 sm:px-6"
+        >
+          <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10 w-full">
+            <div className="flex flex-row items-end justify-between gap-4 w-full">
+              <div className="min-w-0 flex-1">
+                <h2
+                  className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-left"
+                  style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+                >
+                  {testimonials.titleBefore}{" "}
+                  <span style={homeTitleAccentStyle}>
+                    {testimonials.titleAccent}
+                  </span>
+                </h2>
+                <p
+                  className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] mt-3 max-w-2xl text-left"
+                  style={{ color: isDark ? T.muted : "#64748B" }}
+                >
+                  {testimonials.subtitle}
+                </p>
+              </div>
+              <div className="flex gap-2 shrink-0 self-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    goTo(current > 0 ? current - 1 : maxIndex);
+                    startAuto();
+                  }}
+                  aria-label="Previous"
+                  className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
+                  style={{
+                    borderColor: isDark ? C.borderStrong : "#E2E8F0",
+                    color: isDark ? C.text : "#475569",
+                    background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
+                  }}
+                >
+                  <ChevronLeft size={15} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    goTo(current < maxIndex ? current + 1 : 0);
+                    startAuto();
+                  }}
+                  aria-label="Next"
+                  className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
+                  style={{
+                    borderColor: isDark ? C.borderStrong : "#E2E8F0",
+                    color: isDark ? C.text : "#475569",
+                    background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
+                  }}
+                >
+                  <ChevronRight size={15} />
+                </button>
+              </div>
+            </div>
+          </HomeReveal>
+
           <motion.div
             variants={homeStagger}
             initial="hidden"
-            whileInView="visible"
-            viewport={homeViewport}
+            animate={isInView ? "visible" : "hidden"}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
           >
-            <HomeItem variants={homeFadeUp}>
-              <h2
-                className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-left"
-                style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+            <div className="overflow-hidden">
+              <motion.div
+                className="flex -mx-2 sm:-mx-3"
+                animate={{ x: `${trackX}%` }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
-                {testimonials.titleBefore}{" "}
-                <span style={homeTitleAccentStyle}>
-                  {testimonials.titleAccent}
-                </span>
-              </h2>
-            </HomeItem>
-
-            <HomeItem variants={homeFadeUp}>
-              <p
-                className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] mt-3 mb-10 sm:mb-12 md:mb-14 max-w-2xl text-left"
-                style={{ color: isDark ? T.muted : "#64748B" }}
-              >
-                {testimonials.subtitle}
-              </p>
-            </HomeItem>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-              {testimonials.items.map((item) => (
-                <HomeItem key={item.name} variants={homeFadeUp}>
-                  <article
-                    className="relative p-5 sm:p-7 md:p-8 h-full flex flex-col rounded-2xl text-left"
-                    style={{ background: isDark ? T.card : "#F8FAFC" }}
+                {items.map((item) => (
+                  <div
+                    key={item.name}
+                    style={{
+                      width: `${cardWidthPct}%`,
+                      flex: `0 0 ${cardWidthPct}%`,
+                    }}
+                    className="px-2 sm:px-3"
                   >
-                    <div className="flex items-center justify-center gap-[3px] mb-4 sm:mb-5">
-                      <BlueStar />
-                      <BlueStar />
-                      <BlueStar />
-                      <BlueStar />
-                      <BlueStar />
-                    </div>
+                    <HomeItem variants={homeFadeUp} className="h-full">
+                      <article
+                        className="relative p-5 sm:p-7 md:p-8 h-full flex flex-col rounded-2xl text-left"
+                        style={{ background: isDark ? T.card : "#F8FAFC" }}
+                      >
+                        <div className="flex items-center justify-center gap-[3px] mb-4 sm:mb-5">
+                          <BlueStar />
+                          <BlueStar />
+                          <BlueStar />
+                          <BlueStar />
+                          <BlueStar />
+                        </div>
 
-                    <p
-                      className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed flex-1"
-                      style={{ color: isDark ? T.quote : "#334155" }}
-                    >
-                      &ldquo;{item.text}&rdquo;
-                    </p>
+                        <p
+                          className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed flex-1"
+                          style={{ color: isDark ? T.quote : "#334155" }}
+                        >
+                          &ldquo;{item.text}&rdquo;
+                        </p>
 
-                    <div className="flex items-center gap-3 mt-6 sm:mt-8">
-                      <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          className="object-cover"
-                          sizes="40px"
-                        />
-                      </div>
-                      <div className="min-w-0">
-                        <p
-                          className="font-bold text-sm truncate"
-                          style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
-                        >
-                          {item.name}
-                        </p>
-                        <p
-                          className="text-xs mt-0.5 truncate"
-                          style={{ color: isDark ? T.muted : "#64748B" }}
-                        >
-                          {item.role}
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </HomeItem>
-              ))}
+                        <div className="flex items-center gap-3 mt-6 sm:mt-8">
+                          <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+                            <Image
+                              src={item.image}
+                              alt={item.name}
+                              fill
+                              className="object-cover"
+                              sizes="40px"
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <p
+                              className="font-bold text-sm truncate"
+                              style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+                            >
+                              {item.name}
+                            </p>
+                            <p
+                              className="text-xs mt-0.5 truncate"
+                              style={{ color: isDark ? T.muted : "#64748B" }}
+                            >
+                              {item.role}
+                            </p>
+                          </div>
+                        </div>
+                      </article>
+                    </HomeItem>
+                  </div>
+                ))}
+              </motion.div>
             </div>
+
+            {pageCount > 1 && (
+              <div className="flex justify-center gap-2 mt-8">
+                {Array.from({ length: pageCount }).map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => goTo(i)}
+                    aria-label={`Page ${i + 1}`}
+                    className={cn(
+                      "h-1.5 rounded-full transition-all duration-300",
+                      i === current ? "w-6" : "w-1.5"
+                    )}
+                    style={{
+                      background:
+                        i === current
+                          ? isDark
+                            ? C.text
+                            : C.accentStrong
+                          : isDark
+                            ? "rgba(248,248,248,0.25)"
+                            : "#CBD5E1",
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
@@ -185,7 +317,7 @@ export default function Testimonials() {
         <div className="max-w-[1260px] mx-auto px-4 sm:px-6">
           <HomeReveal variants={homeScaleIn}>
             <div
-              className="relative overflow-hidden rounded-2xl sm:rounded-[28px] px-5 py-12 sm:px-6 sm:py-14 md:px-16 md:py-20 text-center"
+              className="relative overflow-hidden rounded-2xl sm:rounded-[28px] px-4 py-10 sm:px-6 sm:py-14 md:px-16 md:py-20 text-center"
               style={
                 isDark
                   ? {
@@ -199,7 +331,6 @@ export default function Testimonials() {
             >
               {isDark && (
                 <>
-                  {/* Inner gradient image — darker base inside the card */}
                   <div
                     aria-hidden
                     className="absolute inset-0 z-0 pointer-events-none"
@@ -214,7 +345,6 @@ export default function Testimonials() {
                     />
                   </div>
 
-                  {/* Very subtle corner washes — match design, not heavy orbs */}
                   <div
                     aria-hidden
                     className="absolute inset-0 z-[1] pointer-events-none"
@@ -226,7 +356,6 @@ export default function Testimonials() {
                     }}
                   />
 
-                  {/* Grid lines — stronger so they read on the dark bg */}
                   <div
                     aria-hidden
                     className="absolute inset-0 z-[1] pointer-events-none"
