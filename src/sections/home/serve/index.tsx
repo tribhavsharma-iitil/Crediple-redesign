@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { homeContent, homeColors } from "@/content/home";
+import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp, homeEase } from "@/lib/animations";
@@ -71,10 +71,10 @@ export default function WhoWeServe() {
         <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
           <h2
             className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight"
-            style={{ color: isDark ? C.text : "#0F172A" }}
+            style={{ color: isDark ? "#DCE2F6" : "#0F172A" }}
           >
             {serve.titleBefore}{" "}
-            <span style={{ color: C.accentSoft }}>{serve.titleAccent}</span>
+            <span style={homeTitleAccentStyle}>{serve.titleAccent}</span>
           </h2>
         </HomeReveal>
 
@@ -145,7 +145,7 @@ export default function WhoWeServe() {
                       borderColor: isActive
                         ? C.accentSoft
                         : isDark
-                          ? "rgba(248,248,248,0.18)"
+                          ? "rgba(220,226,246,0.28)"
                           : "#CBD5E1",
                     }}
                   >
@@ -157,8 +157,8 @@ export default function WhoWeServe() {
                             ? C.text
                             : "#0F172A"
                           : isDark
-                            ? C.textDim
-                            : "#94A3B8",
+                            ? "#DCE2F6"
+                            : "#64748B",
                       }}
                     >
                       {cat.title}
@@ -171,7 +171,7 @@ export default function WhoWeServe() {
                             ? C.textMuted
                             : "#64748B"
                           : isDark
-                            ? "rgba(88,96,112,0.85)"
+                            ? "rgba(220,226,246,0.55)"
                             : "#94A3B8",
                       }}
                     >

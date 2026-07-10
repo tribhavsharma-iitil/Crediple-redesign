@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { homeContent, homeColors } from "@/content/home";
+import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import BrandCard from "./brandCard";
 import { HomeReveal } from "@/components/home/HomeReveal";
@@ -87,7 +87,7 @@ export default function Brands() {
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
                 {ecosystem.titleBefore}{" "}
-                <span style={{ color: C.accentSoft }}>{ecosystem.titleAccent}</span>
+                <span style={homeTitleAccentStyle}>{ecosystem.titleAccent}</span>
               </h2>
               <p
                 className="text-sm mt-2 font-medium"

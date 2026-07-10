@@ -45,6 +45,9 @@ export const homeColors = {
   buttonFrom: "#1550B4",
   buttonTo: "#2F80ED",
   buttonGradient: "linear-gradient(180deg, #1550B4 0%, #2F80ED 100%)",
+  /** Title accent word gradient (Figma) — e.g. "Us" in About Us */
+  titleAccentGradient:
+    "linear-gradient(180deg, #90C4FF 0%, #5FA8FF 33%, #2F80ED 66%, #1550B4 100%)",
   text: "#F8F8F8",
   textMuted: "#98A0A8",
   textDim: "#586070",
@@ -53,6 +56,15 @@ export const homeColors = {
   wave: "rgba(64, 142, 242, 0.35)",
   glow: "rgba(47, 128, 237, 0.28)",
 } as const;
+
+/** Shared style for homepage title accent words (Us, Ecosystem, Values, …) */
+export const homeTitleAccentStyle = {
+  backgroundImage: homeColors.titleAccentGradient,
+  WebkitBackgroundClip: "text" as const,
+  WebkitTextFillColor: "transparent",
+  backgroundClip: "text" as const,
+  color: "transparent",
+};
 
 export const homeContent = {
   hero: {

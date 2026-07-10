@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Phone } from "lucide-react";
 import type { CSSProperties } from "react";
-import { homeContent, homeColors } from "@/content/home";
+import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
@@ -13,6 +12,7 @@ import {
   homeStagger,
   homeViewport,
 } from "@/lib/animations";
+import ctaBg from "@/assets/gradient.png";
 
 const { testimonials, cta } = homeContent;
 const C = homeColors;
@@ -22,7 +22,6 @@ const T = {
   bg: "#03081A",
   card: "#0B1324",
   ball: "#041565",
-  titleBlue: "#5B8FD4",
   quote: "#F4F6FA",
   muted: "#7B8494",
   star: "#3E66DF",
@@ -109,7 +108,7 @@ export default function Testimonials() {
                 style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
               >
                 {testimonials.titleBefore}{" "}
-                <span style={{ color: isDark ? T.titleBlue : C.accentSoft }}>
+                <span style={homeTitleAccentStyle}>
                   {testimonials.titleAccent}
                 </span>
               </h2>
@@ -190,7 +189,7 @@ export default function Testimonials() {
               style={
                 isDark
                   ? {
-                      backgroundColor: "#0A1428",
+                      backgroundColor: "#050B18",
                       border: "1px solid rgba(255,255,255,0.08)",
                     }
                   : {
@@ -200,43 +199,58 @@ export default function Testimonials() {
             >
               {isDark && (
                 <>
+                  {/* Inner gradient image — darker base inside the card */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 z-0 pointer-events-none"
+                  >
+                    <Image
+                      src={ctaBg}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1260px) 100vw, 1260px"
+                      className="object-cover object-center opacity-90"
+                      priority={false}
+                    />
+                  </div>
+
                   {/* Very subtle corner washes — match design, not heavy orbs */}
                   <div
                     aria-hidden
-                    className="absolute inset-0 pointer-events-none"
+                    className="absolute inset-0 z-[1] pointer-events-none"
                     style={{
                       background: `
-                        radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.22) 0%, transparent 70%),
-                        radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.14) 0%, transparent 70%)
+                        radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.28) 0%, transparent 70%),
+                        radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.18) 0%, transparent 70%)
                       `,
                     }}
                   />
 
-                  {/* Faint grid only */}
+                  {/* Grid lines — stronger so they read on the dark bg */}
                   <div
                     aria-hidden
-                    className="absolute inset-0 pointer-events-none"
+                    className="absolute inset-0 z-[1] pointer-events-none"
                     style={{
                       backgroundImage: `
-                        linear-gradient(rgba(120, 150, 200, 0.07) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(120, 150, 200, 0.07) 1px, transparent 1px)
+                        linear-gradient(rgba(160, 190, 240, 0.14) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(160, 190, 240, 0.14) 1px, transparent 1px)
                       `,
                       backgroundSize: "52px 52px",
                       WebkitMaskImage:
-                        "radial-gradient(ellipse at center, black 20%, transparent 70%)",
+                        "radial-gradient(ellipse at center, black 35%, transparent 78%)",
                       maskImage:
-                        "radial-gradient(ellipse at center, black 20%, transparent 70%)",
+                        "radial-gradient(ellipse at center, black 35%, transparent 78%)",
                     }}
                   />
                 </>
               )}
 
-              <h2 className="relative font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] text-white px-1">
+              <h2 className="relative z-10 font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] text-white px-1">
                 {cta.title}
               </h2>
 
               <p
-                className="relative text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed px-1"
+                className="relative z-10 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed px-1"
                 style={{
                   color: isDark ? "#A8B0BC" : "rgba(255,255,255,0.85)",
                 }}
@@ -244,7 +258,7 @@ export default function Testimonials() {
                 {cta.description}
               </p>
 
-              <div className="relative flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+              <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                 <a
                   href={cta.primaryCta.href}
                   className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold text-sm no-underline transition-opacity hover:opacity-90"
@@ -255,17 +269,6 @@ export default function Testimonials() {
                   }}
                 >
                   {cta.primaryCta.label}
-                </a>
-                <a
-                  href={cta.secondaryCta.href}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm text-white no-underline transition-colors hover:bg-white/5"
-                  style={{
-                    border: "1px solid rgba(255,255,255,0.28)",
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  <Phone size={15} strokeWidth={2.25} />
-                  {cta.secondaryCta.label}
                 </a>
               </div>
             </div>

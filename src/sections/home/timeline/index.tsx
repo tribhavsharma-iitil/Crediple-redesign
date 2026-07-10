@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { homeContent, homeColors } from "@/content/home";
+import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
@@ -64,7 +64,7 @@ export default function Timeline() {
             style={{ color: isDark ? C.text : "#0F172A" }}
           >
             {timeline.titleBefore}{" "}
-            <span style={{ color: C.accentSoft }}>{timeline.titleAccent}</span>
+            <span style={homeTitleAccentStyle}>{timeline.titleAccent}</span>
           </h2>
         </HomeReveal>
 

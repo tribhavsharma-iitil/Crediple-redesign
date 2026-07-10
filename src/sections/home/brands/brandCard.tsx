@@ -8,175 +8,12 @@ import { HomeBrand, homeColors } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { homeFadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
+import cardBg from "@/assets/container.png";
 
 const C = homeColors;
 const LINK_BLUE = "#5A96E3";
 
 const cardVariants: Variants = homeFadeUp;
-
-/** Transparent network / constellation — no black fill */
-function NetworkBackdrop({ id, variant }: { id: string; variant: number }) {
-  const layouts = [
-    {
-      nodes: [
-        [40, 36],
-        [110, 24],
-        [180, 42],
-        [250, 20],
-        [310, 50],
-        [60, 90],
-        [140, 100],
-        [210, 78],
-        [280, 110],
-        [90, 150],
-        [170, 155],
-        [250, 165],
-        [320, 130],
-        [130, 200],
-        [220, 205],
-      ],
-      links: [
-        [0, 1],
-        [1, 2],
-        [2, 3],
-        [3, 4],
-        [0, 5],
-        [1, 6],
-        [2, 7],
-        [4, 8],
-        [5, 6],
-        [6, 7],
-        [7, 8],
-        [5, 9],
-        [6, 10],
-        [8, 11],
-        [8, 12],
-        [9, 13],
-        [10, 14],
-        [11, 14],
-      ] as [number, number][],
-    },
-    {
-      nodes: [
-        [50, 30],
-        [130, 45],
-        [200, 25],
-        [270, 55],
-        [80, 85],
-        [160, 95],
-        [240, 80],
-        [300, 100],
-        [100, 145],
-        [180, 140],
-        [260, 155],
-        [140, 190],
-        [230, 200],
-        [60, 170],
-        [310, 170],
-      ],
-      links: [
-        [0, 1],
-        [1, 2],
-        [2, 3],
-        [0, 4],
-        [1, 5],
-        [2, 6],
-        [3, 7],
-        [4, 5],
-        [5, 6],
-        [6, 7],
-        [4, 8],
-        [5, 9],
-        [6, 10],
-        [8, 11],
-        [9, 12],
-        [8, 13],
-        [10, 14],
-        [9, 11],
-      ] as [number, number][],
-    },
-    {
-      nodes: [
-        [70, 40],
-        [150, 28],
-        [230, 48],
-        [300, 30],
-        [40, 100],
-        [120, 110],
-        [200, 90],
-        [280, 120],
-        [80, 160],
-        [160, 170],
-        [240, 155],
-        [320, 180],
-        [110, 210],
-        [200, 215],
-        [50, 190],
-      ],
-      links: [
-        [0, 1],
-        [1, 2],
-        [2, 3],
-        [0, 4],
-        [0, 5],
-        [1, 5],
-        [2, 6],
-        [3, 7],
-        [4, 5],
-        [5, 6],
-        [6, 7],
-        [4, 8],
-        [5, 9],
-        [7, 10],
-        [7, 11],
-        [8, 12],
-        [9, 13],
-        [8, 14],
-      ] as [number, number][],
-    },
-  ];
-
-  const { nodes, links } = layouts[variant % layouts.length];
-
-  return (
-    <svg
-      aria-hidden
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      viewBox="0 0 360 240"
-      preserveAspectRatio="xMidYMid slice"
-    >
-      <defs>
-        <radialGradient id={`${id}-glow`} cx="55%" cy="30%" r="50%">
-          <stop offset="0%" stopColor="#2F80ED" stopOpacity="0.28" />
-          <stop offset="100%" stopColor="#2F80ED" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      {/* Transparent — only soft blue glow, no black rect */}
-      <rect width="360" height="240" fill={`url(#${id}-glow)`} />
-      <g stroke="#7EB6FF" strokeWidth="0.85" opacity="0.4" fill="none">
-        {links.map(([a, b], i) => (
-          <line
-            key={i}
-            x1={nodes[a][0]}
-            y1={nodes[a][1]}
-            x2={nodes[b][0]}
-            y2={nodes[b][1]}
-          />
-        ))}
-      </g>
-      {nodes.map(([x, y], i) => (
-        <circle
-          key={i}
-          cx={x}
-          cy={y}
-          r={i % 4 === 0 ? 2.8 : 1.8}
-          fill="#B8D8FF"
-          opacity={0.7}
-        />
-      ))}
-    </svg>
-  );
-}
 
 export default function BrandCard({
   brand,
@@ -186,19 +23,24 @@ export default function BrandCard({
   index: number;
 }) {
   const { isDark } = useTheme();
-  const patternId = `eco-net-${index}`;
 
   const content = (
     <>
-      {/* Transparent network overlay only — no black image */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <NetworkBackdrop id={patternId} variant={index} />
+      <div aria-hidden className="absolute inset-0 z-0 pointer-events-none">
+        <Image
+          src={cardBg}
+          alt=""
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover object-center"
+          priority={index < 3}
+        />
         <div
           className="absolute inset-0"
           style={{
             background: isDark
-              ? "linear-gradient(180deg, transparent 0%, transparent 45%, rgba(13,20,37,0.75) 75%, #0D1425 100%)"
-              : "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.85) 100%)",
+              ? "linear-gradient(180deg, transparent 0%, transparent 40%, rgba(13,20,37,0.55) 75%, rgba(13,20,37,0.85) 100%)"
+              : "linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.55) 55%, rgba(255,255,255,0.9) 100%)",
           }}
         />
       </div>

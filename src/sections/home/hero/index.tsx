@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
-import { homeContent, homeColors } from "@/content/home";
+import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { useIntroPhase } from "@/components/layout/AppShell";
 import { homeStagger, homeEase } from "@/lib/animations";
@@ -128,7 +128,7 @@ export default function Hero() {
         >
           {hero.titleLine1}
           <br />
-          <span style={{ color: C.accentSoft }}>{hero.titleLine2}</span>
+          <span style={homeTitleAccentStyle}>{hero.titleLine2}</span>
         </motion.h1>
 
         {/* Description — single block, tight */}
