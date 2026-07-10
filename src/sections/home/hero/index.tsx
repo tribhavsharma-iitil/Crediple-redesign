@@ -1,92 +1,86 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Circle } from "lucide-react";
-import { HERO_CONTENT, STATS } from "@/utils/siteData";
-import { CredipleButton } from "@/components/ui/CredipleButton";
+import { motion } from "framer-motion";
+import { Play, ArrowRight } from "lucide-react";
+import { homeContent, homeColors } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
-import { useCountUp } from "@/hooks/useCountUp";
 import { useIntroPhase } from "@/components/layout/AppShell";
-import {
-  fadeUp,
-  fadeRight,
-  staggerContainer,
-  scaleIn,
-} from "@/lib/animations";
-import home_hero from "@/assets/home_hero.png";
-import enterprise_light from "@/assets/enterprise_light.png";
-import enterprise_dark from "@/assets/enterprise_dark.png";
-import { cn } from "@/lib/utils";
+import { homeStagger, homeEase } from "@/lib/animations";
+import yakaBlue from "@/assets/yaka_blue.png";
+import waveDark from "@/assets/home/wave-dark.png";
+import waveLight from "@/assets/home/wave-light.png";
 
-function StatItem({ value, label }: { value: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true });
-  const display = useCountUp(value, inView);
-  const { isDark } = useTheme();
+const { hero, trust } = homeContent;
+const C = homeColors;
 
-  return (
-    <motion.div ref={ref} variants={scaleIn} className="text-left">
-      <p
-        className={cn(
-          "font-heading font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight",
-          isDark ? "text-[#DCE2F6]" : "text-[#020B1A]"
-        )}
-      >
-        {display}
-      </p>
-      <p
-        className={cn(
-          "text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mt-1.5",
-          isDark ? "text-dark-body/60" : "text-light-body/60"
-        )}
-      >
-        {label}
-      </p>
-    </motion.div>
-  );
-}
+const heroItem = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: homeEase },
+  },
+};
 
 export default function Hero() {
   const { isDark } = useTheme();
   const { phase } = useIntroPhase();
-
-  // Displays instantly when the landing animation phase is complete
   const showStaticLogo = phase === "ready";
 
   return (
     <section
       id="hero"
-      className={cn(
-        "relative min-h-[100svh] flex items-center pt-24 md:pt-36 pb-16 overflow-hidden select-none",
-        isDark ? "bg-[#020B1A] section-dark-glow" : "bg-[#F8FAFC]"
-      )}
+      className="relative min-h-[100svh] flex items-center justify-center pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20 overflow-hidden select-none"
+      style={{ background: isDark ? C.bg : "#F8FAFC" }}
     >
-      {/* 
-        YAKA Brand Logo Target Bounding Box.
-        This provides the matching structural targets for the layout positioning.
-      */}
-      <div 
-        id="yaka-logo-anchor" 
-        className="absolute top-20 md:top-24 right-4 md:right-6 xl:right-12 z-20 w-20 md:w-28 xl:w-32 aspect-square pointer-events-none"
+      {/* Theme wave — dark / light assets */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 w-full h-[38%] md:h-[42%] pointer-events-none z-0"
+      >
+        <Image
+          src={isDark ? waveDark : waveLight}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-bottom"
+        />
+      </div>
+
+      {/* YAKA logo */}
+      <div
+        id="yaka-logo-anchor"
+        className="absolute top-16 sm:top-20 md:top-24 right-3 sm:right-4 md:right-8 xl:right-12 z-20 w-[56px] sm:w-[72px] md:w-[88px] xl:w-[100px] pointer-events-none"
       >
         {showStaticLogo && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.35 }}
-            className="w-full h-full"
+            className="flex flex-col items-center gap-1 sm:gap-1.5"
           >
-            <Image
-              src={isDark ? enterprise_dark : enterprise_light}
-              alt="A YAKA Enterprise"
-              fill
-              priority
-              sizes="(max-w-768px) 80px, (max-w-1200px) 112px, 128px"
-              className="object-contain"
-            />
+            <div className="relative w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 xl:w-16 xl:h-16">
+              <Image
+                src={yakaBlue}
+                alt="YAKA"
+                fill
+                priority
+                sizes="(max-width: 640px) 36px, 64px"
+                className="object-contain"
+              />
+            </div>
+            <p
+              className="text-[7px] sm:text-[8px] md:text-[9px] font-medium tracking-wide text-center leading-tight max-w-[64px] sm:max-w-none"
+              style={{ color: isDark ? "rgba(248,248,248,0.85)" : "#475569" }}
+            >
+              A{" "}
+              <span className="font-bold" style={{ color: isDark ? "#fff" : "#0F172A" }}>
+                YAKA
+              </span>{" "}
+              Enterprise
+            </p>
           </motion.div>
         )}
       </div>
@@ -94,128 +88,117 @@ export default function Hero() {
       {isDark && (
         <div
           aria-hidden
-          className="absolute right-0 top-1/4 w-[600px] h-[600px] pointer-events-none z-0 mix-blend-screen"
+          className="absolute left-1/2 top-[38%] -translate-x-1/2 w-[min(640px,100vw)] h-[min(360px,50vw)] pointer-events-none z-0"
           style={{
-            background:
-              "radial-gradient(circle, rgba(21,93,252,0.15) 0%, transparent 70%)",
-            filter: "blur(80px)",
+            background: `radial-gradient(ellipse, ${C.glow} 0%, transparent 70%)`,
+            filter: "blur(50px)",
           }}
         />
       )}
 
-      <div className="w-full max-w-[1260px] sm:px-10 md:px-10 lg:px-10 xl:px-0 mt-6 md:mt-10 mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
-          
-          {/* Left Text/Actions Column block */}
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col gap-6 col-span-1 lg:col-span-7 xl:col-span-7 max-w-2xl lg:max-w-none w-full"
+      <motion.div
+        variants={homeStagger}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center"
+      >
+        {/* Badge */}
+        <motion.div variants={heroItem} className="w-fit max-w-full mb-5 sm:mb-6 md:mb-7">
+          <span
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] md:text-xs font-medium tracking-wide border max-w-full"
+            style={{
+              borderColor: isDark ? "rgba(180, 197, 255, 0.45)" : "rgba(21,80,180,0.25)",
+              color: isDark ? "#B4C5FF" : C.accentStrong,
+              background: isDark ? "rgba(10, 20, 45, 0.85)" : "rgba(47,128,237,0.08)",
+            }}
           >
-            {/* Dynamic Segment Capsule */}
-            <motion.div variants={fadeUp} className="w-fit">
-              <span
-                className={cn(
-                  "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold tracking-widest uppercase border transition-all duration-300",
-                  isDark
-                    ? "border-[#B4C5FF15] text-[#94A3B8]"
-                    : "border-[#3B82F620] text-[#2563EB]"
-                )}
+            <span
+              className="w-1.5 h-1.5 rounded-full shrink-0"
+              style={{ background: "#22C55E" }}
+            />
+            <span className="truncate">{hero.badge}</span>
+          </span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1
+          variants={heroItem}
+          className="font-heading font-[800] text-[1.85rem] sm:text-5xl md:text-6xl xl:text-[4.25rem] leading-[1.12] tracking-tight mb-4 sm:mb-5 md:mb-6 px-1"
+          style={{ color: isDark ? C.text : "#0F172A" }}
+        >
+          {hero.titleLine1}
+          <br />
+          <span style={{ color: C.accentSoft }}>{hero.titleLine2}</span>
+        </motion.h1>
+
+        {/* Description — single block, tight */}
+        <motion.p
+          variants={heroItem}
+          className="text-[13px] sm:text-sm md:text-[15px] lg:text-base max-w-xl leading-relaxed mb-7 sm:mb-8 md:mb-9 px-1"
+          style={{ color: isDark ? C.textMuted : "#64748B" }}
+        >
+          {hero.description}
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          variants={heroItem}
+          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 md:mb-12 w-full max-w-sm sm:max-w-none"
+        >
+          <a
+            href={hero.primaryCta.href}
+            className="inline-flex items-center justify-center gap-2 px-7 h-11 md:h-12 rounded-full font-semibold text-sm text-white no-underline transition-opacity hover:opacity-90 w-full sm:w-auto"
+            style={{
+              background: C.buttonGradient,
+              boxShadow: `0 8px 28px ${C.glow}`,
+            }}
+          >
+            <Play size={13} className="fill-current" />
+            {hero.primaryCta.label}
+          </a>
+
+          <a
+            href={hero.secondaryCta.href}
+            className="inline-flex items-center justify-center gap-2 px-7 h-11 md:h-12 rounded-full font-semibold text-sm no-underline border transition-colors w-full sm:w-auto"
+            style={{
+              borderColor: isDark ? "rgba(248,248,248,0.28)" : "rgba(15,23,42,0.15)",
+              color: isDark ? C.text : "#0F172A",
+              background: "transparent",
+            }}
+          >
+            {hero.secondaryCta.label}
+            <ArrowRight size={15} />
+          </a>
+        </motion.div>
+
+        {/* Trust — directly under CTAs (not stuck at page bottom) */}
+        <motion.div
+          variants={heroItem}
+          className="flex flex-wrap items-center justify-center gap-3"
+        >
+          <div className="flex items-center -space-x-2">
+            {trust.marks.map((mark) => (
+              <div
+                key={mark}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[8px] font-bold"
                 style={{
-                  background: isDark
-                    ? "#B4C5FF1A"
-                    : "linear-gradient(90deg, #DBEAFE 0%, #CEFAFE 100%)",
+                  background: C.buttonGradient,
+                  color: "#fff",
+                  boxShadow: `0 0 0 2px ${isDark ? C.bg : "#F8FAFC"}`,
                 }}
               >
-                <Circle size={5} className={cn("fill-current", isDark ? "text-brand-blue" : "text-[#2563EB]")} />
-                Unified Digital Ecosystem
-              </span>
-            </motion.div>
-
-            {/* Core Header Title */}
-            <motion.h1
-              variants={fadeUp}
-              className={cn(
-                "font-heading font-[900] text-4xl sm:text-5xl md:text-6xl xl:text-7xl leading-[1.15] md:leading-[1.1] tracking-tight pr-12 sm:pr-0",
-                isDark ? "text-[#DCE2F6]" : "text-black"
-              )}
-            >
-              One Holding. <br className="hidden sm:inline" />
-              Multiple Innovations.
-            </motion.h1>
-
-            {/* Description Text */}
-            <motion.p
-              variants={fadeUp}
-              className={cn(
-                "text-sm md:text-md lg:text-lg max-w-xl leading-relaxed font-normal opacity-85",
-                isDark ? "text-[#94A3B8]" : "text-[#475569]"
-              )}
-            >
-              Crediple unifies innovative companies across healthcare, finance,
-              legal technology, education, and AI into one powerful digital
-              ecosystem.
-            </motion.p>
-
-            {/* Strategy Call To Actions */}
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2 w-full sm:w-auto"
-            >
-              <CredipleButton href="/brands" className="px-8 h-12 rounded-[12px] font-semibold shadow-sm text-center justify-center">
-                Explore Brands
-              </CredipleButton>
-              
-              <CredipleButton
-                variant="outlined"
-                href="/contact"
-                className={cn(
-                  "px-8 h-12 rounded-[12px] font-semibold text-center justify-center border bg-transparent transition-all",
-                  isDark 
-                    ? "border-white/10 text-white hover:bg-white/5" 
-                    : "border-black/10 text-[#020B1A] hover:bg-black/5"
-                )}
-              >
-                Schedule Consultation
-              </CredipleButton>
-            </motion.div>
-
-            {/* Continuous Stat Counter Track */}
-            <motion.div
-              variants={staggerContainer}
-              className={cn(
-                "grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 pt-6 mt-4 border-t",
-                isDark ? "border-white/10" : "border-black/5"
-              )}
-            >
-              <StatItem value="50+" label="Global Brands" />
-              <StatItem value="10K+" label="Happy Clients" />
-              <StatItem value="25+" label="Active Countries" />
-            </motion.div>
-          </motion.div>
-
-          {/* Right Layout Image Column block */}
-          <motion.div
-            variants={fadeRight}
-            initial="hidden"
-            animate="visible"
-            className="hidden lg:flex lg:col-span-5 xl:col-span-5 w-full justify-center lg:justify-end"
+                {mark}
+              </div>
+            ))}
+          </div>
+          <p
+            className="text-sm font-medium"
+            style={{ color: isDark ? C.textMuted : "#64748B" }}
           >
-            <div className="relative aspect-[4/4] w-full max-w-[440px]">
-              <Image
-                src={home_hero}
-                alt="Crediple team collaboration inside ecosystem framework"
-                fill
-                sizes="440px"
-                className="object-cover"
-                priority
-              />
-            </div>
-          </motion.div>
-
-        </div>
-      </div>
+            {trust.label}
+          </p>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

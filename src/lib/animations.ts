@@ -40,3 +40,77 @@ export const staggerContainer = {
 };
 
 export const viewportOnce = { once: true, margin: "-80px" as const };
+
+/** Home-page only motion presets */
+export const homeEase = [0.22, 1, 0.36, 1] as const;
+
+export const homeFadeUp = {
+  hidden: { opacity: 0, y: 36 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: homeEase },
+  },
+};
+
+export const homeFadeDown = {
+  hidden: { opacity: 0, y: -24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: homeEase },
+  },
+};
+
+export const homeFadeLeft = {
+  hidden: { opacity: 0, x: -40 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: homeEase },
+  },
+};
+
+export const homeFadeRight = {
+  hidden: { opacity: 0, x: 40 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: homeEase },
+  },
+};
+
+export const homeScaleIn = {
+  hidden: { opacity: 0, scale: 0.92 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.65, ease: homeEase },
+  },
+};
+
+export const homeStagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
+    },
+  },
+};
+
+export const homeStaggerFast = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.04,
+    },
+  },
+};
+
+export const homeViewport = {
+  once: true,
+  amount: 0.2,
+  margin: "0px 0px -10% 0px" as const,
+};

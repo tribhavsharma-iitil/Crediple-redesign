@@ -1,203 +1,218 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import {
-  HeartPulse,
-  BarChart2,
-  Scale,
-  GraduationCap,
-  Building2,
-} from "lucide-react";
-import { WHO_WE_SERVE } from "@/utils/siteData";
-import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { homeContent, homeColors } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
-import { fadeUp, staggerContainer, viewportOnce } from "@/lib/animations";
-import { cn } from "@/lib/utils";
+import { HomeReveal } from "@/components/home/HomeReveal";
+import { homeFadeUp, homeEase } from "@/lib/animations";
 
-// Custom mapping to match Lucide icons exactly to the styles in the provided mockups
-const ICONS: Record<string, React.ReactNode> = {
-  "bar-chart-2": <BarChart2 size={26} strokeWidth={2} />,
-  "heart-pulse": <HeartPulse size={26} strokeWidth={2} />,
-  "scale": <Scale size={26} strokeWidth={2} />,
-  "building-2": <Building2 size={26} strokeWidth={2} />,
-  "graduation-cap": <GraduationCap size={26} strokeWidth={2} />,
-};
+const { serve } = homeContent;
+const C = homeColors;
 
-// Explicit values mapping extracted directly from Screenshot 2026-06-27 193447.png
-const BRAND_COUNTS = [
-  "12 ACTIVE BRANDS", // FinTech
-  "8 ACTIVE BRANDS",  // HealthTech
-  "5 ACTIVE BRANDS",  // LegalTech
-  "4 ACTIVE BRANDS",  // EduTech
-];
+function useStripVisible() {
+  const [count, setCount] = useState(2);
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 640) setCount(2);
+      else if (w < 1024) setCount(3);
+      else setCount(4);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return count;
+}
 
 export default function WhoWeServe() {
   const { isDark } = useTheme();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, viewportOnce);
+  const [active, setActive] = useState(1); // Finance & Fintech featured
+  const [offset, setOffset] = useState(0);
+  const visible = useStripVisible();
+  const total = serve.items.length;
+  const item = serve.items[active];
 
-  // Safely mapping indices based on layout structure in mockups
-  const finTechItem = WHO_WE_SERVE.find(item => item.icon === "bar-chart-2") || WHO_WE_SERVE[1];
-  const healthTechItem = WHO_WE_SERVE.find(item => item.icon === "heart-pulse") || WHO_WE_SERVE[0];
-  const legalTechItem = WHO_WE_SERVE.find(item => item.icon === "scale") || WHO_WE_SERVE[2];
-  const enterpriseItem = WHO_WE_SERVE.find(item => item.icon === "building-2") || WHO_WE_SERVE[5];
-  const eduTechItem = WHO_WE_SERVE.find(item => item.icon === "graduation-cap") || WHO_WE_SERVE[4];
+  const clampOffset = (nextActive: number, currentOffset: number, vis: number) => {
+    if (nextActive < currentOffset) return nextActive;
+    if (nextActive >= currentOffset + vis) return nextActive - vis + 1;
+    return Math.min(currentOffset, Math.max(0, total - vis));
+  };
+
+  useEffect(() => {
+    setOffset((o) => clampOffset(active, o, visible));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, active, total]);
+
+  const goTo = (index: number) => {
+    const next = ((index % total) + total) % total;
+    setActive(next);
+    setOffset((o) => clampOffset(next, o, visible));
+  };
+
+  const prev = () => goTo(active - 1);
+  const next = () => goTo(active + 1);
+
+  const stripItems = serve.items
+    .map((cat, index) => ({ ...cat, index }))
+    .slice(offset, offset + visible);
 
   return (
-    <SectionWrapper 
-    id="serve"
-    className={cn(
-      "relative overflow-hidden", 
-      isDark 
-        ? "bg-[linear-gradient(135deg,#040814_0%,#081026_50%,#030712_100%)]" 
-        : "bg-[linear-gradient(135deg,#EFF6FF_0%,#FFFFFF_50%,#ECFEFF_100%)]"
-    )}
-  >
-      {/* Header Block */}
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        viewport={viewportOnce}
-        className="text-center mb-16"
-      >
-        <p className={cn(
-          "text-xs font-bold uppercase tracking-[0.2em] mb-3",
-          isDark ? "text-slate-500" : "text-slate-400"
-        )}>
-          WHY US?
-        </p>
-        <h2
-          className={cn(
-            "font-heading font-bold text-3xl md:text-5xl tracking-tight",
-            isDark ? "text-white" : "text-[#1E293B]"
-          )}
-        >
-          Who We Serve
-        </h2>
-      </motion.div>
+    <section
+      id="serve"
+      className="relative py-16 md:py-24 overflow-hidden"
+      style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
+    >
+      <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
+        <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
+          <h2
+            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight"
+            style={{ color: isDark ? C.text : "#0F172A" }}
+          >
+            {serve.titleBefore}{" "}
+            <span style={{ color: C.accentSoft }}>{serve.titleAccent}</span>
+          </h2>
+        </HomeReveal>
 
-      {/* Grid Canvas Wrapper */}
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        animate={inView ? "visible" : "hidden"}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1260px] mx-auto px-4 md:px-6"
-      >
-        {/* Row 1: FinTech Card */}
-        <motion.div variants={fadeUp}>
-          <ServeCard item={finTechItem} footer={BRAND_COUNTS[0]} isDark={isDark} />
-        </motion.div>
-
-        {/* Row 1: HealthTech Card */}
-        <motion.div variants={fadeUp}>
-          <ServeCard item={healthTechItem} footer={BRAND_COUNTS[1]} isDark={isDark} />
-        </motion.div>
-
-        {/* Row 1: LegalTech Card */}
-        <motion.div variants={fadeUp}>
-          <ServeCard item={legalTechItem} footer={BRAND_COUNTS[2]} isDark={isDark} />
-        </motion.div>
-
-        {/* Row 2: Enterprise & Corporates (Spans 2 columns wide) */}
-        <motion.div variants={fadeUp} className="md:col-span-2">
-          <div className={cn(
-            "p-8 md:p-10 h-full rounded-[24px] border flex flex-col sm:flex-row gap-8 justify-between items-start sm:items-center transition-all duration-300",
-            isDark 
-              ? "bg-[#090F1C] border-white/[0.05]" 
-              : "bg-white border-[#E2E8F0] shadow-sm shadow-blue-100/40"
-          )}>
-            <div className="flex-1">
-              <div className={cn("mb-5", isDark ? "text-[#3B82F6]" : "text-[#155DFC]")}>
-                {ICONS[enterpriseItem.icon]}
-              </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={item.title}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4, ease: homeEase }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center mb-12 sm:mb-14 md:mb-16"
+          >
+            <div className="max-w-xl order-2 lg:order-1">
               <h3
-                className={cn(
-                  "font-heading font-bold text-xl md:text-2xl mb-3 tracking-tight",
-                  isDark ? "text-white" : "text-[#1E293B]"
-                )}
+                className="font-heading font-black text-2xl sm:text-3xl md:text-[2.5rem] leading-tight mb-4 sm:mb-5 tracking-tight"
+                style={{ color: isDark ? C.text : "#0F172A" }}
               >
-                {enterpriseItem.title}
+                {item.title}
               </h3>
-              <p className={cn("text-sm leading-relaxed max-w-xl", isDark ? "text-slate-400" : "text-[#475569]")}>
-                {enterpriseItem.desc}
+              <p
+                className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed mb-6 sm:mb-8"
+                style={{ color: isDark ? "#C8D0DC" : "#475569" }}
+              >
+                {item.desc}
               </p>
+              <Link
+                href={item.href}
+                className="inline-flex items-center justify-center px-7 py-2.5 rounded-full text-white text-sm font-semibold no-underline transition-opacity hover:opacity-90 w-full sm:w-auto"
+                style={{
+                  background: C.buttonGradient,
+                  boxShadow: `0 8px 24px ${C.glow}`,
+                }}
+              >
+                Read More
+              </Link>
             </div>
 
-            {/* Inner Feature Badge Layout block */}
+            <div className="relative rounded-2xl overflow-hidden aspect-[16/10] shadow-2xl w-full order-1 lg:order-2">
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+              />
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        <HomeReveal variants={homeFadeUp}>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 md:gap-6">
             <div
-              className={cn(
-                "rounded-[20px] p-6 text-center min-w-[160px] w-full sm:w-auto border transition-all duration-300",
-                isDark 
-                  ? "bg-white/[0.03] border-white/10" 
-                  : "bg-[#F0F7FF] border-[#E2E8F0]"
-              )}
+              className="flex-1 grid gap-x-4 sm:gap-x-5 md:gap-x-8 gap-y-6 sm:gap-y-8 min-w-0"
+              style={{
+                gridTemplateColumns: `repeat(${visible}, minmax(0, 1fr))`,
+              }}
             >
-              <p
-                className={cn(
-                  "font-heading font-black text-4xl tracking-tight",
-                  isDark ? "text-white" : "text-[#155DFC]"
-                )}
+              {stripItems.map((cat) => {
+                const isActive = cat.index === active;
+                return (
+                  <button
+                    key={cat.title}
+                    type="button"
+                    onClick={() => goTo(cat.index)}
+                    className="text-left group w-full pt-3 sm:pt-4 border-t-2 transition-colors min-w-0"
+                    style={{
+                      borderColor: isActive
+                        ? C.accentSoft
+                        : isDark
+                          ? "rgba(248,248,248,0.18)"
+                          : "#CBD5E1",
+                    }}
+                  >
+                    <p
+                      className="font-heading font-bold text-xs sm:text-sm md:text-[15px] mb-1.5 sm:mb-2 transition-colors break-words"
+                      style={{
+                        color: isActive
+                          ? isDark
+                            ? C.text
+                            : "#0F172A"
+                          : isDark
+                            ? C.textDim
+                            : "#94A3B8",
+                      }}
+                    >
+                      {cat.title}
+                    </p>
+                    <p
+                      className="text-[11px] sm:text-xs leading-relaxed line-clamp-2 sm:line-clamp-1"
+                      style={{
+                        color: isActive
+                          ? isDark
+                            ? C.textMuted
+                            : "#64748B"
+                          : isDark
+                            ? "rgba(88,96,112,0.85)"
+                            : "#94A3B8",
+                      }}
+                    >
+                      {cat.short}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex gap-2 shrink-0 pt-0 sm:pt-4 justify-end sm:justify-start">
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous sector"
+                className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
+                style={{
+                  borderColor: isDark ? C.borderStrong : "#E2E8F0",
+                  color: isDark ? C.text : "#475569",
+                  background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
+                }}
               >
-                50+
-              </p>
-              <p className={cn(
-                "text-[10px] font-bold uppercase tracking-widest mt-2",
-                isDark ? "text-slate-400" : "text-[#155DFC]"
-              )}>
-                GLOBAL BRANDS
-              </p>
+                <ChevronLeft size={15} />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next sector"
+                className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
+                style={{
+                  borderColor: isDark ? C.borderStrong : "#E2E8F0",
+                  color: isDark ? C.text : "#475569",
+                  background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
+                }}
+              >
+                <ChevronRight size={15} />
+              </button>
             </div>
           </div>
-        </motion.div>
-
-        {/* Row 2: EduTech Card */}
-        <motion.div variants={fadeUp}>
-          <ServeCard item={eduTechItem} footer={BRAND_COUNTS[3]} isDark={isDark} />
-        </motion.div>
-      </motion.div>
-    </SectionWrapper>
-  );
-}
-
-// Reusable standard layout grid card
-function ServeCard({
-  item,
-  footer,
-  isDark,
-}: {
-  item: any;
-  footer: string;
-  isDark: boolean;
-}) {
-  return (
-    <div className={cn(
-      "p-8 h-full flex flex-col rounded-[24px] border transition-all duration-300",
-      isDark 
-        ? "bg-[#090F1C] border-white/[0.05]" 
-        : "bg-white border-[#E2E8F0] shadow-sm shadow-blue-100/40"
-    )}>
-      <div className={cn("mb-5", isDark ? "text-[#3B82F6]" : "text-[#155DFC]")}>
-        {ICONS[item.icon] || <BarChart2 size={26} />}
+        </HomeReveal>
       </div>
-      <h3
-        className={cn(
-          "font-heading font-bold text-xl mb-3 tracking-tight",
-          isDark ? "text-white" : "text-[#1E293B]"
-        )}
-      >
-        {item.title}
-      </h3>
-      <p className={cn("text-sm leading-relaxed flex-1 mb-6", isDark ? "text-slate-400" : "text-[#475569]")}>
-        {item.desc}
-      </p>
-      <p className={cn(
-        "text-[11px] font-bold uppercase tracking-wider",
-        isDark ? "text-[#3B82F6]" : "text-[#155DFC]"
-      )}>
-        {footer}
-      </p>
-    </div>
+    </section>
   );
 }

@@ -1,184 +1,256 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Award, Shield, Zap, Star } from "lucide-react";
-import { ABOUT_MISSION, ABOUT_VISION, CORE_VALUES } from "@/utils/siteData";
-import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { Card } from "@/components/ui/Card";
+import { useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight } from "lucide-react";
+import { homeContent, homeColors } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
+import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
-  fadeLeft,
-  fadeRight,
-  staggerContainer,
-  viewportOnce,
+  homeFadeUp,
+  homeFadeLeft,
+  homeFadeRight,
+  homeScaleIn,
+  homeStagger,
+  homeStaggerFast,
+  homeViewport,
+  homeEase,
 } from "@/lib/animations";
-import { cn } from "@/lib/utils";
 
-const ICON_MAP: Record<string, React.ReactNode> = {
-  award: <Award size={24} strokeWidth={2.2} className="shrink-0" />,
-  shield: <Shield size={24} strokeWidth={2.2} className="shrink-0" />,
-  zap: <Zap size={24} strokeWidth={2.2} className="shrink-0" />,
-  star: <Star size={24} strokeWidth={2.2} className="shrink-0" />,
-};
+const { about, values } = homeContent;
+const C = homeColors;
 
 export default function About() {
   const { isDark } = useTheme();
-  const valuesRef = useRef<HTMLDivElement>(null);
-  const valuesInView = useInView(valuesRef, viewportOnce);
+  const [activeValue, setActiveValue] = useState(0);
 
   return (
-    <SectionWrapper bg="hero" id="about">
-      <div className="w-full max-w-[1260px] xl:w-[1260px] mx-auto px-6 lg:px-0">
-        
-        <h2
-          className={cn(
-            "font-heading font-bold text-center text-4xl md:text-5xl mb-16 tracking-tight",
-            isDark ? "text-white" : "text-slate-900"
-          )}
-        >
-          About Us
-        </h2>
-
-        {/* Mission / Vision Blocks */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20"
-        >
-          {/* Mission Card */}
-          <motion.div variants={fadeLeft}>
-            <Card
-              className={cn(
-                "p-8 md:p-12 text-center rounded-xl transition-all duration-300 h-[280px] md:h-[220px] flex flex-col justify-center border",
-                isDark 
-                  ? "bg-[#0B122099] border-white/[0.06] shadow-2xl" 
-                  : "bg-[#EDFAFF] border-[#BEDBFF] shadow-sm"
-              )}
-              hover={false}
+    <>
+      <section
+        id="about"
+        className="relative py-16 md:py-24 overflow-hidden"
+        style={{ background: isDark ? C.bg : "#FFFFFF" }}
+      >
+        <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
+          <HomeReveal variants={homeFadeUp}>
+            <h2
+              className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight mb-8 sm:mb-12"
+              style={{ color: isDark ? C.text : "#0F172A" }}
             >
-              <h3
-                className={cn(
-                  "font-black text-xl md:text-2xl uppercase tracking-widest mb-4",
-                  isDark ? "text-white" : "text-slate-900"
-                )}
-              >
-                {ABOUT_MISSION.title}
-              </h3>
-              <p
-                className={cn(
-                  "text-xs md:text-sm font-normal leading-relaxed tracking-wide max-w-[520px] mx-auto",
-                  isDark ? "text-[#DCE2F6]" : "text-[#45556C]"
-                )}
-              >
-                {ABOUT_MISSION.text}
-              </p>
-            </Card>
-          </motion.div>
+              {about.titleBefore}{" "}
+              <span style={{ color: C.accent }}>{about.titleAccent}</span>
+            </h2>
+          </HomeReveal>
 
-          {/* Vision Card */}
-          <motion.div variants={fadeRight}>
-            <Card
-              className={cn(
-                "p-8 md:p-12 text-center rounded-xl transition-all duration-300 h-[280px] md:h-[220px] flex flex-col justify-center border",
-                isDark 
-                  ? "bg-[#0B122099] border-white/[0.06] shadow-2xl" 
-                  : "bg-[#EDFAFF] border-[#BEDBFF] shadow-sm"
-              )}
-              hover={false}
-            >
-              <h3
-                className={cn(
-                  "font-black text-xl md:text-2xl uppercase tracking-widest mb-4",
-                  isDark ? "text-white" : "text-slate-900"
-                )}
+          <motion.div
+            variants={homeStagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={homeViewport}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6"
+          >
+            <HomeItem variants={homeFadeLeft}>
+              <div
+                className="rounded-2xl border p-5 sm:p-8 md:p-10 flex flex-col justify-center min-h-[220px] sm:min-h-[280px] h-full"
+                style={{
+                  background: isDark ? `${C.bgCard}CC` : "#F8FAFC",
+                  borderColor: isDark ? C.border : "#E2E8F0",
+                }}
               >
-                {ABOUT_VISION.title}
-              </h3>
-              <p
-                className={cn(
-                  "text-xs md:text-sm font-normal leading-relaxed tracking-wide max-w-[520px] mx-auto",
-                  isDark ? "text-[#DCE2F6]" : "text-[#45556C]"
-                )}
-              >
-                {ABOUT_VISION.text}
-              </p>
-            </Card>
-          </motion.div>
-        </motion.div>
-
-        {/* Section Heading Refined to Match Colors */}
-        <motion.h3
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={viewportOnce}
-          className={cn(
-            "font-heading font-bold text-lg md:text-xl text-center mb-10 tracking-wide",
-            isDark ? "text-[#00D3F3]" : "text-[#155DFC]"
-          )}
-        >
-          Our Core Values
-        </motion.h3>
-
-        {/* Core Values Horizontal Flex Grid Layout */}
-        <motion.div
-          ref={valuesRef}
-          variants={staggerContainer}
-          initial="hidden"
-          animate={valuesInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          {CORE_VALUES.map((val, i) => (
-            <motion.div
-              key={val.title}
-              variants={i % 2 === 0 ? fadeLeft : fadeRight}
-            >
-              <Card 
-                className={cn(
-                  "p-6 md:p-8 rounded-xl flex flex-row items-start gap-5 transition-all duration-300 h-[180px] md:h-[140px] border",
-                  isDark 
-                    ? "bg-[#060f21] border-white/[0.04] shadow-xl" 
-                    : "bg-white border-[#BEDBFF] shadow-md shadow-slate-100/30"
-                )}
-                style={isDark ? { borderTop: "0.8px solid rgba(0, 184, 219, 0.3)" } : undefined}
-                hover={false}
-              >
-                {/* Icon wrapper layout matched directly with row flex container */}
-                <div
-                  className={cn(
-                    "mt-0.5 flex items-center justify-center shrink-0",
-                    isDark ? "text-[#00D3F3]" : "text-[#155DFC]"
-                  )}
+                <h3
+                  className="font-black text-base sm:text-lg uppercase tracking-[0.2em] mb-4 sm:mb-5 text-center"
+                  style={{ color: isDark ? C.text : "#0F172A" }}
                 >
-                  {ICON_MAP[val.icon]}
-                </div>
-                
-                {/* Text Content Block */}
-                <div className="flex-1 flex flex-col text-left">
-                  <h4
-                    className={cn(
-                      "font-heading font-bold text-sm md:text-base mb-2 tracking-wide",
-                      isDark ? "text-[#00D3F3]" : "text-[#155DFC]"
-                    )}
-                  >
-                    {val.title}
-                  </h4>
-                  <p
-                    className={cn(
-                      "text-xs md:text-sm font-normal leading-relaxed",
-                      isDark ? "text-[#90A1B9]" : "text-[#45556C]"
-                    )}
-                  >
-                    {val.desc}
-                  </p>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </SectionWrapper>
+                  {about.mission.title}
+                </h3>
+                <p
+                  className="text-[13px] sm:text-sm leading-relaxed text-center"
+                  style={{ color: isDark ? "#D8E0F0" : "#475569" }}
+                >
+                  {about.mission.text}
+                </p>
+              </div>
+            </HomeItem>
+
+            <HomeItem variants={homeScaleIn}>
+              <div
+                className="relative rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[280px] aspect-[4/3] md:aspect-auto border h-full"
+                style={{ borderColor: C.border }}
+              >
+                <Image
+                  src={about.missionImage}
+                  alt="Collaborative workspace"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </HomeItem>
+
+            <HomeItem variants={homeScaleIn}>
+              <div
+                className="relative rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[280px] aspect-[4/3] md:aspect-auto border h-full"
+                style={{ borderColor: C.border }}
+              >
+                <Image
+                  src={about.visionImage}
+                  alt="Digital infrastructure"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </HomeItem>
+
+            <HomeItem variants={homeFadeRight}>
+              <div
+                className="rounded-2xl border p-5 sm:p-8 md:p-10 flex flex-col justify-center min-h-[220px] sm:min-h-[280px] h-full"
+                style={{
+                  background: isDark ? `${C.bgCard}CC` : "#F8FAFC",
+                  borderColor: isDark ? C.border : "#E2E8F0",
+                }}
+              >
+                <h3
+                  className="font-black text-base sm:text-lg uppercase tracking-[0.2em] mb-4 sm:mb-5 text-center"
+                  style={{ color: isDark ? C.text : "#0F172A" }}
+                >
+                  {about.vision.title}
+                </h3>
+                <p
+                  className="text-[13px] sm:text-sm leading-relaxed text-center"
+                  style={{ color: isDark ? "#D8E0F0" : "#475569" }}
+                >
+                  {about.vision.text}
+                </p>
+              </div>
+            </HomeItem>
+          </motion.div>
+        </div>
+      </section>
+
+      <section
+        id="values"
+        className="relative py-16 md:py-24 overflow-hidden"
+        style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
+      >
+        {isDark && (
+          <div
+            aria-hidden
+            className="absolute left-0 top-1/2 -translate-y-1/2 w-[min(500px,90vw)] h-[min(500px,90vw)] pointer-events-none"
+            style={{
+              background: `radial-gradient(circle, ${C.glow} 0%, transparent 70%)`,
+              filter: "blur(40px)",
+            }}
+          />
+        )}
+
+        <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-start">
+            <HomeReveal stagger>
+              <HomeItem variants={homeFadeLeft}>
+                <h2
+                  className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight mb-8 sm:mb-10"
+                  style={{ color: isDark ? C.text : "#0F172A" }}
+                >
+                  {values.titleBefore}{" "}
+                  <span style={{ color: C.accent }}>{values.titleAccent}</span>
+                </h2>
+              </HomeItem>
+
+              <motion.div
+                variants={homeStaggerFast}
+                initial="hidden"
+                whileInView="visible"
+                viewport={homeViewport}
+                className="flex flex-col gap-3"
+              >
+                {values.items.map((item, i) => {
+                  const open = activeValue === i;
+                  return (
+                    <HomeItem key={item.number} variants={homeFadeUp}>
+                      <button
+                        type="button"
+                        onClick={() => setActiveValue(i)}
+                        className="w-full flex items-center justify-between gap-3 sm:gap-4 rounded-xl border px-4 sm:px-5 py-3.5 sm:py-4 text-left transition-all"
+                        style={{
+                          borderColor: open
+                            ? `${C.accent}99`
+                            : isDark
+                              ? C.border
+                              : "#E2E8F0",
+                          background: isDark ? C.bgCard : "#FFFFFF",
+                          boxShadow: open ? `0 0 20px ${C.glow}` : "none",
+                        }}
+                      >
+                        <span
+                          className="font-heading font-semibold text-sm sm:text-base md:text-lg min-w-0"
+                          style={{ color: isDark ? C.text : "#0F172A" }}
+                        >
+                          <span
+                            className="mr-2 font-medium"
+                            style={{ color: C.textDim }}
+                          >
+                            {item.number}
+                          </span>
+                          {item.title}
+                        </span>
+                        <ChevronRight
+                          size={18}
+                          className={`shrink-0 transition-transform ${open ? "rotate-90" : ""}`}
+                          style={{ color: C.textMuted }}
+                        />
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {open && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: homeEase }}
+                            className="overflow-hidden"
+                          >
+                            <p
+                              className="px-4 sm:px-5 py-3 sm:py-4 text-[13px] sm:text-sm leading-relaxed"
+                              style={{
+                                color: isDark ? C.textMuted : "#475569",
+                              }}
+                            >
+                              {item.desc}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </HomeItem>
+                  );
+                })}
+              </motion.div>
+            </HomeReveal>
+
+            <HomeReveal variants={homeFadeRight} delay={0.15}>
+              <p
+                className="font-heading font-bold text-lg sm:text-xl mb-4"
+                style={{ color: isDark ? C.text : "#0F172A" }}
+              >
+                {values.imageLabel}
+              </p>
+              <div
+                className="relative rounded-2xl overflow-hidden border aspect-[4/3] shadow-2xl w-full"
+                style={{ borderColor: C.border }}
+              >
+                <Image
+                  src={values.image}
+                  alt="Analytics dashboard"
+                  fill
+                  className="object-cover object-left-top"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+            </HomeReveal>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

@@ -1,181 +1,291 @@
 "use client";
 
-import { motion, Variants } from "framer-motion"; // ◄ Added Variants import
+import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import { BRANDS } from "@/utils/siteData";
+import { ChevronRight } from "lucide-react";
+import { HomeBrand, homeColors } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
+import { homeFadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
-const WAVE_CONFIGS = [
-  {
-    id: "indigo-blue",
-    leftStart: "#6366f1",
-    leftEnd: "rgba(21, 93, 252, 0)",
-    rightStart: "#155dfc",
-    rightEnd: "rgba(99, 102, 241, 0)",
-    pathLeftToRight: "M0,15 C70,105 130,100 240,45 L240,120 L0,120 Z",
-    pathRightToLeft: "M0,65 C100,115 170,95 240,40 L240,120 L0,120 Z"
-  },
-  {
-    id: "blue-royal",
-    leftStart: "#155dfc",
-    leftEnd: "rgba(59, 130, 246, 0)",
-    rightStart: "#3b82f6",
-    rightEnd: "rgba(21, 93, 252, 0)",
-    pathLeftToRight: "M0,10 C80,100 140,95 240,50 L240,120 L0,120 Z",
-    pathRightToLeft: "M0,60 C90,110 160,90 240,35 L240,120 L0,120 Z"
-  },
-  {
-    id: "teal-cyan",
-    leftStart: "#0092b8",
-    leftEnd: "rgba(34, 211, 238, 0)",
-    rightStart: "#22d3ee",
-    rightEnd: "rgba(0, 146, 184, 0)",
-    pathLeftToRight: "M0,20 C70,110 130,105 240,35 L240,120 L0,120 Z",
-    pathRightToLeft: "M0,55 C80,100 150,115 240,25 L240,120 L0,120 Z"
-  },
-  {
-    id: "purple-deep",
-    leftStart: "#7c3aed",
-    leftEnd: "rgba(21, 93, 252, 0)",
-    rightStart: "#155dfc",
-    rightEnd: "rgba(124, 58, 237, 0)",
-    pathLeftToRight: "M0,5 C90,105 150,90 240,55 L240,120 L0,120 Z",
-    pathRightToLeft: "M0,70 C70,115 140,100 240,30 L240,120 L0,120 Z"
-  }
-];
+const C = homeColors;
+const LINK_BLUE = "#5A96E3";
 
-// ── ADDED EXPLICIT TYPE ──────────────────────────────────────────────────────
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-};
+const cardVariants: Variants = homeFadeUp;
+
+/** Transparent network / constellation — no black fill */
+function NetworkBackdrop({ id, variant }: { id: string; variant: number }) {
+  const layouts = [
+    {
+      nodes: [
+        [40, 36],
+        [110, 24],
+        [180, 42],
+        [250, 20],
+        [310, 50],
+        [60, 90],
+        [140, 100],
+        [210, 78],
+        [280, 110],
+        [90, 150],
+        [170, 155],
+        [250, 165],
+        [320, 130],
+        [130, 200],
+        [220, 205],
+      ],
+      links: [
+        [0, 1],
+        [1, 2],
+        [2, 3],
+        [3, 4],
+        [0, 5],
+        [1, 6],
+        [2, 7],
+        [4, 8],
+        [5, 6],
+        [6, 7],
+        [7, 8],
+        [5, 9],
+        [6, 10],
+        [8, 11],
+        [8, 12],
+        [9, 13],
+        [10, 14],
+        [11, 14],
+      ] as [number, number][],
+    },
+    {
+      nodes: [
+        [50, 30],
+        [130, 45],
+        [200, 25],
+        [270, 55],
+        [80, 85],
+        [160, 95],
+        [240, 80],
+        [300, 100],
+        [100, 145],
+        [180, 140],
+        [260, 155],
+        [140, 190],
+        [230, 200],
+        [60, 170],
+        [310, 170],
+      ],
+      links: [
+        [0, 1],
+        [1, 2],
+        [2, 3],
+        [0, 4],
+        [1, 5],
+        [2, 6],
+        [3, 7],
+        [4, 5],
+        [5, 6],
+        [6, 7],
+        [4, 8],
+        [5, 9],
+        [6, 10],
+        [8, 11],
+        [9, 12],
+        [8, 13],
+        [10, 14],
+        [9, 11],
+      ] as [number, number][],
+    },
+    {
+      nodes: [
+        [70, 40],
+        [150, 28],
+        [230, 48],
+        [300, 30],
+        [40, 100],
+        [120, 110],
+        [200, 90],
+        [280, 120],
+        [80, 160],
+        [160, 170],
+        [240, 155],
+        [320, 180],
+        [110, 210],
+        [200, 215],
+        [50, 190],
+      ],
+      links: [
+        [0, 1],
+        [1, 2],
+        [2, 3],
+        [0, 4],
+        [0, 5],
+        [1, 5],
+        [2, 6],
+        [3, 7],
+        [4, 5],
+        [5, 6],
+        [6, 7],
+        [4, 8],
+        [5, 9],
+        [7, 10],
+        [7, 11],
+        [8, 12],
+        [9, 13],
+        [8, 14],
+      ] as [number, number][],
+    },
+  ];
+
+  const { nodes, links } = layouts[variant % layouts.length];
+
+  return (
+    <svg
+      aria-hidden
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      viewBox="0 0 360 240"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <defs>
+        <radialGradient id={`${id}-glow`} cx="55%" cy="30%" r="50%">
+          <stop offset="0%" stopColor="#2F80ED" stopOpacity="0.28" />
+          <stop offset="100%" stopColor="#2F80ED" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      {/* Transparent — only soft blue glow, no black rect */}
+      <rect width="360" height="240" fill={`url(#${id}-glow)`} />
+      <g stroke="#7EB6FF" strokeWidth="0.85" opacity="0.4" fill="none">
+        {links.map(([a, b], i) => (
+          <line
+            key={i}
+            x1={nodes[a][0]}
+            y1={nodes[a][1]}
+            x2={nodes[b][0]}
+            y2={nodes[b][1]}
+          />
+        ))}
+      </g>
+      {nodes.map(([x, y], i) => (
+        <circle
+          key={i}
+          cx={x}
+          cy={y}
+          r={i % 4 === 0 ? 2.8 : 1.8}
+          fill="#B8D8FF"
+          opacity={0.7}
+        />
+      ))}
+    </svg>
+  );
+}
 
 export default function BrandCard({
   brand,
   index,
 }: {
-  brand: typeof BRANDS[0];
+  brand: HomeBrand;
   index: number;
 }) {
   const { isDark } = useTheme();
-  const wave = WAVE_CONFIGS[index % WAVE_CONFIGS.length];
+  const patternId = `eco-net-${index}`;
 
-  // Check if the current card is allowed to navigate
-  const isClickable = ["Iitil", "Eatskart"].includes(brand.name);
+  const content = (
+    <>
+      {/* Transparent network overlay only — no black image */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <NetworkBackdrop id={patternId} variant={index} />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: isDark
+              ? "linear-gradient(180deg, transparent 0%, transparent 45%, rgba(13,20,37,0.75) 75%, #0D1425 100%)"
+              : "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.85) 100%)",
+          }}
+        />
+      </div>
 
-  return (
-    <motion.div
-      variants={cardVariants}
-      className={cn(
-        "relative w-full h-[520px] rounded-none border flex flex-col items-center text-center p-6 sm:p-8 overflow-hidden transition-shadow duration-300",
-        isDark 
-          ? "bg-[#0b1329] border-white/[0.05] shadow-2xl" 
-          : "bg-white border-slate-100 shadow-md shadow-slate-100/50"
-      )}
-    >
-      {/* Content Wrapper */}
-      <div className="flex-1 flex flex-col items-center w-full z-10">
-        {/* Brand Icon */}
-        <div className="w-36 h-36 sm:w-40 sm:h-40 my-6 flex items-center justify-center shrink-0">
-          <Image
-            src={isDark ? brand.iconDark : brand.icon}
-            alt={brand.name}
-            width={140}
-            height={140}
-            className="object-contain max-h-full max-w-full"
-            priority
-          />
+      <div className="relative z-10 flex flex-col h-full items-start">
+        <div className="w-full flex items-center justify-start mb-4 sm:mb-5 md:mb-6 pt-1">
+          <div className="relative w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] flex items-center justify-center">
+            <div
+              className="absolute inset-0 rounded-full blur-2xl opacity-35"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(47,128,237,0.5) 0%, transparent 70%)",
+              }}
+            />
+            <Image
+              src={isDark ? brand.iconDark : brand.icon}
+              alt={brand.name}
+              width={120}
+              height={120}
+              className={cn(
+                "relative z-10 object-contain w-auto h-auto max-h-[80px] sm:max-h-[100px] md:max-h-[120px] max-w-[80px] sm:max-w-[100px] md:max-w-[120px]",
+                isDark && "mix-blend-screen"
+              )}
+              sizes="(max-width: 640px) 80px, (max-width: 768px) 100px, 120px"
+              priority={index < 3}
+            />
+          </div>
         </div>
 
-        {/* Accent Divider Bar */}
-        <div
-          className={cn(
-            "w-12 h-[2px] mb-6 rounded-full shrink-0",
-            isDark ? "bg-white/30" : "bg-blue-600"
-          )}
-        />
-
-        {/* Brand Name Title */}
         <h3
-          className={cn(
-            "font-heading font-bold text-xl sm:text-2xl mb-3 tracking-wide",
-            isDark ? "text-white" : "text-slate-800"
-          )}
+          className="font-heading font-bold text-lg sm:text-xl md:text-2xl mb-2 sm:mb-3 tracking-tight text-left w-full"
+          style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
         >
           {brand.name}
         </h3>
 
-        {/* Description Context */}
         <p
-          className={cn(
-            "text-xs sm:text-sm font-normal leading-relaxed max-w-[260px]",
-            isDark ? "text-slate-400" : "text-slate-500"
-          )}
+          className="text-xs sm:text-[13px] md:text-sm leading-relaxed text-left flex-1 mb-5 sm:mb-6 line-clamp-4"
+          style={{ color: isDark ? "rgba(255,255,255,0.82)" : "#64748B" }}
         >
           {brand.description}
         </p>
-      </div>
 
-      {/* Button Layout Area */}
-      <div className="relative z-20 mt-auto pb-4">
-        {isClickable ? (
-          /* Active Link Button */
-          <Link
-            href={brand.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 hover:-translate-y-0.5",
-              isDark
-                ? "bg-[#cce0ff] text-slate-900 hover:bg-white"
-                : "bg-blue-600 text-white hover:bg-blue-700"
-            )}
-          >
-            <ArrowUpRight size={20} strokeWidth={2.5} />
-          </Link>
-        ) : (
-          /* Non-clickable Button Placeholder */
-          <div
-            className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center cursor-not-allowed opacity-40",
-              isDark
-                ? "bg-slate-700 text-slate-400"
-                : "bg-slate-200 text-slate-400"
-            )}
-          >
-            <ArrowUpRight size={20} strokeWidth={2.5} />
-          </div>
-        )}
-      </div>
-
-      {/* Deep Crossover Waves Layer */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 w-full pointer-events-none z-0">
-        <svg
-          viewBox="0 0 240 120"
-          className="w-full h-full object-cover"
-          preserveAspectRatio="none"
+        <span
+          className={cn(
+            "inline-flex items-center gap-1 text-sm font-medium mt-auto",
+            !brand.clickable && "opacity-40"
+          )}
+          style={{ color: brand.clickable ? LINK_BLUE : C.textDim }}
         >
-          <defs>
-            <linearGradient id={`${wave.id}-left`} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={wave.leftStart} stopOpacity="0.6" />
-              <stop offset="60%" stopColor={wave.leftStart} stopOpacity="0.2" />
-              <stop offset="100%" stopColor={wave.leftEnd} stopOpacity="0" />
-            </linearGradient>
-
-            <linearGradient id={`${wave.id}-right`} x1="100%" y1="0%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor={wave.rightStart} stopOpacity="0.6" />
-              <stop offset="60%" stopColor={wave.rightStart} stopOpacity="0.2" />
-              <stop offset="100%" stopColor={wave.rightEnd} stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          
-          <path d={wave.pathLeftToRight} fill={`url(#${wave.id}-left)`} />
-          <path d={wave.pathRightToLeft} fill={`url(#${wave.id}-right)`} className="mix-blend-screen" />
-        </svg>
+          {brand.cta}
+          <ChevronRight size={15} strokeWidth={2.2} />
+        </span>
       </div>
+    </>
+  );
+
+  const className =
+    "relative w-full min-h-[320px] h-[340px] sm:h-[360px] md:h-[400px] rounded-[16px] sm:rounded-[20px] border p-5 sm:p-6 md:p-8 flex flex-col overflow-hidden transition-all duration-300 hover:border-[rgba(90,150,227,0.45)]";
+
+  const style = {
+    background: isDark ? "#0D1425" : "#FFFFFF",
+    borderColor: isDark ? "rgba(255,255,255,0.08)" : "#E2E8F0",
+    boxShadow: isDark
+      ? "inset 0 1px 0 rgba(126,182,255,0.06), 0 24px 48px rgba(0,0,0,0.4)"
+      : "0 10px 28px rgba(15,23,42,0.08)",
+  };
+
+  if (brand.clickable) {
+    return (
+      <motion.div variants={cardVariants} className="h-full">
+        <Link
+          href={brand.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(className, "no-underline block h-full")}
+          style={style}
+        >
+          {content}
+        </Link>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div variants={cardVariants} className={className} style={style}>
+      {content}
     </motion.div>
   );
 }

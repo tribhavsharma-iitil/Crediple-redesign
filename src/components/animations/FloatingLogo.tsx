@@ -8,9 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import { useTheme } from "@/context/ThemeContext";
-import enterprise_light from "@/assets/enterprise_light.png";
-import enterprise_dark from "@/assets/enterprise_dark.png";
+import yakaBlue from "@/assets/yaka_blue.png";
 import type { HomeIntroPhase } from "@/lib/homeIntro";
 
 const NAV_H = 72;
@@ -57,7 +55,6 @@ export default function FloatingLogo({
   phase,
   onIntroComplete,
 }: FloatingLogoProps) {
-  const { isDark } = useTheme();
   const [vw, setVw] = useState(0);
   const [vh, setVh] = useState(0);
   const [heroRect, setHeroRect] = useState<Rect | null>(null);
@@ -133,7 +130,7 @@ export default function FloatingLogo({
     return null;
   }
 
-  const logo = isDark ? enterprise_dark : enterprise_light;
+  const logo = yakaBlue;
 
   if (phase === "flying" && !landed) {
     const center = viewportCenter(vw, vh);
@@ -150,7 +147,7 @@ export default function FloatingLogo({
           left: heroRect.x,
           top: heroRect.y,
           width: heroRect.width,
-          height: heroRect.height,
+          height: Math.min(heroRect.height, heroRect.width),
         }}
         transition={{
           type: "spring",

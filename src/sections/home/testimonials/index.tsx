@@ -1,185 +1,277 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Phone, Star } from "lucide-react";
-import { TESTIMONIALS } from "@/utils/siteData";
-import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { Phone } from "lucide-react";
+import type { CSSProperties } from "react";
+import { homeContent, homeColors } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
-import { fadeUp, staggerContainer, scaleIn, viewportOnce } from "@/lib/animations";
-import { cn } from "@/lib/utils";
+import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
+import {
+  homeFadeUp,
+  homeScaleIn,
+  homeStagger,
+  homeViewport,
+} from "@/lib/animations";
 
-const DISPLAYED = TESTIMONIALS.slice(0, 3);
+const { testimonials, cta } = homeContent;
+const C = homeColors;
+
+/** Sampled from Home.pdf testimonials frame */
+const T = {
+  bg: "#03081A",
+  card: "#0B1324",
+  ball: "#041565",
+  titleBlue: "#5B8FD4",
+  quote: "#F4F6FA",
+  muted: "#7B8494",
+  star: "#3E66DF",
+} as const;
+
+function BlueStar() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden className="shrink-0">
+      <path
+        fill={T.star}
+        d="M12 2.5l2.9 6.1 6.7.7-5 4.6 1.4 6.6L12 17.8 5.99 20.5 7.4 13.9l-5-4.6 6.7-.7L12 2.5z"
+      />
+    </svg>
+  );
+}
+
+function Ball({
+  size,
+  style,
+  className,
+}: {
+  size: number;
+  style: CSSProperties;
+  className?: string;
+}) {
+  return (
+    <div
+      aria-hidden
+      className={`absolute rounded-full pointer-events-none ${className ?? ""}`}
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: T.ball,
+        ...style,
+      }}
+    />
+  );
+}
 
 export default function Testimonials() {
   const { isDark } = useTheme();
 
   return (
-    <div 
-      className="w-full"
-    >
-      {/* Testimonials Grid Section */}
-      <SectionWrapper id="testimonials" className="py-20 md:py-24">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="max-w-[1300px] mx-auto px-4 md:px-6"
-        >
-          <motion.h2
-            variants={fadeUp}
-            className={cn(
-              "font-heading font-bold text-3xl md:text-5xl text-center tracking-tight",
-              isDark ? "text-white" : "text-[#1E293B]"
-            )}
-          >
-            What Our Clients Say
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className={cn(
-              "text-xs font-bold uppercase tracking-[0.2em] text-center mt-4 mb-16 max-w-2xl mx-auto",
-              isDark ? "text-slate-500" : "text-slate-400"
-            )}
-          >
-            TRUSTED BY PROFESSIONALS ACROSS HEALTHCARE, FINANCE, LEGAL AND TECH.
-          </motion.p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {DISPLAYED.map((item) => (
-              <motion.div key={item.name} variants={fadeUp}>
-                <div className={cn(
-                  "p-8 h-full flex flex-col rounded-[20px] border transition-all duration-300 shadow-none",
-                  isDark 
-                    ? "bg-[#090F1C] border-white/[0.04]" 
-                    : "bg-white border-slate-100 shadow-sm shadow-indigo-100/30"
-                )}>
-                  {/* Top Header Block matching the screenshot layouts */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex gap-1">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          size={13}
-                          className="fill-[#EAB308] text-[#EAB308]"
-                        />
-                      ))}
-                    </div>
-                    <span className="text-4xl font-serif font-black leading-none text-[#155DFC] select-none opacity-80">
-                      99
-                    </span>
-                  </div>
-
-                  {/* Main Quote Content Text block */}
-                  <p className={cn(
-                    "text-sm leading-relaxed flex-1 font-medium",
-                    isDark ? "text-slate-400" : "text-[#475569]"
-                  )}>
-                    &ldquo;{item.text}&rdquo;
-                  </p>
-
-                  {/* Identity Footer section block */}
-                  <div className="flex items-center gap-4 mt-8 pt-5 border-t border-slate-100/10 dark:border-white/5">
-                    <div
-                      className="w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold shrink-0 overflow-hidden"
-                      style={{
-                        background: `${item.accent || '#155DFC'}15`,
-                        color: item.accent || '#155DFC',
-                        border: `1px solid ${item.accent || '#155DFC'}30`
-                      }}
-                    >
-                      {item.avatar || item.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className={cn(
-                        "font-bold text-sm tracking-tight",
-                        isDark ? "text-white" : "text-[#1E293B]"
-                      )}>
-                        {item.name}
-                      </p>
-                      <p className={cn(
-                        "text-xs font-medium mt-0.5", 
-                        isDark ? "text-slate-500" : "text-slate-400"
-                      )}>
-                        {item.role}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+    <div className="w-full">
+      <section
+        id="testimonials"
+        className="relative py-16 md:py-24 overflow-hidden"
+        style={{ background: isDark ? T.bg : "#FFFFFF" }}
+      >
+        {/* Full-bleed balls relative to section (matches PDF frame) */}
+        {isDark && (
+          <div aria-hidden className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            {/* Left big — cut off by left/bottom, sits behind card 1 */}
+            <Ball
+              size={180}
+              style={{ left: -40, bottom: 40 }}
+              className="sm:!w-[250px] sm:!h-[250px] sm:!-left-[50px] sm:!bottom-[50px]"
+            />
+            {/* Top-right — beside the heading */}
+            <Ball
+              size={80}
+              style={{ right: "6%", top: 48 }}
+              className="sm:!w-[130px] sm:!h-[130px] sm:!right-[8%] sm:!top-[72px]"
+            />
+            {/* Bottom-right — small peek */}
+            <Ball
+              size={64}
+              style={{ right: 24, bottom: 40 }}
+              className="sm:!w-[100px] sm:!h-[100px] sm:!right-[100px] sm:!bottom-[70px]"
+            />
           </div>
-        </motion.div>
-      </SectionWrapper>
+        )}
 
-      {/* Institutional CTA Callout Section */}
-      <SectionWrapper className="pb-24 pt-4">
-        <div className="max-w-[1300px] mx-auto px-4 md:px-6">
+        <div className="relative z-10 w-full max-w-[1260px] mx-auto px-4 sm:px-6">
           <motion.div
-            variants={scaleIn}
+            variants={homeStagger}
             initial="hidden"
             whileInView="visible"
-            viewport={viewportOnce}
-            className={cn(
-              "rounded-[32px] p-10 md:p-16 text-center border relative overflow-hidden transition-all duration-300",
-              isDark
-                ? "bg-[#070D19] border-white/[0.05] shadow-2xl"
-                : "bg-gradient-to-r from-[#00A3C4] via-[#1D4ED8] to-[#2563EB] text-white border-transparent shadow-xl shadow-blue-600/10"
-            )}
+            viewport={homeViewport}
           >
-            <h2 className={cn(
-              "font-heading font-bold text-3xl md:text-5xl mb-5 tracking-tight max-w-2xl mx-auto leading-[1.15]",
-              isDark ? "text-white" : "text-white"
-            )}>
-              Ready for Institutional Excellence?
-            </h2>
-            
-            <p className={cn(
-              "text-sm md:text-base max-w-2xl mx-auto mb-10 leading-relaxed font-medium",
-              isDark ? "text-slate-400" : "text-white/85"
-            )}>
-              Join the ecosystem that&apos;s redefining the future of global industry.
-              Let&apos;s discuss your next strategic move.
-            </p>
+            <HomeItem variants={homeFadeUp}>
+              <h2
+                className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-left"
+                style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+              >
+                {testimonials.titleBefore}{" "}
+                <span style={{ color: isDark ? T.titleBlue : C.accentSoft }}>
+                  {testimonials.titleAccent}
+                </span>
+              </h2>
+            </HomeItem>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-              {isDark ? (
-                <>
-                  <a
-                    href="/contact"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-[14px] bg-[#93C5FD] text-[#030712] font-bold text-sm hover:bg-[#BFDBFE] transition-colors no-underline shadow-lg shadow-blue-500/10"
+            <HomeItem variants={homeFadeUp}>
+              <p
+                className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] mt-3 mb-10 sm:mb-12 md:mb-14 max-w-2xl text-left"
+                style={{ color: isDark ? T.muted : "#64748B" }}
+              >
+                {testimonials.subtitle}
+              </p>
+            </HomeItem>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+              {testimonials.items.map((item) => (
+                <HomeItem key={item.name} variants={homeFadeUp}>
+                  <article
+                    className="relative p-5 sm:p-7 md:p-8 h-full flex flex-col rounded-2xl text-left"
+                    style={{ background: isDark ? T.card : "#F8FAFC" }}
                   >
-                    Schedule Consultation
-                  </a>
-                  <a
-                    href="/contact"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[14px] border border-white/20 bg-white/[0.02] text-white font-bold text-sm hover:bg-white/[0.06] transition-colors no-underline"
-                  >
-                    <Phone size={15} strokeWidth={2.5} />
-                    Schedule a Call
-                  </a>
-                </>
-              ) : (
-                <>
-                  <a
-                    href="/contact"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-[14px] bg-white text-[#155DFC] font-bold text-sm hover:bg-slate-50 transition-colors no-underline shadow-md"
-                  >
-                    Schedule Consultation
-                  </a>
-                  <a
-                    href="/contact"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[14px] border border-white/30 bg-white/10 text-white font-bold text-sm hover:bg-white/15 transition-colors no-underline"
-                  >
-                    <Phone size={15} strokeWidth={2.5} />
-                    Schedule a Call
-                  </a>
-                </>
-              )}
+                    <div className="flex items-center justify-center gap-[3px] mb-4 sm:mb-5">
+                      <BlueStar />
+                      <BlueStar />
+                      <BlueStar />
+                      <BlueStar />
+                      <BlueStar />
+                    </div>
+
+                    <p
+                      className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed flex-1"
+                      style={{ color: isDark ? T.quote : "#334155" }}
+                    >
+                      &ldquo;{item.text}&rdquo;
+                    </p>
+
+                    <div className="flex items-center gap-3 mt-6 sm:mt-8">
+                      <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-cover"
+                          sizes="40px"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <p
+                          className="font-bold text-sm truncate"
+                          style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+                        >
+                          {item.name}
+                        </p>
+                        <p
+                          className="text-xs mt-0.5 truncate"
+                          style={{ color: isDark ? T.muted : "#64748B" }}
+                        >
+                          {item.role}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                </HomeItem>
+              ))}
             </div>
           </motion.div>
         </div>
-      </SectionWrapper>
+      </section>
+
+      <section
+        className="relative pb-16 sm:pb-20 md:pb-28 pt-4 sm:pt-6 md:pt-8"
+        style={{ background: isDark ? T.bg : "#F8FAFC" }}
+      >
+        <div className="max-w-[1260px] mx-auto px-4 sm:px-6">
+          <HomeReveal variants={homeScaleIn}>
+            <div
+              className="relative overflow-hidden rounded-2xl sm:rounded-[28px] px-5 py-12 sm:px-6 sm:py-14 md:px-16 md:py-20 text-center"
+              style={
+                isDark
+                  ? {
+                      backgroundColor: "#0A1428",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }
+                  : {
+                      backgroundImage: `linear-gradient(90deg, ${C.accentStrong}, ${C.accent}, ${C.accentSoft})`,
+                    }
+              }
+            >
+              {isDark && (
+                <>
+                  {/* Very subtle corner washes — match design, not heavy orbs */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: `
+                        radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.22) 0%, transparent 70%),
+                        radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.14) 0%, transparent 70%)
+                      `,
+                    }}
+                  />
+
+                  {/* Faint grid only */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      backgroundImage: `
+                        linear-gradient(rgba(120, 150, 200, 0.07) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(120, 150, 200, 0.07) 1px, transparent 1px)
+                      `,
+                      backgroundSize: "52px 52px",
+                      WebkitMaskImage:
+                        "radial-gradient(ellipse at center, black 20%, transparent 70%)",
+                      maskImage:
+                        "radial-gradient(ellipse at center, black 20%, transparent 70%)",
+                    }}
+                  />
+                </>
+              )}
+
+              <h2 className="relative font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] text-white px-1">
+                {cta.title}
+              </h2>
+
+              <p
+                className="relative text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed px-1"
+                style={{
+                  color: isDark ? "#A8B0BC" : "rgba(255,255,255,0.85)",
+                }}
+              >
+                {cta.description}
+              </p>
+
+              <div className="relative flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <a
+                  href={cta.primaryCta.href}
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold text-sm no-underline transition-opacity hover:opacity-90"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(180deg, #2F80ED 0%, #1550B4 100%)",
+                    boxShadow: "0 6px 20px rgba(47, 128, 237, 0.35)",
+                  }}
+                >
+                  {cta.primaryCta.label}
+                </a>
+                <a
+                  href={cta.secondaryCta.href}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm text-white no-underline transition-colors hover:bg-white/5"
+                  style={{
+                    border: "1px solid rgba(255,255,255,0.28)",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  <Phone size={15} strokeWidth={2.25} />
+                  {cta.secondaryCta.label}
+                </a>
+              </div>
+            </div>
+          </HomeReveal>
+        </div>
+      </section>
     </div>
   );
 }
