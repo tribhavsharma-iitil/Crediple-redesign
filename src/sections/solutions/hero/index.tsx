@@ -94,30 +94,6 @@ export default function SolutionsHero() {
         animate="visible"
         className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center sm:px-6"
       >
-        <motion.div
-          variants={heroItem}
-          className="mb-5 w-fit max-w-full sm:mb-6 md:mb-7"
-        >
-          <span
-            className="inline-flex max-w-full items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-medium tracking-wide sm:px-4 sm:text-[11px] md:text-xs"
-            style={{
-              borderColor: isDark
-                ? "rgba(180, 197, 255, 0.45)"
-                : "rgba(21,80,180,0.25)",
-              color: isDark ? "#B4C5FF" : C.accentStrong,
-              background: isDark
-                ? "rgba(10, 20, 45, 0.85)"
-                : "rgba(47,128,237,0.08)",
-            }}
-          >
-            <span
-              className="h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ background: "#22C55E" }}
-            />
-            <span className="truncate">{hero.badge}</span>
-          </span>
-        </motion.div>
-
         <motion.h1
           variants={heroItem}
           className="font-heading mb-4 px-1 text-[1.85rem] leading-[1.12] font-[800] tracking-tight sm:mb-5 sm:text-5xl md:mb-6 md:text-6xl xl:text-[4.25rem]"

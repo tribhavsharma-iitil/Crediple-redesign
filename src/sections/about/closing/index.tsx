@@ -87,16 +87,10 @@ export default function AboutClosing() {
               {closing.brand}
             </h2>
             <p
-              className="relative z-10 text-sm sm:text-[15px] mb-3"
-              style={{ color: isDark ? C.textClosingMuted : "#64748B" }}
-            >
-              {closing.line1}
-            </p>
-            <p
               className="relative z-10 font-heading font-bold text-base sm:text-lg md:text-xl leading-snug max-w-2xl mx-auto"
               style={{ color: isDark ? C.textClosing : "#0F172A" }}
             >
-              {closing.line2}
+              {closing.line}
             </p>
           </div>
         </HomeReveal>

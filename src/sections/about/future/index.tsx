@@ -44,9 +44,7 @@ export default function AboutFuture() {
                 className="font-heading font-bold text-xl sm:text-2xl md:text-[1.75rem] leading-[1.35] mb-5"
                 style={{ color: isDark ? C.textHeading : "#0F172A" }}
               >
-                {future.headlineLine1}
-                <br />
-                {future.headlineLine2}
+                {future.headline}
               </p>
 
               <p
@@ -56,16 +54,30 @@ export default function AboutFuture() {
                 {future.body}
               </p>
 
-              <Link
-                href={future.cta.href}
-                className="inline-flex items-center justify-center px-8 py-2.5 rounded-full text-white text-sm font-semibold no-underline transition-opacity hover:opacity-90"
-                style={{
-                  background: C.buttonGradient,
-                  boxShadow: `0 8px 24px ${C.glow}`,
-                }}
-              >
-                {future.cta.label}
-              </Link>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  href={future.primaryCta.href}
+                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-full text-white text-sm font-semibold no-underline transition-opacity hover:opacity-90"
+                  style={{
+                    background: C.buttonGradient,
+                    boxShadow: `0 8px 24px ${C.glow}`,
+                  }}
+                >
+                  {future.primaryCta.label}
+                </Link>
+                <Link
+                  href={future.secondaryCta.href}
+                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-full text-sm font-semibold no-underline border transition-opacity hover:opacity-90"
+                  style={{
+                    borderColor: isDark
+                      ? "rgba(248,248,248,0.28)"
+                      : "rgba(15,23,42,0.15)",
+                    color: isDark ? C.text : "#0F172A",
+                  }}
+                >
+                  {future.secondaryCta.label}
+                </Link>
+              </div>
             </HomeItem>
           </HomeReveal>
 
@@ -94,7 +106,7 @@ export default function AboutFuture() {
                       {item.title}
                     </p>
                     <p
-                      className="text-xs leading-relaxed line-clamp-2"
+                      className="text-xs leading-relaxed"
                       style={{
                         color: isDark ? C.textClosingMuted : "#64748B",
                       }}

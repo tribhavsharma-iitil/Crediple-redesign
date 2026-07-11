@@ -32,7 +32,7 @@ export default function AboutFoundation() {
                 className="font-heading font-bold text-xl sm:text-2xl md:text-[1.65rem] leading-[1.35] mb-6 max-w-md"
                 style={{ color: isDark ? "#D8D8D8" : "#1E293B" }}
               >
-                {foundation.headline} {foundation.subheadline}
+                {foundation.headline}
               </p>
               <p
                 className="text-sm md:text-[15px] leading-relaxed mb-5 max-w-lg"

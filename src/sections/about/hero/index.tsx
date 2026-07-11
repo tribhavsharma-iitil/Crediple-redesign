@@ -90,38 +90,12 @@ export default function AboutHero() {
         animate="visible"
         className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center sm:px-6"
       >
-        <motion.div
-          variants={heroItem}
-          className="w-fit max-w-full mb-5 sm:mb-6 md:mb-7"
-        >
-          <span
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] md:text-xs font-medium tracking-wide border max-w-full"
-            style={{
-              borderColor: isDark
-                ? "rgba(88, 168, 248, 0.45)"
-                : "rgba(21,80,180,0.25)",
-              color: isDark ? C.textBadge : C.accentStrong,
-              background: isDark
-                ? "rgba(10, 20, 45, 0.85)"
-                : "rgba(47,128,237,0.08)",
-            }}
-          >
-            <span
-              className="w-1.5 h-1.5 rounded-full shrink-0"
-              style={{ background: "#22C55E" }}
-            />
-            <span className="truncate">{hero.badge}</span>
-          </span>
-        </motion.div>
-
         <motion.h1
           variants={heroItem}
           className="font-heading font-[800] text-[1.85rem] sm:text-5xl md:text-6xl xl:text-[4.25rem] leading-[1.12] tracking-tight mb-4 sm:mb-5 md:mb-6 px-1"
           style={{ color: isDark ? C.text : "#0F172A" }}
         >
           {hero.titleLine1}
-          <br />
-          {hero.titleLine2}
           <br />
           <span
             className="inline-block sm:whitespace-nowrap"

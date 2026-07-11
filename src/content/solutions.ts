@@ -1,5 +1,5 @@
 /**
- * Solutions page content from Crediple Solutions.pdf.
+ * Solutions page content.
  * Colors shared with Home / About brand tokens.
  */
 
@@ -8,7 +8,6 @@ import foundationNetwork from "@/assets/about/foundation-network.png";
 import serveFinance from "@/assets/home/serve-finance.jpg";
 import aboutCircuit from "@/assets/home/about-circuit.jpg";
 import valuesAnalytics from "@/assets/home/values-analytics.jpg";
-import timelineServer from "@/assets/home/timeline-server.jpg";
 import aboutDesk from "@/assets/home/about-desk.jpg";
 
 export const solutionsColors = {
@@ -25,13 +24,12 @@ export { homeTitleAccentStyle };
 
 export const solutionsContent = {
   hero: {
-    badge: "Smart Digital Solutions",
     titleLine1: "Scalable Systems For",
     titleAccent: "Modern Businesses.",
     description:
-      "We build intelligent platforms, automation systems, and enterprise-ready digital infrastructure.",
-    primaryCta: { label: "Our Brands", href: "/brands" },
-    secondaryCta: { label: "Start Project", href: "/contact" },
+      "We build automation systems and digital infrastructure for businesses that can't afford downtime.",
+    primaryCta: { label: "See Our Solutions", href: "#domains" },
+    secondaryCta: { label: "Talk to Us", href: "/contact" },
   },
 
   trust: {
@@ -40,107 +38,98 @@ export const solutionsContent = {
   },
 
   foundation: {
-    title: "Our Foundation",
-    headline: "More Than a Holding Company.",
-    subheadline: "A system builder across industries",
-    body: "Crediple transforms traditional business models into scalable, technology driven ecosystems. We bring structure, intelligence, and scalability to every industry we build in.",
+    title: "How We Build",
+    headline: "The Same Discipline",
+    subheadline: "Across Every Brand We Own.",
+    body: "Rather than building first and adjusting later, we study the operational realities — the bottlenecks, the friction points — up front. Every brand we launch fits from day one.",
     accent:
-      "We are not just building Brands. We are building systems that power industries.",
+      "That's the difference between a product and infrastructure. Every one of our brands is built as the latter.",
     image: foundationNetwork,
   },
 
   domains: {
-    titleBefore: "Solution",
-    titleAccent: "Domains",
+    titleBefore: "Domains We",
+    titleAccent: "Serve",
     items: [
       {
         title: "FinTech Intelligence",
-        desc: "Credit clarity, borrower profiling, lending workflows, and financial decision systems built for structured growth.",
-        short: "Provide the best experience with AI...",
+        desc: "From credit clarity to borrower profiling, financial decision infrastructure for structured, sustainable growth.",
+        short: "Financial decision infrastructure for structured growth.",
         href: "/contact",
         image: serveFinance,
       },
       {
         title: "HealthTech Systems",
-        desc: "Patient acquisition, provider visibility, care workflows, and clinic operations shaped into one connected digital journey.",
-        short: "Scale your retail brand with Adobe...",
+        desc: "From patient acquisition to clinical growth, digital infrastructure for healthcare providers.",
+        short: "Digital infrastructure for healthcare providers.",
         href: "/contact",
         image: aboutDesk,
       },
       {
         title: "Data Intelligence",
-        desc: "Dashboards, aggregation layers, predictive signals, and decision support systems that turn scattered data into action.",
-        short: "Leverage property listing marketpla...",
+        desc: "From cloud infrastructure to AI/ML, data intelligence systems for enterprise scale.",
+        short: "Data intelligence systems for enterprise scale.",
         href: "/contact",
         image: valuesAnalytics,
       },
       {
         title: "LegalTech Workflows",
-        desc: "Case handling, client onboarding, documentation, and service delivery brought into cleaner digital operating models.",
-        short: "Personalize your banking experience...",
+        desc: "Legal workflow infrastructure to reduce paperwork and speed up legal services.",
+        short: "Legal workflow infrastructure for faster services.",
         href: "/contact",
         image: aboutCircuit,
-      },
-      {
-        title: "Education Institutions",
-        desc: "Adaptive learning systems and administrative tools that handle thousands of users with institutional-grade reliability.",
-        short: "Provide the best experience with AI...",
-        href: "/contact",
-        image: timelineServer,
       },
     ],
   },
 
   process: {
-    titleBefore: "What Our",
-    titleAccent: "Clients Say",
-    subtitle:
-      "TRUSTED BY PROFESSIONALS ACROSS HEALTHCARE, FINANCE, LEGAL AND TECH.",
+    titleBefore: "Our",
+    titleAccent: "Process",
+    subtitle: "The repeatable strategy behind every system we ship.",
     steps: [
       {
         number: "01",
         label: "Discover",
-        text: "We map the industry problem, operational friction, user journey, and scale requirement before defining the system.",
+        text: "We begin by understanding the industry. What are its friction points? Who are its users? What are the scaling challenges?",
       },
       {
         number: "02",
-        label: "Architect",
-        text: "We design the workflows, intelligence layer, data movement, and brand experience that make the solution repeatable.",
+        label: "Design",
+        text: "We design the workflows, data flow, and intelligence layer, all toward a cohesive brand experience.",
       },
       {
         number: "03",
-        label: "Build",
-        text: "We turn the model into digital infrastructure, dashboards, tools, and growth systems with measurable outcomes.",
+        label: "Develop",
+        text: "The blueprint comes to life. We build the digital infrastructure — dashboards, tools, systems — with measurable outcomes from day one.",
       },
       {
         number: "04",
         label: "Scale",
-        text: "We refine adoption, performance loops, automation, and expansion paths so every solution can grow beyond a single use case.",
+        text: "We keep optimizing for higher adoption, automation, and better performance to help the system scale well beyond where it started.",
       },
     ],
   },
 
   advantage: {
-    eyebrow: "Ecosystem",
-    titleBefore: "Unified",
-    titleAccent: "Advantage",
+    titleBefore: "Multiple Systems,",
+    titleAccent: "One Brand",
     subtitle:
-      "Every brand in our ecosystem benefits from the same central intelligence layer.",
+      "One central intelligence layer powers every brand in the Crediple ecosystem.",
     items: [
-      { number: "01", label: "Digital presence systems" },
-      { number: "02", label: "Customer acquisition funnels" },
-      { number: "03", label: "Workflow automation" },
-      { number: "04", label: "Operational intelligence" },
-      { number: "05", label: "Data dashboards" },
-      { number: "06", label: "Brand ecosystem design" },
+      { number: "01", label: "Digital Footprint Systems" },
+      { number: "02", label: "Growth Funnels" },
+      { number: "03", label: "Automated Workflows" },
+      { number: "04", label: "Operational Intelligence" },
+      { number: "05", label: "Real-Time Dashboards" },
+      { number: "06", label: "Ecosystem Design" },
     ],
   },
 
   cta: {
-    title: "Build the system behind your next industry solution.",
+    title: "One Layer Across Every Brand.",
     description:
-      "Whether the challenge is visibility, workflow speed, data clarity, or scale, Crediple designs the operating layer that makes progress repeatable.",
-    button: { label: "Contact Us", href: "/contact" },
+      "Every Crediple brand runs on the same infrastructure, designed for consistency, built for scale.",
+    button: { label: "Get in Touch", href: "/contact" },
   },
 } as const;
 

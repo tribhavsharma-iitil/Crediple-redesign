@@ -35,90 +35,85 @@ export const aboutColors = {
 
 export const aboutContent = {
   hero: {
-    badge: "Unified Digital Ecosystem",
-    titleLine1: "Building Businesses",
-    titleLine2: "Through",
-    titleAccent: "Technology & Strategy.",
+    titleLine1: "We Build Systems that",
+    titleAccent: "Outlast Trends.",
     description:
-      "Crediple creates scalable digital ecosystems for modern industries and future-ready growth.",
-    primaryCta: { label: "Our Ecosystem", href: "/brands" },
-    secondaryCta: { label: "Contact Us", href: "/contact" },
+      "Crediple builds scalable technology systems for the industries shaping the future.",
+    primaryCta: { label: "See What We've Built", href: "/brands" },
+    secondaryCta: { label: "Get in Touch", href: "/contact" },
   },
 
   trust: {
-    label: "Trusted by 50+ institutions",
+    label: "Chosen by 50+ institutions and counting",
     marks: ["HD", "SB", "IC", "BF", "TC"],
   },
 
   foundation: {
-    title: "Our Foundation",
-    headline: "More Than a Holding Company.",
-    subheadline: "A system builder across industries",
-    body: "Crediple transforms traditional business models into scalable, technology driven ecosystems. We bring structure, intelligence, and scalability to every industry we build in.",
+    title: "Our Core",
+    headline: "A System Builder Across Industries.",
+    body: "We rebuild traditional business models as scalable, technology-driven systems. Crediple's approach is consistent across industries — bring structure and intelligence to fragmented processes.",
     accent:
-      "We are not just building Brands. We are building systems that power industries.",
+      "Our goal is to create a systemic infrastructure that powers future industries.",
     image: foundationNetwork,
   },
 
   philosophy: {
     titleBefore: "Our Operating",
     titleAccent: "Philosophy",
-    intro: "Every vertical we enter is evaluated on three principles:",
+    intro: "Before we enter any industry, we test it against three questions.",
     principles: [
       {
         number: "01",
-        text: "Can we standardise this process?",
+        text: "Can we standardise the workflow?",
       },
       {
         number: "02",
-        text: "Can it be scaled through technology?",
+        text: "Can technology scale it?",
       },
       {
         number: "03",
-        text: "Can it improve decision making or access?",
+        text: "Can we improve decision-making?",
       },
     ],
-    verdict: "If the answer is yes — we build it.",
+    verdict: "If the answer is yes, we build it.",
     pillars: [
-      { number: "01", label: "Transparent systems" },
-      { number: "02", label: "Scalable digital infrastructure" },
-      { number: "03", label: "Industry ready technology frameworks" },
-      { number: "04", label: "Long term ecosystem value" },
+      { number: "01", label: "Transparent Systems" },
+      { number: "02", label: "Scalable Infrastructure" },
+      { number: "03", label: "Industry-Ready Frameworks" },
+      { number: "04", label: "Compounding Ecosystem Value" },
     ],
   },
 
   future: {
-    titleBefore: "Future",
-    titleAccent: "Direction",
-    headlineLine1: "Our focus is not just expansion.",
-    headlineLine2: "It is ecosystem convergence.",
-    body: "Where healthcare, finance, legal systems, and data intelligence begin to interact seamlessly under one unified structure.",
-    cta: { label: "Read More", href: "/solutions" },
+    titleBefore: "What Comes",
+    titleAccent: "Next",
+    headline: "The next phase is a more connected ecosystem.",
+    body: "We're building toward a point where different industries talk to each other seamlessly — healthcare, finance, real estate, legal, and data systems.",
+    primaryCta: { label: "Explore What's Next", href: "/solutions" },
+    secondaryCta: { label: "Know More", href: "/brands" },
     items: [
       {
-        title: "Healthcare Professionals",
-        desc: "Scale your retail brand with Adobe Commerce and Magento.",
+        title: "Healthcare Systems",
+        desc: "Where clinical operations meet legal-grade documentation and compliance.",
       },
       {
-        title: "Finance & Fintech",
-        desc: "Powering next-gen financial ops at institutional scale.",
+        title: "Legal Practice",
+        desc: "Where casework and documentation meet structured data systems and automation.",
       },
       {
-        title: "Legal Practices",
-        desc: "Leverage property listing marketplaces and legal workflows.",
+        title: "Finance",
+        desc: "Where lending decisions meet real-time data intelligence and predictive analytics.",
       },
       {
-        title: "Enterprise & Corporates",
-        desc: "Enterprise-grade digital backbone for complex ops.",
+        title: "Data Intelligence",
+        desc: "Where clinical decision-making meets enterprise-grade data intelligence and analytics.",
       },
     ],
   },
 
   closing: {
     brand: "Crediple",
-    line1: "Crediple is not a traditional holding company.",
-    line2:
-      "It is a multi-domain system architecture designed to transform how industries operate.",
+    line: "A multi-domain architecture, built to transform how industries operate.",
     copyright: "© 2026 Crediple. Building systems that power industries.",
   },
 } as const;

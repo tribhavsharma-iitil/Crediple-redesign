@@ -86,7 +86,7 @@ export default function SolutionsProcess() {
             <span style={homeTitleAccentStyle}>{process.titleAccent}</span>
           </h2>
           <p
-            className="mt-3 max-w-2xl text-left text-[10px] font-semibold leading-relaxed tracking-[0.14em] uppercase sm:text-[11px] sm:tracking-[0.16em]"
+            className="mt-3 max-w-2xl text-left text-sm leading-relaxed sm:text-[15px]"
             style={{ color: isDark ? T.muted : "#64748B" }}
           >
             {process.subtitle}

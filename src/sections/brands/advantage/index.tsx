@@ -41,12 +41,6 @@ export default function BrandsAdvantage() {
 
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
-          <p
-            className="mb-2 text-sm font-semibold"
-            style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
-          >
-            {advantage.eyebrow}
-          </p>
           <h2
             className="font-heading text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: isDark ? "#DCE2F6" : "#0F172A" }}

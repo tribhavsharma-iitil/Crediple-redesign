@@ -35,7 +35,7 @@ function BrandBlock({
               className="mb-1.5 text-xs font-medium sm:mb-2 sm:text-sm"
               style={{ color: isDark ? C.textTagline : C.accentStrong }}
             >
-              Brand {brand.number}
+              {brand.number}
             </p>
             <h2
               className="font-heading mb-2 break-words text-[1.75rem] font-black tracking-tight sm:mb-3 sm:text-4xl md:text-5xl"
@@ -94,10 +94,16 @@ function BrandBlock({
       </div>
 
       <HomeReveal variants={homeFadeUp} className="mt-8 sm:mt-12 md:mt-14">
+        <p
+          className="mb-5 font-heading text-lg font-bold sm:mb-6 sm:text-xl"
+          style={{ color: isDark ? C.text : "#0F172A" }}
+        >
+          {brand.featuresTitle}
+        </p>
         <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3 sm:gap-y-6 md:grid-cols-5 md:gap-x-6">
           {brand.deliverables.map((item) => (
             <div
-              key={item}
+              key={item.title}
               className="border-t pt-3 sm:pt-4"
               style={{
                 borderColor: isDark
@@ -109,15 +115,15 @@ function BrandBlock({
                 className="font-heading mb-0 text-[13px] font-bold sm:mb-1.5 sm:text-sm"
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
-                {item}
+                {item.title}
               </p>
               <p
-                className="mt-1 hidden text-[11px] leading-relaxed sm:mt-0 sm:block sm:text-xs"
+                className="mt-1 text-[11px] leading-relaxed sm:mt-0 sm:text-xs"
                 style={{
                   color: isDark ? "rgba(220,226,246,0.55)" : "#94A3B8",
                 }}
               >
-                {brand.deliverableNote}
+                {item.subtext}
               </p>
             </div>
           ))}
