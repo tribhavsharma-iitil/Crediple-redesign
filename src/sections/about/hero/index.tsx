@@ -33,7 +33,7 @@ export default function AboutHero() {
     >
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 w-full h-[38%] md:h-[42%] pointer-events-none z-0"
+        className="absolute inset-x-0 bottom-0 w-full h-[38%] md:h-[50%] pointer-events-none z-0"
       >
         <Image
           src={isDark ? waveDark : waveLight}
