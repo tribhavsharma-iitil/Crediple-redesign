@@ -5,13 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
+import {
+  solutionsContent,
+  solutionsColors,
+  homeTitleAccentStyle,
+} from "@/content/solutions";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp, homeEase } from "@/lib/animations";
 
-const { serve } = homeContent;
-const C = homeColors;
+const { domains } = solutionsContent;
+const C = solutionsColors;
 
 function useStripVisible() {
   const [count, setCount] = useState(2);
@@ -29,15 +33,19 @@ function useStripVisible() {
   return count;
 }
 
-export default function WhoWeServe() {
+export default function SolutionsDomains() {
   const { isDark } = useTheme();
-  const [active, setActive] = useState(1); // Finance & Fintech featured
+  const [active, setActive] = useState(0);
   const [offset, setOffset] = useState(0);
   const visible = useStripVisible();
-  const total = serve.items.length;
-  const item = serve.items[active];
+  const total = domains.items.length;
+  const item = domains.items[active];
 
-  const clampOffset = (nextActive: number, currentOffset: number, vis: number) => {
+  const clampOffset = (
+    nextActive: number,
+    currentOffset: number,
+    vis: number
+  ) => {
     if (nextActive < currentOffset) return nextActive;
     if (nextActive >= currentOffset + vis) return nextActive - vis + 1;
     return Math.min(currentOffset, Math.max(0, total - vis));
@@ -57,24 +65,24 @@ export default function WhoWeServe() {
   const prev = () => goTo(active - 1);
   const next = () => goTo(active + 1);
 
-  const stripItems = serve.items
+  const stripItems = domains.items
     .map((cat, index) => ({ ...cat, index }))
     .slice(offset, offset + visible);
 
   return (
     <section
-      id="serve"
-      className="relative py-16 md:py-24 overflow-hidden"
+      id="domains"
+      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
       style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
     >
-      <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
-        <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
+      <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">
+        <HomeReveal variants={homeFadeUp} className="mb-6 sm:mb-10 md:mb-12">
           <h2
-            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight"
+            className="font-heading text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: isDark ? "#DCE2F6" : "#0F172A" }}
           >
-            {serve.titleBefore}{" "}
-            <span style={homeTitleAccentStyle}>{serve.titleAccent}</span>
+            {domains.titleBefore}{" "}
+            <span style={homeTitleAccentStyle}>{domains.titleAccent}</span>
           </h2>
         </HomeReveal>
 
@@ -85,24 +93,24 @@ export default function WhoWeServe() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4, ease: homeEase }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center mb-12 sm:mb-14 md:mb-16"
+            className="mb-8 grid grid-cols-1 items-center gap-6 sm:mb-14 sm:gap-10 md:mb-16 lg:grid-cols-2 lg:gap-16"
           >
-            <div className="max-w-xl order-2 lg:order-1">
+            <div className="order-2 max-w-xl lg:order-1">
               <h3
-                className="font-heading font-black text-2xl sm:text-3xl md:text-[2.5rem] leading-tight mb-4 sm:mb-5 tracking-tight"
+                className="font-heading mb-3 text-xl leading-tight font-black tracking-tight sm:mb-5 sm:text-3xl md:text-[2.5rem]"
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
                 {item.title}
               </h3>
               <p
-                className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed mb-6 sm:mb-8"
+                className="mb-6 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:text-[15px]"
                 style={{ color: isDark ? "#C8D0DC" : "#475569" }}
               >
                 {item.desc}
               </p>
               <Link
                 href={item.href}
-                className="inline-flex items-center justify-center px-7 py-2.5 rounded-full text-white text-sm font-semibold no-underline transition-opacity hover:opacity-90 w-full sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-full px-7 py-2.5 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto"
                 style={{
                   background: C.buttonGradient,
                   boxShadow: `0 8px 24px ${C.glow}`,
@@ -112,7 +120,7 @@ export default function WhoWeServe() {
               </Link>
             </div>
 
-            <div className="relative rounded-2xl overflow-hidden aspect-[16/10] shadow-2xl w-full order-1 lg:order-2">
+            <div className="relative order-1 aspect-[16/10] w-full overflow-hidden rounded-2xl shadow-2xl lg:order-2">
               <Image
                 src={item.image}
                 alt={item.title}
@@ -126,9 +134,9 @@ export default function WhoWeServe() {
         </AnimatePresence>
 
         <HomeReveal variants={homeFadeUp}>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 md:gap-6">
+          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-start sm:gap-6">
             <div
-              className="flex-1 grid gap-x-4 sm:gap-x-5 md:gap-x-8 gap-y-6 sm:gap-y-8 min-w-0"
+              className="grid min-w-0 flex-1 gap-x-4 gap-y-5 sm:gap-x-5 sm:gap-y-8 md:gap-x-8"
               style={{
                 gridTemplateColumns: `repeat(${visible}, minmax(0, 1fr))`,
               }}
@@ -140,7 +148,7 @@ export default function WhoWeServe() {
                     key={cat.title}
                     type="button"
                     onClick={() => goTo(cat.index)}
-                    className="text-left group w-full pt-3 sm:pt-4 border-t-2 transition-colors min-w-0"
+                    className="group w-full min-w-0 border-t-2 pt-3 text-left transition-colors sm:pt-4"
                     style={{
                       borderColor: isActive
                         ? C.accentSoft
@@ -150,7 +158,7 @@ export default function WhoWeServe() {
                     }}
                   >
                     <p
-                      className="font-heading font-bold text-xs sm:text-sm md:text-[15px] mb-1.5 sm:mb-2 transition-colors break-words"
+                      className="font-heading mb-1.5 text-xs font-bold break-words transition-colors sm:mb-2 sm:text-sm md:text-[15px]"
                       style={{
                         color: isActive
                           ? isDark
@@ -164,7 +172,7 @@ export default function WhoWeServe() {
                       {cat.title}
                     </p>
                     <p
-                      className="text-[11px] sm:text-xs leading-relaxed line-clamp-2 sm:line-clamp-1"
+                      className="line-clamp-2 text-[11px] leading-relaxed sm:line-clamp-1 sm:text-xs"
                       style={{
                         color: isActive
                           ? isDark
@@ -182,12 +190,12 @@ export default function WhoWeServe() {
               })}
             </div>
 
-            <div className="flex gap-2 shrink-0 pt-0 sm:pt-4 justify-end sm:justify-start">
+            <div className="flex shrink-0 justify-end gap-2 pt-0 sm:justify-start sm:pt-4">
               <button
                 type="button"
                 onClick={prev}
-                aria-label="Previous sector"
-                className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
+                aria-label="Previous domain"
+                className="flex h-9 w-9 items-center justify-center rounded-full border transition-opacity hover:opacity-80"
                 style={{
                   borderColor: isDark ? C.borderStrong : "#E2E8F0",
                   color: isDark ? C.text : "#475569",
@@ -199,8 +207,8 @@ export default function WhoWeServe() {
               <button
                 type="button"
                 onClick={next}
-                aria-label="Next sector"
-                className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
+                aria-label="Next domain"
+                className="flex h-9 w-9 items-center justify-center rounded-full border transition-opacity hover:opacity-80"
                 style={{
                   borderColor: isDark ? C.borderStrong : "#E2E8F0",
                   color: isDark ? C.text : "#475569",

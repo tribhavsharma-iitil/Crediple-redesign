@@ -88,7 +88,7 @@ export default function AboutHero() {
         variants={homeStagger}
         initial="hidden"
         animate="visible"
-        className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center"
+        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center sm:px-6"
       >
         <motion.div
           variants={heroItem}

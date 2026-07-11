@@ -100,7 +100,7 @@ export default function Hero() {
         variants={homeStagger}
         initial="hidden"
         animate="visible"
-        className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center"
+        className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-4 text-center sm:px-6"
       >
         {/* Badge */}
         <motion.div variants={heroItem} className="w-fit max-w-full mb-5 sm:mb-6 md:mb-7">
