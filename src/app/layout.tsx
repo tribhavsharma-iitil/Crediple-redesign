@@ -3,6 +3,7 @@ import { Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, ThemeScript } from "@/context/ThemeContext";
 import AppShell from "@/components/layout/AppShell";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import {
   COMPANY_ADDRESS,
   COMPANY_NAME,
@@ -120,15 +121,15 @@ export const metadata: Metadata = {
     telephone: false,
   },
   other: {
-    "msapplication-TileColor": "#020B1A",
+    "msapplication-TileColor": "#EFF6FF",
     "msapplication-config": "/browserconfig.xml",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#020B1A" },
     { media: "(prefers-color-scheme: light)", color: "#EFF6FF" },
+    { media: "(prefers-color-scheme: dark)", color: "#020B1A" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -216,7 +217,8 @@ export default function RootLayout({
         style={{ background: "var(--background)", color: "var(--foreground)" }}
       >
         <ThemeProvider>
-            <AppShell>{children}</AppShell>
+          <GoogleAnalytics />
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>

@@ -71,7 +71,7 @@ export default function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full px-6 md:px-12",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full px-4 sm:px-6 md:px-12",
           scrolled
             ? "backdrop-blur-md border-b bg-white/80 dark:bg-black/20 border-[#0047AB40] dark:border-white/10"
             : "bg-transparent border-b border-transparent",
@@ -110,7 +110,7 @@ export default function Navbar() {
                     "relative text-sm font-bold uppercase tracking-widest no-underline transition-all hover:opacity-80",
                     active
                       ? isDark
-                        ? "text-[#DCE2F6]"
+                        ? "text-[#B4C5FF]"
                         : "text-brand-blue"
                       : isDark
                         ? "text-dark-body/70"
@@ -122,7 +122,7 @@ export default function Navbar() {
                     <span
                       className={cn(
                         "absolute -bottom-1 left-0 right-0 h-0.5 rounded-full",
-                        isDark ? "bg-[#DCE2F6]" : "bg-brand-blue",
+                        isDark ? "bg-[#B4C5FF]" : "bg-brand-blue",
                       )}
                     />
                   )}
@@ -238,7 +238,7 @@ export default function Navbar() {
                           "block py-3 px-4 rounded-[12px] text-sm font-medium uppercase no-underline",
                           active
                             ? isDark
-                              ? "bg-white/10 text-dark-heading"
+                              ? "bg-white/10 text-[#B4C5FF]"
                               : "bg-[#EFF6FF] text-brand-blue"
                             : isDark
                               ? "text-dark-body"

@@ -53,9 +53,108 @@
 }
 
 /* ============================================================
-   PREMIUM AI DARK SYSTEM — default (dark mode)
+   LIGHT SYSTEM — default (light mode)
    ============================================================ */
-:root {
+:root {  --background:             #fcfdff;
+  --bg-primary:             #eef4ff;
+  --bg-secondary:           #f5f8ff;
+  --bg-elevated:            #ffffff;
+
+  --foreground:             #0c1a35;
+  --text-primary:           #0c1a35;
+  --text-secondary:         rgba(12, 26, 53, 0.68);
+  --text-muted:             rgba(12, 26, 53, 0.42);
+
+  --card:                   #ffffff;
+  --card-bg:                #ffffff;
+  --card-foreground:        #0c1a35;
+  --popover:                #ffffff;
+  --popover-foreground:     #0c1a35;
+
+  --primary:                #1d4ed8;
+  --primary-foreground:     #ffffff;
+  --secondary:              rgba(0, 0, 0, 0.05);
+  --secondary-foreground:   #0c1a35;
+  --muted:                  rgba(0, 0, 0, 0.04);
+  --muted-foreground:       rgba(12, 26, 53, 0.45);
+  --accent:                 rgba(29, 78, 216, 0.07);
+  --accent-color:           #1d4ed8;
+  --accent-secondary:       #7c3aed;
+  --accent-foreground:      #0c1a35;
+
+  --hero-glow:              rgba(29, 78, 216, 0.1);
+  --glow-primary:           rgba(29, 78, 216, 0.14);
+  --glow-secondary:         rgba(37, 99, 235, 0.1);
+
+  --nav-bg:                 rgba(238, 244, 255, 0.88);
+  --nav-border:             rgba(29, 78, 216, 0.12);
+  --nav-link:               rgba(12, 26, 53, 0.6);
+  --nav-link-hover:         #0c1a35;
+  --nav-underline:          #1d4ed8;
+
+  --cta-bg:                 #0c1a35;
+  --cta-text:               #ffffff;
+  --cta-hover:              #1e293b;
+
+  --section-alt:            #e2ecff;
+  --card-inner:             #f5f8ff;
+  --card-border:            rgba(29, 78, 216, 0.1);
+  --card-glow-base:         rgba(29, 78, 216, 0.04);
+
+  --glow-cyan:              rgba(29, 78, 216, 0.55);
+  --glow-purple:            rgba(124, 58, 237, 0.45);
+
+  --card-text:              #0c1a35;
+  --card-text-secondary:    rgba(12, 26, 53, 0.62);
+  --card-text-muted:        rgba(12, 26, 53, 0.38);
+
+  --heading-gradient:       linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
+  --icon-accent:            #1d4ed8;
+  --icon-accent-bg:         rgba(29, 78, 216, 0.1);
+  --icon-accent-border:     rgba(29, 78, 216, 0.2);
+
+  --stat-value-gradient:    linear-gradient(135deg, #0c1a35 0%, #1d4ed8 48%, #7c3aed 100%);
+  --stat-label:             rgba(12, 26, 53, 0.45);
+  --separator:              rgba(29, 78, 216, 0.2);
+
+  /* FIX #5 — light theme timeline uses blue/white tones, not dark navy */
+  --timeline-dot-bg:        linear-gradient(135deg, #dbeafe 0%, #eff6ff 60%, #f0f7ff 100%);
+  --timeline-dot-border:    rgba(37, 99, 235, 0.3);
+  --timeline-inner-dot:     linear-gradient(135deg, #1d4ed8, #7c3aed);
+  --timeline-line:          linear-gradient(to right, rgba(37,99,235,0.25), rgba(29,78,216,0.25), rgba(37,99,235,0.25));
+  --timeline-period:        linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
+  --timeline-text:          rgba(12, 26, 53, 0.5);
+
+  --testimonial-bg:         #ffffff;
+  --testimonial-border:     rgba(0, 0, 0, 0.07);
+  --testimonial-text:       #1d4ed8;
+  --testimonial-quote:      rgba(29, 78, 216, 0.18);
+  --testimonial-name:       #0c1a35;
+  --testimonial-role:       rgba(12, 26, 53, 0.45);
+
+  --border:                 rgba(29, 78, 216, 0.12);
+  --border-subtle:          rgba(29, 78, 216, 0.06);
+  --input:                  rgba(29, 78, 216, 0.1);
+  --ring:                   rgba(29, 78, 216, 0.35);
+  --loader-bg:              #eef4ff;
+
+  --destructive:            oklch(0.577 0.245 27.325);
+
+  --sidebar:                #ffffff;
+  --sidebar-foreground:     #0c1a35;
+  --sidebar-primary:        #1d4ed8;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent:         rgba(0, 0, 0, 0.04);
+  --sidebar-accent-foreground: #0c1a35;
+  --sidebar-border:         rgba(29, 78, 216, 0.1);
+  --sidebar-ring:           rgba(29, 78, 216, 0.35);
+  --radius:                 0.625rem;
+}
+
+/* ============================================================
+   DARK MODE — html.dark (unchanged dark palette)
+   ============================================================ */
+html.dark {
   --background:             #020B1A;
   --bg-primary:             #020B1A;
   --bg-secondary:           #030712;
@@ -152,111 +251,10 @@
 }
 
 /* ============================================================
-   LIGHT MODE — html.light
-   ============================================================ */
-html.light {
-  color-scheme: light;
-
-  --background:             #fcfdff;
-  --bg-primary:             #eef4ff;
-  --bg-secondary:           #f5f8ff;
-  --bg-elevated:            #ffffff;
-
-  --foreground:             #0c1a35;
-  --text-primary:           #0c1a35;
-  --text-secondary:         rgba(12, 26, 53, 0.68);
-  --text-muted:             rgba(12, 26, 53, 0.42);
-
-  --card:                   #ffffff;
-  --card-bg:                #ffffff;
-  --card-foreground:        #0c1a35;
-  --popover:                #ffffff;
-  --popover-foreground:     #0c1a35;
-
-  --primary:                #1d4ed8;
-  --primary-foreground:     #ffffff;
-  --secondary:              rgba(0, 0, 0, 0.05);
-  --secondary-foreground:   #0c1a35;
-  --muted:                  rgba(0, 0, 0, 0.04);
-  --muted-foreground:       rgba(12, 26, 53, 0.45);
-  --accent:                 rgba(29, 78, 216, 0.07);
-  --accent-color:           #1d4ed8;
-  --accent-secondary:       #7c3aed;
-  --accent-foreground:      #0c1a35;
-
-  --hero-glow:              rgba(29, 78, 216, 0.1);
-  --glow-primary:           rgba(29, 78, 216, 0.14);
-  --glow-secondary:         rgba(37, 99, 235, 0.1);
-
-  --nav-bg:                 rgba(238, 244, 255, 0.88);
-  --nav-border:             rgba(29, 78, 216, 0.12);
-  --nav-link:               rgba(12, 26, 53, 0.6);
-  --nav-link-hover:         #0c1a35;
-  --nav-underline:          #1d4ed8;
-
-  --cta-bg:                 #0c1a35;
-  --cta-text:               #ffffff;
-  --cta-hover:              #1e293b;
-
-  --section-alt:            #e2ecff;
-  --card-inner:             #f5f8ff;
-  --card-border:            rgba(29, 78, 216, 0.1);
-  --card-glow-base:         rgba(29, 78, 216, 0.04);
-
-  --glow-cyan:              rgba(29, 78, 216, 0.55);
-  --glow-purple:            rgba(124, 58, 237, 0.45);
-
-  --card-text:              #0c1a35;
-  --card-text-secondary:    rgba(12, 26, 53, 0.62);
-  --card-text-muted:        rgba(12, 26, 53, 0.38);
-
-  --heading-gradient:       linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
-  --icon-accent:            #1d4ed8;
-  --icon-accent-bg:         rgba(29, 78, 216, 0.1);
-  --icon-accent-border:     rgba(29, 78, 216, 0.2);
-
-  --stat-value-gradient:    linear-gradient(135deg, #0c1a35 0%, #1d4ed8 48%, #7c3aed 100%);
-  --stat-label:             rgba(12, 26, 53, 0.45);
-  --separator:              rgba(29, 78, 216, 0.2);
-
-  /* FIX #5 — light theme timeline uses blue/white tones, not dark navy */
-  --timeline-dot-bg:        linear-gradient(135deg, #dbeafe 0%, #eff6ff 60%, #f0f7ff 100%);
-  --timeline-dot-border:    rgba(37, 99, 235, 0.3);
-  --timeline-inner-dot:     linear-gradient(135deg, #1d4ed8, #7c3aed);
-  --timeline-line:          linear-gradient(to right, rgba(37,99,235,0.25), rgba(29,78,216,0.25), rgba(37,99,235,0.25));
-  --timeline-period:        linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
-  --timeline-text:          rgba(12, 26, 53, 0.5);
-
-  --testimonial-bg:         #ffffff;
-  --testimonial-border:     rgba(0, 0, 0, 0.07);
-  --testimonial-text:       #1d4ed8;
-  --testimonial-quote:      rgba(29, 78, 216, 0.18);
-  --testimonial-name:       #0c1a35;
-  --testimonial-role:       rgba(12, 26, 53, 0.45);
-
-  --border:                 rgba(29, 78, 216, 0.12);
-  --border-subtle:          rgba(29, 78, 216, 0.06);
-  --input:                  rgba(29, 78, 216, 0.1);
-  --ring:                   rgba(29, 78, 216, 0.35);
-  --loader-bg:              #eef4ff;
-
-  --destructive:            oklch(0.577 0.245 27.325);
-
-  --sidebar:                #ffffff;
-  --sidebar-foreground:     #0c1a35;
-  --sidebar-primary:        #1d4ed8;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent:         rgba(0, 0, 0, 0.04);
-  --sidebar-accent-foreground: #0c1a35;
-  --sidebar-border:         rgba(29, 78, 216, 0.1);
-  --sidebar-ring:           rgba(29, 78, 216, 0.35);
-}
-
-/* ============================================================
    COLOR SCHEME
    ============================================================ */
-html { color-scheme: dark; }
-html.light { color-scheme: light; }
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
 
 /* ============================================================
    SMOOTH THEME TRANSITIONS
