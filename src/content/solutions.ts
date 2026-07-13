@@ -5,7 +5,7 @@
 
 import { homeColors, homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight } from "@/content/home";
 import companyHistory4 from "@/assets/home/company_history_4.png";
-import domainsNetwork from "@/assets/solutions/domains-network.png";
+import dataIntelligence from "@/assets/solutions/data_intelligance.png";
 import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
 import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
 import whoWeServe4 from "@/assets/home/who_we_serve_4.jpg";
@@ -70,7 +70,7 @@ export const solutionsContent = {
         desc: "From cloud infrastructure to AI/ML, data intelligence systems for enterprise scale.",
         short: "Data intelligence systems for enterprise scale.",
         href: "/contact",
-        image: domainsNetwork,
+        image: dataIntelligence,
       },
       {
         title: "LegalTech Workflows",

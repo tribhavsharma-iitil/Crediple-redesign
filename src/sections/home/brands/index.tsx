@@ -78,18 +78,18 @@ export default function Brands() {
   return (
     <section
       id="ecosystem"
-      className="relative py-16 md:py-24 overflow-hidden"
-      style={{ background: isDark ? C.bgSection : homeLight.bg }}
+      className="relative py-16 md:py-24"
+      style={{ background: isDark ? C.bgSection : "#FFFFFF" }}
     >
       <div
         ref={sectionRef}
-        className="w-full max-w-[1260px] mx-auto px-4 sm:px-6 relative z-10"
+        className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6"
       >
-        <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10 w-full">
-          <div className="flex flex-row items-end justify-between gap-4 w-full">
+        <HomeReveal variants={homeFadeLeft} className="mb-8 w-full sm:mb-10">
+          <div className="flex w-full flex-row items-end justify-between gap-4">
             <div className="min-w-0 flex-1">
               <h2
-                className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight"
+                className="font-heading text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
                 style={{ color: isDark ? C.text : homeLight.heading }}
               >
                 {ecosystem.titleBefore}{" "}
@@ -98,13 +98,13 @@ export default function Brands() {
                 </span>
               </h2>
               <p
-                className="text-sm mt-2 font-medium"
+                className="mt-2 text-sm font-medium"
                 style={{ color: isDark ? C.textMuted : homeLight.muted }}
               >
                 {ecosystem.subtitle}
               </p>
             </div>
-            <div className="flex gap-3 shrink-0 self-end">
+            <div className="flex shrink-0 gap-3 self-end">
               <DiamondNavButton
                 isDark={isDark}
                 onClick={() => {
@@ -138,9 +138,10 @@ export default function Brands() {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <div className="overflow-hidden">
+          {/* overflow-x only — avoid clipping a gray band under the cards */}
+          <div className="overflow-x-clip">
             <motion.div
-              className="flex -mx-3"
+              className="-mx-3 flex"
               animate={{ x: `${trackX}%` }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
@@ -159,7 +160,7 @@ export default function Brands() {
             </motion.div>
           </div>
 
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="mt-8 flex justify-center gap-2">
             {Array.from({ length: pageCount }).map((_, i) => (
               <button
                 key={i}

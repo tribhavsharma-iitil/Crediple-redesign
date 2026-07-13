@@ -101,8 +101,9 @@ export default function BrandCard({
   const style = {
     background: "#0D1425",
     borderColor: "rgba(255,255,255,0.08)",
-    boxShadow:
-      "inset 0 1px 0 rgba(126,182,255,0.06), 0 24px 48px rgba(0,0,0,0.4)",
+    // Inset only — outer drop shadows get clipped by the carousel and
+    // read as a solid gray bar on light section backgrounds.
+    boxShadow: "inset 0 1px 0 rgba(126,182,255,0.06)",
   };
 
   if (brand.clickable) {
