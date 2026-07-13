@@ -3,6 +3,7 @@ import { Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, ThemeScript } from "@/context/ThemeContext";
 import AppShell from "@/components/layout/AppShell";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import {
   COMPANY_ADDRESS,
   COMPANY_NAME,
@@ -216,7 +217,8 @@ export default function RootLayout({
         style={{ background: "var(--background)", color: "var(--foreground)" }}
       >
         <ThemeProvider>
-            <AppShell>{children}</AppShell>
+          <GoogleAnalytics />
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>

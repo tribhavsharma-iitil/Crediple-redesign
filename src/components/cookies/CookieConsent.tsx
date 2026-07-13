@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Cookie, SlidersHorizontal, X } from "lucide-react";
+import { COOKIE_CONSENT_EVENT } from "@/components/analytics/GoogleAnalytics";
 
 type CookiePreferences = {
   necessary: true;
@@ -86,6 +87,7 @@ export default function CookieConsent() {
     setPreferences(nextPreferences);
     setVisible(false);
     setCustomizing(false);
+    window.dispatchEvent(new Event(COOKIE_CONSENT_EVENT));
   };
 
   return (
