@@ -84,7 +84,7 @@ export const brandsContent = {
     },
     {
       number: "Brand 02",
-      name: "Eatskart",
+      name: "EatsKart",
       tagline: "Where Restaurants Keep More And Customers Pay Less",
       description: [
         "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, Eatskart helps them earn more and pass the savings on to customers.",

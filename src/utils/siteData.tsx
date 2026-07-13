@@ -386,7 +386,7 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 2,
-    name: "Eatskart",
+    name: "EatsKart",
     taglines: ["Your Food, Your Way Through", "Intelligent On-Demand Delivery"],
     description: [
       "Eatskart is a modern food delivery ecosystem designed to give you your food, your way, by connecting consumers with top-rated local restaurants and diverse cuisines effortlessly.",

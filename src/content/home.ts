@@ -126,7 +126,7 @@ export const homeContent = {
         clickable: true,
       },
       {
-        name: "Eatskart",
+        name: "EatsKart",
         description:
           "Your food, your way. Explore top restaurants, track orders in real time, and enjoy fast, reliable delivery to your doorstep.",
         href: "https://eatskart.com/",

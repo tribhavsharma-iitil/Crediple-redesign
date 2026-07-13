@@ -18,9 +18,8 @@ const COMPANY_LINKS = [
 
 const BRAND_LINKS = [
   { label: "Iitil", href: "https://www.iitil.com/" },
-  { label: "Propertizor", href: "https://propertizor.com" },
-  { label: "Loan Konnekt", href: "https://www.loankonnekt.com" },
-  { label: "Lawvix", href: "https://www.lawvix.com" },
+  { label: "EatsKart", href: "https://eatskart.com/" },
+ 
 ];
 
 function LinkColumn({
@@ -134,18 +133,6 @@ export default function Footer() {
             </p>
 
             <div className="flex gap-2.5 mt-4">
-              <button
-                type="button"
-                aria-label="Share"
-                className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center transition-colors border",
-                  isDark
-                    ? "bg-[#0E1628] border-white/10 text-[#C3C6D7] hover:text-[#DCE2F6]"
-                    : "bg-white border-slate-200 text-slate-500 hover:text-slate-900"
-                )}
-              >
-                <Share2 size={13} strokeWidth={1.75} />
-              </button>
               <a
                 href="mailto:hello@crediple.com"
                 aria-label="Email"
