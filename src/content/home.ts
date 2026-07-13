@@ -206,7 +206,6 @@ export const homeContent = {
   values: {
     titleBefore: "Our Core",
     titleAccent: "Values",
-    imageLabel: "Measure & Scale",
     items: [
       {
         number: "01",

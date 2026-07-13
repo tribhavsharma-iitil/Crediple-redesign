@@ -337,12 +337,7 @@ export default function About() {
                       "linear-gradient(180deg, transparent 45%, rgba(3,8,26,0.75) 100%)",
                   }}
                 />
-                <p
-                  className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 font-heading font-bold text-lg sm:text-xl md:text-2xl z-10"
-                  style={{ color: "#FFFFFF" }}
-                >
-                  {values.imageLabel}
-                </p>
+                
               </div>
             </HomeReveal>
           </div>
