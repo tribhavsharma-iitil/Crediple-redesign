@@ -8,8 +8,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { useIntroPhase } from "@/components/layout/AppShell";
 import { homeStagger, homeEase } from "@/lib/animations";
 import yakaBlue from "@/assets/yaka_blue.png";
-import waveDark from "@/assets/home/wave-dark.png";
-import waveLight from "@/assets/home/wave-light.png";
+import HeroWave from "@/components/home/HeroWave";
 
 const { hero, trust } = homeContent;
 const C = homeColors;
@@ -34,20 +33,7 @@ export default function Hero() {
       className="relative min-h-[100svh] flex items-center justify-center pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20 overflow-hidden select-none"
       style={{ background: isDark ? C.bg : "#F8FAFC" }}
     >
-      {/* Theme wave — dark / light assets */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 w-full h-[38%] md:h-[50%] pointer-events-none z-0"
-      >
-        <Image
-          src={isDark ? waveDark : waveLight}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-bottom"
-        />
-      </div>
+      <HeroWave isDark={isDark} />
 
       {/* YAKA logo */}
       <div

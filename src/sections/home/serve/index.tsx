@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
+import DiamondNavButton from "@/components/ui/DiamondNavButton";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp, homeEase } from "@/lib/animations";
 
@@ -182,33 +183,23 @@ export default function WhoWeServe() {
               })}
             </div>
 
-            <div className="flex gap-2 shrink-0 pt-0 sm:pt-4 justify-end sm:justify-start">
-              <button
-                type="button"
+            <div className="flex gap-3 shrink-0 pt-0 sm:pt-4 justify-end sm:justify-start">
+              <DiamondNavButton
+                isDark={isDark}
                 onClick={prev}
                 aria-label="Previous sector"
-                className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
-                style={{
-                  borderColor: isDark ? C.borderStrong : "#E2E8F0",
-                  color: isDark ? C.text : "#475569",
-                  background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
-                }}
+                style={{ color: isDark ? C.text : "#475569" }}
               >
                 <ChevronLeft size={15} />
-              </button>
-              <button
-                type="button"
+              </DiamondNavButton>
+              <DiamondNavButton
+                isDark={isDark}
                 onClick={next}
                 aria-label="Next sector"
-                className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
-                style={{
-                  borderColor: isDark ? C.borderStrong : "#E2E8F0",
-                  color: isDark ? C.text : "#475569",
-                  background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
-                }}
+                style={{ color: isDark ? C.text : "#475569" }}
               >
                 <ChevronRight size={15} />
-              </button>
+              </DiamondNavButton>
             </div>
           </div>
         </HomeReveal>

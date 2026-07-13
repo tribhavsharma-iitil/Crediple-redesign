@@ -22,23 +22,6 @@ export default function BrandsAdvantage() {
       className="relative overflow-hidden py-12 sm:py-16 md:py-24"
       style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
     >
-      {isDark && (
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
-          <div
-            className="absolute -top-20 -left-16 h-[280px] w-[280px] rounded-full opacity-80"
-            style={{
-              background: "radial-gradient(circle, #041565 0%, transparent 70%)",
-            }}
-          />
-          <div
-            className="absolute right-[-40px] bottom-[15%] h-[220px] w-[220px] rounded-full opacity-75"
-            style={{
-              background: "radial-gradient(circle, #041565 0%, transparent 70%)",
-            }}
-          />
-        </div>
-      )}
-
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
           <h2

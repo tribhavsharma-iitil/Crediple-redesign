@@ -6,7 +6,7 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 
 export default function ScrollButton() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [heroVisible, setHeroVisible]     = useState(true);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   useEffect(() => {
     const hero = document.getElementById("hero");
@@ -89,7 +89,8 @@ export default function ScrollButton() {
             style={{
               border: "1px solid rgba(34,211,238,0.22)",
               background: "var(--bg-elevated)",
-              boxShadow: "0 0 20px rgba(34,211,238,0.12), 0 4px 20px rgba(0,0,0,0.2)",
+              boxShadow:
+                "0 0 20px rgba(34,211,238,0.12), 0 4px 20px rgba(0,0,0,0.2)",
             }}
           >
             <ArrowUp size={16} style={{ color: "var(--text-primary)" }} />

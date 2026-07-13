@@ -11,6 +11,7 @@ import {
   homeTitleAccentStyle,
 } from "@/content/solutions";
 import { useTheme } from "@/context/ThemeContext";
+import DiamondNavButton from "@/components/ui/DiamondNavButton";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp, homeEase } from "@/lib/animations";
 
@@ -190,33 +191,23 @@ export default function SolutionsDomains() {
               })}
             </div>
 
-            <div className="flex shrink-0 justify-end gap-2 pt-0 sm:justify-start sm:pt-4">
-              <button
-                type="button"
+            <div className="flex shrink-0 justify-end gap-3 pt-0 sm:justify-start sm:pt-4">
+              <DiamondNavButton
+                isDark={isDark}
                 onClick={prev}
                 aria-label="Previous domain"
-                className="flex h-9 w-9 items-center justify-center rounded-full border transition-opacity hover:opacity-80"
-                style={{
-                  borderColor: isDark ? C.borderStrong : "#E2E8F0",
-                  color: isDark ? C.text : "#475569",
-                  background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
-                }}
+                style={{ color: isDark ? C.text : "#475569" }}
               >
                 <ChevronLeft size={15} />
-              </button>
-              <button
-                type="button"
+              </DiamondNavButton>
+              <DiamondNavButton
+                isDark={isDark}
                 onClick={next}
                 aria-label="Next domain"
-                className="flex h-9 w-9 items-center justify-center rounded-full border transition-opacity hover:opacity-80"
-                style={{
-                  borderColor: isDark ? C.borderStrong : "#E2E8F0",
-                  color: isDark ? C.text : "#475569",
-                  background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
-                }}
+                style={{ color: isDark ? C.text : "#475569" }}
               >
                 <ChevronRight size={15} />
-              </button>
+              </DiamondNavButton>
             </div>
           </div>
         </HomeReveal>

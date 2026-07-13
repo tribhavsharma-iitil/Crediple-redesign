@@ -11,8 +11,7 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import { homeStagger, homeEase } from "@/lib/animations";
 import yakaBlue from "@/assets/yaka_blue.png";
-import waveDark from "@/assets/home/wave-dark.png";
-import waveLight from "@/assets/home/wave-light.png";
+import HeroWave from "@/components/home/HeroWave";
 
 const { hero } = brandsContent;
 const C = brandsColors;
@@ -35,19 +34,7 @@ export default function BrandsHero() {
       className="relative flex min-h-[100svh] items-center justify-center overflow-x-clip pt-24 pb-28 select-none sm:pt-28 sm:pb-32 md:pt-32 md:pb-36"
       style={{ background: isDark ? C.bg : "#F8FAFC" }}
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[38%] w-full md:h-[50%]"
-      >
-        <Image
-          src={isDark ? waveDark : waveLight}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-bottom"
-        />
-      </div>
+      <HeroWave isDark={isDark} />
 
       <div className="pointer-events-none absolute top-16 right-3 z-20 w-[56px] sm:top-20 sm:right-4 sm:w-[72px] md:top-24 md:right-8 md:w-[88px] xl:right-12 xl:w-[100px]">
         <div className="flex flex-col items-center gap-1 sm:gap-1.5">

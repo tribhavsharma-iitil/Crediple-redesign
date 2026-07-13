@@ -4,9 +4,9 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { CSSProperties } from "react";
 import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
+import DiamondNavButton from "@/components/ui/DiamondNavButton";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
   homeFadeUp,
@@ -25,7 +25,6 @@ const C = homeColors;
 const T = {
   bg: "#03081A",
   card: "#0B1324",
-  ball: "#041565",
   quote: "#F4F6FA",
   muted: "#7B8494",
   star: "#3E66DF",
@@ -55,29 +54,6 @@ function BlueStar() {
         d="M12 2.5l2.9 6.1 6.7.7-5 4.6 1.4 6.6L12 17.8 5.99 20.5 7.4 13.9l-5-4.6 6.7-.7L12 2.5z"
       />
     </svg>
-  );
-}
-
-function Ball({
-  size,
-  style,
-  className,
-}: {
-  size: number;
-  style: CSSProperties;
-  className?: string;
-}) {
-  return (
-    <div
-      aria-hidden
-      className={`absolute rounded-full pointer-events-none ${className ?? ""}`}
-      style={{
-        width: size,
-        height: size,
-        backgroundColor: T.ball,
-        ...style,
-      }}
-    />
   );
 }
 
@@ -126,26 +102,6 @@ export default function Testimonials() {
         className="relative py-16 md:py-24 overflow-hidden"
         style={{ background: isDark ? T.bg : "#FFFFFF" }}
       >
-        {isDark && (
-          <div aria-hidden className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <Ball
-              size={180}
-              style={{ left: -40, bottom: 40 }}
-              className="sm:!w-[250px] sm:!h-[250px] sm:!-left-[50px] sm:!bottom-[50px]"
-            />
-            <Ball
-              size={80}
-              style={{ right: "6%", top: 48 }}
-              className="sm:!w-[130px] sm:!h-[130px] sm:!right-[8%] sm:!top-[72px]"
-            />
-            <Ball
-              size={64}
-              style={{ right: 24, bottom: 40 }}
-              className="sm:!w-[100px] sm:!h-[100px] sm:!right-[100px] sm:!bottom-[70px]"
-            />
-          </div>
-        )}
-
         <div
           ref={sectionRef}
           className="relative z-10 w-full max-w-[1260px] mx-auto px-4 sm:px-6"
@@ -169,39 +125,29 @@ export default function Testimonials() {
                   {testimonials.subtitle}
                 </p>
               </div>
-              <div className="flex gap-2 shrink-0 self-end">
-                <button
-                  type="button"
+              <div className="flex gap-3 shrink-0 self-end">
+                <DiamondNavButton
+                  isDark={isDark}
                   onClick={() => {
                     goTo(current > 0 ? current - 1 : maxIndex);
                     startAuto();
                   }}
                   aria-label="Previous"
-                  className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
-                  style={{
-                    borderColor: isDark ? C.borderStrong : "#E2E8F0",
-                    color: isDark ? C.text : "#475569",
-                    background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
-                  }}
+                  style={{ color: isDark ? C.text : "#475569" }}
                 >
                   <ChevronLeft size={15} />
-                </button>
-                <button
-                  type="button"
+                </DiamondNavButton>
+                <DiamondNavButton
+                  isDark={isDark}
                   onClick={() => {
                     goTo(current < maxIndex ? current + 1 : 0);
                     startAuto();
                   }}
                   aria-label="Next"
-                  className="w-9 h-9 rounded-full border flex items-center justify-center transition-opacity hover:opacity-80"
-                  style={{
-                    borderColor: isDark ? C.borderStrong : "#E2E8F0",
-                    color: isDark ? C.text : "#475569",
-                    background: isDark ? "rgba(18,28,51,0.6)" : "#FFFFFF",
-                  }}
+                  style={{ color: isDark ? C.text : "#475569" }}
                 >
                   <ChevronRight size={15} />
-                </button>
+                </DiamondNavButton>
               </div>
             </div>
           </HomeReveal>

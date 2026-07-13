@@ -5,10 +5,10 @@
 
 import { homeColors, homeTitleAccentStyle } from "@/content/home";
 import foundationNetwork from "@/assets/about/foundation-network.png";
-import serveFinance from "@/assets/home/serve-finance.jpg";
-import aboutCircuit from "@/assets/home/about-circuit.jpg";
-import valuesAnalytics from "@/assets/home/values-analytics.jpg";
-import aboutDesk from "@/assets/home/about-desk.jpg";
+import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
+import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
+import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
+import coreValues1 from "@/assets/home/core_values_1.jpg";
 
 export const solutionsColors = {
   ...homeColors,
@@ -56,28 +56,28 @@ export const solutionsContent = {
         desc: "From credit clarity to borrower profiling, financial decision infrastructure for structured, sustainable growth.",
         short: "Financial decision infrastructure for structured growth.",
         href: "/contact",
-        image: serveFinance,
+        image: whoWeServe2,
       },
       {
         title: "HealthTech Systems",
         desc: "From patient acquisition to clinical growth, digital infrastructure for healthcare providers.",
         short: "Digital infrastructure for healthcare providers.",
         href: "/contact",
-        image: aboutDesk,
+        image: whoWeServe1,
       },
       {
         title: "Data Intelligence",
         desc: "From cloud infrastructure to AI/ML, data intelligence systems for enterprise scale.",
         short: "Data intelligence systems for enterprise scale.",
         href: "/contact",
-        image: valuesAnalytics,
+        image: coreValues1,
       },
       {
         title: "LegalTech Workflows",
         desc: "Legal workflow infrastructure to reduce paperwork and speed up legal services.",
         short: "Legal workflow infrastructure for faster services.",
         href: "/contact",
-        image: aboutCircuit,
+        image: whoWeServe3,
       },
     ],
   },

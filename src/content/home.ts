@@ -21,11 +21,20 @@ import brand_icon_dark_7 from "@/assets/brand_icon_dark_7.png";
 
 import aboutDesk from "@/assets/home/about-desk.jpg";
 import aboutCircuit from "@/assets/home/about-circuit.jpg";
-import valuesAnalytics from "@/assets/home/values-analytics.jpg";
-import timelineServer from "@/assets/home/timeline-server.jpg";
-import timelineAbstract1 from "@/assets/home/timeline-abstract-1.jpg";
-import timelineAbstract2 from "@/assets/home/timeline-abstract-2.jpg";
-import serveFinance from "@/assets/home/serve-finance.jpg";
+import coreValues1 from "@/assets/home/core_values_1.jpg";
+import coreValues2 from "@/assets/home/core_values_2.png";
+import coreValues3 from "@/assets/home/core_values_3.jpg";
+import coreValues4 from "@/assets/home/core_values_4.jpg";
+import companyHistory1 from "@/assets/home/company_history_1.jpg";
+import companyHistory2 from "@/assets/home/company_history_2.png";
+import companyHistory3 from "@/assets/home/company_history_3.png";
+import companyHistory4 from "@/assets/home/company_history_4.png";
+import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
+import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
+import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
+import whoWeServe4 from "@/assets/home/who_we_serve_4.jpg";
+import whoWeServe5 from "@/assets/home/who_we_serve_5.jpg";
+import whoWeServe6 from "@/assets/home/who_we_serve_6.jpg";
 import avatar1 from "@/assets/home/avatar-1.png";
 import avatar2 from "@/assets/home/avatar-2.png";
 import avatar3 from "@/assets/home/avatar-3.png";
@@ -178,28 +187,31 @@ export const homeContent = {
   values: {
     titleBefore: "Our Core",
     titleAccent: "Values",
-    image: valuesAnalytics,
     imageLabel: "Measure & Scale",
     items: [
       {
         number: "01",
         title: "Architectural Excellence",
         desc: "We don't just build businesses; we build ecosystems. Every solution under the Crediple umbrella must be scalable, secure and sophisticated.",
+        image: coreValues1,
       },
       {
         number: "02",
         title: "Uncompromising Integrity",
         desc: "In health, finance, law, data and technology, trust is our primary currency. We lead with transparency and professional rigor in every transaction.",
+        image: coreValues2,
       },
       {
         number: "03",
         title: "Strategic Synergy",
         desc: "We believe the whole is greater than the sum of its parts. We leverage cross industry insights to create a unique competitive advantage for our partners.",
+        image: coreValues3,
       },
       {
         number: "04",
         title: "Relentless Innovation",
         desc: "We reject the status quo. We are committed to constant iteration, ensuring our SaaS platforms remain the gold standard in a rapidly shifting global economy.",
+        image: coreValues4,
       },
     ],
   },
@@ -207,7 +219,12 @@ export const homeContent = {
   timeline: {
     titleBefore: "Company",
     titleAccent: "History",
-    images: [timelineAbstract1, timelineAbstract2, timelineServer],
+    images: [
+      companyHistory1,
+      companyHistory2,
+      companyHistory3,
+      companyHistory4,
+    ],
     items: [
       {
         period: "2018-2019",
@@ -262,7 +279,7 @@ export const homeContent = {
         desc: "From independent practitioners to multi-specialty hospitals, we deliver HIPAA-aligned platforms that streamline patient management, billing, and compliance.",
         short: "Digitising clinical workflows for modern care teams...",
         href: "/solutions",
-        image: serveFinance,
+        image: whoWeServe1,
       },
       {
         title: "Finance & Fintech",
@@ -270,7 +287,7 @@ export const homeContent = {
         desc: "Banks, NBFCs, and fintech startups rely on our infrastructure to automate reconciliation, reporting, and regulatory compliance at scale.",
         short: "Powering next-gen financial ops at institutional scale...",
         href: "/solutions",
-        image: serveFinance,
+        image: whoWeServe2,
       },
       {
         title: "Legal Practices",
@@ -278,7 +295,7 @@ export const homeContent = {
         desc: "Law firms and solo advocates use our tools to manage case files, automate documentation, and serve clients faster with end-to-end legal tech.",
         short: "Technology meets jurisprudence for modern firms...",
         href: "/solutions",
-        image: serveFinance,
+        image: whoWeServe3,
       },
       {
         title: "Enterprise & Corporates",
@@ -286,7 +303,7 @@ export const homeContent = {
         desc: "Large organisations trust Crediple to modernise legacy systems, integrate cross-functional data pipelines, and maintain operational continuity.",
         short: "Enterprise-grade digital backbone for complex ops...",
         href: "/solutions",
-        image: serveFinance,
+        image: whoWeServe4,
       },
       {
         title: "Education Institutions",
@@ -294,7 +311,7 @@ export const homeContent = {
         desc: "From edtech platforms to traditional institutions, we build adaptive learning systems and administrative tools that handle thousands of users seamlessly.",
         short: "Reinventing learning systems for institutions at scale...",
         href: "/solutions",
-        image: serveFinance,
+        image: whoWeServe5,
       },
       {
         title: "Tech Startups",
@@ -302,7 +319,7 @@ export const homeContent = {
         desc: "Early-stage and growth-stage teams plug into our ecosystem to access shared infrastructure, reducing time-to-market without sacrificing quality.",
         short: "Launch faster, scale smarter with shared infrastructure...",
         href: "/solutions",
-        image: serveFinance,
+        image: whoWeServe6,
       },
     ],
   },

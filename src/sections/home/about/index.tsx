@@ -23,7 +23,7 @@ const C = homeColors;
 
 export default function About() {
   const { isDark } = useTheme();
-  const [activeValue, setActiveValue] = useState(3);
+  const [activeValue, setActiveValue] = useState(0);
 
   return (
     <>
@@ -215,15 +215,25 @@ export default function About() {
                             {item.title}
                           </span>
                           {!open && (
-                            <ChevronRight
-                              size={18}
-                              className="shrink-0"
+                            <span
+                              className="relative flex h-8 w-8 shrink-0 items-center justify-center"
                               style={{
                                 color: isDark
-                                  ? "rgba(220,226,246,0.4)"
-                                  : "#94A3B8",
+                                  ? "rgba(220,226,246,0.7)"
+                                  : "#64748B",
                               }}
-                            />
+                            >
+                              <span
+                                aria-hidden
+                                className="absolute inset-[2px] rotate-45 rounded-[5px] border"
+                                style={{
+                                  borderColor: isDark
+                                    ? "rgba(220, 226, 246, 0.45)"
+                                    : "rgba(15, 23, 42, 0.2)",
+                                }}
+                              />
+                              <ChevronRight size={14} className="relative z-10" />
+                            </span>
                           )}
                         </div>
 
@@ -264,8 +274,9 @@ export default function About() {
                 }}
               >
                 <Image
-                  src={values.image}
-                  alt="Analytics dashboard"
+                  key={values.items[activeValue].number}
+                  src={values.items[activeValue].image}
+                  alt={values.items[activeValue].title}
                   fill
                   className="object-cover object-left-top"
                   sizes="(max-width: 1024px) 100vw, 50vw"
