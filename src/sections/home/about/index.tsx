@@ -37,37 +37,41 @@ export default function About() {
         className="relative py-16 md:py-24 overflow-hidden"
         style={{ background: isDark ? C.bg : homeLight.bgSoft }}
       >
-        {!isDark && (
-          <svg
-            aria-hidden
-            className="pointer-events-none absolute inset-0 h-full w-full"
-            viewBox="0 0 1440 720"
-            fill="none"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M -40 80 C 180 40, 260 160, 120 280"
-              stroke="rgba(47,128,237,0.35)"
-              strokeWidth="1.5"
-              strokeDasharray="6 8"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 1480 60 C 1180 20, 1280 200, 1380 320"
-              stroke="rgba(47,128,237,0.28)"
-              strokeWidth="1.5"
-              strokeDasharray="6 8"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 520 700 C 640 620, 800 640, 920 720"
-              stroke="rgba(47,128,237,0.22)"
-              strokeWidth="1.5"
-              strokeDasharray="6 8"
-              strokeLinecap="round"
-            />
-          </svg>
-        )}
+        <svg
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox="0 0 1440 720"
+          fill="none"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M -40 80 C 180 40, 260 160, 120 280"
+            stroke={
+              isDark ? "rgba(255,255,255,0.35)" : "rgba(47,128,237,0.35)"
+            }
+            strokeWidth="1.5"
+            strokeDasharray="6 8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 1480 60 C 1180 20, 1280 200, 1380 320"
+            stroke={
+              isDark ? "rgba(255,255,255,0.28)" : "rgba(47,128,237,0.28)"
+            }
+            strokeWidth="1.5"
+            strokeDasharray="6 8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 520 700 C 640 620, 800 640, 920 720"
+            stroke={
+              isDark ? "rgba(255,255,255,0.22)" : "rgba(47,128,237,0.22)"
+            }
+            strokeWidth="1.5"
+            strokeDasharray="6 8"
+            strokeLinecap="round"
+          />
+        </svg>
         <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6 relative z-10">
           <HomeReveal variants={homeFadeUp}>
             <h2
