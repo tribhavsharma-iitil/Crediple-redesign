@@ -120,15 +120,15 @@ export const metadata: Metadata = {
     telephone: false,
   },
   other: {
-    "msapplication-TileColor": "#020B1A",
+    "msapplication-TileColor": "#EFF6FF",
     "msapplication-config": "/browserconfig.xml",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#020B1A" },
     { media: "(prefers-color-scheme: light)", color: "#EFF6FF" },
+    { media: "(prefers-color-scheme: dark)", color: "#020B1A" },
   ],
   width: "device-width",
   initialScale: 1,

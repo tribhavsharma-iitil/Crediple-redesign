@@ -4,7 +4,12 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
+import {
+  homeContent,
+  homeColors,
+  homeLight,
+  getHomeTitleAccentStyle,
+} from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import DiamondNavButton from "@/components/ui/DiamondNavButton";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
@@ -100,7 +105,7 @@ export default function Testimonials() {
       <section
         id="testimonials"
         className="relative py-16 md:py-24 overflow-hidden"
-        style={{ background: isDark ? T.bg : "#FFFFFF" }}
+        style={{ background: isDark ? T.bg : homeLight.bgAlt }}
       >
         <div
           ref={sectionRef}
@@ -111,16 +116,16 @@ export default function Testimonials() {
               <div className="min-w-0 flex-1">
                 <h2
                   className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-left"
-                  style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+                  style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
                 >
                   {testimonials.titleBefore}{" "}
-                  <span style={homeTitleAccentStyle}>
+                  <span style={getHomeTitleAccentStyle(isDark)}>
                     {testimonials.titleAccent}
                   </span>
                 </h2>
                 <p
                   className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] mt-3 max-w-2xl text-left"
-                  style={{ color: isDark ? T.muted : "#64748B" }}
+                  style={{ color: isDark ? T.muted : homeLight.muted }}
                 >
                   {testimonials.subtitle}
                 </p>
@@ -133,7 +138,7 @@ export default function Testimonials() {
                     startAuto();
                   }}
                   aria-label="Previous"
-                  style={{ color: isDark ? C.text : "#475569" }}
+                  style={{ color: isDark ? C.text : homeLight.body }}
                 >
                   <ChevronLeft size={15} />
                 </DiamondNavButton>
@@ -144,7 +149,7 @@ export default function Testimonials() {
                     startAuto();
                   }}
                   aria-label="Next"
-                  style={{ color: isDark ? C.text : "#475569" }}
+                  style={{ color: isDark ? C.text : homeLight.body }}
                 >
                   <ChevronRight size={15} />
                 </DiamondNavButton>
@@ -177,7 +182,15 @@ export default function Testimonials() {
                     <HomeItem variants={homeFadeUp} className="h-full">
                       <article
                         className="relative p-5 sm:p-7 md:p-8 h-full flex flex-col rounded-2xl text-left"
-                        style={{ background: isDark ? T.card : "#F8FAFC" }}
+                        style={{
+                          background: isDark ? T.card : homeLight.card,
+                          boxShadow: isDark
+                            ? "none"
+                            : "0 8px 28px rgba(15, 23, 42, 0.06)",
+                          border: isDark
+                            ? "none"
+                            : `1px solid ${homeLight.border}`,
+                        }}
                       >
                         <div className="flex items-center justify-center gap-[3px] mb-4 sm:mb-5">
                           <BlueStar />
@@ -207,13 +220,17 @@ export default function Testimonials() {
                           <div className="min-w-0">
                             <p
                               className="font-bold text-sm truncate"
-                              style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+                              style={{
+                                color: isDark ? "#FFFFFF" : T.star,
+                              }}
                             >
                               {item.name}
                             </p>
                             <p
                               className="text-xs mt-0.5 truncate"
-                              style={{ color: isDark ? T.muted : "#64748B" }}
+                              style={{
+                                color: isDark ? T.muted : homeLight.muted,
+                              }}
                             >
                               {item.role}
                             </p>
@@ -256,69 +273,60 @@ export default function Testimonials() {
         </div>
       </section>
 
+      {/* CTA — dark navy card on both themes (matches light PDF) */}
       <section
         className="relative pb-16 sm:pb-20 md:pb-28 pt-4 sm:pt-6 md:pt-8"
-        style={{ background: isDark ? T.bg : "#F8FAFC" }}
+        style={{ background: isDark ? T.bg : homeLight.bg }}
       >
         <div className="max-w-[1260px] mx-auto px-4 sm:px-6">
           <HomeReveal variants={homeScaleIn}>
             <div
               className="relative overflow-hidden rounded-2xl sm:rounded-[28px] px-4 py-10 sm:px-6 sm:py-14 md:px-16 md:py-20 text-center"
-              style={
-                isDark
-                  ? {
-                      backgroundColor: "#050B18",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                    }
-                  : {
-                      backgroundImage: `linear-gradient(90deg, ${C.accentStrong}, ${C.accent}, ${C.accentSoft})`,
-                    }
-              }
+              style={{
+                backgroundColor: "#050B18",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
             >
-              {isDark && (
-                <>
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 z-0 pointer-events-none"
-                  >
-                    <Image
-                      src={ctaBg}
-                      alt=""
-                      fill
-                      sizes="(max-width: 1260px) 100vw, 1260px"
-                      className="object-cover object-center opacity-90"
-                      priority={false}
-                    />
-                  </div>
+              <div
+                aria-hidden
+                className="absolute inset-0 z-0 pointer-events-none"
+              >
+                <Image
+                  src={ctaBg}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1260px) 100vw, 1260px"
+                  className="object-cover object-center opacity-90"
+                  priority={false}
+                />
+              </div>
 
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 z-[1] pointer-events-none"
-                    style={{
-                      background: `
-                        radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.28) 0%, transparent 70%),
-                        radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.18) 0%, transparent 70%)
-                      `,
-                    }}
-                  />
+              <div
+                aria-hidden
+                className="absolute inset-0 z-[1] pointer-events-none"
+                style={{
+                  background: `
+                    radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.28) 0%, transparent 70%),
+                    radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.18) 0%, transparent 70%)
+                  `,
+                }}
+              />
 
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 z-[1] pointer-events-none"
-                    style={{
-                      backgroundImage: `
-                        linear-gradient(rgba(160, 190, 240, 0.14) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(160, 190, 240, 0.14) 1px, transparent 1px)
-                      `,
-                      backgroundSize: "52px 52px",
-                      WebkitMaskImage:
-                        "radial-gradient(ellipse at center, black 35%, transparent 78%)",
-                      maskImage:
-                        "radial-gradient(ellipse at center, black 35%, transparent 78%)",
-                    }}
-                  />
-                </>
-              )}
+              <div
+                aria-hidden
+                className="absolute inset-0 z-[1] pointer-events-none"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(160, 190, 240, 0.14) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(160, 190, 240, 0.14) 1px, transparent 1px)
+                  `,
+                  backgroundSize: "52px 52px",
+                  WebkitMaskImage:
+                    "radial-gradient(ellipse at center, black 35%, transparent 78%)",
+                  maskImage:
+                    "radial-gradient(ellipse at center, black 35%, transparent 78%)",
+                }}
+              />
 
               <h2 className="relative z-10 font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] text-white px-1">
                 {cta.title}
@@ -326,9 +334,7 @@ export default function Testimonials() {
 
               <p
                 className="relative z-10 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed px-1"
-                style={{
-                  color: isDark ? "#A8B0BC" : "rgba(255,255,255,0.85)",
-                }}
+                style={{ color: "#A8B0BC" }}
               >
                 {cta.description}
               </p>
@@ -336,11 +342,11 @@ export default function Testimonials() {
               <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                 <a
                   href={cta.primaryCta.href}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold text-sm no-underline transition-opacity hover:opacity-90"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-sm no-underline transition-opacity hover:opacity-90"
                   style={{
-                    backgroundImage:
-                      "linear-gradient(180deg, #2F80ED 0%, #1550B4 100%)",
-                    boxShadow: "0 6px 20px rgba(47, 128, 237, 0.35)",
+                    background: "#F0F4FA",
+                    color: "#0F172A",
+                    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)",
                   }}
                 >
                   {cta.primaryCta.label}

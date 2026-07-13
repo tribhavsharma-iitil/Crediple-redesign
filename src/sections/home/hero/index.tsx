@@ -3,11 +3,17 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
-import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
+import {
+  homeContent,
+  homeColors,
+  homeLight,
+  getHomeTitleAccentStyle,
+} from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { useIntroPhase } from "@/components/layout/AppShell";
 import { homeStagger, homeEase } from "@/lib/animations";
 import yakaBlue from "@/assets/yaka_blue.png";
+import yakaLight from "@/assets/yaka_light.png";
 import HeroWave from "@/components/home/HeroWave";
 
 const { hero, trust } = homeContent;
@@ -31,7 +37,7 @@ export default function Hero() {
     <section
       id="hero"
       className="relative min-h-[100svh] flex items-center justify-center pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20 overflow-hidden select-none"
-      style={{ background: isDark ? C.bg : "#F8FAFC" }}
+      style={{ background: isDark ? C.bg : homeLight.bgSoft }}
     >
       <HeroWave isDark={isDark} />
 
@@ -49,7 +55,7 @@ export default function Hero() {
           >
             <div className="relative w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 xl:w-16 xl:h-16">
               <Image
-                src={yakaBlue}
+                src={isDark ? yakaBlue : yakaLight}
                 alt="YAKA"
                 fill
                 priority
@@ -59,10 +65,13 @@ export default function Hero() {
             </div>
             <p
               className="text-[7px] sm:text-[8px] md:text-[9px] font-medium tracking-wide text-center leading-tight max-w-[64px] sm:max-w-none"
-              style={{ color: isDark ? "rgba(248,248,248,0.85)" : "#475569" }}
+              style={{ color: isDark ? "rgba(248,248,248,0.85)" : homeLight.body }}
             >
               A{" "}
-              <span className="font-bold" style={{ color: isDark ? "#fff" : "#0F172A" }}>
+              <span
+                className="font-bold"
+                style={{ color: isDark ? "#fff" : homeLight.heading }}
+              >
                 YAKA
               </span>{" "}
               Enterprise
@@ -110,18 +119,18 @@ export default function Hero() {
         <motion.h1
           variants={heroItem}
           className="font-heading font-[800] text-[1.85rem] sm:text-5xl md:text-6xl xl:text-[4.25rem] leading-[1.12] tracking-tight mb-4 sm:mb-5 md:mb-6 px-1"
-          style={{ color: isDark ? C.text : "#0F172A" }}
+          style={{ color: isDark ? C.text : homeLight.heading }}
         >
           {hero.titleLine1}
           <br />
-          <span style={homeTitleAccentStyle}>{hero.titleLine2}</span>
+          <span style={getHomeTitleAccentStyle(isDark)}>{hero.titleLine2}</span>
         </motion.h1>
 
         {/* Description — single block, tight */}
         <motion.p
           variants={heroItem}
           className="text-[13px] sm:text-sm md:text-[15px] lg:text-base max-w-xl leading-relaxed mb-7 sm:mb-8 md:mb-9 px-1"
-          style={{ color: isDark ? C.textMuted : "#64748B" }}
+          style={{ color: isDark ? C.textMuted : homeLight.muted }}
         >
           {hero.description}
         </motion.p>
@@ -148,7 +157,7 @@ export default function Hero() {
             className="inline-flex items-center justify-center gap-2 px-7 h-11 md:h-12 rounded-full font-semibold text-sm no-underline border transition-colors w-full sm:w-auto"
             style={{
               borderColor: isDark ? "rgba(248,248,248,0.28)" : "rgba(15,23,42,0.15)",
-              color: isDark ? C.text : "#0F172A",
+              color: isDark ? C.text : homeLight.heading,
               background: "transparent",
             }}
           >
@@ -170,7 +179,7 @@ export default function Hero() {
                 style={{
                   background: C.buttonGradient,
                   color: "#fff",
-                  boxShadow: `0 0 0 2px ${isDark ? C.bg : "#F8FAFC"}`,
+                  boxShadow: `0 0 0 2px ${isDark ? C.bg : homeLight.bgSoft}`,
                 }}
               >
                 {mark}
@@ -179,7 +188,7 @@ export default function Hero() {
           </div>
           <p
             className="text-sm font-medium"
-            style={{ color: isDark ? C.textMuted : "#64748B" }}
+            style={{ color: isDark ? C.textMuted : homeLight.muted }}
           >
             {trust.label}
           </p>

@@ -5,7 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
+import {
+  homeContent,
+  homeColors,
+  homeLight,
+  getHomeTitleAccentStyle,
+} from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import DiamondNavButton from "@/components/ui/DiamondNavButton";
 import { HomeReveal } from "@/components/home/HomeReveal";
@@ -66,16 +71,16 @@ export default function WhoWeServe() {
     <section
       id="serve"
       className="relative py-16 md:py-24 overflow-hidden"
-      style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
+      style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
           <h2
             className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight"
-            style={{ color: isDark ? "#DCE2F6" : "#0F172A" }}
+            style={{ color: isDark ? "#DCE2F6" : homeLight.heading }}
           >
             {serve.titleBefore}{" "}
-            <span style={homeTitleAccentStyle}>{serve.titleAccent}</span>
+            <span style={getHomeTitleAccentStyle(isDark)}>{serve.titleAccent}</span>
           </h2>
         </HomeReveal>
 
@@ -91,13 +96,13 @@ export default function WhoWeServe() {
             <div className="max-w-xl order-2 lg:order-1">
               <h3
                 className="font-heading font-black text-2xl sm:text-3xl md:text-[2.5rem] leading-tight mb-4 sm:mb-5 tracking-tight"
-                style={{ color: isDark ? C.text : "#0F172A" }}
+                style={{ color: isDark ? C.text : homeLight.heading }}
               >
                 {item.title}
               </h3>
               <p
                 className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed mb-6 sm:mb-8"
-                style={{ color: isDark ? "#C8D0DC" : "#475569" }}
+                style={{ color: isDark ? "#C8D0DC" : homeLight.body }}
               >
                 {item.desc}
               </p>
@@ -147,7 +152,7 @@ export default function WhoWeServe() {
                         ? C.accentSoft
                         : isDark
                           ? "rgba(220,226,246,0.28)"
-                          : "#CBD5E1",
+                          : homeLight.border,
                     }}
                   >
                     <p
@@ -156,10 +161,10 @@ export default function WhoWeServe() {
                         color: isActive
                           ? isDark
                             ? C.text
-                            : "#0F172A"
+                            : homeLight.heading
                           : isDark
                             ? "#DCE2F6"
-                            : "#64748B",
+                            : homeLight.muted,
                       }}
                     >
                       {cat.title}
@@ -170,7 +175,7 @@ export default function WhoWeServe() {
                         color: isActive
                           ? isDark
                             ? C.textMuted
-                            : "#64748B"
+                            : homeLight.muted
                           : isDark
                             ? "rgba(220,226,246,0.55)"
                             : "#94A3B8",
@@ -188,7 +193,7 @@ export default function WhoWeServe() {
                 isDark={isDark}
                 onClick={prev}
                 aria-label="Previous sector"
-                style={{ color: isDark ? C.text : "#475569" }}
+                style={{ color: isDark ? C.text : homeLight.body }}
               >
                 <ChevronLeft size={15} />
               </DiamondNavButton>
@@ -196,7 +201,7 @@ export default function WhoWeServe() {
                 isDark={isDark}
                 onClick={next}
                 aria-label="Next sector"
-                style={{ color: isDark ? C.text : "#475569" }}
+                style={{ color: isDark ? C.text : homeLight.body }}
               >
                 <ChevronRight size={15} />
               </DiamondNavButton>

@@ -35,11 +35,11 @@ const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [mouse, setMouse] = useState({ x: 50, y: 50 });
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const update = () =>
-      setIsDark(!document.documentElement.classList.contains("light"));
+      setIsDark(document.documentElement.classList.contains("dark"));
     update();
     const observer = new MutationObserver(update);
     observer.observe(document.documentElement, {

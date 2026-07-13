@@ -4,7 +4,12 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import DiamondNavButton from "@/components/ui/DiamondNavButton";
-import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
+import {
+  homeContent,
+  homeColors,
+  homeLight,
+  getHomeTitleAccentStyle,
+} from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import BrandCard from "./brandCard";
 import { HomeReveal } from "@/components/home/HomeReveal";
@@ -74,7 +79,7 @@ export default function Brands() {
     <section
       id="ecosystem"
       className="relative py-16 md:py-24 overflow-hidden"
-      style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
+      style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div
         ref={sectionRef}
@@ -85,14 +90,16 @@ export default function Brands() {
             <div className="min-w-0 flex-1">
               <h2
                 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight"
-                style={{ color: isDark ? C.text : "#0F172A" }}
+                style={{ color: isDark ? C.text : homeLight.heading }}
               >
                 {ecosystem.titleBefore}{" "}
-                <span style={homeTitleAccentStyle}>{ecosystem.titleAccent}</span>
+                <span style={getHomeTitleAccentStyle(isDark)}>
+                  {ecosystem.titleAccent}
+                </span>
               </h2>
               <p
                 className="text-sm mt-2 font-medium"
-                style={{ color: isDark ? C.textMuted : "#64748B" }}
+                style={{ color: isDark ? C.textMuted : homeLight.muted }}
               >
                 {ecosystem.subtitle}
               </p>
@@ -105,7 +112,7 @@ export default function Brands() {
                   startAuto();
                 }}
                 aria-label="Previous"
-                style={{ color: isDark ? C.text : "#475569" }}
+                style={{ color: isDark ? C.text : homeLight.body }}
               >
                 <ChevronLeft size={15} />
               </DiamondNavButton>
@@ -116,7 +123,7 @@ export default function Brands() {
                   startAuto();
                 }}
                 aria-label="Next"
-                style={{ color: isDark ? C.text : "#475569" }}
+                style={{ color: isDark ? C.text : homeLight.body }}
               >
                 <ChevronRight size={15} />
               </DiamondNavButton>

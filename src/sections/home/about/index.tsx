@@ -4,7 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-import { homeContent, homeColors, homeTitleAccentStyle } from "@/content/home";
+import {
+  homeContent,
+  homeColors,
+  homeLight,
+  getHomeTitleAccentStyle,
+} from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
@@ -30,16 +35,49 @@ export default function About() {
       <section
         id="about"
         className="relative py-16 md:py-24 overflow-hidden"
-        style={{ background: isDark ? C.bg : "#FFFFFF" }}
+        style={{ background: isDark ? C.bg : homeLight.bgSoft }}
       >
-        <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
+        {!isDark && (
+          <svg
+            aria-hidden
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            viewBox="0 0 1440 720"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M -40 80 C 180 40, 260 160, 120 280"
+              stroke="rgba(47,128,237,0.35)"
+              strokeWidth="1.5"
+              strokeDasharray="6 8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M 1480 60 C 1180 20, 1280 200, 1380 320"
+              stroke="rgba(47,128,237,0.28)"
+              strokeWidth="1.5"
+              strokeDasharray="6 8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M 520 700 C 640 620, 800 640, 920 720"
+              stroke="rgba(47,128,237,0.22)"
+              strokeWidth="1.5"
+              strokeDasharray="6 8"
+              strokeLinecap="round"
+            />
+          </svg>
+        )}
+        <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6 relative z-10">
           <HomeReveal variants={homeFadeUp}>
             <h2
               className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight mb-8 sm:mb-12"
-              style={{ color: isDark ? C.text : "#0F172A" }}
+              style={{ color: isDark ? C.text : homeLight.heading }}
             >
               {about.titleBefore}{" "}
-              <span style={homeTitleAccentStyle}>{about.titleAccent}</span>
+              <span style={getHomeTitleAccentStyle(isDark)}>
+                {about.titleAccent}
+              </span>
             </h2>
           </HomeReveal>
 
@@ -54,19 +92,19 @@ export default function About() {
               <div
                 className="rounded-2xl border p-5 sm:p-8 md:p-10 flex flex-col justify-center min-h-[220px] sm:min-h-[280px] h-full"
                 style={{
-                  background: isDark ? `${C.bgCard}CC` : "#F8FAFC",
-                  borderColor: isDark ? C.border : "#E2E8F0",
+                  background: isDark ? `${C.bgCard}CC` : homeLight.card,
+                  borderColor: isDark ? C.border : homeLight.border,
                 }}
               >
                 <h3
                   className="font-black text-base sm:text-lg uppercase tracking-[0.2em] mb-4 sm:mb-5 text-center"
-                  style={{ color: isDark ? C.text : "#0F172A" }}
+                  style={{ color: isDark ? C.text : homeLight.heading }}
                 >
                   {about.mission.title}
                 </h3>
                 <p
                   className="text-[13px] sm:text-sm leading-relaxed text-center"
-                  style={{ color: isDark ? "#D8E0F0" : "#475569" }}
+                  style={{ color: isDark ? "#D8E0F0" : homeLight.body }}
                 >
                   {about.mission.text}
                 </p>
@@ -76,7 +114,7 @@ export default function About() {
             <HomeItem variants={homeScaleIn}>
               <div
                 className="relative rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[280px] aspect-[4/3] md:aspect-auto border h-full"
-                style={{ borderColor: C.border }}
+                style={{ borderColor: isDark ? C.border : homeLight.border }}
               >
                 <Image
                   src={about.missionImage}
@@ -91,7 +129,7 @@ export default function About() {
             <HomeItem variants={homeScaleIn}>
               <div
                 className="relative rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[280px] aspect-[4/3] md:aspect-auto border h-full"
-                style={{ borderColor: C.border }}
+                style={{ borderColor: isDark ? C.border : homeLight.border }}
               >
                 <Image
                   src={about.visionImage}
@@ -107,19 +145,19 @@ export default function About() {
               <div
                 className="rounded-2xl border p-5 sm:p-8 md:p-10 flex flex-col justify-center min-h-[220px] sm:min-h-[280px] h-full"
                 style={{
-                  background: isDark ? `${C.bgCard}CC` : "#F8FAFC",
-                  borderColor: isDark ? C.border : "#E2E8F0",
+                  background: isDark ? `${C.bgCard}CC` : homeLight.card,
+                  borderColor: isDark ? C.border : homeLight.border,
                 }}
               >
                 <h3
                   className="font-black text-base sm:text-lg uppercase tracking-[0.2em] mb-4 sm:mb-5 text-center"
-                  style={{ color: isDark ? C.text : "#0F172A" }}
+                  style={{ color: isDark ? C.text : homeLight.heading }}
                 >
                   {about.vision.title}
                 </h3>
                 <p
                   className="text-[13px] sm:text-sm leading-relaxed text-center"
-                  style={{ color: isDark ? "#D8E0F0" : "#475569" }}
+                  style={{ color: isDark ? "#D8E0F0" : homeLight.body }}
                 >
                   {about.vision.text}
                 </p>
@@ -132,7 +170,7 @@ export default function About() {
       <section
         id="values"
         className="relative py-16 md:py-24 overflow-hidden"
-        style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
+        style={{ background: isDark ? C.bgSection : homeLight.bg }}
       >
         {/* Soft blue glow — behind image column, not over the list */}
         <div
@@ -161,10 +199,12 @@ export default function About() {
               <HomeReveal variants={homeFadeLeft}>
                 <h2
                   className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight mb-8 sm:mb-10"
-                  style={{ color: isDark ? "#DCE2F6" : "#0F172A" }}
+                  style={{ color: isDark ? "#DCE2F6" : homeLight.heading }}
                 >
                   {values.titleBefore}{" "}
-                  <span style={homeTitleAccentStyle}>{values.titleAccent}</span>
+                  <span style={getHomeTitleAccentStyle(isDark)}>
+                    {values.titleAccent}
+                  </span>
                 </h2>
               </HomeReveal>
 
@@ -188,10 +228,10 @@ export default function About() {
                             ? "#2F80ED"
                             : isDark
                               ? "rgba(255,255,255,0.08)"
-                              : "#E2E8F0",
+                              : homeLight.border,
                           background: isDark
                             ? "rgba(18,28,51,0.92)"
-                            : "#FFFFFF",
+                            : homeLight.card,
                           boxShadow: open
                             ? "0 0 0 1px rgba(47,128,237,0.4), 0 0 28px rgba(47,128,237,0.4)"
                             : "none",
@@ -200,7 +240,9 @@ export default function About() {
                         <div className="flex items-center justify-between gap-3 sm:gap-4">
                           <span
                             className="font-heading font-semibold text-sm sm:text-base md:text-lg min-w-0 flex items-center gap-2 sm:gap-2.5"
-                            style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+                            style={{
+                              color: isDark ? "#FFFFFF" : homeLight.heading,
+                            }}
                           >
                             <span
                               className="font-medium tabular-nums shrink-0"
@@ -220,7 +262,7 @@ export default function About() {
                               style={{
                                 color: isDark
                                   ? "rgba(220,226,246,0.7)"
-                                  : "#64748B",
+                                  : homeLight.muted,
                               }}
                             >
                               <span
@@ -251,7 +293,7 @@ export default function About() {
                                 style={{
                                   color: isDark
                                     ? "rgba(255,255,255,0.65)"
-                                    : "#64748B",
+                                    : homeLight.muted,
                                 }}
                               >
                                 {item.desc}
@@ -270,7 +312,9 @@ export default function About() {
               <div
                 className="relative rounded-[20px] sm:rounded-[24px] overflow-hidden border aspect-[4/3] shadow-2xl w-full"
                 style={{
-                  borderColor: isDark ? "rgba(255,255,255,0.08)" : "#E2E8F0",
+                  borderColor: isDark
+                    ? "rgba(255,255,255,0.08)"
+                    : homeLight.border,
                 }}
               >
                 <Image

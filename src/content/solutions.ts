@@ -3,7 +3,7 @@
  * Colors shared with Home / About brand tokens.
  */
 
-import { homeColors, homeTitleAccentStyle } from "@/content/home";
+import { homeColors, homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight } from "@/content/home";
 import foundationNetwork from "@/assets/about/foundation-network.png";
 import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
 import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
@@ -20,7 +20,7 @@ export const solutionsColors = {
   textAccent: "#3888F0",
 } as const;
 
-export { homeTitleAccentStyle };
+export { homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight };
 
 export const solutionsContent = {
   hero: {

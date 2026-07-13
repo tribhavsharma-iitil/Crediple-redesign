@@ -21,12 +21,12 @@ const glitchVariants = {
 };
 
 export default function NotFoundPage() {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const [glitching, setGlitching] = useState(false);
 
   useEffect(() => {
     const update = () =>
-      setIsDark(!document.documentElement.classList.contains("light"));
+      setIsDark(document.documentElement.classList.contains("dark"));
     update();
     const obs = new MutationObserver(update);
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });

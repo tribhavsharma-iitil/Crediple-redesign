@@ -313,16 +313,22 @@ export default function AboutPhilosophy() {
                   {item.label}
                 </span>
                 <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border"
+                  className="relative flex h-9 w-9 shrink-0 items-center justify-center"
                   style={{
-                    borderColor: isDark
-                      ? "rgba(248,248,248,0.16)"
-                      : "#E2E8F0",
-                    color: isDark ? C.textMuted : "#64748B",
-                    background: isDark ? "rgba(18,28,51,0.6)" : "#F8FAFC",
+                    color: isDark ? C.textMuted : "#475569",
                   }}
                 >
-                  <ChevronRight size={14} />
+                  <span
+                    aria-hidden
+                    className="absolute inset-[2px] rotate-45 rounded-[6px] border"
+                    style={{
+                      borderColor: isDark
+                        ? "rgba(220, 226, 246, 0.45)"
+                        : "rgba(15, 23, 42, 0.18)",
+                      background: isDark ? "transparent" : "#FFFFFF",
+                    }}
+                  />
+                  <ChevronRight size={14} className="relative z-10" />
                 </span>
               </div>
             </HomeItem>

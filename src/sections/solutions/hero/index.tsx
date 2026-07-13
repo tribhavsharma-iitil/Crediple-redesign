@@ -11,6 +11,7 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import { homeStagger, homeEase } from "@/lib/animations";
 import yakaBlue from "@/assets/yaka_blue.png";
+import yakaLight from "@/assets/yaka_light.png";
 import HeroWave from "@/components/home/HeroWave";
 
 const { hero, trust } = solutionsContent;
@@ -40,7 +41,7 @@ export default function SolutionsHero() {
         <div className="flex flex-col items-center gap-1 sm:gap-1.5">
           <div className="relative h-9 w-9 sm:h-12 sm:w-12 md:h-14 md:w-14 xl:h-16 xl:w-16">
             <Image
-              src={yakaBlue}
+              src={isDark ? yakaBlue : yakaLight}
               alt="YAKA"
               fill
               priority

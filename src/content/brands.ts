@@ -2,7 +2,7 @@
  * Brands page content.
  */
 
-import { homeColors, homeTitleAccentStyle } from "@/content/home";
+import { homeColors, homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight } from "@/content/home";
 import card_1 from "@/assets/card_1.png";
 import card_2 from "@/assets/card_2.png";
 import card_3 from "@/assets/card_3.png";
@@ -20,7 +20,7 @@ export const brandsColors = {
   textTagline: "#5FA8FF",
 } as const;
 
-export { homeTitleAccentStyle };
+export { homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight };
 
 /** Brand body copy — Inter Regular 20/26 from Brands Figma */
 export const brandBodyStyle = {

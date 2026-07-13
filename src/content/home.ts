@@ -75,6 +75,25 @@ export const homeTitleAccentStyle = {
   color: "transparent",
 };
 
+/** Light PDF uses solid blue accents; dark keeps the gradient */
+export function getHomeTitleAccentStyle(isDark: boolean) {
+  if (isDark) return homeTitleAccentStyle;
+  return { color: "#2F80ED" } as const;
+}
+
+/** Light-theme section tokens from Home (1).pdf */
+export const homeLight = {
+  bg: "#F8FAFC",
+  bgAlt: "#FFFFFF",
+  bgSoft: "#F6FAFF",
+  heading: "#0F172A",
+  body: "#475569",
+  muted: "#64748B",
+  border: "#E2E8F0",
+  card: "#FFFFFF",
+  accent: "#2F80ED",
+} as const;
+
 export const homeContent = {
   hero: {
     badge: "Unified Digital Ecosystem",
@@ -356,7 +375,6 @@ export const homeContent = {
     description:
       "Join the ecosystem that's redefining the future of global industry. Let's discuss your next strategic move.",
     primaryCta: { label: "Schedule Consultation", href: "/contact" },
-    secondaryCta: { label: "Schedule a Call", href: "/contact" },
   },
 } as const;
 

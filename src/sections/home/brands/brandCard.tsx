@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { HomeBrand, homeColors } from "@/content/home";
-import { useTheme } from "@/context/ThemeContext";
 import { homeFadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import cardBg from "@/assets/container.png";
@@ -15,6 +14,10 @@ const LINK_BLUE = "#5A96E3";
 
 const cardVariants: Variants = homeFadeUp;
 
+/**
+ * Ecosystem cards always use the dark PDF treatment (network bg + light text),
+ * on both light and dark site themes.
+ */
 export default function BrandCard({
   brand,
   index,
@@ -22,8 +25,6 @@ export default function BrandCard({
   brand: HomeBrand;
   index: number;
 }) {
-  const { isDark } = useTheme();
-
   const content = (
     <>
       <div aria-hidden className="absolute inset-0 z-0 pointer-events-none">
@@ -38,9 +39,8 @@ export default function BrandCard({
         <div
           className="absolute inset-0"
           style={{
-            background: isDark
-              ? "linear-gradient(180deg, transparent 0%, transparent 40%, rgba(13,20,37,0.55) 75%, rgba(13,20,37,0.85) 100%)"
-              : "linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.55) 55%, rgba(255,255,255,0.9) 100%)",
+            background:
+              "linear-gradient(180deg, transparent 0%, transparent 40%, rgba(13,20,37,0.55) 75%, rgba(13,20,37,0.85) 100%)",
           }}
         />
       </div>
@@ -56,14 +56,11 @@ export default function BrandCard({
               }}
             />
             <Image
-              src={isDark ? brand.iconDark : brand.icon}
+              src={brand.iconDark}
               alt={brand.name}
               width={120}
               height={120}
-              className={cn(
-                "relative z-10 object-contain w-auto h-auto max-h-[80px] sm:max-h-[100px] md:max-h-[120px] max-w-[80px] sm:max-w-[100px] md:max-w-[120px]",
-                isDark && "mix-blend-screen"
-              )}
+              className="relative z-10 object-contain w-auto h-auto max-h-[80px] sm:max-h-[100px] md:max-h-[120px] max-w-[80px] sm:max-w-[100px] md:max-w-[120px] mix-blend-screen"
               sizes="(max-width: 640px) 80px, (max-width: 768px) 100px, 120px"
               priority={index < 3}
             />
@@ -72,14 +69,14 @@ export default function BrandCard({
 
         <h3
           className="font-heading font-bold text-lg sm:text-xl md:text-2xl mb-2 sm:mb-3 tracking-tight text-left w-full"
-          style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
+          style={{ color: "#FFFFFF" }}
         >
           {brand.name}
         </h3>
 
         <p
           className="text-xs sm:text-[13px] md:text-sm leading-relaxed text-left flex-1 mb-5 sm:mb-6 line-clamp-4"
-          style={{ color: isDark ? "rgba(255,255,255,0.82)" : "#64748B" }}
+          style={{ color: "rgba(255,255,255,0.82)" }}
         >
           {brand.description}
         </p>
@@ -102,11 +99,10 @@ export default function BrandCard({
     "relative w-full min-h-[320px] h-[340px] sm:h-[360px] md:h-[400px] rounded-[16px] sm:rounded-[20px] border p-5 sm:p-6 md:p-8 flex flex-col overflow-hidden transition-all duration-300 hover:border-[rgba(90,150,227,0.45)]";
 
   const style = {
-    background: isDark ? "#0D1425" : "#FFFFFF",
-    borderColor: isDark ? "rgba(255,255,255,0.08)" : "#E2E8F0",
-    boxShadow: isDark
-      ? "inset 0 1px 0 rgba(126,182,255,0.06), 0 24px 48px rgba(0,0,0,0.4)"
-      : "0 10px 28px rgba(15,23,42,0.08)",
+    background: "#0D1425",
+    borderColor: "rgba(255,255,255,0.08)",
+    boxShadow:
+      "inset 0 1px 0 rgba(126,182,255,0.06), 0 24px 48px rgba(0,0,0,0.4)",
   };
 
   if (brand.clickable) {

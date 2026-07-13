@@ -9,6 +9,8 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import yakaBlue from "@/assets/yaka_blue.png";
+import yakaLight from "@/assets/yaka_light.png";
+import { useTheme } from "@/context/ThemeContext";
 import type { HomeIntroPhase } from "@/lib/homeIntro";
 
 const NAV_H = 72;
@@ -55,6 +57,7 @@ export default function FloatingLogo({
   phase,
   onIntroComplete,
 }: FloatingLogoProps) {
+  const { isDark } = useTheme();
   const [vw, setVw] = useState(0);
   const [vh, setVh] = useState(0);
   const [heroRect, setHeroRect] = useState<Rect | null>(null);
@@ -130,7 +133,7 @@ export default function FloatingLogo({
     return null;
   }
 
-  const logo = yakaBlue;
+  const logo = isDark ? yakaBlue : yakaLight;
 
   if (phase === "flying" && !landed) {
     const center = viewportCenter(vw, vh);
