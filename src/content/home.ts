@@ -212,25 +212,25 @@ export const homeContent = {
         number: "01",
         title: "Architectural Excellence",
         desc: "We don't just build businesses; we build ecosystems. Every solution under the Crediple umbrella must be scalable, secure and sophisticated.",
-        image: coreValues1,
+        image: coreValues2,
       },
       {
         number: "02",
         title: "Uncompromising Integrity",
         desc: "In health, finance, law, data and technology, trust is our primary currency. We lead with transparency and professional rigor in every transaction.",
-        image: coreValues2,
+        image: coreValues1,
       },
       {
         number: "03",
         title: "Strategic Synergy",
         desc: "We believe the whole is greater than the sum of its parts. We leverage cross industry insights to create a unique competitive advantage for our partners.",
-        image: coreValues3,
+        image: coreValues4,
       },
       {
         number: "04",
         title: "Relentless Innovation",
         desc: "We reject the status quo. We are committed to constant iteration, ensuring our SaaS platforms remain the gold standard in a rapidly shifting global economy.",
-        image: coreValues4,
+        image: coreValues3,
       },
     ],
   },
@@ -239,10 +239,10 @@ export const homeContent = {
     titleBefore: "Company",
     titleAccent: "History",
     images: [
-      companyHistory1,
       companyHistory2,
       companyHistory3,
       companyHistory4,
+      companyHistory1,
     ],
     items: [
       {
@@ -306,7 +306,7 @@ export const homeContent = {
         desc: "Banks, NBFCs, and fintech startups rely on our infrastructure to automate reconciliation, reporting, and regulatory compliance at scale.",
         short: "Powering next-gen financial ops at institutional scale...",
         href: "/solutions",
-        image: whoWeServe2,
+        image: whoWeServe3,
       },
       {
         title: "Legal Practices",
@@ -314,7 +314,7 @@ export const homeContent = {
         desc: "Law firms and solo advocates use our tools to manage case files, automate documentation, and serve clients faster with end-to-end legal tech.",
         short: "Technology meets jurisprudence for modern firms...",
         href: "/solutions",
-        image: whoWeServe3,
+        image: whoWeServe4,
       },
       {
         title: "Enterprise & Corporates",
@@ -322,7 +322,7 @@ export const homeContent = {
         desc: "Large organisations trust Crediple to modernise legacy systems, integrate cross-functional data pipelines, and maintain operational continuity.",
         short: "Enterprise-grade digital backbone for complex ops...",
         href: "/solutions",
-        image: whoWeServe4,
+        image: whoWeServe5,
       },
       {
         title: "Education Institutions",
@@ -330,7 +330,7 @@ export const homeContent = {
         desc: "From edtech platforms to traditional institutions, we build adaptive learning systems and administrative tools that handle thousands of users seamlessly.",
         short: "Reinventing learning systems for institutions at scale...",
         href: "/solutions",
-        image: whoWeServe5,
+        image: whoWeServe6,
       },
       {
         title: "Tech Startups",
@@ -338,7 +338,7 @@ export const homeContent = {
         desc: "Early-stage and growth-stage teams plug into our ecosystem to access shared infrastructure, reducing time-to-market without sacrificing quality.",
         short: "Launch faster, scale smarter with shared infrastructure...",
         href: "/solutions",
-        image: whoWeServe6,
+        image: whoWeServe2,
       },
     ],
   },
