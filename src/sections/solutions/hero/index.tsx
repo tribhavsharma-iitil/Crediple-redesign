@@ -6,7 +6,7 @@ import { Play, ArrowRight } from "lucide-react";
 import {
   solutionsContent,
   solutionsColors,
-  homeTitleAccentStyle,
+  getHomeTitleAccentStyle,
 } from "@/content/solutions";
 import { useTheme } from "@/context/ThemeContext";
 import { homeStagger, homeEase } from "@/lib/animations";
@@ -14,7 +14,7 @@ import yakaBlue from "@/assets/yaka_blue.png";
 import yakaLight from "@/assets/yaka_light.png";
 import HeroWave from "@/components/home/HeroWave";
 
-const { hero, trust } = solutionsContent;
+const { hero } = solutionsContent;
 const C = solutionsColors;
 
 const heroItem = {
@@ -32,7 +32,7 @@ export default function SolutionsHero() {
   return (
     <section
       id="solutions-hero"
-      className="relative flex min-h-[100svh] items-center justify-center overflow-x-clip pt-24 pb-28 select-none sm:pt-28 sm:pb-32 md:pt-32 md:pb-36"
+      className="relative flex min-h-[100svh] items-center justify-start overflow-x-clip pt-24 pb-10 select-none sm:justify-center sm:pt-28 sm:pb-24 md:pt-32 md:pb-28"
       style={{ background: isDark ? C.bg : "#F8FAFC" }}
     >
       <HeroWave isDark={isDark} />
@@ -80,21 +80,21 @@ export default function SolutionsHero() {
         variants={homeStagger}
         initial="hidden"
         animate="visible"
-        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center sm:px-6"
+        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-5 pr-16 text-center sm:px-6 sm:pr-6"
       >
         <motion.h1
           variants={heroItem}
-          className="font-heading mb-4 px-1 text-[1.85rem] leading-[1.12] font-[800] tracking-tight sm:mb-5 sm:text-5xl md:mb-6 md:text-6xl xl:text-[4.25rem]"
+          className="font-heading mb-3 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
           style={{ color: isDark ? C.text : "#0F172A" }}
         >
           {hero.titleLine1}
           <br />
-          <span style={homeTitleAccentStyle}>{hero.titleAccent}</span>
+          <span style={getHomeTitleAccentStyle(isDark)}>{hero.titleAccent}</span>
         </motion.h1>
 
         <motion.p
           variants={heroItem}
-          className="mb-7 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
+          className="mb-6 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
           style={{ color: isDark ? C.textMuted : "#64748B" }}
         >
           {hero.description}
@@ -102,11 +102,11 @@ export default function SolutionsHero() {
 
         <motion.div
           variants={heroItem}
-          className="mb-8 flex w-full max-w-sm flex-col items-stretch justify-center gap-3 sm:mb-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4 md:mb-12"
+          className="flex w-full max-w-[280px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
         >
           <a
             href={hero.primaryCta.href}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-7 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto md:h-12"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
             style={{
               background: C.buttonGradient,
               boxShadow: `0 8px 28px ${C.glow}`,
@@ -117,7 +117,7 @@ export default function SolutionsHero() {
           </a>
           <a
             href={hero.secondaryCta.href}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-7 text-sm font-semibold no-underline transition-colors sm:w-auto md:h-12"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold no-underline transition-colors sm:w-auto sm:px-7 md:h-12"
             style={{
               borderColor: isDark
                 ? "rgba(248,248,248,0.28)"
@@ -129,33 +129,6 @@ export default function SolutionsHero() {
             {hero.secondaryCta.label}
             <ArrowRight size={15} />
           </a>
-        </motion.div>
-
-        <motion.div
-          variants={heroItem}
-          className="flex flex-wrap items-center justify-center gap-3"
-        >
-          <div className="flex items-center -space-x-2">
-            {trust.marks.map((mark) => (
-              <div
-                key={mark}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-[8px] font-bold"
-                style={{
-                  background: C.buttonGradient,
-                  color: "#fff",
-                  boxShadow: `0 0 0 2px ${isDark ? C.bg : "#F8FAFC"}`,
-                }}
-              >
-                {mark}
-              </div>
-            ))}
-          </div>
-          <p
-            className="text-sm font-medium"
-            style={{ color: isDark ? C.textMuted : "#64748B" }}
-          >
-            {trust.label}
-          </p>
         </motion.div>
       </motion.div>
     </section>

@@ -4,18 +4,19 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
 import {
-  brandsContent,
-  brandsColors,
+  contactContent,
+  contactColors,
+  homeLight,
   getHomeTitleAccentStyle,
-} from "@/content/brands";
+} from "@/content/contact";
 import { useTheme } from "@/context/ThemeContext";
 import { homeStagger, homeEase } from "@/lib/animations";
 import yakaBlue from "@/assets/yaka_blue.png";
 import yakaLight from "@/assets/yaka_light.png";
 import HeroWave from "@/components/home/HeroWave";
 
-const { hero } = brandsContent;
-const C = brandsColors;
+const { hero } = contactContent;
+const C = contactColors;
 
 const heroItem = {
   hidden: { opacity: 0, y: 28 },
@@ -26,14 +27,14 @@ const heroItem = {
   },
 };
 
-export default function BrandsHero() {
+export default function ContactHero() {
   const { isDark } = useTheme();
 
   return (
     <section
-      id="brands-hero"
-      className="relative flex min-h-[100svh] items-center justify-start overflow-x-clip pt-24 pb-10 select-none sm:justify-center sm:pt-28 sm:pb-24 md:pt-32 md:pb-28"
-      style={{ background: isDark ? C.bg : "#F8FAFC" }}
+      id="contact-hero"
+      className="relative flex min-h-[100svh] items-center justify-start overflow-hidden pt-24 pb-10 select-none sm:justify-center sm:pt-28 sm:pb-24 md:pt-32 md:pb-28"
+      style={{ background: isDark ? C.bg : homeLight.bgSoft }}
     >
       <HeroWave isDark={isDark} />
 
@@ -51,12 +52,12 @@ export default function BrandsHero() {
           </div>
           <p
             className="max-w-[64px] text-center text-[7px] leading-tight font-medium tracking-wide sm:max-w-none sm:text-[8px] md:text-[9px]"
-            style={{ color: isDark ? C.textSoftBlue : "#475569" }}
+            style={{ color: isDark ? C.textSoftBlue : homeLight.body }}
           >
             A{" "}
             <span
               className="font-bold"
-              style={{ color: isDark ? C.text : "#0F172A" }}
+              style={{ color: isDark ? C.text : homeLight.heading }}
             >
               YAKA
             </span>{" "}
@@ -85,7 +86,7 @@ export default function BrandsHero() {
         <motion.h1
           variants={heroItem}
           className="font-heading mb-3 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
-          style={{ color: isDark ? C.text : "#0F172A" }}
+          style={{ color: isDark ? C.text : homeLight.heading }}
         >
           {hero.titleLine1}
           <br />
@@ -95,10 +96,9 @@ export default function BrandsHero() {
         <motion.p
           variants={heroItem}
           className="mb-6 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
-          style={{ color: isDark ? C.textMuted : "#64748B" }}
+          style={{ color: isDark ? C.textMuted : homeLight.muted }}
         >
           {hero.description}
-          <br className="hidden sm:block" /> {hero.descriptionLine2}
         </motion.p>
 
         <motion.div
@@ -116,6 +116,7 @@ export default function BrandsHero() {
             <Play size={13} className="fill-current" />
             {hero.primaryCta.label}
           </a>
+
           <a
             href={hero.secondaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold no-underline transition-colors sm:w-auto sm:px-7 md:h-12"
@@ -123,7 +124,7 @@ export default function BrandsHero() {
               borderColor: isDark
                 ? "rgba(248,248,248,0.28)"
                 : "rgba(15,23,42,0.15)",
-              color: isDark ? C.text : "#0F172A",
+              color: isDark ? C.text : homeLight.heading,
               background: "transparent",
             }}
           >

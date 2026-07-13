@@ -4,11 +4,11 @@
  */
 
 import { homeColors, homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight } from "@/content/home";
-import foundationNetwork from "@/assets/about/foundation-network.png";
+import companyHistory4 from "@/assets/home/company_history_4.png";
+import domainsNetwork from "@/assets/solutions/domains-network.png";
 import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
-import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
 import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
-import coreValues1 from "@/assets/home/core_values_1.jpg";
+import whoWeServe4 from "@/assets/home/who_we_serve_4.jpg";
 
 export const solutionsColors = {
   ...homeColors,
@@ -44,7 +44,7 @@ export const solutionsContent = {
     body: "Rather than building first and adjusting later, we study the operational realities — the bottlenecks, the friction points — up front. Every brand we launch fits from day one.",
     accent:
       "That's the difference between a product and infrastructure. Every one of our brands is built as the latter.",
-    image: foundationNetwork,
+    image: companyHistory4,
   },
 
   domains: {
@@ -56,7 +56,7 @@ export const solutionsContent = {
         desc: "From credit clarity to borrower profiling, financial decision infrastructure for structured, sustainable growth.",
         short: "Financial decision infrastructure for structured growth.",
         href: "/contact",
-        image: whoWeServe2,
+        image: whoWeServe3,
       },
       {
         title: "HealthTech Systems",
@@ -70,14 +70,14 @@ export const solutionsContent = {
         desc: "From cloud infrastructure to AI/ML, data intelligence systems for enterprise scale.",
         short: "Data intelligence systems for enterprise scale.",
         href: "/contact",
-        image: coreValues1,
+        image: domainsNetwork,
       },
       {
         title: "LegalTech Workflows",
         desc: "Legal workflow infrastructure to reduce paperwork and speed up legal services.",
         short: "Legal workflow infrastructure for faster services.",
         href: "/contact",
-        image: whoWeServe3,
+        image: whoWeServe4,
       },
     ],
   },

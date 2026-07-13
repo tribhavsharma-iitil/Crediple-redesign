@@ -4,7 +4,7 @@
  */
 
 import { homeColors } from "@/content/home";
-import foundationNetwork from "@/assets/about/foundation-network.png";
+import coreValues3 from "@/assets/home/core_values_3.jpg";
 
 /** PDF-accurate text + shared brand colors */
 export const aboutColors = {
@@ -54,7 +54,7 @@ export const aboutContent = {
     body: "We rebuild traditional business models as scalable, technology-driven systems. Crediple's approach is consistent across industries — bring structure and intelligence to fragmented processes.",
     accent:
       "Our goal is to create a systemic infrastructure that powers future industries.",
-    image: foundationNetwork,
+    image: coreValues3,
   },
 
   philosophy: {
