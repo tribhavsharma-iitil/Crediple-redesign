@@ -3,9 +3,10 @@ import type { ReactNode } from "react";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Brands",
+  title: "Our Brands & Ventures | Crediple",
   description:
-    "Explore Crediple's brand ecosystem across healthcare, finance, legal technology, data intelligence, HR, and real estate.",
+    "Discover Crediple's portfolio of AI, healthcare, fintech, HR, legal, and enterprise SaaS brands delivering innovative technology solutions worldwide.",
+  keywords: "Crediple",
   path: "/brands",
 });
 

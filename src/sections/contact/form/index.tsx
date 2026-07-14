@@ -6,6 +6,7 @@ import {
   contactContent,
   contactColors,
   homeLight,
+  getHomeTitleAccentStyle,
 } from "@/content/contact";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
@@ -13,15 +14,6 @@ import { homeFadeLeft, homeFadeRight, homeEase } from "@/lib/animations";
 
 const { form: F } = contactContent;
 const C = contactColors;
-
-const infoAccentStyle = {
-  backgroundImage:
-    "linear-gradient(90deg, #90C4FF 0%, #5FA8FF 40%, #2F80ED 70%, #7B5CFF 100%)",
-  WebkitBackgroundClip: "text" as const,
-  WebkitTextFillColor: "transparent",
-  backgroundClip: "text" as const,
-  color: "transparent",
-};
 
 export default function ContactFormSection() {
   const { isDark } = useTheme();
@@ -54,19 +46,19 @@ export default function ContactFormSection() {
   return (
     <section
       id="contact-form"
-      className="relative overflow-hidden py-16 md:py-24"
+      className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
       style={{ background: isDark ? C.bg : homeLight.bg }}
     >
       <div className="relative z-10 mx-auto grid max-w-[1260px] grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-20 xl:gap-24">
         {/* Left — contact info */}
         <HomeReveal variants={homeFadeLeft}>
           <h2
-            className="font-heading mb-5 text-[1.75rem] leading-[1.2] font-bold tracking-tight sm:mb-6 sm:text-4xl md:text-[2.75rem]"
+            className="font-heading mb-5 text-[1.5rem] leading-[1.25] font-bold tracking-tight sm:mb-6 sm:text-3xl md:text-[2.75rem]"
             style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
           >
             {F.titleBefore}
             <br />
-            <span style={infoAccentStyle}>{F.titleAccent}</span>
+            <span style={getHomeTitleAccentStyle(isDark)}>{F.titleAccent}</span>
           </h2>
 
           <p
@@ -197,11 +189,10 @@ export default function ContactFormSection() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2, ease: homeEase }}
-              className="mt-1 inline-flex h-12 w-full items-center justify-center rounded-2xl px-8 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-auto sm:self-start"
+              className="mt-1 inline-flex h-12 w-full items-center justify-center rounded-full px-8 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-auto sm:self-start"
               style={{
-                background:
-                  "linear-gradient(90deg, #2F80ED 0%, #5B6CF0 45%, #9B7BFF 100%)",
-                boxShadow: "0 10px 28px rgba(47, 128, 237, 0.32)",
+                background: C.buttonGradient,
+                boxShadow: `0 8px 28px ${C.glow}`,
               }}
             >
               {F.submitLabel}

@@ -33,13 +33,12 @@ export const brandBodyStyle = {
 
 export const brandsContent = {
   hero: {
-    titleLine1: "Purpose-built Systems For",
+    titleLine1: "Tailored Systems for",
     titleAccent: "Every Sector.",
     description:
       "Every Crediple brand tackles a different industry problem, all with the same rigor and intent.",
     descriptionLine2: "We don't follow; we set the standard.",
-    primaryCta: { label: "Our Brands", href: "#brand-showcase" },
-    secondaryCta: { label: "Contact Us", href: "/contact" },
+    secondaryCta: { label: "Contact Us", href: "/contact/#contact-form" },
   },
 
   brands: [

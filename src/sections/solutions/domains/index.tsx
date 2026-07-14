@@ -73,13 +73,13 @@ export default function SolutionsDomains() {
   return (
     <section
       id="domains"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
       style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
     >
       <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-6 sm:mb-10 md:mb-12">
           <h2
-            className="font-heading text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
+            className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
             style={{ color: isDark ? "#DCE2F6" : "#0F172A" }}
           >
             {domains.titleBefore}{" "}

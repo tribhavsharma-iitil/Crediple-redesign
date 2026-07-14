@@ -10,20 +10,20 @@ import {
   homeFadeLeft,
   homeFadeRight,
   homeFadeUp,
-  homeStagger,
-  homeViewport,
 } from "@/lib/animations";
+import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 const { future } = aboutContent;
 const C = aboutColors;
 
 export default function AboutFuture() {
   const { isDark } = useTheme();
+  const { stagger, viewport } = useHomeMotion();
 
   return (
     <section
       id="future"
-      className="relative py-16 md:py-24 overflow-hidden"
+      className="relative section-py overflow-hidden"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
       <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
@@ -31,7 +31,7 @@ export default function AboutFuture() {
           <HomeReveal stagger>
             <HomeItem variants={homeFadeLeft}>
               <h2
-                className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight mb-6"
+                className="font-heading text-2xl font-black sm:text-3xl md:text-4xl lg:text-5xl tracking-tight mb-6"
                 style={{ color: isDark ? C.textHeading : "#0F172A" }}
               >
                 {future.titleBefore}{" "}
@@ -83,10 +83,10 @@ export default function AboutFuture() {
 
           <HomeReveal variants={homeFadeRight} delay={0.1}>
             <motion.div
-              variants={homeStagger}
+              variants={stagger}
               initial="hidden"
               whileInView="visible"
-              viewport={homeViewport}
+              viewport={viewport}
               className="grid grid-cols-1 sm:grid-cols-2 gap-x-10"
             >
               {future.items.map((item) => (

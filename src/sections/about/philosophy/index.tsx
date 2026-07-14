@@ -7,7 +7,6 @@ import {
   useState,
   type RefObject,
 } from "react";
-import { ChevronRight } from "lucide-react";
 import {
   motion,
   useMotionValueEvent,
@@ -22,9 +21,8 @@ import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
   homeFadeUp,
   homeFadeLeft,
-  homeStagger,
-  homeViewport,
 } from "@/lib/animations";
+import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 const { philosophy } = aboutContent;
 const C = aboutColors;
@@ -68,6 +66,7 @@ function usePathPoint(
 
 export default function AboutPhilosophy() {
   const { isDark } = useTheme();
+  const { stagger, viewport } = useHomeMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const [activeStep, setActiveStep] = useState(0);
@@ -100,13 +99,13 @@ export default function AboutPhilosophy() {
   return (
     <section
       id="philosophy"
-      className="relative overflow-hidden py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10">
           <h2
-            className="font-heading text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
+            className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
             style={{ color: isDark ? C.textHeading : "#0F172A" }}
           >
             {philosophy.titleBefore}{" "}
@@ -283,16 +282,16 @@ export default function AboutPhilosophy() {
         </HomeReveal>
 
         <motion.div
-          variants={homeStagger}
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={homeViewport}
+          viewport={viewport}
           className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4"
         >
           {philosophy.pillars.map((item) => (
             <HomeItem key={item.number} variants={homeFadeUp}>
               <div
-                className="flex items-center gap-4 rounded-[16px] border px-5 py-[18px] transition-colors hover:border-[rgba(90,150,227,0.35)]"
+                className="group relative overflow-hidden rounded-2xl border px-5 py-5 sm:px-6 sm:py-6"
                 style={{
                   background: isDark ? "#0B1324" : "#FFFFFF",
                   borderColor: isDark
@@ -301,35 +300,24 @@ export default function AboutPhilosophy() {
                 }}
               >
                 <span
-                  className="w-7 shrink-0 font-heading text-sm font-bold tabular-nums"
-                  style={{ color: isDark ? C.textMuted : "#94A3B8" }}
-                >
-                  {item.number}
-                </span>
-                <span
-                  className="min-w-0 flex-1 text-sm font-medium"
-                  style={{ color: isDark ? C.textHeading : "#0F172A" }}
-                >
-                  {item.label}
-                </span>
-                <span
-                  className="relative flex h-9 w-9 shrink-0 items-center justify-center"
-                  style={{
-                    color: isDark ? C.textMuted : "#475569",
-                  }}
-                >
+                  aria-hidden
+                  className="absolute inset-y-0 left-0 w-[3px] rounded-l-2xl opacity-80 transition-opacity group-hover:opacity-100"
+                  style={{ background: C.buttonGradient }}
+                />
+                <div className="flex items-baseline gap-4 pl-1">
                   <span
-                    aria-hidden
-                    className="absolute inset-[2px] rotate-45 rounded-[6px] border"
-                    style={{
-                      borderColor: isDark
-                        ? "rgba(220, 226, 246, 0.45)"
-                        : "rgba(15, 23, 42, 0.18)",
-                      background: isDark ? "transparent" : "#FFFFFF",
-                    }}
-                  />
-                  <ChevronRight size={14} className="relative z-10" />
-                </span>
+                    className="font-heading shrink-0 text-[11px] font-bold tracking-[0.14em] tabular-nums sm:text-xs"
+                    style={{ color: isDark ? C.textAccentSoft : C.accentStrong }}
+                  >
+                    {item.number}
+                  </span>
+                  <p
+                    className="font-heading min-w-0 text-[15px] font-semibold leading-snug tracking-tight sm:text-base"
+                    style={{ color: isDark ? C.textHeading : "#0F172A" }}
+                  >
+                    {item.label}
+                  </p>
+                </div>
               </div>
             </HomeItem>
           ))}

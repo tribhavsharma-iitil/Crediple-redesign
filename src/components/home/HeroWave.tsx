@@ -10,12 +10,7 @@ type HeroWaveProps = {
 
 /**
  * Full-bleed hero wave used on Home / About / Solutions / Brands / Contact.
- *
- * Pinned to the first viewport (`100svh`) so when the hero grows taller than
- * the screen on mobile, the wave stays on-screen — not below the fold.
- *
- * Mobile: full wave shape (no object-cover crop), lifted behind the copy.
- * Desktop: width-locked at the bottom so line art never mid-crops.
+ * Fills the hero bounds (`inset-0`) and anchors to the bottom edge.
  */
 export default function HeroWave({ isDark }: HeroWaveProps) {
   const wave: StaticImageData = isDark ? waveDark : waveLight;
@@ -23,7 +18,7 @@ export default function HeroWave({ isDark }: HeroWaveProps) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[100svh] overflow-hidden leading-[0]"
+      className="pointer-events-none absolute inset-0 z-0 top-0 overflow-hidden leading-[0]"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -33,7 +28,7 @@ export default function HeroWave({ isDark }: HeroWaveProps) {
         height={wave.height}
         decoding="async"
         draggable={false}
-        className="absolute top-[36%] left-1/2 block h-auto w-[200%] max-w-none -translate-x-1/2 select-none sm:top-auto sm:bottom-0 sm:left-0 sm:w-full sm:translate-x-0"
+        className="absolute bottom-0 left-1/2 block h-auto w-[155%] max-w-none -translate-x-1/2 select-none sm:left-0 sm:w-full sm:translate-x-0"
         style={{
           opacity: isDark ? 1 : 0.92,
           filter: isDark

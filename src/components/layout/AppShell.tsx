@@ -15,6 +15,7 @@ import {
   markHomeIntroCompleted,
   type HomeIntroPhase,
 } from "@/lib/homeIntro";
+import { consumePendingHash, normalizePath, scrollToHashWhenReady } from "@/lib/scrollToHash";
 
 // 1. Create a lightweight context to share the animation state with inner child layout nodes
 const IntroContext = createContext<{ phase: HomeIntroPhase }>({ phase: "ready" });
@@ -26,7 +27,7 @@ export default function AppShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "";
 
   const [phase, setPhase] = useState<HomeIntroPhase>(() =>
     getInitialIntroPhase(isHome)
@@ -46,6 +47,25 @@ export default function AppShell({
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
+
+  // Hash CTAs: land at top, then animate down to the section (no instant jump)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const pending = consumePendingHash();
+    const hash = pending || window.location.hash.replace(/^#/, "") || null;
+    if (!hash) return;
+
+    const path = normalizePath(pathname || "/");
+
+    return scrollToHashWhenReady(hash, {
+      startFromTop: true,
+      delayMs: pending ? 120 : 40,
+      onScrolled: () => {
+        window.history.replaceState(null, "", `${path}#${hash}`);
+      },
+    });
+  }, [pathname]);
 
   const handleLoaderComplete = useCallback(() => {
     if (loaderDoneRef.current) return;

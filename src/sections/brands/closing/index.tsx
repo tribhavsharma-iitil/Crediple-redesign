@@ -15,14 +15,13 @@ export default function BrandsClosing() {
 
   return (
     <section
-      className="relative overflow-hidden pt-2 pb-16 sm:pt-4 sm:pb-20 md:pb-28"
+      className="relative overflow-hidden section-cta-end"
       style={{ background: isDark ? C.bg : homeLight.bg }}
     >
       <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeScaleIn}>
-          {/* Same container treatment as Home CTA — both themes */}
           <div
-            className="relative overflow-hidden rounded-2xl px-4 py-12 text-center sm:rounded-[28px] sm:px-6 sm:py-16 md:px-16 md:py-24"
+            className="relative overflow-hidden rounded-2xl section-card-py px-4 text-center sm:rounded-[28px] sm:px-6 md:px-16"
             style={{
               backgroundColor: "#050B18",
               border: "1px solid rgba(255,255,255,0.08)",
@@ -69,7 +68,10 @@ export default function BrandsClosing() {
               }}
             />
 
-            <h2 className="font-heading relative z-10 mx-auto mb-4 max-w-3xl px-1 text-[1.65rem] leading-[1.15] font-black tracking-tight text-white sm:mb-5 sm:text-3xl md:text-[2.75rem] lg:text-5xl">
+            <h2
+              className="font-heading relative z-10 mx-auto mb-4 max-w-3xl px-1 text-[1.65rem] leading-[1.15] font-black tracking-tight sm:mb-5 sm:text-3xl md:text-[2.75rem] lg:text-5xl"
+              style={{ color: "#FFFFFF" }}
+            >
               {closing.titleLine1}
               <br />
               {closing.titleLine2}

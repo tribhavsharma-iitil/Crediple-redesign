@@ -88,7 +88,7 @@ export default function Navbar() {
                 src={isDark ? credipleDark : credipleLight}
                 alt="Crediple Logo"
                 height={28}
-                className="w-auto h-9 object-contain"
+                className="h-7 w-auto object-contain sm:h-9"
                 priority
               />
             </Link>

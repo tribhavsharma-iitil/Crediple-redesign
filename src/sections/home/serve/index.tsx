@@ -70,13 +70,13 @@ export default function WhoWeServe() {
   return (
     <section
       id="serve"
-      className="relative py-16 md:py-24 overflow-hidden"
+      className="relative section-py overflow-hidden"
       style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
           <h2
-            className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight"
+            className="font-heading text-2xl font-black sm:text-3xl md:text-4xl lg:text-5xl tracking-tight"
             style={{ color: isDark ? "#DCE2F6" : homeLight.heading }}
           >
             {serve.titleBefore}{" "}

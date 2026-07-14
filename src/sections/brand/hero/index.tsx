@@ -88,7 +88,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-[100svh] overflow-hidden flex items-center"
+      className="relative min-h-[var(--hero-min-h)] overflow-hidden flex items-center"
       style={{ backgroundImage: sectionBg, transition: "background-image 0.5s ease" }}
     >
       {/* Planet Layer 1 — bloom halo */}

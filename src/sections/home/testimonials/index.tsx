@@ -17,8 +17,8 @@ import {
   homeFadeUp,
   homeFadeLeft,
   homeScaleIn,
-  homeStagger,
 } from "@/lib/animations";
+import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { cn } from "@/lib/utils";
 import ctaBg from "@/assets/gradient.png";
 
@@ -34,6 +34,15 @@ const T = {
   muted: "#7B8494",
   star: "#3E66DF",
 } as const;
+
+function initialsFromName(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
 
 function useVisibleCount() {
   const [count, setCount] = useState(1);
@@ -66,6 +75,7 @@ export default function Testimonials() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
   const { isDark } = useTheme();
+  const { stagger } = useHomeMotion();
   const visible = useVisibleCount();
   const items = testimonials.items;
   const maxIndex = Math.max(0, items.length - visible);
@@ -104,7 +114,7 @@ export default function Testimonials() {
     <div className="w-full">
       <section
         id="testimonials"
-        className="relative py-16 md:py-24 overflow-hidden"
+        className="relative section-py overflow-hidden"
         style={{ background: isDark ? T.bg : homeLight.bgAlt }}
       >
         <div
@@ -112,10 +122,10 @@ export default function Testimonials() {
           className="relative z-10 w-full max-w-[1260px] mx-auto px-4 sm:px-6"
         >
           <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10 w-full">
-            <div className="flex flex-row items-end justify-between gap-4 w-full">
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
               <div className="min-w-0 flex-1">
                 <h2
-                  className="font-heading font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-left"
+                  className="font-heading text-left text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
                   style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
                 >
                   {testimonials.titleBefore}{" "}
@@ -124,13 +134,13 @@ export default function Testimonials() {
                   </span>
                 </h2>
                 <p
-                  className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] mt-3 max-w-2xl text-left"
+                  className="mt-3 max-w-2xl text-left text-[10px] font-semibold tracking-[0.16em] uppercase sm:text-[11px]"
                   style={{ color: isDark ? T.muted : homeLight.muted }}
                 >
                   {testimonials.subtitle}
                 </p>
               </div>
-              <div className="flex gap-3 shrink-0 self-end">
+              <div className="hidden shrink-0 gap-3 sm:flex sm:self-end">
                 <DiamondNavButton
                   isDark={isDark}
                   onClick={() => {
@@ -158,7 +168,7 @@ export default function Testimonials() {
           </HomeReveal>
 
           <motion.div
-            variants={homeStagger}
+            variants={stagger}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             onMouseEnter={() => setPaused(true)}
@@ -208,14 +218,15 @@ export default function Testimonials() {
                         </p>
 
                         <div className="flex items-center gap-3 mt-6 sm:mt-8">
-                          <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fill
-                              className="object-cover"
-                              sizes="40px"
-                            />
+                          <div
+                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[11px] font-bold tracking-wide"
+                            style={{
+                              background: C.buttonGradient,
+                              color: "#FFFFFF",
+                            }}
+                            aria-hidden
+                          >
+                            {initialsFromName(item.name)}
                           </div>
                           <div className="min-w-0">
                             <p
@@ -244,44 +255,74 @@ export default function Testimonials() {
             </div>
 
             {pageCount > 1 && (
-              <div className="flex justify-center gap-2 mt-8">
-                {Array.from({ length: pageCount }).map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => goTo(i)}
-                    aria-label={`Page ${i + 1}`}
-                    className={cn(
-                      "h-1.5 rounded-full transition-all duration-300",
-                      i === current ? "w-6" : "w-1.5"
-                    )}
-                    style={{
-                      background:
-                        i === current
-                          ? isDark
-                            ? C.text
-                            : C.accentStrong
-                          : isDark
-                            ? "rgba(248,248,248,0.25)"
-                            : "#CBD5E1",
+              <div className="mt-8 flex items-center justify-center gap-4 sm:gap-2">
+                <div className="flex sm:hidden">
+                  <DiamondNavButton
+                    isDark={isDark}
+                    onClick={() => {
+                      goTo(current > 0 ? current - 1 : maxIndex);
+                      startAuto();
                     }}
-                  />
-                ))}
+                    aria-label="Previous"
+                    style={{ color: isDark ? C.text : homeLight.body }}
+                  >
+                    <ChevronLeft size={16} />
+                  </DiamondNavButton>
+                </div>
+
+                <div className="flex justify-center gap-2">
+                  {Array.from({ length: pageCount }).map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => goTo(i)}
+                      aria-label={`Page ${i + 1}`}
+                      className={cn(
+                        "h-1.5 rounded-full transition-all duration-300",
+                        i === current ? "w-6" : "w-1.5"
+                      )}
+                      style={{
+                        background:
+                          i === current
+                            ? isDark
+                              ? C.text
+                              : C.accentStrong
+                            : isDark
+                              ? "rgba(248,248,248,0.25)"
+                              : "#CBD5E1",
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex sm:hidden">
+                  <DiamondNavButton
+                    isDark={isDark}
+                    onClick={() => {
+                      goTo(current < maxIndex ? current + 1 : 0);
+                      startAuto();
+                    }}
+                    aria-label="Next"
+                    style={{ color: isDark ? C.text : homeLight.body }}
+                  >
+                    <ChevronRight size={16} />
+                  </DiamondNavButton>
+                </div>
               </div>
             )}
           </motion.div>
         </div>
       </section>
 
-      {/* CTA — dark navy card on both themes (matches light PDF) */}
+      {/* CTA — always dark navy card (same UI in light + dark page themes) */}
       <section
-        className="relative pb-16 sm:pb-20 md:pb-28 pt-4 sm:pt-6 md:pt-8"
+        className="relative section-cta-end"
         style={{ background: isDark ? T.bg : homeLight.bg }}
       >
         <div className="max-w-[1260px] mx-auto px-4 sm:px-6">
           <HomeReveal variants={homeScaleIn}>
             <div
-              className="relative overflow-hidden rounded-2xl sm:rounded-[28px] px-4 py-10 sm:px-6 sm:py-14 md:px-16 md:py-20 text-center"
+              className="relative overflow-hidden rounded-2xl section-card-py sm:rounded-[28px] px-4 sm:px-6 md:px-16 text-center"
               style={{
                 backgroundColor: "#050B18",
                 border: "1px solid rgba(255,255,255,0.08)",
@@ -328,30 +369,19 @@ export default function Testimonials() {
                 }}
               />
 
-              <h2 className="relative z-10 font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] text-white px-1">
+              <h2
+                className="relative z-10 font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] px-1"
+                style={{ color: "#FFFFFF" }}
+              >
                 {cta.title}
               </h2>
 
               <p
-                className="relative z-10 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed px-1"
+                className="relative z-10 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-1"
                 style={{ color: "#A8B0BC" }}
               >
                 {cta.description}
               </p>
-
-              <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-                <a
-                  href={cta.primaryCta.href}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-sm no-underline transition-opacity hover:opacity-90"
-                  style={{
-                    background: "#F0F4FA",
-                    color: "#0F172A",
-                    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)",
-                  }}
-                >
-                  {cta.primaryCta.label}
-                </a>
-              </div>
             </div>
           </HomeReveal>
         </div>

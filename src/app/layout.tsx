@@ -38,12 +38,13 @@ export const metadata: Metadata = {
   category: "technology",
 
   title: {
-    default: "Crediple | Scalable Business Systems",
+    default:
+      "AI-Powered Digital Transformation & Technology Solutions | Crediple",
     template: "%s | Crediple",
   },
 
   description:
-    "Crediple helps businesses accelerate growth through software development, digital transformation, automation, cloud solutions, and technology consulting.",
+    "Crediple delivers data intelligence, software development, technology solutions, cloud solutions, artificial intelligence in business, SaaS platforms, and workflow automation.",
 
   alternates: {
     canonical: "/",
@@ -51,14 +52,15 @@ export const metadata: Metadata = {
 
   keywords: [
     "Crediple",
-    "digital transformation",
+    "data intelligence",
     "software development",
     "technology solutions",
     "cloud solutions",
-    "automation",
-    "SaaS platforms",
-    "enterprise software",
-    "technology consulting",
+    "artificial intelligence in business",
+    "SaaS Companies",
+    "workflow automation",
+    "industry-specific software",
+    "AI & ML",
   ],
 
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -70,9 +72,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "Crediple | Digital Transformation, Software & Technology Solutions",
+    title:
+      "AI-Powered Digital Transformation & Technology Solutions | Crediple",
     description:
-      "Crediple helps businesses accelerate growth through software development, digital transformation, automation, cloud solutions, and technology consulting.",
+      "Crediple delivers data intelligence, software development, technology solutions, cloud solutions, artificial intelligence in business, SaaS platforms, and workflow automation.",
     images: [
       {
         url: OG_IMAGE,
@@ -85,9 +88,10 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Crediple | Digital Transformation, Software & Technology Solutions",
+    title:
+      "AI-Powered Digital Transformation & Technology Solutions | Crediple",
     description:
-      "Software development, digital transformation, automation, cloud solutions, and technology consulting.",
+      "Crediple delivers data intelligence, software development, technology solutions, cloud solutions, artificial intelligence in business, SaaS platforms, and workflow automation.",
     images: [OG_IMAGE],
   },
 

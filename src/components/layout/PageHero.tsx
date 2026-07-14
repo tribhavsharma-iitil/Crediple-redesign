@@ -61,7 +61,7 @@ export default function Hero({
     <section
       id="hero"
       className={cn(
-        "relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden select-none px-4 sm:px-6",
+        "relative overflow-hidden pt-24 pb-[var(--section-py)] select-none px-4 sm:px-6 md:pt-28",
         isDark ? "bg-[#020B1A] section-dark-glow" : "bg-[#F8FAFC]"
       )}
     >

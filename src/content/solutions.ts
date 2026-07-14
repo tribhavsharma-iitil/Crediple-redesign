@@ -28,13 +28,8 @@ export const solutionsContent = {
     titleAccent: "Modern Businesses.",
     description:
       "We build automation systems and digital infrastructure for businesses that can't afford downtime.",
-    primaryCta: { label: "See Our Solutions", href: "#domains" },
-    secondaryCta: { label: "Talk to Us", href: "/contact" },
-  },
-
-  trust: {
-    label: "Trusted by 50+ institutions",
-    marks: ["HD", "SB", "IC", "BF", "TC"],
+    primaryCta: { label: "See Our Solutions", href: "/solutions/#domains" },
+    secondaryCta: { label: "Talk to Us", href: "/contact/#contact-form" },
   },
 
   foundation: {

@@ -24,6 +24,10 @@ function BrandBlock({
   const imageRight = index % 2 === 0;
 
   return (
+    <div
+      id={index === 0 ? "brand-01" : `brand-${String(index + 1).padStart(2, "0")}`}
+      className="scroll-mt-20 sm:scroll-mt-24"
+    >
     <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">
       <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-20">
         <HomeReveal
@@ -38,7 +42,7 @@ function BrandBlock({
               {brand.number}
             </p>
             <h2
-              className="font-heading mb-2 break-words text-[1.75rem] font-black tracking-tight sm:mb-3 sm:text-4xl md:text-5xl"
+              className="font-heading mb-2 break-words text-[1.5rem] font-black tracking-tight sm:mb-3 sm:text-3xl md:text-4xl lg:text-5xl"
               style={{ color: isDark ? C.text : "#0F172A" }}
             >
               {brand.name}
@@ -145,6 +149,7 @@ function BrandBlock({
         </p>
       </HomeReveal>
     </div>
+    </div>
   );
 }
 
@@ -154,7 +159,7 @@ export default function BrandsShowcase() {
   return (
     <section
       id="brand-showcase"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
       <div className="flex flex-col gap-14 sm:gap-20 md:gap-28">

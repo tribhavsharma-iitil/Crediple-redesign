@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
 import {
@@ -10,10 +9,16 @@ import {
   getHomeTitleAccentStyle,
 } from "@/content/contact";
 import { useTheme } from "@/context/ThemeContext";
-import { homeStagger, homeEase } from "@/lib/animations";
-import yakaBlue from "@/assets/yaka_blue.png";
-import yakaLight from "@/assets/yaka_light.png";
+import { homeEase } from "@/lib/animations";
+import { useHomeMotion } from "@/hooks/useHomeMotion";
+import HashLink from "@/components/ui/HashLink";
 import HeroWave from "@/components/home/HeroWave";
+import YakaBrandMark from "@/components/home/YakaBrandMark";
+import {
+  HERO_CONTENT_CLASS,
+  HERO_SECTION_CLASS,
+  HERO_YAKA_SLOT_CLASS,
+} from "@/components/home/heroLayout";
 
 const { hero } = contactContent;
 const C = contactColors;
@@ -29,41 +34,18 @@ const heroItem = {
 
 export default function ContactHero() {
   const { isDark } = useTheme();
+  const { heroStagger } = useHomeMotion();
 
   return (
     <section
       id="contact-hero"
-      className="relative flex min-h-[100svh] items-center justify-start overflow-hidden pt-24 pb-10 select-none sm:justify-center sm:pt-28 sm:pb-24 md:pt-32 md:pb-28"
+      className={HERO_SECTION_CLASS}
       style={{ background: isDark ? C.bg : homeLight.bgSoft }}
     >
       <HeroWave isDark={isDark} />
 
-      <div className="pointer-events-none absolute top-16 right-3 z-20 w-[56px] sm:top-20 sm:right-4 sm:w-[72px] md:top-24 md:right-8 md:w-[88px] xl:right-12 xl:w-[100px]">
-        <div className="flex flex-col items-center gap-1 sm:gap-1.5">
-          <div className="relative h-9 w-9 sm:h-12 sm:w-12 md:h-14 md:w-14 xl:h-16 xl:w-16">
-            <Image
-              src={isDark ? yakaBlue : yakaLight}
-              alt="YAKA"
-              fill
-              priority
-              sizes="(max-width: 640px) 36px, 64px"
-              className="object-contain"
-            />
-          </div>
-          <p
-            className="max-w-[64px] text-center text-[7px] leading-tight font-medium tracking-wide sm:max-w-none sm:text-[8px] md:text-[9px]"
-            style={{ color: isDark ? C.textSoftBlue : homeLight.body }}
-          >
-            A{" "}
-            <span
-              className="font-bold"
-              style={{ color: isDark ? C.text : homeLight.heading }}
-            >
-              YAKA
-            </span>{" "}
-            Enterprise
-          </p>
-        </div>
+      <div className={HERO_YAKA_SLOT_CLASS}>
+        <YakaBrandMark />
       </div>
 
       {isDark && (
@@ -78,14 +60,14 @@ export default function ContactHero() {
       )}
 
       <motion.div
-        variants={homeStagger}
+        variants={heroStagger}
         initial="hidden"
         animate="visible"
-        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-5 pr-16 text-center sm:px-6 sm:pr-6"
+        className={`${HERO_CONTENT_CLASS} max-w-4xl`}
       >
         <motion.h1
           variants={heroItem}
-          className="font-heading mb-3 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
+          className="font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
           style={{ color: isDark ? C.text : homeLight.heading }}
         >
           {hero.titleLine1}
@@ -95,7 +77,7 @@ export default function ContactHero() {
 
         <motion.p
           variants={heroItem}
-          className="mb-6 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
+          className="mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
           style={{ color: isDark ? C.textMuted : homeLight.muted }}
         >
           {hero.description}
@@ -103,9 +85,9 @@ export default function ContactHero() {
 
         <motion.div
           variants={heroItem}
-          className="flex w-full max-w-[280px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
+          className="flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
         >
-          <a
+          <HashLink
             href={hero.primaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
             style={{
@@ -115,9 +97,9 @@ export default function ContactHero() {
           >
             <Play size={13} className="fill-current" />
             {hero.primaryCta.label}
-          </a>
+          </HashLink>
 
-          <a
+          <HashLink
             href={hero.secondaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold no-underline transition-colors sm:w-auto sm:px-7 md:h-12"
             style={{
@@ -130,7 +112,7 @@ export default function ContactHero() {
           >
             {hero.secondaryCta.label}
             <ArrowRight size={15} />
-          </a>
+          </HashLink>
         </motion.div>
       </motion.div>
     </section>

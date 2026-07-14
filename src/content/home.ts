@@ -35,9 +35,6 @@ import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
 import whoWeServe4 from "@/assets/home/who_we_serve_4.jpg";
 import whoWeServe5 from "@/assets/home/who_we_serve_5.jpg";
 import whoWeServe6 from "@/assets/home/who_we_serve_6.jpg";
-import avatar1 from "@/assets/home/avatar-1.png";
-import avatar2 from "@/assets/home/avatar-2.png";
-import avatar3 from "@/assets/home/avatar-3.png";
 
 /** Exact colors from Home.pdf / Figma */
 export const homeColors = {
@@ -81,6 +78,10 @@ export function getHomeTitleAccentStyle(isDark: boolean) {
   return { color: "#2F80ED" } as const;
 }
 
+export const yakaTaglineClassName =
+  "whitespace-nowrap text-center text-[9px] font-medium leading-tight tracking-wide sm:text-[10px] md:text-[11px]";
+
+
 /** Light-theme section tokens from Home (1).pdf */
 export const homeLight = {
   bg: "#F8FAFC",
@@ -101,13 +102,7 @@ export const homeContent = {
     titleLine2: "Multiple Innovations.",
     description:
       "Crediple unifies innovative companies across healthcare, finance, legal technology, education, and AI into one powerful digital ecosystem.",
-    primaryCta: { label: "Explore Brands", href: "/brands" },
-    secondaryCta: { label: "Schedule Consultation", href: "/contact" },
-  },
-
-  trust: {
-    label: "Trusted by 50+ institutions",
-    marks: ["HD", "SB", "IC", "BF", "TC"],
+    primaryCta: { label: "Explore Brands", href: "/brands/#brand-01" },
   },
 
   ecosystem: {
@@ -352,19 +347,16 @@ export const homeContent = {
         name: "Rajiv Sharma",
         role: "CEO, MediTech Solutions",
         text: "Crediple transformed our entire clinical workflow. What used to take days now takes hours. Their infrastructure is rock solid and the support team genuinely understands enterprise healthcare needs.",
-        image: avatar1,
       },
       {
         name: "Priya Nair",
         role: "CFO, FinVault India",
         text: "We integrated Crediple's fintech platform across 3 cities in under a month. The reconciliation automation alone saved us 40 hours a week. Truly a game changer for our operations.",
-        image: avatar2,
       },
       {
         name: "Arjun Mehta",
         role: "Founder, LexCore",
         text: "Our firm was drowning in paperwork. Crediple built us a case management system that feels like it was made specifically for us. Client satisfaction has never been higher.",
-        image: avatar3,
       },
     ],
   },
@@ -373,7 +365,6 @@ export const homeContent = {
     title: "Ready for Institutional Excellence?",
     description:
       "Join the ecosystem that's redefining the future of global industry. Let's discuss your next strategic move.",
-    primaryCta: { label: "Schedule Consultation", href: "/contact" },
   },
 } as const;
 

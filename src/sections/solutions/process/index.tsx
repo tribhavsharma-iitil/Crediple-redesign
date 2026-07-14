@@ -23,13 +23,13 @@ export default function SolutionsProcess() {
   return (
     <section
       id="process"
-      className="relative overflow-hidden py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? T.bg : "#FFFFFF" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-10 sm:mb-12 md:mb-14">
           <h2
-            className="font-heading text-left text-[1.75rem] font-black tracking-tight sm:text-4xl md:text-5xl"
+            className="font-heading text-left text-[1.5rem] font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
             style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
           >
             {process.titleBefore}{" "}
