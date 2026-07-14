@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
 import {
@@ -10,9 +10,8 @@ import {
 } from "@/content/brands";
 import { useTheme } from "@/context/ThemeContext";
 import { homeStagger, homeEase } from "@/lib/animations";
-import yakaBlue from "@/assets/yaka_blue.png";
-import yakaLight from "@/assets/yaka_light.png";
 import HeroWave from "@/components/home/HeroWave";
+import YakaBrandMark from "@/components/home/YakaBrandMark";
 
 const { hero } = brandsContent;
 const C = brandsColors;
@@ -37,32 +36,8 @@ export default function BrandsHero() {
     >
       <HeroWave isDark={isDark} />
 
-      <div className="pointer-events-none absolute top-16 right-3 z-20 w-[56px] sm:top-20 sm:right-4 sm:w-[72px] md:top-24 md:right-8 md:w-[88px] xl:right-12 xl:w-[100px]">
-        <div className="flex flex-col items-center gap-1 sm:gap-1.5">
-          <div className="relative h-9 w-9 sm:h-12 sm:w-12 md:h-14 md:w-14 xl:h-16 xl:w-16">
-            <Image
-              src={isDark ? yakaBlue : yakaLight}
-              alt="YAKA"
-              fill
-              priority
-              sizes="(max-width: 640px) 36px, 64px"
-              className="object-contain"
-            />
-          </div>
-          <p
-            className="max-w-[64px] text-center text-[7px] leading-tight font-medium tracking-wide sm:max-w-none sm:text-[8px] md:text-[9px]"
-            style={{ color: isDark ? C.textSoftBlue : "#475569" }}
-          >
-            A{" "}
-            <span
-              className="font-bold"
-              style={{ color: isDark ? C.text : "#0F172A" }}
-            >
-              YAKA
-            </span>{" "}
-            Enterprise
-          </p>
-        </div>
+      <div className="pointer-events-none absolute top-16 right-2 z-20 sm:top-20 sm:right-4 md:top-24 md:right-8 xl:right-12">
+        <YakaBrandMark />
       </div>
 
       {isDark && (
@@ -105,7 +80,7 @@ export default function BrandsHero() {
           variants={heroItem}
           className="flex w-full max-w-[280px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
         >
-          <a
+          <Link
             href={hero.primaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
             style={{
@@ -115,8 +90,8 @@ export default function BrandsHero() {
           >
             <Play size={13} className="fill-current" />
             {hero.primaryCta.label}
-          </a>
-          <a
+          </Link>
+          <Link
             href={hero.secondaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold no-underline transition-colors sm:w-auto sm:px-7 md:h-12"
             style={{
@@ -129,7 +104,7 @@ export default function BrandsHero() {
           >
             {hero.secondaryCta.label}
             <ArrowRight size={15} />
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

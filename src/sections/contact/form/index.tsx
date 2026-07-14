@@ -6,6 +6,7 @@ import {
   contactContent,
   contactColors,
   homeLight,
+  getHomeTitleAccentStyle,
 } from "@/content/contact";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
@@ -13,15 +14,6 @@ import { homeFadeLeft, homeFadeRight, homeEase } from "@/lib/animations";
 
 const { form: F } = contactContent;
 const C = contactColors;
-
-const infoAccentStyle = {
-  backgroundImage:
-    "linear-gradient(90deg, #90C4FF 0%, #5FA8FF 40%, #2F80ED 70%, #7B5CFF 100%)",
-  WebkitBackgroundClip: "text" as const,
-  WebkitTextFillColor: "transparent",
-  backgroundClip: "text" as const,
-  color: "transparent",
-};
 
 export default function ContactFormSection() {
   const { isDark } = useTheme();
@@ -66,7 +58,7 @@ export default function ContactFormSection() {
           >
             {F.titleBefore}
             <br />
-            <span style={infoAccentStyle}>{F.titleAccent}</span>
+            <span style={getHomeTitleAccentStyle(isDark)}>{F.titleAccent}</span>
           </h2>
 
           <p
@@ -197,11 +189,10 @@ export default function ContactFormSection() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2, ease: homeEase }}
-              className="mt-1 inline-flex h-12 w-full items-center justify-center rounded-2xl px-8 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-auto sm:self-start"
+              className="mt-1 inline-flex h-12 w-full items-center justify-center rounded-full px-8 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-auto sm:self-start"
               style={{
-                background:
-                  "linear-gradient(90deg, #2F80ED 0%, #5B6CF0 45%, #9B7BFF 100%)",
-                boxShadow: "0 10px 28px rgba(47, 128, 237, 0.32)",
+                background: C.buttonGradient,
+                boxShadow: `0 8px 28px ${C.glow}`,
               }}
             >
               {F.submitLabel}

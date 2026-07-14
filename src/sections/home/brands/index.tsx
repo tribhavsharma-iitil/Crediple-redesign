@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import DiamondNavButton from "@/components/ui/DiamondNavButton";
 import {
@@ -13,10 +13,11 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import BrandCard from "./brandCard";
 import { HomeReveal } from "@/components/home/HomeReveal";
-import { homeFadeLeft, homeStagger } from "@/lib/animations";
+import { homeEase, homeFadeLeft, homeStagger } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
-const INTERVAL = 5000;
+const INTERVAL = 2200;
+const SLIDE_MS = 0.28;
 const { ecosystem } = homeContent;
 const C = homeColors;
 
@@ -45,16 +46,22 @@ export default function Brands() {
   const maxIndex = Math.max(0, brands.length - visible);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [direction, setDirection] = useState(1);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goTo = useCallback(
-    (idx: number) => setCurrent(Math.max(0, Math.min(idx, maxIndex))),
-    [maxIndex]
+    (idx: number, dir?: number) => {
+      const next = Math.max(0, Math.min(idx, maxIndex));
+      setDirection(dir ?? (next >= current ? 1 : -1));
+      setCurrent(next);
+    },
+    [maxIndex, current],
   );
 
   const startAuto = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
+      setDirection(1);
       setCurrent((c) => (c < maxIndex ? c + 1 : 0));
     }, INTERVAL);
   }, [maxIndex]);
@@ -66,7 +73,6 @@ export default function Brands() {
     };
   }, [paused, startAuto]);
 
-  // Keep carousel index valid when breakpoint / visible count changes
   useEffect(() => {
     setCurrent((c) => Math.min(c, maxIndex));
   }, [maxIndex]);
@@ -79,7 +85,7 @@ export default function Brands() {
     <section
       id="ecosystem"
       className="relative py-16 md:py-24"
-      style={{ background: isDark ? C.bgSection : "#FFFFFF" }}
+      style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div
         ref={sectionRef}
@@ -108,7 +114,7 @@ export default function Brands() {
               <DiamondNavButton
                 isDark={isDark}
                 onClick={() => {
-                  goTo(current > 0 ? current - 1 : maxIndex);
+                  goTo(current > 0 ? current - 1 : maxIndex, -1);
                   startAuto();
                 }}
                 aria-label="Previous"
@@ -119,7 +125,7 @@ export default function Brands() {
               <DiamondNavButton
                 isDark={isDark}
                 onClick={() => {
-                  goTo(current < maxIndex ? current + 1 : 0);
+                  goTo(current < maxIndex ? current + 1 : 0, 1);
                   startAuto();
                 }}
                 aria-label="Next"
@@ -138,25 +144,45 @@ export default function Brands() {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          {/* overflow-x only — avoid clipping a gray band under the cards */}
           <div className="overflow-x-clip">
             <motion.div
-              className="-mx-3 flex"
+              className="-mx-3 flex will-change-transform"
               animate={{ x: `${trackX}%` }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: SLIDE_MS,
+                ease: homeEase,
+              }}
             >
-              {brands.map((brand, i) => (
-                <div
-                  key={brand.name}
-                  style={{
-                    width: `${cardWidthPct}%`,
-                    flex: `0 0 ${cardWidthPct}%`,
-                  }}
-                  className="px-3"
-                >
-                  <BrandCard brand={brand} index={i} />
-                </div>
-              ))}
+              {brands.map((brand, i) => {
+                const inView = i >= current && i < current + visible;
+                return (
+                  <motion.div
+                    key={brand.name}
+                    style={{
+                      width: `${cardWidthPct}%`,
+                      flex: `0 0 ${cardWidthPct}%`,
+                    }}
+                    className="px-3"
+                    animate={{
+                      opacity: inView ? 1 : 0.5,
+                      scale: inView ? 1 : 0.94,
+                      y: inView ? 0 : 10,
+                    }}
+                    transition={{
+                      duration: SLIDE_MS,
+                      ease: homeEase,
+                      delay: inView ? 0.02 * Math.max(0, i - current) : 0,
+                    }}
+                  >
+                    <motion.div
+                      whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                      className="h-full"
+                    >
+                      <BrandCard brand={brand} index={i} />
+                    </motion.div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
 
@@ -165,25 +191,59 @@ export default function Brands() {
               <button
                 key={i}
                 type="button"
-                onClick={() => goTo(i)}
+                onClick={() => {
+                  goTo(i);
+                  startAuto();
+                }}
                 aria-label={`Page ${i + 1}`}
+                aria-current={i === current ? "true" : undefined}
                 className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
-                  i === current ? "w-6" : "w-1.5"
+                  "relative h-1.5 overflow-hidden rounded-full transition-[width] duration-300",
+                  i === current ? "w-7" : "w-1.5",
                 )}
                 style={{
                   background:
                     i === current
                       ? isDark
-                        ? C.text
-                        : C.accentStrong
+                        ? "rgba(248,248,248,0.2)"
+                        : "rgba(47,128,237,0.2)"
                       : isDark
                         ? "rgba(248,248,248,0.25)"
                         : "#CBD5E1",
                 }}
-              />
+              >
+                <AnimatePresence mode="wait">
+                  {i === current && (
+                    <motion.span
+                      key={`fill-${current}-${paused ? "p" : "r"}`}
+                      className="absolute inset-y-0 left-0 rounded-full"
+                      style={{
+                        background: isDark ? C.text : C.accentStrong,
+                        originX: 0,
+                      }}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: paused ? 0 : 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={
+                        paused
+                          ? { duration: 0.15 }
+                          : {
+                              duration: INTERVAL / 1000,
+                              ease: "linear",
+                            }
+                      }
+                    />
+                  )}
+                </AnimatePresence>
+              </button>
             ))}
           </div>
+
+          {/* Direction hint for a11y / subtle motion cue */}
+          <span className="sr-only" aria-live="polite">
+            Slide {current + 1} of {pageCount}, direction{" "}
+            {direction > 0 ? "forward" : "back"}
+          </span>
         </motion.div>
       </div>
     </section>

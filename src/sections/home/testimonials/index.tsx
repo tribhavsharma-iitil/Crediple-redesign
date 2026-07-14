@@ -35,6 +35,15 @@ const T = {
   star: "#3E66DF",
 } as const;
 
+function initialsFromName(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
 function useVisibleCount() {
   const [count, setCount] = useState(1);
   useEffect(() => {
@@ -208,14 +217,15 @@ export default function Testimonials() {
                         </p>
 
                         <div className="flex items-center gap-3 mt-6 sm:mt-8">
-                          <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fill
-                              className="object-cover"
-                              sizes="40px"
-                            />
+                          <div
+                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[11px] font-bold tracking-wide"
+                            style={{
+                              background: C.buttonGradient,
+                              color: "#FFFFFF",
+                            }}
+                            aria-hidden
+                          >
+                            {initialsFromName(item.name)}
                           </div>
                           <div className="min-w-0">
                             <p
@@ -273,7 +283,7 @@ export default function Testimonials() {
         </div>
       </section>
 
-      {/* CTA — dark navy card on both themes (matches light PDF) */}
+      {/* CTA — navy in dark mode, light card in light mode */}
       <section
         className="relative pb-16 sm:pb-20 md:pb-28 pt-4 sm:pt-6 md:pt-8"
         style={{ background: isDark ? T.bg : homeLight.bg }}
@@ -282,76 +292,77 @@ export default function Testimonials() {
           <HomeReveal variants={homeScaleIn}>
             <div
               className="relative overflow-hidden rounded-2xl sm:rounded-[28px] px-4 py-10 sm:px-6 sm:py-14 md:px-16 md:py-20 text-center"
-              style={{
-                backgroundColor: "#050B18",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
+              style={
+                isDark
+                  ? {
+                      backgroundColor: "#050B18",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }
+                  : {
+                      backgroundColor: "#FFFFFF",
+                      border: `1px solid ${homeLight.border}`,
+                      boxShadow: "0 12px 40px rgba(15, 23, 42, 0.06)",
+                    }
+              }
             >
-              <div
-                aria-hidden
-                className="absolute inset-0 z-0 pointer-events-none"
+              {isDark && (
+                <>
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 z-0 pointer-events-none"
+                  >
+                    <Image
+                      src={ctaBg}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1260px) 100vw, 1260px"
+                      className="object-cover object-center opacity-90"
+                      priority={false}
+                    />
+                  </div>
+
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 z-[1] pointer-events-none"
+                    style={{
+                      background: `
+                        radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.28) 0%, transparent 70%),
+                        radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.18) 0%, transparent 70%)
+                      `,
+                    }}
+                  />
+
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 z-[1] pointer-events-none"
+                    style={{
+                      backgroundImage: `
+                        linear-gradient(rgba(160, 190, 240, 0.14) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(160, 190, 240, 0.14) 1px, transparent 1px)
+                      `,
+                      backgroundSize: "52px 52px",
+                      WebkitMaskImage:
+                        "radial-gradient(ellipse at center, black 35%, transparent 78%)",
+                      maskImage:
+                        "radial-gradient(ellipse at center, black 35%, transparent 78%)",
+                    }}
+                  />
+                </>
+              )}
+
+              <h2
+                className="relative z-10 font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] px-1"
+                style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
               >
-                <Image
-                  src={ctaBg}
-                  alt=""
-                  fill
-                  sizes="(max-width: 1260px) 100vw, 1260px"
-                  className="object-cover object-center opacity-90"
-                  priority={false}
-                />
-              </div>
-
-              <div
-                aria-hidden
-                className="absolute inset-0 z-[1] pointer-events-none"
-                style={{
-                  background: `
-                    radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.28) 0%, transparent 70%),
-                    radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.18) 0%, transparent 70%)
-                  `,
-                }}
-              />
-
-              <div
-                aria-hidden
-                className="absolute inset-0 z-[1] pointer-events-none"
-                style={{
-                  backgroundImage: `
-                    linear-gradient(rgba(160, 190, 240, 0.14) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(160, 190, 240, 0.14) 1px, transparent 1px)
-                  `,
-                  backgroundSize: "52px 52px",
-                  WebkitMaskImage:
-                    "radial-gradient(ellipse at center, black 35%, transparent 78%)",
-                  maskImage:
-                    "radial-gradient(ellipse at center, black 35%, transparent 78%)",
-                }}
-              />
-
-              <h2 className="relative z-10 font-heading font-bold text-2xl sm:text-3xl md:text-[2.75rem] lg:text-5xl mb-4 sm:mb-5 tracking-tight max-w-3xl mx-auto leading-[1.15] text-white px-1">
                 {cta.title}
               </h2>
 
               <p
-                className="relative z-10 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto mb-8 sm:mb-10 md:mb-12 leading-relaxed px-1"
-                style={{ color: "#A8B0BC" }}
+                className="relative z-10 text-[13px] sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed px-1"
+                style={{ color: isDark ? "#A8B0BC" : homeLight.body }}
               >
                 {cta.description}
               </p>
-
-              <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-                <a
-                  href={cta.primaryCta.href}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-xl font-semibold text-sm no-underline transition-opacity hover:opacity-90"
-                  style={{
-                    background: "#F0F4FA",
-                    color: "#0F172A",
-                    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)",
-                  }}
-                >
-                  {cta.primaryCta.label}
-                </a>
-              </div>
             </div>
           </HomeReveal>
         </div>

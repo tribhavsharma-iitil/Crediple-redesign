@@ -26,7 +26,7 @@ export default function AppShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "";
 
   const [phase, setPhase] = useState<HomeIntroPhase>(() =>
     getInitialIntroPhase(isHome)
