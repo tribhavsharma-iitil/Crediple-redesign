@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
 import {
   solutionsContent,
   solutionsColors,
@@ -49,7 +48,7 @@ export default function SolutionsAdvantage() {
           {advantage.items.map((item) => (
             <HomeItem key={item.number} variants={homeFadeUp}>
               <div
-                className="flex items-center gap-3 rounded-2xl border px-4 py-4 transition-opacity hover:opacity-90 sm:gap-4 sm:px-5 sm:py-5"
+                className="group relative overflow-hidden rounded-2xl border px-5 py-5 sm:px-6 sm:py-6"
                 style={{
                   background: isDark
                     ? "rgba(11, 19, 36, 0.85)"
@@ -60,35 +59,26 @@ export default function SolutionsAdvantage() {
                 }}
               >
                 <span
-                  className="shrink-0 text-xs font-semibold tabular-nums"
-                  style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
-                >
-                  {item.number}
-                </span>
-                <p
-                  className="min-w-0 flex-1 text-sm font-medium sm:text-[15px]"
-                  style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
-                >
-                  {item.label}
-                </p>
-                <span
-                  className="relative flex h-9 w-9 shrink-0 items-center justify-center"
-                  style={{
-                    color: isDark ? "rgba(220,226,246,0.7)" : "#475569",
-                  }}
-                >
+                  aria-hidden
+                  className="absolute inset-y-0 left-0 w-[3px] rounded-l-2xl opacity-80 transition-opacity group-hover:opacity-100"
+                  style={{ background: C.buttonGradient }}
+                />
+                <div className="flex items-baseline gap-4 pl-1">
                   <span
-                    aria-hidden
-                    className="absolute inset-[2px] rotate-45 rounded-[6px] border"
+                    className="font-heading shrink-0 text-[11px] font-bold tracking-[0.14em] tabular-nums sm:text-xs"
                     style={{
-                      borderColor: isDark
-                        ? "rgba(220, 226, 246, 0.45)"
-                        : "rgba(15, 23, 42, 0.18)",
-                      background: isDark ? "transparent" : "#FFFFFF",
+                      color: isDark ? C.textAccent : C.accentStrong,
                     }}
-                  />
-                  <ChevronRight size={14} className="relative z-10" />
-                </span>
+                  >
+                    {item.number}
+                  </span>
+                  <p
+                    className="font-heading min-w-0 text-[15px] font-semibold leading-snug tracking-tight sm:text-base"
+                    style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
+                  >
+                    {item.label}
+                  </p>
+                </div>
               </div>
             </HomeItem>
           ))}
