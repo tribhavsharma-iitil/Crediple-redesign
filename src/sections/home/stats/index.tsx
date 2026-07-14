@@ -26,7 +26,7 @@ export default function Stats() {
   return (
     <section
       ref={ref}
-      className="relative py-16 px-6 overflow-hidden"
+      className="relative overflow-hidden px-4 py-12 sm:px-6 sm:py-16"
       style={{ background: "var(--section-alt)" }}
     >
       {/* top separator */}
@@ -43,7 +43,7 @@ export default function Stats() {
         variants={containerVariants}
         initial="hidden"
         animate={inView ? "show" : "hidden"}
-        className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6"
+        className="mx-auto grid max-w-5xl grid-cols-2 gap-6 md:grid-cols-4 md:gap-6"
       >
         {STATS.map((stat) => (
           <motion.div
@@ -56,7 +56,7 @@ export default function Stats() {
               className="font-bold leading-none"
               style={{
                 fontFamily: "'Jost', sans-serif",
-                fontSize: "clamp(2.4rem, 5vw, 3.5rem)",
+                fontSize: "clamp(1.75rem, 7vw, 3.5rem)",
                 background: "var(--stat-value-gradient)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",

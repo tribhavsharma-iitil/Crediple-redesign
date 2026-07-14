@@ -15,7 +15,7 @@ export default function SolutionsFoundation() {
   return (
     <section
       id="foundation"
-      className="relative overflow-hidden py-16 md:py-24"
+      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
       <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">
@@ -23,7 +23,7 @@ export default function SolutionsFoundation() {
           <HomeReveal stagger>
             <HomeItem variants={homeFadeLeft}>
               <h2
-                className="font-heading mb-5 text-3xl font-black tracking-tight sm:text-4xl md:text-[2.75rem]"
+                className="font-heading mb-5 text-2xl font-black tracking-tight sm:text-3xl md:text-[2.75rem]"
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
                 {foundation.title}

@@ -38,7 +38,7 @@ function BrandBlock({
               {brand.number}
             </p>
             <h2
-              className="font-heading mb-2 break-words text-[1.75rem] font-black tracking-tight sm:mb-3 sm:text-4xl md:text-5xl"
+              className="font-heading mb-2 break-words text-[1.5rem] font-black tracking-tight sm:mb-3 sm:text-3xl md:text-4xl lg:text-5xl"
               style={{ color: isDark ? C.text : "#0F172A" }}
             >
               {brand.name}

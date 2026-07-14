@@ -47,9 +47,9 @@ export default function BrandCard({
 
       <div className="relative z-10 flex flex-col h-full items-start">
         <div className="w-full flex items-center justify-start mb-4 sm:mb-5 md:mb-6 pt-1">
-          <div className="relative w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] flex items-center justify-center">
+          <div className="relative flex h-[64px] w-[64px] items-center justify-center sm:h-[100px] sm:w-[100px] md:h-[120px] md:w-[120px]">
             <div
-              className="absolute inset-0 rounded-full blur-2xl opacity-35"
+              className="absolute inset-0 rounded-full opacity-35 blur-2xl"
               style={{
                 background:
                   "radial-gradient(circle, rgba(47,128,237,0.5) 0%, transparent 70%)",
@@ -60,8 +60,8 @@ export default function BrandCard({
               alt={brand.name}
               width={120}
               height={120}
-              className="relative z-10 object-contain w-auto h-auto max-h-[80px] sm:max-h-[100px] md:max-h-[120px] max-w-[80px] sm:max-w-[100px] md:max-w-[120px] mix-blend-screen"
-              sizes="(max-width: 640px) 80px, (max-width: 768px) 100px, 120px"
+              className="relative z-10 h-auto max-h-[64px] w-auto max-w-[64px] object-contain mix-blend-screen sm:max-h-[100px] sm:max-w-[100px] md:max-h-[120px] md:max-w-[120px]"
+              sizes="(max-width: 640px) 64px, (max-width: 768px) 100px, 120px"
               priority={index < 3}
             />
           </div>
@@ -96,7 +96,7 @@ export default function BrandCard({
   );
 
   const className =
-    "relative w-full min-h-[320px] h-[340px] sm:h-[360px] md:h-[400px] rounded-[16px] sm:rounded-[20px] border p-5 sm:p-6 md:p-8 flex flex-col overflow-hidden transition-all duration-300 hover:border-[rgba(90,150,227,0.45)]";
+    "relative flex h-auto min-h-[280px] w-full flex-col overflow-hidden rounded-[16px] border p-4 transition-all duration-300 hover:border-[rgba(90,150,227,0.45)] sm:h-[360px] sm:min-h-[320px] sm:rounded-[20px] sm:p-6 md:h-[400px] md:p-8";
 
   const style = {
     background: "#0D1425",

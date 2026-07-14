@@ -46,14 +46,14 @@ export default function ContactFormSection() {
   return (
     <section
       id="contact-form"
-      className="relative overflow-hidden py-16 md:py-24"
+      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
       style={{ background: isDark ? C.bg : homeLight.bg }}
     >
       <div className="relative z-10 mx-auto grid max-w-[1260px] grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-20 xl:gap-24">
         {/* Left — contact info */}
         <HomeReveal variants={homeFadeLeft}>
           <h2
-            className="font-heading mb-5 text-[1.75rem] leading-[1.2] font-bold tracking-tight sm:mb-6 sm:text-4xl md:text-[2.75rem]"
+            className="font-heading mb-5 text-[1.5rem] leading-[1.25] font-bold tracking-tight sm:mb-6 sm:text-3xl md:text-[2.75rem]"
             style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
           >
             {F.titleBefore}

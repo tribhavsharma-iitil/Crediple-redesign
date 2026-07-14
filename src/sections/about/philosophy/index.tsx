@@ -22,9 +22,8 @@ import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import {
   homeFadeUp,
   homeFadeLeft,
-  homeStagger,
-  homeViewport,
 } from "@/lib/animations";
+import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 const { philosophy } = aboutContent;
 const C = aboutColors;
@@ -68,6 +67,7 @@ function usePathPoint(
 
 export default function AboutPhilosophy() {
   const { isDark } = useTheme();
+  const { stagger, viewport } = useHomeMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const [activeStep, setActiveStep] = useState(0);
@@ -100,13 +100,13 @@ export default function AboutPhilosophy() {
   return (
     <section
       id="philosophy"
-      className="relative overflow-hidden py-16 md:py-24"
+      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
       style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10">
           <h2
-            className="font-heading text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
+            className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
             style={{ color: isDark ? C.textHeading : "#0F172A" }}
           >
             {philosophy.titleBefore}{" "}
@@ -283,10 +283,10 @@ export default function AboutPhilosophy() {
         </HomeReveal>
 
         <motion.div
-          variants={homeStagger}
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={homeViewport}
+          viewport={viewport}
           className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4"
         >
           {philosophy.pillars.map((item) => (

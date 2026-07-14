@@ -13,7 +13,8 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import BrandCard from "./brandCard";
 import { HomeReveal } from "@/components/home/HomeReveal";
-import { homeEase, homeFadeLeft, homeStagger } from "@/lib/animations";
+import { homeEase, homeFadeLeft } from "@/lib/animations";
+import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { cn } from "@/lib/utils";
 
 const INTERVAL = 2200;
@@ -41,6 +42,7 @@ export default function Brands() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
   const { isDark } = useTheme();
+  const { stagger } = useHomeMotion();
   const visible = useVisibleCount();
   const brands = ecosystem.brands;
   const maxIndex = Math.max(0, brands.length - visible);
@@ -84,7 +86,7 @@ export default function Brands() {
   return (
     <section
       id="ecosystem"
-      className="relative py-16 md:py-24"
+      className="relative py-12 sm:py-16 md:py-24"
       style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div
@@ -92,10 +94,10 @@ export default function Brands() {
         className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6"
       >
         <HomeReveal variants={homeFadeLeft} className="mb-8 w-full sm:mb-10">
-          <div className="flex w-full flex-row items-end justify-between gap-4">
+          <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
             <div className="min-w-0 flex-1">
               <h2
-                className="font-heading text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
+                className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
                 style={{ color: isDark ? C.text : homeLight.heading }}
               >
                 {ecosystem.titleBefore}{" "}
@@ -110,7 +112,7 @@ export default function Brands() {
                 {ecosystem.subtitle}
               </p>
             </div>
-            <div className="flex shrink-0 gap-3 self-end">
+            <div className="hidden shrink-0 gap-3 sm:flex sm:self-end">
               <DiamondNavButton
                 isDark={isDark}
                 onClick={() => {
@@ -138,7 +140,7 @@ export default function Brands() {
         </HomeReveal>
 
         <motion.div
-          variants={homeStagger}
+          variants={stagger}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           onMouseEnter={() => setPaused(true)}
@@ -186,57 +188,87 @@ export default function Brands() {
             </motion.div>
           </div>
 
-          <div className="mt-8 flex justify-center gap-2">
-            {Array.from({ length: pageCount }).map((_, i) => (
-              <button
-                key={i}
-                type="button"
+          <div className="mt-8 flex items-center justify-center gap-4 sm:gap-2">
+            <div className="flex gap-3 sm:hidden">
+              <DiamondNavButton
+                isDark={isDark}
                 onClick={() => {
-                  goTo(i);
+                  goTo(current > 0 ? current - 1 : maxIndex, -1);
                   startAuto();
                 }}
-                aria-label={`Page ${i + 1}`}
-                aria-current={i === current ? "true" : undefined}
-                className={cn(
-                  "relative h-1.5 overflow-hidden rounded-full transition-[width] duration-300",
-                  i === current ? "w-7" : "w-1.5",
-                )}
-                style={{
-                  background:
-                    i === current
-                      ? isDark
-                        ? "rgba(248,248,248,0.2)"
-                        : "rgba(47,128,237,0.2)"
-                      : isDark
-                        ? "rgba(248,248,248,0.25)"
-                        : "#CBD5E1",
-                }}
+                aria-label="Previous"
+                style={{ color: isDark ? C.text : homeLight.body }}
               >
-                <AnimatePresence mode="wait">
-                  {i === current && (
-                    <motion.span
-                      key={`fill-${current}-${paused ? "p" : "r"}`}
-                      className="absolute inset-y-0 left-0 rounded-full"
-                      style={{
-                        background: isDark ? C.text : C.accentStrong,
-                        originX: 0,
-                      }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: paused ? 0 : 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={
-                        paused
-                          ? { duration: 0.15 }
-                          : {
-                              duration: INTERVAL / 1000,
-                              ease: "linear",
-                            }
-                      }
-                    />
+                <ChevronLeft size={16} />
+              </DiamondNavButton>
+            </div>
+
+            <div className="flex justify-center gap-2">
+              {Array.from({ length: pageCount }).map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => {
+                    goTo(i);
+                    startAuto();
+                  }}
+                  aria-label={`Page ${i + 1}`}
+                  aria-current={i === current ? "true" : undefined}
+                  className={cn(
+                    "relative h-1.5 overflow-hidden rounded-full transition-[width] duration-300",
+                    i === current ? "w-7" : "w-1.5",
                   )}
-                </AnimatePresence>
-              </button>
-            ))}
+                  style={{
+                    background:
+                      i === current
+                        ? isDark
+                          ? "rgba(248,248,248,0.2)"
+                          : "rgba(47,128,237,0.2)"
+                        : isDark
+                          ? "rgba(248,248,248,0.25)"
+                          : "#CBD5E1",
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    {i === current && (
+                      <motion.span
+                        key={`fill-${current}-${paused ? "p" : "r"}`}
+                        className="absolute inset-y-0 left-0 rounded-full"
+                        style={{
+                          background: isDark ? C.text : C.accentStrong,
+                          originX: 0,
+                        }}
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: paused ? 0 : 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={
+                          paused
+                            ? { duration: 0.15 }
+                            : {
+                                duration: INTERVAL / 1000,
+                                ease: "linear",
+                              }
+                        }
+                      />
+                    )}
+                  </AnimatePresence>
+                </button>
+              ))}
+            </div>
+
+            <div className="flex gap-3 sm:hidden">
+              <DiamondNavButton
+                isDark={isDark}
+                onClick={() => {
+                  goTo(current < maxIndex ? current + 1 : 0, 1);
+                  startAuto();
+                }}
+                aria-label="Next"
+                style={{ color: isDark ? C.text : homeLight.body }}
+              >
+                <ChevronRight size={16} />
+              </DiamondNavButton>
+            </div>
           </div>
 
           {/* Direction hint for a11y / subtle motion cue */}

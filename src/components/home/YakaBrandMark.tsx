@@ -16,8 +16,9 @@ type YakaBrandMarkProps = {
 
 /**
  * Hero YAKA mark + tagline.
- * Dark — unchanged from before (soft blue + white bold YAKA).
- * Light — Primary Blue #2F80ED for the full string (was black/grey).
+ * Dark — soft blue + white bold YAKA.
+ * Light — Primary Blue #2F80ED for the full string.
+ * Mobile — compact so it doesn't crowd the hero headline.
  */
 export default function YakaBrandMark({
   className,
@@ -29,13 +30,13 @@ export default function YakaBrandMark({
   return (
     <div
       className={cn(
-        "flex flex-col items-center gap-1.5 sm:gap-2",
+        "flex max-w-[4.5rem] flex-col items-center gap-0.5 sm:max-w-none sm:gap-1.5 md:gap-2",
         className,
       )}
     >
       <div
         className={cn(
-          "relative h-9 w-9 sm:h-12 sm:w-12 md:h-14 md:w-14 xl:h-16 xl:w-16",
+          "relative h-7 w-7 sm:h-10 sm:w-10 md:h-14 md:w-14 xl:h-16 xl:w-16",
           logoClassName,
         )}
       >
@@ -45,7 +46,7 @@ export default function YakaBrandMark({
             alt="YAKA"
             fill
             priority={priority}
-            sizes="(max-width: 640px) 36px, 64px"
+            sizes="(max-width: 640px) 28px, 64px"
             className="object-contain"
           />
         ) : (
@@ -55,7 +56,7 @@ export default function YakaBrandMark({
               alt="YAKA"
               fill
               priority={priority}
-              sizes="(max-width: 640px) 36px, 64px"
+              sizes="(max-width: 640px) 28px, 64px"
               className="object-contain dark:hidden"
             />
             <Image
@@ -63,7 +64,7 @@ export default function YakaBrandMark({
               alt="YAKA"
               fill
               priority={priority}
-              sizes="(max-width: 640px) 36px, 64px"
+              sizes="(max-width: 640px) 28px, 64px"
               className="hidden object-contain dark:block"
             />
           </>
@@ -72,12 +73,12 @@ export default function YakaBrandMark({
       {showTagline && (
         <p
           className={cn(
-            "whitespace-nowrap text-center text-[9px] font-medium leading-tight tracking-wide sm:text-[10px] md:text-[11px]",
+            "max-w-[4.25rem] text-center text-[8px] font-medium leading-[1.2] tracking-wide sm:max-w-none sm:whitespace-nowrap sm:text-[10px] md:text-[11px]",
             "text-[#2F80ED] dark:text-[#B0C0F8]",
           )}
         >
           A{" "}
-          <span className="font-bold text-[#2F80ED] dark:text-[#F8F8F8]">
+          <span className="font-bold text-[#2F80ED] dark:text-[#B0C0F8]">
             YAKA
           </span>{" "}
           Enterprise

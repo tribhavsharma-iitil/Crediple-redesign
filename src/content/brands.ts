@@ -38,7 +38,6 @@ export const brandsContent = {
     description:
       "Every Crediple brand tackles a different industry problem, all with the same rigor and intent.",
     descriptionLine2: "We don't follow; we set the standard.",
-    primaryCta: { label: "Our Brands", href: "#brand-showcase" },
     secondaryCta: { label: "Contact Us", href: "/contact" },
   },
 

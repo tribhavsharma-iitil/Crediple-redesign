@@ -16,82 +16,24 @@ const COMPANY_LINKS = [
   { label: "Contact Us", href: "/contact" },
 ];
 
-function LinkColumn({
-  title,
-  links,
-  align = "start",
-}: {
-  title: string;
-  links: { label: string; href: string }[];
-  align?: "start" | "end";
-}) {
-  const { isDark } = useTheme();
-  const pathname = usePathname();
-
-  return (
-    <div
-      className={cn(
-        "flex flex-col gap-2.5",
-        align === "end" && "items-end text-right",
-      )}
-    >
-      <h4
-        className={cn(
-          "text-[10px] font-semibold uppercase tracking-[0.16em]",
-          isDark ? "text-[#DCE2F6]" : "text-slate-400",
-        )}
-      >
-        {title}
-      </h4>
-      <ul className="flex flex-col gap-2">
-        {links.map((link) => {
-          const external = link.href.startsWith("https");
-          const active =
-            !external &&
-            (link.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(link.href));
-
-          return (
-            <li key={link.label}>
-              <Link
-                href={link.href}
-                {...(external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className={cn(
-                  "text-[13px] font-normal no-underline transition-colors",
-                  isDark
-                    ? active
-                      ? "text-[#DCE2F6]"
-                      : "text-[#C3C6D7] hover:text-[#DCE2F6]"
-                    : active
-                      ? "text-brand-blue"
-                      : "text-[#64748B] hover:text-[#1E293B]",
-                )}
-              >
-                {link.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
+const LEGAL_LINKS = [
+  { label: "Privacy Policy", href: "/legal" },
+  { label: "Terms of Service", href: "/legal" },
+];
 
 export default function Footer() {
   const { isDark } = useTheme();
+  const pathname = usePathname();
 
   return (
     <footer
       className="relative"
       style={{ background: isDark ? "#060E1B" : "#F8FAFC" }}
     >
-      <div className="mx-auto max-w-[1260px] px-4 py-8 sm:px-6 md:px-8 md:py-10">
-        {/* Brand left · Company at the end */}
-        <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
-          <div className="flex max-w-[320px] flex-col items-start">
+      <div className="mx-auto max-w-[1260px] px-4 py-10 sm:px-6 md:px-8 md:py-12">
+        <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between sm:gap-12">
+          {/* Brand */}
+          <div className="flex w-full max-w-none flex-col items-start sm:max-w-[320px]">
             <Link
               href="/"
               className="flex shrink-0 items-center no-underline hover:opacity-90"
@@ -107,20 +49,16 @@ export default function Footer() {
 
             <p
               className={cn(
-                "mt-2 text-[12px] tracking-wide",
-                "text-[#2F80ED] dark:text-[#C3C6D7]",
+                "mt-2.5 text-[12px] tracking-wide",
+                isDark ? "text-white" : "text-black",
               )}
             >
-              A{" "}
-              <span className="font-bold text-[#2F80ED] dark:text-white">
-                YAKA
-              </span>{" "}
-              Enterprise
+              A <span className="font-bold">YAKA</span> Enterprise
             </p>
 
             <p
               className={cn(
-                "mt-2 text-[12px] leading-relaxed",
+                "mt-2 max-w-sm text-[12px] leading-relaxed",
                 isDark ? "text-[#C3C6D7]" : "text-[#64748B]",
               )}
             >
@@ -128,18 +66,18 @@ export default function Footer() {
               enterprise technology.
             </p>
 
-            <div className="mt-4 flex gap-2.5">
+            <div className="mt-5 flex gap-3">
               <a
                 href="mailto:hello@crediple.com"
                 aria-label="Email"
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full border transition-colors",
+                  "flex h-10 w-10 items-center justify-center rounded-full border transition-colors",
                   isDark
                     ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-[#DCE2F6]"
                     : "border-slate-200 bg-white text-slate-500 hover:text-slate-900",
                 )}
               >
-                <Mail size={13} strokeWidth={1.75} />
+                <Mail size={15} strokeWidth={1.75} />
               </a>
               <a
                 href="https://www.linkedin.com/company/iitil-cipl/"
@@ -147,15 +85,15 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full border transition-colors",
+                  "flex h-10 w-10 items-center justify-center rounded-full border transition-colors",
                   isDark
                     ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-[#DCE2F6]"
                     : "border-slate-200 bg-white text-slate-500 hover:text-slate-900",
                 )}
               >
                 <svg
-                  width="13"
-                  height="13"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   aria-hidden
@@ -166,12 +104,54 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="shrink-0 sm:ml-auto">
-            <LinkColumn title="Company" links={COMPANY_LINKS} align="end" />
+          {/* Company links */}
+          <div className="w-full sm:w-auto sm:shrink-0 sm:text-right">
+            <h4
+              className={cn(
+                "mb-3 text-[10px] font-semibold uppercase tracking-[0.16em]",
+                isDark ? "text-[#DCE2F6]" : "text-slate-400",
+              )}
+            >
+              Company
+            </h4>
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-1 sm:gap-y-2.5">
+              {COMPANY_LINKS.map((link) => {
+                const active =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.href);
+
+                return (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "inline-flex min-h-11 items-center text-[14px] font-normal no-underline transition-colors sm:min-h-0 sm:text-[13px]",
+                        isDark
+                          ? active
+                            ? "text-[#DCE2F6]"
+                            : "text-[#C3C6D7] hover:text-[#DCE2F6]"
+                          : active
+                            ? "text-brand-blue"
+                            : "text-[#64748B] hover:text-[#1E293B]",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+        {/* Bottom bar */}
+        <div
+          className={cn(
+            "mt-8 flex flex-col items-center gap-3 border-t pt-6 text-center sm:mt-10 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-left",
+            isDark ? "border-white/10" : "border-slate-200",
+          )}
+        >
           <p
             className={cn(
               "text-[11px]",
@@ -181,33 +161,23 @@ export default function Footer() {
             © 2018 All rights reserved.
           </p>
 
-          <div className="flex gap-6">
-            <Link
-              href="/legal"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "text-[11px] no-underline transition-colors",
-                isDark
-                  ? "text-[#C3C6D7] hover:text-[#DCE2F6]"
-                  : "text-[#94A3B8] hover:text-slate-700",
-              )}
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/legal"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "text-[11px] no-underline transition-colors",
-                isDark
-                  ? "text-[#C3C6D7] hover:text-[#DCE2F6]"
-                  : "text-[#94A3B8] hover:text-slate-700",
-              )}
-            >
-              Terms of Service
-            </Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            {LEGAL_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "text-[11px] no-underline transition-colors",
+                  isDark
+                    ? "text-[#C3C6D7] hover:text-[#DCE2F6]"
+                    : "text-[#94A3B8] hover:text-slate-700",
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

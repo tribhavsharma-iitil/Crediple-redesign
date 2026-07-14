@@ -78,19 +78,6 @@ export function getHomeTitleAccentStyle(isDark: boolean) {
   return { color: "#2F80ED" } as const;
 }
 
-/**
- * Hero YAKA tagline (BUG-008) — light only change from prior dark look:
- * - Light → Primary Blue #2F80ED (full string)
- * - Dark  → soft blue #B0C0F8 + white bold YAKA (unchanged from before)
- */
-export function getYakaTaglineStyle(isDark: boolean) {
-  return { color: isDark ? "#B0C0F8" : "#2F80ED" } as const;
-}
-
-export function getYakaNameStyle(isDark: boolean) {
-  return { color: isDark ? "#F8F8F8" : "#2F80ED" } as const;
-}
-
 export const yakaTaglineClassName =
   "whitespace-nowrap text-center text-[9px] font-medium leading-tight tracking-wide sm:text-[10px] md:text-[11px]";
 

@@ -23,73 +23,61 @@ export default function AboutClosing() {
         <HomeReveal variants={homeScaleIn}>
           <div
             className="relative overflow-hidden rounded-2xl px-5 py-12 text-center sm:rounded-[28px] sm:px-12 sm:py-20 md:px-20 md:py-24"
-            style={
-              isDark
-                ? {
-                    backgroundColor: "#050B18",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                  }
-                : {
-                    backgroundColor: "#FFFFFF",
-                    border: `1px solid ${homeLight.border}`,
-                    boxShadow: "0 12px 40px rgba(15, 23, 42, 0.06)",
-                  }
-            }
+            style={{
+              backgroundColor: "#050B18",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
           >
-            {isDark && (
-              <>
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 z-0"
-                >
-                  <Image
-                    src={cardBg}
-                    alt=""
-                    fill
-                    sizes="(max-width: 1260px) 100vw, 1260px"
-                    className="object-cover object-center opacity-90"
-                    priority={false}
-                  />
-                </div>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0"
+            >
+              <Image
+                src={cardBg}
+                alt=""
+                fill
+                sizes="(max-width: 1260px) 100vw, 1260px"
+                className="object-cover object-center opacity-90"
+                priority={false}
+              />
+            </div>
 
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 z-[1]"
-                  style={{
-                    background: `
-                      radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.28) 0%, transparent 70%),
-                      radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.18) 0%, transparent 70%)
-                    `,
-                  }}
-                />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-[1]"
+              style={{
+                background: `
+                  radial-gradient(ellipse 45% 55% at 12% 88%, rgba(70, 50, 140, 0.28) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 50% at 90% 12%, rgba(47, 128, 237, 0.18) 0%, transparent 70%)
+                `,
+              }}
+            />
 
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 z-[1]"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(160, 190, 240, 0.14) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(160, 190, 240, 0.14) 1px, transparent 1px)
-                    `,
-                    backgroundSize: "52px 52px",
-                    WebkitMaskImage:
-                      "radial-gradient(ellipse at center, black 35%, transparent 78%)",
-                    maskImage:
-                      "radial-gradient(ellipse at center, black 35%, transparent 78%)",
-                  }}
-                />
-              </>
-            )}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-[1]"
+              style={{
+                backgroundImage: `
+                  linear-gradient(rgba(160, 190, 240, 0.14) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(160, 190, 240, 0.14) 1px, transparent 1px)
+                `,
+                backgroundSize: "52px 52px",
+                WebkitMaskImage:
+                  "radial-gradient(ellipse at center, black 35%, transparent 78%)",
+                maskImage:
+                  "radial-gradient(ellipse at center, black 35%, transparent 78%)",
+              }}
+            />
 
             <h2
-              className="font-heading relative z-10 mb-5 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl"
-              style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
+              className="font-heading relative z-10 mb-5 text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+              style={{ color: "#FFFFFF" }}
             >
               {closing.brand}
             </h2>
             <p
               className="font-heading relative z-10 mx-auto max-w-2xl text-base leading-snug font-bold sm:text-lg md:text-xl"
-              style={{ color: isDark ? "#A8B0BC" : homeLight.body }}
+              style={{ color: "#A8B0BC" }}
             >
               {closing.line}
             </p>
