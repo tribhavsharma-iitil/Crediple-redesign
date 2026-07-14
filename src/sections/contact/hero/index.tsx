@@ -14,6 +14,11 @@ import { useHomeMotion } from "@/hooks/useHomeMotion";
 import HashLink from "@/components/ui/HashLink";
 import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
+import {
+  HERO_CONTENT_CLASS,
+  HERO_SECTION_CLASS,
+  HERO_YAKA_SLOT_CLASS,
+} from "@/components/home/heroLayout";
 
 const { hero } = contactContent;
 const C = contactColors;
@@ -34,12 +39,12 @@ export default function ContactHero() {
   return (
     <section
       id="contact-hero"
-      className="relative flex min-h-0 items-start justify-center overflow-x-clip pt-28 pb-10 select-none md:min-h-[var(--hero-min-h)] md:items-center md:pt-24 md:pb-14 lg:pt-28 lg:pb-16"
+      className={HERO_SECTION_CLASS}
       style={{ background: isDark ? C.bg : homeLight.bgSoft }}
     >
       <HeroWave isDark={isDark} />
 
-      <div className="pointer-events-none absolute top-[4.5rem] right-3 z-20 md:top-20 md:right-4 lg:top-24 lg:right-8 xl:right-12">
+      <div className={HERO_YAKA_SLOT_CLASS}>
         <YakaBrandMark />
       </div>
 
@@ -58,7 +63,7 @@ export default function ContactHero() {
         variants={heroStagger}
         initial="hidden"
         animate="visible"
-        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-5 text-center sm:px-6"
+        className={`${HERO_CONTENT_CLASS} max-w-4xl`}
       >
         <motion.h1
           variants={heroItem}

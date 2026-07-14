@@ -18,7 +18,7 @@ type YakaBrandMarkProps = {
  * Hero YAKA mark + tagline.
  * Dark — soft blue + white bold YAKA.
  * Light — Primary Blue #2F80ED for the full string.
- * Mobile — compact so it doesn't crowd the hero headline.
+ * Mobile — compact mark so it clears the headline stack.
  */
 export default function YakaBrandMark({
   className,
@@ -30,13 +30,13 @@ export default function YakaBrandMark({
   return (
     <div
       className={cn(
-        "flex max-w-[4.5rem] flex-col items-center gap-0.5 sm:max-w-none sm:gap-1.5 md:gap-2",
+        "flex max-w-[4.25rem] flex-col items-center gap-0.5 sm:max-w-none sm:gap-1.5 md:gap-2",
         className,
       )}
     >
       <div
         className={cn(
-          "relative h-7 w-7 sm:h-10 sm:w-10 md:h-14 md:w-14 xl:h-16 xl:w-16",
+          "relative h-6 w-6 sm:h-10 sm:w-10 md:h-14 md:w-14 xl:h-16 xl:w-16",
           logoClassName,
         )}
       >
@@ -73,7 +73,7 @@ export default function YakaBrandMark({
       {showTagline && (
         <p
           className={cn(
-            "max-w-[4.25rem] text-center text-[8px] font-medium leading-[1.2] tracking-wide sm:max-w-none sm:whitespace-nowrap sm:text-[10px] md:text-[11px]",
+            "max-w-[4rem] text-center text-[7.5px] font-medium leading-[1.15] tracking-wide sm:max-w-none sm:whitespace-nowrap sm:text-[10px] md:text-[11px]",
             "text-[#2F80ED] dark:text-[#B0C0F8]",
           )}
         >
