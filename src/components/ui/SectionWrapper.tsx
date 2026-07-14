@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/context/ThemeContext";
+import { staggerContainer } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 type SectionBg = "default" | "alt" | "hero" | "dark";
@@ -40,7 +41,7 @@ export function SectionWrapper({
     <section
       id={id}
       className={cn(
-        "relative py-12 md:py-20 overflow-hidden",
+        "relative section-py overflow-hidden",
         bgClass,
         isDark && "section-dark-glow",
         className,
@@ -57,17 +58,22 @@ interface AnimatedSectionProps {
 }
 
 export function AnimatedSection({ children, className }: AnimatedSectionProps) {
-  const { isMobile, stagger, viewportOnce } = useHomeMotion();
+  const { isMobile, viewportOnce } = useHomeMotion();
 
   return (
     <motion.div
       variants={
         isMobile
-          ? stagger
-          : {
+          ? {
               hidden: {},
-              visible: { transition: { staggerChildren: 0.15 } },
+              visible: {
+                transition: {
+                  staggerChildren: 0.16,
+                  delayChildren: 0.1,
+                },
+              },
             }
+          : staggerContainer
       }
       initial="hidden"
       whileInView="visible"

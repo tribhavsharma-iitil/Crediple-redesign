@@ -32,11 +32,6 @@ export const solutionsContent = {
     secondaryCta: { label: "Talk to Us", href: "/contact" },
   },
 
-  trust: {
-    label: "Trusted by 50+ institutions",
-    marks: ["HD", "SB", "IC", "BF", "TC"],
-  },
-
   foundation: {
     title: "How We Build",
     headline: "The Same Discipline",

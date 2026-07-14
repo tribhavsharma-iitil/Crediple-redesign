@@ -26,7 +26,7 @@ export default function Stats() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden px-4 py-12 sm:px-6 sm:py-16"
+      className="relative overflow-hidden section-py px-4 sm:px-6"
       style={{ background: "var(--section-alt)" }}
     >
       {/* top separator */}

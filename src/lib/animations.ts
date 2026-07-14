@@ -115,20 +115,20 @@ export const homeViewport = {
   margin: "0px 0px -10% 0px" as const,
 };
 
-/** Mobile-only: trigger earlier, once — avoid amount thrash on iOS chrome resize */
+/** Mobile-only: trigger earlier, clearer section-by-section reveals */
 export const homeViewportMobile = {
   once: true,
-  amount: 0.01,
-  margin: "0px 0px -5% 0px" as const,
+  amount: 0.08,
+  margin: "60px 0px 60px 0px" as const,
 };
 
-/** Mobile-only: light stagger — keep short so sections don’t feel “blank” waiting */
+/** Mobile-only: slightly longer stagger so each block reads clearly */
 export const homeStaggerMobile = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.04,
+      staggerChildren: 0.18,
+      delayChildren: 0.14,
     },
   },
 };
@@ -137,44 +137,17 @@ export const homeStaggerFastMobile = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.02,
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
     },
   },
 };
 
-/**
- * Mobile reveal — NO opacity:0.
- * Opacity fades while scrolling make the whole page look like it blinks on phones.
- */
 export const homeFadeUpMobile = {
-  hidden: { y: 14 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.4, ease: homeEase },
-  },
-};
-
-export const homeFadeLeftMobile = {
-  hidden: { x: -12 },
-  visible: {
-    x: 0,
-    transition: { duration: 0.4, ease: homeEase },
-  },
-};
-
-export const homeFadeRightMobile = {
-  hidden: { x: 12 },
-  visible: {
-    x: 0,
-    transition: { duration: 0.4, ease: homeEase },
-  },
-};
-
-export const homeScaleInMobile = {
-  hidden: { y: 12 },
-  visible: {
-    y: 0,
-    transition: { duration: 0.4, ease: homeEase },
+    transition: { duration: 0.55, ease: homeEase },
   },
 };

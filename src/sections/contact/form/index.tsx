@@ -46,7 +46,7 @@ export default function ContactFormSection() {
   return (
     <section
       id="contact-form"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? C.bg : homeLight.bg }}
     >
       <div className="relative z-10 mx-auto grid max-w-[1260px] grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:gap-20 xl:gap-24">

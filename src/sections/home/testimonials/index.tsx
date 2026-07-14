@@ -114,7 +114,7 @@ export default function Testimonials() {
     <div className="w-full">
       <section
         id="testimonials"
-        className="relative py-12 sm:py-16 md:py-24 overflow-hidden"
+        className="relative section-py overflow-hidden"
         style={{ background: isDark ? T.bg : homeLight.bgAlt }}
       >
         <div
@@ -316,13 +316,13 @@ export default function Testimonials() {
 
       {/* CTA — always dark navy card (same UI in light + dark page themes) */}
       <section
-        className="relative pb-16 sm:pb-20 md:pb-28 pt-4 sm:pt-6 md:pt-8"
+        className="relative section-cta-end"
         style={{ background: isDark ? T.bg : homeLight.bg }}
       >
         <div className="max-w-[1260px] mx-auto px-4 sm:px-6">
           <HomeReveal variants={homeScaleIn}>
             <div
-              className="relative overflow-hidden rounded-2xl sm:rounded-[28px] px-4 py-10 sm:px-6 sm:py-14 md:px-16 md:py-20 text-center"
+              className="relative overflow-hidden rounded-2xl section-card-py sm:rounded-[28px] px-4 sm:px-6 md:px-16 text-center"
               style={{
                 backgroundColor: "#050B18",
                 border: "1px solid rgba(255,255,255,0.08)",

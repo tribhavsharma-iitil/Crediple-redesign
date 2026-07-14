@@ -16,7 +16,7 @@ import { useHomeMotion } from "@/hooks/useHomeMotion";
 import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
 
-const { hero, trust } = homeContent;
+const { hero } = homeContent;
 const C = homeColors;
 
 const heroItem = {
@@ -37,7 +37,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-0 items-start justify-center overflow-x-clip px-0 pt-32 pb-14 select-none md:min-h-[100svh] md:items-center md:pt-28 md:pb-20 lg:pt-32 lg:pb-24"
+      className="relative flex min-h-0 items-start justify-center overflow-x-clip px-0 pt-28 pb-10 select-none md:min-h-[var(--hero-min-h)] md:items-center md:pt-24 md:pb-14 lg:pt-28 lg:pb-16"
       style={{ background: isDark ? C.bg : homeLight.bgSoft }}
     >
       <HeroWave isDark={isDark} />
@@ -134,32 +134,6 @@ export default function Hero() {
           </Link>
         </motion.div>
 
-        <motion.div
-          variants={heroItem}
-          className="flex flex-col items-center justify-center gap-2.5 sm:flex-row sm:gap-3"
-        >
-          <div className="flex items-center -space-x-2">
-            {trust.marks.map((mark) => (
-              <div
-                key={mark}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-[8px] font-bold"
-                style={{
-                  background: C.buttonGradient,
-                  color: "#fff",
-                  boxShadow: `0 0 0 2px ${isDark ? C.bg : homeLight.bgSoft}`,
-                }}
-              >
-                {mark}
-              </div>
-            ))}
-          </div>
-          <p
-            className="text-xs font-medium sm:text-sm"
-            style={{ color: isDark ? C.textMuted : homeLight.muted }}
-          >
-            {trust.label}
-          </p>
-        </motion.div>
       </motion.div>
     </section>
   );

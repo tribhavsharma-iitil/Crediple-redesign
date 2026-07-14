@@ -20,7 +20,7 @@ export default function BrandsAdvantage() {
   return (
     <section
       id="advantage"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">

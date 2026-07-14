@@ -72,7 +72,7 @@ export default function Timeline() {
   return (
     <section
       id="timeline"
-      className="relative scroll-mt-20 overflow-hidden py-12 sm:scroll-mt-24 sm:py-16 md:py-24"
+      className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
       {/* pattern.png — light only; aspect-locked so dots match PDF spacing/scale */}

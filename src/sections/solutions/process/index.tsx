@@ -23,7 +23,7 @@ export default function SolutionsProcess() {
   return (
     <section
       id="process"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? T.bg : "#FFFFFF" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">

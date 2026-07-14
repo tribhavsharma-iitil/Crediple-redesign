@@ -401,9 +401,34 @@ body::after  { display: none !important; }
   color: transparent;                          /* fallback */
 }
 
+/*
+ * Fluid section spacing — scales with viewport, capped on large screens
+ * so tall desktops don’t get huge empty bands between blocks.
+ * ~40px phones → ~48–56px tablets/laptops → max ~56px wide screens
+ * (was fixed md:py-24 = 96px each side).
+ */
+:root {
+  --section-py: clamp(2.5rem, 1.75rem + 1.5vw, 3.5rem);
+  --section-cta-pt: clamp(0.25rem, 0.15rem + 0.4vw, 0.75rem);
+  --section-cta-pb: clamp(2.5rem, 1.75rem + 1.5vw, 3.5rem);
+  --section-card-py: clamp(2rem, 1.5rem + 1vw, 3rem);
+  /* Heroes: content-driven height, capped so they don’t feel like empty full screens */
+  --hero-min-h: min(100svh, 36rem);
+}
+
 .section-py {
   padding-top: var(--section-py);
   padding-bottom: var(--section-py);
+}
+
+.section-cta-end {
+  padding-top: var(--section-cta-pt);
+  padding-bottom: var(--section-cta-pb);
+}
+
+.section-card-py {
+  padding-top: var(--section-card-py);
+  padding-bottom: var(--section-card-py);
 }
 
 .counter-window {

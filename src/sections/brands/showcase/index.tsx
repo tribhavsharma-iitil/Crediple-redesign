@@ -154,7 +154,7 @@ export default function BrandsShowcase() {
   return (
     <section
       id="brand-showcase"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
       <div className="flex flex-col gap-14 sm:gap-20 md:gap-28">

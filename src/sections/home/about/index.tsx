@@ -41,7 +41,7 @@ export default function About() {
     <>
       <section
         id="about"
-        className="relative scroll-mt-20 overflow-hidden py-12 sm:scroll-mt-24 sm:py-16 md:py-24"
+        className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
         style={{ background: isDark ? C.bg : homeLight.bgSoft }}
       >
         <svg
@@ -262,7 +262,7 @@ export default function About() {
 
       <section
         id="values"
-        className="relative scroll-mt-20 overflow-hidden py-12 sm:scroll-mt-24 sm:py-16 md:py-24"
+        className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
         style={{ background: isDark ? C.bgSection : homeLight.bg }}
       >
         {/* Soft blue glow — behind image column, not over the list */}

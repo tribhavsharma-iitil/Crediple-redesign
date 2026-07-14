@@ -114,6 +114,6 @@ export const aboutContent = {
   closing: {
     brand: "Crediple",
     line: "A multi-domain architecture, built to transform how industries operate.",
-    copyright: "© 2026 Crediple. Building systems that power industries.",
+    copyright: "© 2018 Crediple. Building systems that power industries.",
   },
 } as const;

@@ -34,7 +34,7 @@ export default function ContactHero() {
   return (
     <section
       id="contact-hero"
-      className="relative flex min-h-0 items-start justify-center overflow-x-clip pt-32 pb-14 select-none md:min-h-[100svh] md:items-center md:pt-28 md:pb-24 lg:pt-32 lg:pb-28"
+      className="relative flex min-h-0 items-start justify-center overflow-x-clip pt-28 pb-10 select-none md:min-h-[var(--hero-min-h)] md:items-center md:pt-24 md:pb-14 lg:pt-28 lg:pb-16"
       style={{ background: isDark ? C.bg : homeLight.bgSoft }}
     >
       <HeroWave isDark={isDark} />

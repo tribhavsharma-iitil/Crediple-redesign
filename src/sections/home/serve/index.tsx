@@ -70,7 +70,7 @@ export default function WhoWeServe() {
   return (
     <section
       id="serve"
-      className="relative py-12 sm:py-16 md:py-24 overflow-hidden"
+      className="relative section-py overflow-hidden"
       style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">

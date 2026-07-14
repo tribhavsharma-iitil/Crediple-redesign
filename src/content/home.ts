@@ -105,11 +105,6 @@ export const homeContent = {
     primaryCta: { label: "Explore Brands", href: "/brands" },
   },
 
-  trust: {
-    label: "Trusted by 50+ institutions",
-    marks: ["HD", "SB", "IC", "BF", "TC"],
-  },
-
   ecosystem: {
     titleBefore: "Our",
     titleAccent: "Ecosystem",

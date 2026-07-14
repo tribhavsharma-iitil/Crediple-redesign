@@ -86,7 +86,7 @@ export default function Brands() {
   return (
     <section
       id="ecosystem"
-      className="relative py-12 sm:py-16 md:py-24"
+      className="relative section-py"
       style={{ background: isDark ? C.bgSection : homeLight.bg }}
     >
       <div

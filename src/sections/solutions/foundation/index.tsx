@@ -15,7 +15,7 @@ export default function SolutionsFoundation() {
   return (
     <section
       id="foundation"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-24"
+      className="relative overflow-hidden section-py"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
       <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">

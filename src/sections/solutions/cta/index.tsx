@@ -16,13 +16,13 @@ export default function SolutionsCta() {
 
   return (
     <section
-      className="relative overflow-hidden pt-2 pb-16 sm:pt-4 sm:pb-20 md:pb-28"
+      className="relative overflow-hidden section-cta-end"
       style={{ background: isDark ? C.bg : homeLight.bg }}
     >
       <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeScaleIn}>
           <div
-            className="relative overflow-hidden rounded-2xl px-4 py-10 text-center sm:rounded-[28px] sm:px-6 sm:py-14 md:px-16 md:py-20"
+            className="relative overflow-hidden rounded-2xl section-card-py px-4 text-center sm:rounded-[28px] sm:px-6 md:px-16"
             style={{
               backgroundColor: "#050B18",
               border: "1px solid rgba(255,255,255,0.08)",
