@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/context/ThemeContext";
-import { staggerContainer } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 type SectionBg = "default" | "alt" | "hero" | "dark";
@@ -58,22 +57,17 @@ interface AnimatedSectionProps {
 }
 
 export function AnimatedSection({ children, className }: AnimatedSectionProps) {
-  const { isMobile, viewportOnce } = useHomeMotion();
+  const { isMobile, stagger, viewportOnce } = useHomeMotion();
 
   return (
     <motion.div
       variants={
         isMobile
-          ? {
+          ? stagger
+          : {
               hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.16,
-                  delayChildren: 0.1,
-                },
-              },
+              visible: { transition: { staggerChildren: 0.15 } },
             }
-          : staggerContainer
       }
       initial="hidden"
       whileInView="visible"

@@ -1,7 +1,12 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { homeFadeUp } from "@/lib/animations";
+import {
+  homeFadeUp,
+  homeFadeLeft,
+  homeFadeRight,
+  homeScaleIn,
+} from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { cn } from "@/lib/utils";
 
@@ -10,11 +15,27 @@ type HomeRevealProps = {
   className?: string;
   variants?: Variants;
   stagger?: boolean;
-  /** Extra delay (seconds). On mobile a small baseline delay is added per reveal. */
+  /** Extra delay (seconds). Kept small on mobile to avoid blank waits. */
   delay?: number;
 };
 
-/** Scroll-reveal wrapper — mobile gets clearer section-wise stagger/viewport. */
+/** Map known desktop variants → soft no-opacity mobile counterparts */
+function resolveMobileVariants(
+  variants: Variants,
+  fadeUp: Variants,
+  fadeLeft: Variants,
+  fadeRight: Variants,
+  scaleIn: Variants,
+): Variants {
+  if (variants === homeFadeUp) return fadeUp;
+  if (variants === homeFadeLeft) return fadeLeft;
+  if (variants === homeFadeRight) return fadeRight;
+  if (variants === homeScaleIn) return scaleIn;
+  // Unknown custom variants that use opacity:0 still blink — prefer soft y nudge
+  return fadeUp;
+}
+
+/** Scroll-reveal wrapper — mobile avoids opacity blinks on scroll. */
 export function HomeReveal({
   children,
   className,
@@ -22,17 +43,23 @@ export function HomeReveal({
   stagger = false,
   delay = 0,
 }: HomeRevealProps) {
-  const { isMobile, fadeUp, stagger: staggerVariants, viewport } =
-    useHomeMotion();
+  const {
+    isMobile,
+    fadeUp,
+    fadeLeft,
+    fadeRight,
+    scaleIn,
+    stagger: staggerVariants,
+    viewport,
+  } = useHomeMotion();
 
   const resolvedVariants = stagger
     ? staggerVariants
-    : variants === homeFadeUp
-      ? fadeUp
-      : variants;
-
-  const mobileBaseline = isMobile && !stagger ? 0.06 : 0;
-  const totalDelay = delay + mobileBaseline;
+    : isMobile
+      ? resolveMobileVariants(variants, fadeUp, fadeLeft, fadeRight, scaleIn)
+      : variants === homeFadeUp
+        ? fadeUp
+        : variants;
 
   return (
     <motion.div
@@ -40,7 +67,7 @@ export function HomeReveal({
       initial="hidden"
       whileInView="visible"
       viewport={viewport}
-      transition={totalDelay ? { delay: totalDelay } : undefined}
+      transition={delay ? { delay } : undefined}
       className={cn(className)}
     >
       {children}
@@ -57,12 +84,15 @@ export function HomeItem({
   className?: string;
   variants?: Variants;
 }) {
-  const { fadeUp } = useHomeMotion();
+  const { isMobile, fadeUp, fadeLeft, fadeRight, scaleIn } = useHomeMotion();
+  const resolved = isMobile
+    ? resolveMobileVariants(variants, fadeUp, fadeLeft, fadeRight, scaleIn)
+    : variants === homeFadeUp
+      ? fadeUp
+      : variants;
+
   return (
-    <motion.div
-      variants={variants === homeFadeUp ? fadeUp : variants}
-      className={className}
-    >
+    <motion.div variants={resolved} className={className}>
       {children}
     </motion.div>
   );

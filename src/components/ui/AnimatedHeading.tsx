@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { fadeUp } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 interface AnimatedHeadingProps {
@@ -22,7 +21,7 @@ export function AnimatedHeading({
   label,
   align = "center",
 }: AnimatedHeadingProps) {
-  const { viewportOnce } = useHomeMotion();
+  const { fadeUp, viewportOnce } = useHomeMotion();
 
   return (
     <motion.div
