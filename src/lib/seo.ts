@@ -10,19 +10,31 @@ export const LAST_UPDATED = "June 2, 2026";
 export const OG_IMAGE = "/og-image.png";
 
 type SeoOptions = {
+  /** Full document title (bypasses the root `%s | Crediple` template) */
   title: string;
   description: string;
   path?: string;
+  keywords?: string | string[];
 };
 
 export function createPageMetadata({
   title,
   description,
   path = "/",
+  keywords,
 }: SeoOptions): Metadata {
+  const keywordList = keywords
+    ? Array.isArray(keywords)
+      ? keywords
+      : [keywords]
+    : undefined;
+
   return {
-    title,
+    title: {
+      absolute: title,
+    },
     description,
+    ...(keywordList ? { keywords: keywordList } : {}),
     alternates: {
       canonical: path,
     },

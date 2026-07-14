@@ -11,7 +11,7 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Legal Information",
+  title: "Legal Information | Crediple",
   description:
     "Review Crediple's privacy policy, terms of service, cookie policy, and contact information.",
   path: "/legal",

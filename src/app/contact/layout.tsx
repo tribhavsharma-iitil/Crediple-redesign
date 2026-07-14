@@ -3,9 +3,10 @@ import type { ReactNode } from "react";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Contact",
+  title: "Contact Us | Crediple",
   description:
-    "Contact Crediple to discuss software development, digital transformation, workflow automation, cloud solutions, and technology consulting.",
+    "Contact Crediple for digital transformation, software development & enterprise technology solutions in healthcare, finance & legal. Book a consultation.",
+  keywords: "Contact Us",
   path: "/contact",
 });
 
