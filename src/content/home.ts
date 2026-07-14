@@ -102,7 +102,7 @@ export const homeContent = {
     titleLine2: "Multiple Innovations.",
     description:
       "Crediple unifies innovative companies across healthcare, finance, legal technology, education, and AI into one powerful digital ecosystem.",
-    primaryCta: { label: "Explore Brands", href: "/brands" },
+    primaryCta: { label: "Explore Brands", href: "/brands/#brand-01" },
   },
 
   ecosystem: {

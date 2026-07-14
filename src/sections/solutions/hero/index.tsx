@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Play, ArrowRight } from "lucide-react";
 import {
@@ -11,6 +10,7 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
+import HashLink from "@/components/ui/HashLink";
 import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
 
@@ -81,7 +81,7 @@ export default function SolutionsHero() {
           variants={heroItem}
           className="flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
         >
-          <Link
+          <HashLink
             href={hero.primaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
             style={{
@@ -91,8 +91,8 @@ export default function SolutionsHero() {
           >
             <Play size={13} className="fill-current" />
             {hero.primaryCta.label}
-          </Link>
-          <Link
+          </HashLink>
+          <HashLink
             href={hero.secondaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold no-underline transition-colors sm:w-auto sm:px-7 md:h-12"
             style={{
@@ -105,7 +105,7 @@ export default function SolutionsHero() {
           >
             {hero.secondaryCta.label}
             <ArrowRight size={15} />
-          </Link>
+          </HashLink>
         </motion.div>
       </motion.div>
     </section>

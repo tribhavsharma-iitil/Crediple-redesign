@@ -23,7 +23,7 @@ export const contactContent = {
     description:
       "Partner with us to build scalable digital solutions and high-impact business ecosystems. Innovation starts here.",
     primaryCta: { label: "Know About Us", href: "/about" },
-    secondaryCta: { label: "Explore Brands", href: "/brands" },
+    secondaryCta: { label: "Explore Brands", href: "/brands/#brand-01" },
   },
 
   form: {

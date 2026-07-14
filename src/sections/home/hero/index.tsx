@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import {
@@ -13,6 +12,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { useIntroPhase } from "@/components/layout/AppShell";
 import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
+import HashLink from "@/components/ui/HashLink";
 import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
 
@@ -121,7 +121,7 @@ export default function Hero() {
           variants={heroItem}
           className="mb-4 flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:mb-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4 md:mb-12"
         >
-          <Link
+          <HashLink
             href={hero.primaryCta.href}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
             style={{
@@ -131,7 +131,7 @@ export default function Hero() {
           >
             <Play size={13} className="fill-current" />
             {hero.primaryCta.label}
-          </Link>
+          </HashLink>
         </motion.div>
 
       </motion.div>

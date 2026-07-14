@@ -253,7 +253,17 @@ html.dark {
 /* ============================================================
    COLOR SCHEME
    ============================================================ */
-html { color-scheme: light; }
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 html.dark { color-scheme: dark; }
 
 /* ============================================================

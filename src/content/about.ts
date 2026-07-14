@@ -39,8 +39,8 @@ export const aboutContent = {
     titleAccent: "Outlast Trends.",
     description:
       "Crediple builds scalable technology systems for the industries shaping the future.",
-    primaryCta: { label: "See What We've Built", href: "/brands" },
-    secondaryCta: { label: "Get in Touch", href: "/contact" },
+    primaryCta: { label: "See What We've Built", href: "/brands/#brand-01" },
+    secondaryCta: { label: "Get in Touch", href: "/contact/#contact-form" },
   },
 
   trust: {

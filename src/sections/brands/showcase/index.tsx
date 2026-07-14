@@ -24,6 +24,10 @@ function BrandBlock({
   const imageRight = index % 2 === 0;
 
   return (
+    <div
+      id={index === 0 ? "brand-01" : `brand-${String(index + 1).padStart(2, "0")}`}
+      className="scroll-mt-20 sm:scroll-mt-24"
+    >
     <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">
       <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-20">
         <HomeReveal
@@ -144,6 +148,7 @@ function BrandBlock({
           {brand.coreFocus}
         </p>
       </HomeReveal>
+    </div>
     </div>
   );
 }
