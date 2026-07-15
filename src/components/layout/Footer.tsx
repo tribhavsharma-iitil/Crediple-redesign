@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Mail } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { brandExternalLinks } from "@/content/brands";
 import { cn } from "@/lib/utils";
 import credipleDark from "@/assets/crediple_dark.png";
 import credipleLight from "@/assets/crediple_light.png";
@@ -27,29 +28,32 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative"
-      style={{ background: isDark ? "#060E1B" : "#F8FAFC" }}
+      className="relative border-t"
+      style={{
+        background: isDark ? "#060E1B" : "#F8FAFC",
+        borderColor: isDark ? "rgba(255,255,255,0.06)" : "#E2E8F0",
+      }}
     >
-      <div className="mx-auto max-w-[1260px] px-4 py-10 sm:px-6 md:px-8 md:py-12">
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between sm:gap-12">
+      <div className="mx-auto max-w-[1260px] px-4 py-12 sm:px-6 md:px-8 md:py-14">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-14">
           {/* Brand */}
-          <div className="flex w-full max-w-none flex-col items-start sm:max-w-[320px]">
+          <div className="max-w-[320px] shrink-0">
             <Link
               href="/"
-              className="flex shrink-0 items-center no-underline hover:opacity-90"
+              className="inline-flex items-center no-underline hover:opacity-90"
             >
               <Image
                 src={isDark ? credipleDark : credipleLight}
                 alt="Crediple"
                 height={28}
-                className="h-6 w-auto object-contain sm:h-7"
+                className="h-7 w-auto object-contain"
                 priority
               />
             </Link>
 
             <p
               className={cn(
-                "mt-2.5 text-[12px] tracking-wide",
+                "mt-3 text-[12px] tracking-wide",
                 isDark ? "text-white" : "text-black",
               )}
             >
@@ -58,22 +62,22 @@ export default function Footer() {
 
             <p
               className={cn(
-                "mt-2 max-w-sm text-[12px] leading-relaxed",
-                isDark ? "text-[#C3C6D7]" : "text-[#64748B]",
+                "mt-3 text-[13px] leading-relaxed",
+                isDark ? "text-[#A8B0C4]" : "text-[#64748B]",
               )}
             >
               Precision in Excellence. The holding company for the next era of
               enterprise technology.
             </p>
 
-            <div className="mt-5 flex gap-3">
+            <div className="mt-6 flex gap-2.5">
               <a
                 href="mailto:hello@crediple.com"
                 aria-label="Email"
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-full border transition-colors",
                   isDark
-                    ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-[#DCE2F6]"
+                    ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
                     : "border-slate-200 bg-white text-slate-500 hover:text-slate-900",
                 )}
               >
@@ -87,7 +91,7 @@ export default function Footer() {
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-full border transition-colors",
                   isDark
-                    ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-[#DCE2F6]"
+                    ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
                     : "border-slate-200 bg-white text-slate-500 hover:text-slate-900",
                 )}
               >
@@ -104,74 +108,103 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Company links */}
-          <div className="w-full sm:w-auto sm:shrink-0 sm:text-right">
-            <h4
-              className={cn(
-                "mb-3 text-[10px] font-semibold uppercase tracking-[0.16em]",
-                isDark ? "text-[#DCE2F6]" : "text-slate-400",
-              )}
-            >
-              Company
-            </h4>
-            <ul className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-1 sm:gap-y-2.5">
-              {COMPANY_LINKS.map((link) => {
-                const active =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
+          {/* Link groups */}
+          <div className="grid min-w-0 flex-1 grid-cols-1 gap-10 sm:grid-cols-[140px_minmax(0,1fr)] sm:gap-12 lg:max-w-[720px]">
+            {/* Company */}
+            <div>
+              <h4
+                className={cn(
+                  "mb-4 text-[11px] font-semibold uppercase tracking-[0.18em]",
+                  isDark ? "text-[#DCE2F6]" : "text-slate-500",
+                )}
+              >
+                Company
+              </h4>
+              <ul className="space-y-3">
+                {COMPANY_LINKS.map((link) => {
+                  const active =
+                    link.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(link.href);
+                  return (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "text-[13px] no-underline transition-colors",
+                          isDark
+                            ? active
+                              ? "text-white"
+                              : "text-[#A8B0C4] hover:text-white"
+                            : active
+                              ? "text-brand-blue"
+                              : "text-[#64748B] hover:text-[#0F172A]",
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
-                return (
+            {/* Brands — same simple text as Company, 3-column grid */}
+            <div className="min-w-0">
+              <h4
+                className={cn(
+                  "mb-4 text-[11px] font-semibold uppercase tracking-[0.18em]",
+                  isDark ? "text-[#DCE2F6]" : "text-slate-500",
+                )}
+              >
+                Brands
+              </h4>
+              <ul className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3 sm:gap-x-10">
+                {brandExternalLinks.map((link) => (
                   <li key={link.label}>
-                    <Link
+                    <a
                       href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={cn(
-                        "inline-flex min-h-11 items-center text-[14px] font-normal no-underline transition-colors sm:min-h-0 sm:text-[13px]",
+                        "text-[13px] no-underline transition-colors",
                         isDark
-                          ? active
-                            ? "text-[#DCE2F6]"
-                            : "text-[#C3C6D7] hover:text-[#DCE2F6]"
-                          : active
-                            ? "text-brand-blue"
-                            : "text-[#64748B] hover:text-[#1E293B]",
+                          ? "text-[#A8B0C4] hover:text-white"
+                          : "text-[#64748B] hover:text-[#0F172A]",
                       )}
                     >
                       {link.label}
-                    </Link>
+                    </a>
                   </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div
           className={cn(
-            "mt-8 flex flex-col items-center gap-3 border-t pt-6 text-center sm:mt-10 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-left",
+            "mt-12 flex flex-col gap-3 border-t pt-6 sm:flex-row sm:items-center sm:justify-between",
             isDark ? "border-white/10" : "border-slate-200",
           )}
         >
           <p
             className={cn(
-              "text-[11px]",
-              isDark ? "text-[#C3C6D7]" : "text-[#94A3B8]",
+              "text-[12px]",
+              isDark ? "text-[#7B8494]" : "text-[#94A3B8]",
             )}
           >
-            © 2018 All rights reserved.
+            © {new Date().getFullYear()} Crediple. All rights reserved.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
             {LEGAL_LINKS.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className={cn(
-                  "text-[11px] no-underline transition-colors",
+                  "text-[12px] no-underline transition-colors",
                   isDark
-                    ? "text-[#C3C6D7] hover:text-[#DCE2F6]"
+                    ? "text-[#7B8494] hover:text-[#DCE2F6]"
                     : "text-[#94A3B8] hover:text-slate-700",
                 )}
               >
