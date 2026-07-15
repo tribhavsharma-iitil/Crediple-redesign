@@ -83,10 +83,10 @@ export const brandsContent = {
     },
     {
       number: "Brand 02",
-      name: "EatsKart",
+      name: "eatskart",
       tagline: "Where Restaurants Keep More And Customers Pay Less",
       description: [
-        "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, Eatskart helps them earn more and pass the savings on to customers.",
+        "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, eatskart helps them earn more and pass the savings on to customers.",
         "Browse the latest menus, discover new places, track your order live, and get it delivered fast, every time.",
       ],
       image: card_7,
@@ -131,7 +131,7 @@ export const brandsContent = {
         "Orgatry replaces all of it with one connected, automated system built for modern teams.",
       ],
       image: card_5,
-      href: "https://orgatry.com",
+      href: "https://orgatry.com/",
       featuresTitle: "What We Build",
       deliverables: [
         {
@@ -171,7 +171,7 @@ export const brandsContent = {
         "My Doctor Capsule solves both with a credible digital presence and organized patient acquisition systems for modern healthcare providers.",
       ],
       image: card_1,
-      href: "https://www.mydoctorcapsule.com",
+      href: "https://mydoctorcapsule.com/",
       featuresTitle: "What We Build",
       deliverables: [
         {
@@ -212,7 +212,7 @@ export const brandsContent = {
         "Loan Konnekt builds analytical frameworks and advisory systems to simplify financial decision-making for borrowers seeking to understand their options and lenders seeking to assess risk.",
       ],
       image: card_2,
-      href: "https://www.loankonnekt.com",
+      href: "https://loankonnekt.com/",
       featuresTitle: "What We Build",
       deliverables: [
         {
@@ -253,7 +253,7 @@ export const brandsContent = {
         "Through structured, technology-enabled workflows, we make legal access more transparent, more efficient, and more accessible. For practices and clients alike.",
       ],
       image: card_3,
-      href: "https://www.lawvix.com",
+      href: "https://lawvix.com/",
       featuresTitle: "What We Build",
       deliverables: [
         {
@@ -292,7 +292,7 @@ export const brandsContent = {
         "Propertizor fixes that by connecting buyers, sellers, and agents through verified listings and structured market data.",
       ],
       image: card_6,
-      href: "https://propertizor.com",
+      href: "https://propertizor.com/",
       featuresTitle: "What We Build",
       deliverables: [
         {
@@ -346,3 +346,9 @@ export const brandsContent = {
 } as const;
 
 export type BrandDetail = (typeof brandsContent.brands)[number];
+
+/** Footer / nav brand links (live product sites). */
+export const brandExternalLinks = brandsContent.brands.map((brand) => ({
+  label: brand.name,
+  href: brand.href,
+}));

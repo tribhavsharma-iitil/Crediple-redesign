@@ -171,7 +171,7 @@ export const BRANDS = [
     iconDark: brand_icon_dark_4,
   },
  {
-    name: "Eatskart",
+    name: "eatskart",
     description: "Your food, your way. Explore top restaurants, track orders in real time, and enjoy fast, reliable delivery to your doorstep.",
     href: "https://eatskart.com/",
     icon: brand_icon_7,
@@ -180,35 +180,35 @@ export const BRANDS = [
   {
     name: "Orgatry",
     description: "Comprehensive HRMS solutions streamlining workforce management, payroll, attendance, and organisational workflows.",
-    href: "https://orgatry.com",
+    href: "https://orgatry.com/",
     icon: brand_icon_5,
     iconDark: brand_icon_dark_5,
   },
   {
     name: "My Doctor Capsule",
     description: "Healthcare ecosystem focused on digital patient acquisition, healthcare visibility, and modern clinical growth systems.",
-    href: "https://www.mydoctorcapsule.com",
+    href: "https://mydoctorcapsule.com/",
     icon: brand_icon_1,
     iconDark: brand_icon_dark_1,
   },
   {
     name: "Loan Konnekt",
     description: "Structured financial intelligence and lending ecosystem simplifying credit analysis and borrower journeys.",
-    href: "https://www.loankonnekt.com",
+    href: "https://loankonnekt.com/",
     icon: brand_icon_2,
     iconDark: brand_icon_dark_2,
   },
   {
     name: "Lawvix",
     description: "LegalTech platform focused on structured legal workflows, documentation automation, and digital legal access.",
-    href: "https://www.lawvix.com",
+    href: "https://lawvix.com/",
     icon: brand_icon_3,
     iconDark: brand_icon_dark_3,
   },
   {
     name: "Propertizor",
     description: "Intelligent property platform connecting buyers, sellers, and agents with data-driven real estate insights.",
-    href: "https://propertizor.com",
+    href: "https://propertizor.com/",
     icon: brand_icon_6,
     iconDark: brand_icon_dark_6,
   },
@@ -386,10 +386,10 @@ export const BRANDS_PAGE_DATA = [
   },
   {
     id: 2,
-    name: "EatsKart",
+    name: "eatskart",
     taglines: ["Your Food, Your Way Through", "Intelligent On-Demand Delivery"],
     description: [
-      "Eatskart is a modern food delivery ecosystem designed to give you your food, your way, by connecting consumers with top-rated local restaurants and diverse cuisines effortlessly.",
+      "eatskart is a modern food delivery ecosystem designed to give you your food, your way, by connecting consumers with top-rated local restaurants and diverse cuisines effortlessly.",
       "Explore trending menus, discover fresh culinary choices, track your order in real time, and enjoy fast, reliable delivery brought straight to your doorstep via a seamless, few-tap workflow.",
     ],
     image: card_7, 
@@ -481,7 +481,7 @@ export const FOOTER_COL2 = [
 
 export const FOOTER_COL3 = [
     { label: "Iitil", href: "https://www.iitil.com/" },
-    { label: "Eatskart", href: "https://eatskart.com/" },
+    { label: "eatskart", href: "https://eatskart.com/" },
 ];
 
 export const FOOTER_TAGLINE =
