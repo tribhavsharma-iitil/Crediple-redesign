@@ -34,8 +34,8 @@ export default function Footer() {
         borderColor: isDark ? "rgba(255,255,255,0.06)" : "#E2E8F0",
       }}
     >
-      <div className="mx-auto max-w-[1260px] px-4 py-12 sm:px-6 md:px-8 md:py-14">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-14">
+      <div className="mx-auto max-w-[1260px] px-4 py-6 sm:px-6 md:px-8 md:py-7">
+        <div className="flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
           {/* Brand */}
           <div className="max-w-[320px] shrink-0">
             <Link
@@ -70,7 +70,7 @@ export default function Footer() {
               enterprise technology.
             </p>
 
-            <div className="mt-6 flex gap-2.5">
+            <div className="mt-5 flex gap-2.5">
               <a
                 href="mailto:hello@crediple.com"
                 aria-label="Email"
@@ -109,18 +109,18 @@ export default function Footer() {
           </div>
 
           {/* Link groups: Company 4 · Brands 4 · Brands 3 (no second Brands label) */}
-          <div className="grid min-w-0 flex-1 grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8 lg:max-w-[640px] lg:gap-10">
+          <div className="grid min-w-0 flex-1 grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-8 lg:max-w-[640px] lg:gap-10">
             {/* Company — 4 */}
             <div>
               <h4
                 className={cn(
-                  "mb-4 text-[11px] font-semibold uppercase tracking-[0.18em]",
+                  "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em]",
                   isDark ? "text-[#DCE2F6]" : "text-slate-500",
                 )}
               >
                 Company
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {COMPANY_LINKS.map((link) => {
                   const active =
                     link.href === "/"
@@ -153,13 +153,13 @@ export default function Footer() {
             <div>
               <h4
                 className={cn(
-                  "mb-4 text-[11px] font-semibold uppercase tracking-[0.18em]",
+                  "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em]",
                   isDark ? "text-[#DCE2F6]" : "text-slate-500",
                 )}
               >
                 Brands
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {brandExternalLinks.slice(0, 4).map((link) => (
                   <li key={link.label}>
                     <a
@@ -184,11 +184,11 @@ export default function Footer() {
             <div>
               <div
                 aria-hidden
-                className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-0"
+                className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-0"
               >
                 Brands
               </div>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {brandExternalLinks.slice(4).map((link) => (
                   <li key={link.label}>
                     <a
@@ -213,7 +213,7 @@ export default function Footer() {
 
         <div
           className={cn(
-            "mt-12 flex flex-col gap-3 border-t pt-6 sm:flex-row sm:items-center sm:justify-between",
+            "mt-6 flex flex-col gap-2.5 border-t pt-4 sm:flex-row sm:items-center sm:justify-between",
             isDark ? "border-white/10" : "border-slate-200",
           )}
         >
