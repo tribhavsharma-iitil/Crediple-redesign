@@ -108,9 +108,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link groups */}
-          <div className="grid min-w-0 flex-1 grid-cols-1 gap-10 sm:grid-cols-[140px_minmax(0,1fr)] sm:gap-12 lg:max-w-[720px]">
-            {/* Company */}
+          {/* Link groups: Company 4 · Brands 4 · Brands 3 (no second Brands label) */}
+          <div className="grid min-w-0 flex-1 grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8 lg:max-w-[640px] lg:gap-10">
+            {/* Company — 4 */}
             <div>
               <h4
                 className={cn(
@@ -149,8 +149,8 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Brands — same simple text as Company, 3-column grid */}
-            <div className="min-w-0">
+            {/* Brands — first 4, with label */}
+            <div>
               <h4
                 className={cn(
                   "mb-4 text-[11px] font-semibold uppercase tracking-[0.18em]",
@@ -159,8 +159,37 @@ export default function Footer() {
               >
                 Brands
               </h4>
-              <ul className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3 sm:gap-x-10">
-                {brandExternalLinks.map((link) => (
+              <ul className="space-y-3">
+                {brandExternalLinks.slice(0, 4).map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "text-[13px] no-underline transition-colors",
+                        isDark
+                          ? "text-[#A8B0C4] hover:text-white"
+                          : "text-[#64748B] hover:text-[#0F172A]",
+                      )}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Brands — last 3, no heading label */}
+            <div>
+              <div
+                aria-hidden
+                className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-0"
+              >
+                Brands
+              </div>
+              <ul className="space-y-3">
+                {brandExternalLinks.slice(4).map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}
