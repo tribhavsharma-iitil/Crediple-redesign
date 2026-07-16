@@ -100,6 +100,10 @@ export const metadata: Metadata = {
     follow: true,
   },
 
+  verification: {
+    google: "tNSBuJxzv5cBkVxbsQchE7GsfZ5X4CRYPrE4bf4kLGY",
+  },
+
   icons: {
     icon: [
       { url: "/favicon.ico" },
