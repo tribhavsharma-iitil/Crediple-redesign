@@ -53,7 +53,7 @@ export function DunsBadge({
               )
             : isFooter
               ? cn(
-                  "flex flex-row items-start gap-4 rounded-xl",
+                  "flex flex-row items-center gap-4 rounded-xl",
                   isDark ? "hover:bg-white/[0.03]" : "hover:bg-black/[0.02]",
                 )
               : cn("flex flex-col items-start gap-3 rounded-xl"),
@@ -73,7 +73,8 @@ export function DunsBadge({
 
         <div
           className={cn(
-            "flex shrink-0 items-start justify-center",
+            "flex shrink-0 justify-center",
+            isFooter ? "items-center self-center" : "items-start",
             isCard
               ? cn(
                   "mb-4 rounded-xl border px-4 py-3",
