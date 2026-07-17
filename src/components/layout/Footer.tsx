@@ -7,7 +7,6 @@ import { Mail } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { brandExternalLinks } from "@/content/brands";
 import { cn } from "@/lib/utils";
-import { DunsBadge } from "@/components/layout/DunsBadge";
 import credipleDark from "@/assets/crediple_dark.png";
 import credipleLight from "@/assets/crediple_light.png";
 
@@ -70,10 +69,6 @@ export default function Footer() {
               Precision in Excellence. The holding company for the next era of
               enterprise technology.
             </p>
-
-            <div className="mt-4">
-              <DunsBadge variant="footer" className="max-w-[280px]" />
-            </div>
 
           </div>
 
