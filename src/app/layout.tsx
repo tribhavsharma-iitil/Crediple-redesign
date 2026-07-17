@@ -46,10 +46,6 @@ export const metadata: Metadata = {
   description:
     "Crediple delivers data intelligence, software development, technology solutions, cloud solutions, artificial intelligence in business, SaaS platforms, and workflow automation.",
 
-  alternates: {
-    canonical: "/",
-  },
-
   keywords: [
     "Crediple",
     "data intelligence",

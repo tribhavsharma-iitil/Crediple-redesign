@@ -7,7 +7,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Discover Crediple's vision, expertise, and commitment to delivering innovative technology solutions for businesses worldwide.",
   keywords: "Technology Solutions for Business",
-  path: "/about",
+  path: "/about/",
 });
 
 export default function AboutLayout({ children }: { children: ReactNode }) {
