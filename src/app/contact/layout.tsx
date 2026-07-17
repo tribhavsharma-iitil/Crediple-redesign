@@ -7,7 +7,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Contact Crediple for digital transformation, software development & enterprise technology solutions in healthcare, finance & legal. Book a consultation.",
   keywords: "Contact Us",
-  path: "/contact",
+  path: "/contact/",
 });
 
 export default function ContactLayout({

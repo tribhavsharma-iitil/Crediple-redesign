@@ -7,7 +7,7 @@ export const metadata: Metadata = createPageMetadata({
   description:
     "Explore a range of software, cloud, automation, and digital transformation solutions built to support modern business needs.",
   keywords: "Cloud Solutions",
-  path: "/solutions",
+  path: "/solutions/",
 });
 
 export default function SolutionsLayout({ children }: { children: ReactNode }) {

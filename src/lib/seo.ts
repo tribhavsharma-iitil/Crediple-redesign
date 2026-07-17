@@ -44,7 +44,8 @@ export function canonicalPath(path = "/"): string {
 
 export function absoluteUrl(path = "/"): string {
   const normalized = canonicalPath(path);
-  if (normalized === "/") return SITE_URL;
+  // Prefer trailing slash on the homepage to match trailingSlash: true exports
+  if (normalized === "/") return `${SITE_URL}/`;
   return `${SITE_URL}${normalized}`;
 }
 
@@ -94,7 +95,7 @@ export function createPageMetadata({
       ? keywords
       : [keywords]
     : undefined;
-  const canonical = canonicalPath(path);
+  // Absolute self-referencing canonical (required for trailingSlash static export SEO)
   const url = absoluteUrl(path);
   const images = buildOgImages(imageAlt);
 
@@ -105,7 +106,7 @@ export function createPageMetadata({
     description,
     ...(keywordList ? { keywords: keywordList } : {}),
     alternates: {
-      canonical,
+      canonical: url,
     },
     robots: noIndex
       ? { index: false, follow: false }
@@ -145,9 +146,6 @@ export function createRootMetadata(): Metadata {
     authors: [{ name: SITE_NAME, url: SITE_URL }],
     creator: SITE_NAME,
     publisher: SITE_NAME,
-    alternates: {
-      canonical: "/",
-    },
     robots: {
       index: true,
       follow: true,
