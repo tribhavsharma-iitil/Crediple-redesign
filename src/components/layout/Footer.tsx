@@ -35,7 +35,7 @@ export default function Footer() {
         borderColor: isDark ? "rgba(255,255,255,0.06)" : "#E2E8F0",
       }}
     >
-      <div className="mx-auto max-w-[1260px] px-4 py-6 sm:px-6 md:px-8 md:py-7">
+      <div className="mx-auto max-w-[1260px] p-4 sm:px-6 md:px-8">
         <div className="flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
           {/* Brand */}
           <div className="max-w-[320px] shrink-0">
@@ -83,13 +83,13 @@ export default function Footer() {
             <div>
               <h4
                 className={cn(
-                  "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em]",
-                  isDark ? "text-[#DCE2F6]" : "text-slate-500",
+                  "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
+                  isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
                 )}
               >
                 Company
               </h4>
-              <ul className="space-y-2.5">
+              <ul>
                 {COMPANY_LINKS.map((link) => {
                   const active =
                     link.href === "/"
@@ -122,13 +122,13 @@ export default function Footer() {
             <div>
               <h4
                 className={cn(
-                  "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em]",
-                  isDark ? "text-[#DCE2F6]" : "text-slate-500",
+                  "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
+                  isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
                 )}
               >
                 Brands
               </h4>
-              <ul className="space-y-2.5">
+              <ul>
                 {brandExternalLinks.slice(0, 4).map((link) => (
                   <li key={link.label}>
                     <a
@@ -153,11 +153,11 @@ export default function Footer() {
             <div>
               <div
                 aria-hidden
-                className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-0"
+                className="mb-2 text-[11px] text-[#0F172B] font-semibold uppercase tracking-[0.18em] opacity-0"
               >
                 Brands
               </div>
-              <ul className="space-y-2.5">
+              <ul>
                 {brandExternalLinks.slice(4).map((link) => (
                   <li key={link.label}>
                     <a
@@ -200,10 +200,10 @@ export default function Footer() {
                   href="mailto:hello@crediple.com"
                   aria-label="Email"
                   className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full border transition-colors",
+                    "flex h-9 w-9 items-center justify-center rounded-full transition-colors",
                     isDark
                       ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
-                      : "border-slate-200 bg-white text-slate-500 hover:text-slate-900",
+                      : "border-slate-200 bg-[#EDFAFF] text-[#0F172B] hover:text-slate-900",
                   )}
                 >
                   <Mail size={14} strokeWidth={1.75} />
@@ -214,10 +214,10 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
                   className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full border transition-colors",
+                    "flex h-9 w-9 items-center justify-center rounded-full  transition-colors",
                     isDark
                       ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
-                      : "border-slate-200 bg-white text-slate-500 hover:text-slate-900",
+                      : "border-slate-200 bg-[#EDFAFF] text-[#0F172B] hover:text-slate-900",
                   )}
                 >
                   <svg

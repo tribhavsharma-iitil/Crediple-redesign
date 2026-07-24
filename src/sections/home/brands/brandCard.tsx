@@ -8,6 +8,9 @@ import { HomeBrand, homeColors } from "@/content/home";
 import { homeFadeUp } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import cardBg from "@/assets/container.png";
+import cardBgLight from "@/assets/container_light.png";
+import { useTheme } from "@/context/ThemeContext";
+import DiamondNavButton from "@/components/ui/DiamondNavButton";
 
 const C = homeColors;
 const LINK_BLUE = "#5A96E3";
@@ -25,24 +28,38 @@ export default function BrandCard({
   brand: HomeBrand;
   index: number;
 }) {
+
+  const { isDark } = useTheme();
+
   const content = (
     <>
       <div aria-hidden className="absolute inset-0 z-0 pointer-events-none">
-        <Image
-          src={cardBg}
-          alt=""
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover object-center"
-          priority={index < 3}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, transparent 0%, transparent 40%, rgba(13,20,37,0.55) 75%, rgba(13,20,37,0.85) 100%)",
-          }}
-        />
+        <>
+          <Image
+            src={isDark ? cardBg : cardBgLight}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover object-center"
+            priority={index < 3}
+          />
+          {isDark ? (
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, transparent 0%, transparent 40%, rgba(13,20,37,0.55) 75%, rgba(13,20,37,0.85) 100%)",
+              }}
+            />
+          ) :
+            <div
+              className="absolute inset-0"
+              style={{
+                background: " rgba(255, 255, 255, 0.70)"
+              }}
+            />
+          }
+        </>
       </div>
 
       <div className="relative z-10 flex flex-col h-full items-start">
@@ -56,7 +73,7 @@ export default function BrandCard({
               }}
             />
             <Image
-              src={brand.iconDark}
+              src={isDark ? brand.iconDark : brand.icon}
               alt={brand.name}
               width={120}
               height={120}
@@ -68,28 +85,33 @@ export default function BrandCard({
         </div>
 
         <h3
-          className="font-heading font-bold text-lg sm:text-xl md:text-2xl mb-2 sm:mb-3 tracking-tight text-left w-full"
-          style={{ color: "#FFFFFF" }}
+          className="font-heading font-bold text-lg sm:text-xl md:text-2xl mb-2 sm:mb-3 tracking-tight text-left w-full text-[#0F172B] dark:text-white"
         >
           {brand.name}
         </h3>
 
         <p
-          className="text-xs sm:text-[13px] md:text-sm leading-relaxed text-left flex-1 mb-5 sm:mb-6 line-clamp-4"
-          style={{ color: "rgba(255,255,255,0.82)" }}
+          className="text-xs sm:text-[13px] md:text-sm leading-relaxed text-left flex-1 mb-5 sm:mb-6 line-clamp-4 text-[#0F172B] dark:text-white"
         >
           {brand.description}
         </p>
 
         <span
           className={cn(
-            "inline-flex items-center gap-1 text-sm font-medium mt-auto",
+            "inline-flex items-center gap-1 text-sm font-medium mt-auto !text-[#0F172B] dark:!text-white",
             !brand.clickable && "opacity-40"
           )}
           style={{ color: brand.clickable ? LINK_BLUE : C.textDim }}
         >
           {brand.cta}
-          <ChevronRight size={15} strokeWidth={2.2} />
+
+          <DiamondNavButton
+            isDark={isDark}
+            className="ml-2"
+            style={{ backgroundColor: "transparent !important", }}
+          >
+            <ChevronRight size={15} strokeWidth={2.2} />
+          </DiamondNavButton>
         </span>
       </div>
     </>
@@ -105,6 +127,9 @@ export default function BrandCard({
     // read as a solid gray bar on light section backgrounds.
     boxShadow: "inset 0 1px 0 rgba(126,182,255,0.06)",
   };
+  const lightStyle = {
+    borderColor: "rgb(246, 250, 255)",
+  };
 
   if (brand.clickable) {
     return (
@@ -114,7 +139,7 @@ export default function BrandCard({
           target="_blank"
           rel="noopener noreferrer"
           className={cn(className, "no-underline block h-full")}
-          style={style}
+          style={isDark ? style : lightStyle}
         >
           {content}
         </Link>
@@ -123,7 +148,7 @@ export default function BrandCard({
   }
 
   return (
-    <motion.div variants={cardVariants} className={className} style={style}>
+    <motion.div variants={cardVariants} className={className} style={isDark ? style : lightStyle}>
       {content}
     </motion.div>
   );
