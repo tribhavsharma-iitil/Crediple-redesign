@@ -35,7 +35,7 @@ export default function DiamondNavButton({
           borderColor: isDark
             ? "rgba(220, 226, 246, 0.55)"
             : "rgba(15, 23, 42, 0.28)",
-          background: isDark ? "rgba(255,255,255,0.04)" : "#FFFFFF",
+          background: isDark ? "rgba(255,255,255,0.04)" : "transparent",
           boxShadow: isDark
             ? "0 0 0 1px rgba(47,128,237,0.12)"
             : "0 1px 4px rgba(15,23,42,0.06)",
