@@ -345,17 +345,17 @@ export const homeContent = {
     items: [
       {
         name: "Rajiv Sharma",
-        role: "CEO, MediTech Solutions",
+        role: "CEO",
         text: "Crediple transformed our entire clinical workflow. What used to take days now takes hours. Their infrastructure is rock solid and the support team genuinely understands enterprise healthcare needs.",
       },
       {
         name: "Priya Nair",
-        role: "CFO, FinVault India",
+        role: "CFO",
         text: "We integrated Crediple's fintech platform across 3 cities in under a month. The reconciliation automation alone saved us 40 hours a week. Truly a game changer for our operations.",
       },
       {
         name: "Arjun Mehta",
-        role: "Founder, LexCore",
+        role: "Founder",
         text: "Our firm was drowning in paperwork. Crediple built us a case management system that feels like it was made specifically for us. Client satisfaction has never been higher.",
       },
     ],

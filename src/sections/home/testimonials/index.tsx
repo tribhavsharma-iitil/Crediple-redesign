@@ -180,7 +180,7 @@ export default function Testimonials() {
                 animate={{ x: `${trackX}%` }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
-                {items.map((item) => (
+                {items.map((item, index) => (
                   <div
                     key={item.name}
                     style={{
@@ -203,11 +203,11 @@ export default function Testimonials() {
                         }}
                       >
                         <div className="flex items-center justify-center gap-[3px] mb-4 sm:mb-5">
-                          <BlueStar />
-                          <BlueStar />
-                          <BlueStar />
-                          <BlueStar />
-                          <BlueStar />
+                          {Array.from({
+                            length: index === 1 ? 4 : 5,
+                          }).map((_, i) => (
+                            <BlueStar key={i} />
+                          ))}
                         </div>
 
                         <p
