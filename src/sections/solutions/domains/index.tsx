@@ -27,13 +27,13 @@ export default function SolutionsDomains() {
           <HomeReveal variants={homeFadeUp} className="mb-8 text-center sm:mb-10 md:mb-12">
             <h2
               className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
-              style={{ color: isDark ? "#DCE2F6" : "#0F172A" }}
+              style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
             >
               {domains.title}
             </h2>
             <p
               className="mt-2 text-sm sm:text-base"
-              style={{ color: isDark ? C.textMuted : homeLight.muted }}
+              style={{ color: isDark ? '#F8F8F8' : homeLight.muted }}
             >
               {domains.subtitle}
             </p>

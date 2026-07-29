@@ -5,9 +5,9 @@
 
 import { homeColors, homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight } from "@/content/home";
 import dataIntelligence from "@/assets/solutions/data_intelligance.png";
-import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
-import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
-import whoWeServe4 from "@/assets/home/who_we_serve_4.jpg";
+import whoWeServe1 from "@/assets/home/who_we_serve_1.png";
+import whoWeServe3 from "@/assets/home/who_we_serve_3.png";
+import whoWeServe4 from "@/assets/home/who_we_serve_4.png";
 
 export const solutionsColors = {
   ...homeColors,

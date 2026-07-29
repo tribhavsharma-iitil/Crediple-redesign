@@ -22,10 +22,10 @@ import testimonial_1 from "@/assets/testimonial_1.png";
 import testimonial_2 from "@/assets/testimonial_2.png";
 import testimonial_3 from "@/assets/testimonial_3.png";
 
-import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
+import whoWeServe1 from "@/assets/home/who_we_serve_1.png";
 import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
-import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
-import whoWeServe4 from "@/assets/home/who_we_serve_4.jpg";
+import whoWeServe3 from "@/assets/home/who_we_serve_3.png";
+import whoWeServe4 from "@/assets/home/who_we_serve_4.png";
 import whoWeServe5 from "@/assets/home/who_we_serve_5.jpg";
 import whoWeServe6 from "@/assets/home/who_we_serve_6.jpg";
 
@@ -266,7 +266,7 @@ export const homeContent = {
         title: "Healthcare Professionals",
         heading: "Digitising clinical workflows",
         desc: "From independent practitioners to multi-specialty hospitals, we deliver HIPAA-aligned platforms that streamline patient management, billing, and compliance.",
-        short: "Digitising clinical workflows for modern care teams...",
+        short: "From patient acquisition to clinical growth, digital infrastructure for healthcare providers.",
         href: "/solutions",
         image: whoWeServe1,
       },
@@ -274,7 +274,7 @@ export const homeContent = {
         title: "Finance & Fintech",
         heading: "Powering next-gen financial ops",
         desc: "Banks, NBFCs, and fintech startups rely on our infrastructure to automate reconciliation, reporting, and regulatory compliance at scale.",
-        short: "Powering next-gen financial ops at institutional scale...",
+        short: "Financial infrastructure for smarter lending and sustainable growth.",
         href: "/solutions",
         image: whoWeServe3,
       },
@@ -282,7 +282,7 @@ export const homeContent = {
         title: "Legal Practices",
         heading: "Technology meets jurisprudence",
         desc: "Law firms and solo advocates use our tools to manage case files, automate documentation, and serve clients faster with end-to-end legal tech.",
-        short: "Technology meets jurisprudence for modern firms...",
+        short: "Legal workflow infrastructure to reduce paperwork and speed up legal services.",
         href: "/solutions",
         image: whoWeServe4,
       },
@@ -294,22 +294,22 @@ export const homeContent = {
         href: "/solutions",
         image: whoWeServe5,
       },
-      // {
-      //   title: "Education Institutions",
-      //   heading: "Reinventing learning systems",
-      //   desc: "From edtech platforms to traditional institutions, we build adaptive learning systems and administrative tools that handle thousands of users seamlessly.",
-      //   short: "Reinventing learning systems for institutions at scale...",
-      //   href: "/solutions",
-      //   image: whoWeServe6,
-      // },
-      // {
-      //   title: "Tech Startups",
-      //   heading: "Launch faster, scale smarter",
-      //   desc: "Early-stage and growth-stage teams plug into our ecosystem to access shared infrastructure, reducing time-to-market without sacrificing quality.",
-      //   short: "Launch faster, scale smarter with shared infrastructure...",
-      //   href: "/solutions",
-      //   image: whoWeServe2,
-      // },
+      {
+        title: "Education Institutions",
+        heading: "Reinventing learning systems",
+        desc: "From edtech platforms to traditional institutions, we build adaptive learning systems and administrative tools that handle thousands of users seamlessly.",
+        short: "Reinventing learning systems for institutions at scale...",
+        href: "/solutions",
+        image: whoWeServe6,
+      },
+      {
+        title: "Tech Startups",
+        heading: "Launch faster, scale smarter",
+        desc: "Early-stage and growth-stage teams plug into our ecosystem to access shared infrastructure, reducing time-to-market without sacrificing quality.",
+        short: "Launch faster, scale smarter with shared infrastructure...",
+        href: "/solutions",
+        image: whoWeServe2,
+      },
     ],
   },
 
