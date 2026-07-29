@@ -57,7 +57,7 @@ export default function WhoWeServe() {
               <HomeItem
                 key={item.title}
                 variants={homeFadeUp}
-                className="w-[220px] shrink-0 snap-start sm:w-[240px] lg:w-[360px] h-[300px] sm:h-[320px] lg:h-[400px]"
+                className="w-[220px] shrink-0 snap-start sm:w-[240px] lg:w-[380px] h-[300px] sm:h-[320px] lg:h-[400px]"
               >
                 <Link
                   href={item.href}
@@ -84,7 +84,7 @@ export default function WhoWeServe() {
                     <h3 className="font-heading md:text-xl font-bold text-white text-base">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-md leading-relaxed text-white/75">
+                    <p className="mt-1 text-sm leading-relaxed text-white/75">
                       {item.short}
                     </p>
                   </div>
