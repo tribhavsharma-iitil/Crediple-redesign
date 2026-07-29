@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation";
 import { Mail } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { brandExternalLinks } from "@/content/brands";
+import { solutionsContent } from "@/content/solutions";
 import { cn } from "@/lib/utils";
 import { DunsBadge } from "@/components/layout/DunsBadge";
 import credipleDark from "@/assets/crediple_dark.png";
 import credipleLight from "@/assets/crediple_light.png";
+import footerBgDark from "@/assets/home/footer_bg_dark.png";
 
 const COMPANY_LINKS = [
   { label: "About Us", href: "/about" },
@@ -17,6 +19,11 @@ const COMPANY_LINKS = [
   { label: "Brands", href: "/brands" },
   { label: "Contact Us", href: "/contact" },
 ];
+
+const DOMAIN_LINKS = solutionsContent.domains.items.map((item) => ({
+  label: item.title,
+  href: item.href,
+}));
 
 const LEGAL_LINKS = [
   { label: "Privacy Policy", href: "/legal" },
@@ -31,14 +38,16 @@ export default function Footer() {
     <footer
       className="relative border-t"
       style={{
-        background: isDark ? "#060E1B" : "#F8FAFC",
+        background: isDark
+          ? `url(${footerBgDark.src}) center/cover no-repeat`
+          : "#FFFFFF",
         borderColor: isDark ? "rgba(255,255,255,0.06)" : "#E2E8F0",
       }}
     >
-      <div className="mx-auto max-w-[1260px] p-4 sm:px-6 md:px-8">
-        <div className="flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+      <div className="mx-auto max-w-[1260px] p-8 sm:px-6 md:px-8">
+        <div className="flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between lg:gap-20">
           {/* Brand */}
-          <div className="max-w-[320px] shrink-0">
+          <div className="max-w-[420px] shrink-0">
             <Link
               href="/"
               className="inline-flex items-center no-underline hover:opacity-90"
@@ -77,9 +86,7 @@ export default function Footer() {
 
           </div>
 
-          {/* Link groups: Company 4 · Brands 4 · Brands 3 (no second Brands label) */}
-          <div className="grid min-w-0 flex-1 grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-8 lg:max-w-[640px] lg:gap-10">
-            {/* Company — 4 */}
+          <div className="grid min-w-0 flex-1 grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
             <div>
               <h4
                 className={cn(
@@ -89,7 +96,7 @@ export default function Footer() {
               >
                 Company
               </h4>
-              <ul>
+              <ul className="space-y-2">
                 {COMPANY_LINKS.map((link) => {
                   const active =
                     link.href === "/"
@@ -118,7 +125,6 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Brands — first 4, with label */}
             <div>
               <h4
                 className={cn(
@@ -128,7 +134,7 @@ export default function Footer() {
               >
                 Brands
               </h4>
-              <ul>
+              <ul className="space-y-2">
                 {brandExternalLinks.slice(0, 4).map((link) => (
                   <li key={link.label}>
                     <a
@@ -149,15 +155,16 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Brands — last 3, no heading label */}
             <div>
-              <div
-                aria-hidden
-                className="mb-2 text-[11px] text-[#0F172B] font-semibold uppercase tracking-[0.18em] opacity-0"
+              <h4
+                className={cn(
+                  "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
+                  isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
+                )}
               >
                 Brands
-              </div>
-              <ul>
+              </h4>
+              <ul className="space-y-2">
                 {brandExternalLinks.slice(4).map((link) => (
                   <li key={link.label}>
                     <a
@@ -173,6 +180,34 @@ export default function Footer() {
                     >
                       {link.label}
                     </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4
+                className={cn(
+                  "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
+                  isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
+                )}
+              >
+                Domain
+              </h4>
+              <ul className="space-y-2">
+                {DOMAIN_LINKS.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "text-[13px] no-underline transition-colors",
+                        isDark
+                          ? "text-[#A8B0C4] hover:text-white"
+                          : "text-[#64748B] hover:text-[#0F172A]",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -195,42 +230,42 @@ export default function Footer() {
             © {new Date().getFullYear()} Crediple. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <div className="flex gap-2.5">
-                <a
-                  href="mailto:hello@crediple.com"
-                  aria-label="Email"
-                  className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full transition-colors",
-                    isDark
-                      ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
-                      : "border-slate-200 bg-[#EDFAFF] text-[#0F172B] hover:text-slate-900",
-                  )}
+            {/* <div className="flex gap-2.5">
+              <a
+                href="mailto:hello@crediple.com"
+                aria-label="Email"
+                className={cn(
+                  "flex h-9 w-9 items-center justify-center rounded-full transition-colors",
+                  isDark
+                    ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
+                    : "border-slate-200 bg-[#EDFAFF] text-[#0F172B] hover:text-slate-900",
+                )}
+              >
+                <Mail size={14} strokeWidth={1.75} />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/iitil-cipl/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className={cn(
+                  "flex h-9 w-9 items-center justify-center rounded-full  transition-colors",
+                  isDark
+                    ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
+                    : "border-slate-200 bg-[#EDFAFF] text-[#0F172B] hover:text-slate-900",
+                )}
+              >
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden
                 >
-                  <Mail size={14} strokeWidth={1.75} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/iitil-cipl/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full  transition-colors",
-                    isDark
-                      ? "border-white/10 bg-[#0E1628] text-[#C3C6D7] hover:text-white"
-                      : "border-slate-200 bg-[#EDFAFF] text-[#0F172B] hover:text-slate-900",
-                  )}
-                >
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden
-                  >
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </a>
-            </div>
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
+            </div> */}
             <div className="flex flex-wrap gap-x-6 gap-y-2">
               {LEGAL_LINKS.map((link) => (
                 <Link

@@ -311,8 +311,13 @@ html.dark { color-scheme: dark; }
   }
 }
 
+p{
+   font-family: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+}
+
 .font-heading {
-  font-family: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-family: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  font-weight: 600 !important;
 }
 
 .btn-light {
@@ -354,6 +359,10 @@ body::after  { display: none !important; }
 ::-webkit-scrollbar-thumb { background-color: var(--primary); border-radius: 3px; }
 ::selection { background-color: var(--primary); color: #fff; }
 
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
 /* ============================================================
    UTILITY CLASSES
    ============================================================ */

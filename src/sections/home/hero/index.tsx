@@ -40,15 +40,11 @@ export default function Hero() {
   const { heroStagger } = useHomeMotion();
 
   return (
-    <section
-      id="hero"
-      className={`${HERO_SECTION_CLASS} px-0`}
-      style={{ background: isDark ? C.bg : homeLight.bgSoft }}
-    >
+    <section id="hero" className={`${HERO_SECTION_CLASS} px-0`}>
       <HeroWave isDark={isDark} />
 
       {/* YAKA mark + themed tagline */}
-      <div
+      {/* <div
         id="yaka-logo-anchor"
         className={HERO_YAKA_SLOT_CLASS}
       >
@@ -61,26 +57,43 @@ export default function Hero() {
             <YakaBrandMark />
           </motion.div>
         )}
-      </div>
+      </div> */}
 
-      {isDark && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute top-[38%] left-1/2 z-0 h-[min(360px,50vw)] w-[min(640px,100vw)] -translate-x-1/2"
-          style={{
-            background: `radial-gradient(ellipse, ${C.glow} 0%, transparent 70%)`,
-            filter: "blur(50px)",
-          }}
-        />
-      )}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-[38%] left-1/2 z-0 h-[min(360px,50vw)] w-[min(640px,100vw)] -translate-x-1/2"
+        style={{
+          background: `radial-gradient(ellipse, ${C.glow} 0%, transparent 70%)`,
+          filter: "blur(50px)",
+        }}
+      />
+
+      {/* Background video (covers whole hero) */}
+      <video
+        aria-hidden
+        className="absolute inset-0 z-0 w-full h-full object-cover pointer-events-none"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/videos/hero_bg.mp4" type="video/mp4" />
+      </video>
+
+      {/* Subtle overlay to keep text readable over the video */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ zIndex: 5, background: isDark ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.25)" }}
+      />
 
       <motion.div
         variants={heroStagger}
         initial="hidden"
         animate="visible"
-        className={`${HERO_CONTENT_CLASS} max-w-3xl`}
+        className={`${HERO_CONTENT_CLASS} max-w-4xl`}
       >
-        <motion.div
+        {/* <motion.div
           variants={heroItem}
           className="mb-3 w-fit max-w-full sm:mb-6 md:mb-7"
         >
@@ -102,22 +115,22 @@ export default function Hero() {
             />
             <span className="truncate">{hero.badge}</span>
           </span>
-        </motion.div>
+        </motion.div> */}
 
         <motion.h1
           variants={heroItem}
           className="font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
-          style={{ color: isDark ? C.text : homeLight.heading }}
+          style={{ color: "#ffffff" }}
         >
           {hero.titleLine1}
           <br />
-          <span style={getHomeTitleAccentStyle(isDark)}>{hero.titleLine2}</span>
+          {/* <span style={getHomeTitleAccentStyle(isDark)}>{hero.titleLine2}</span> */}
         </motion.h1>
 
         <motion.p
           variants={heroItem}
           className="mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
-          style={{ color: isDark ? C.textMuted : homeLight.muted }}
+          style={{ color: "#FFFFFF"}}
         >
           {hero.description}
         </motion.p>
@@ -128,13 +141,16 @@ export default function Hero() {
         >
           <HashLink
             href={hero.primaryCta.href}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
+            className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
+            // style={{
+            //   background: C.buttonGradient,
+            //   boxShadow: `0 8px 28px ${C.glow}`,
+            // }}
             style={{
-              background: C.buttonGradient,
-              boxShadow: `0 8px 28px ${C.glow}`,
+              background:"rgba(255, 255, 255, 0.16)"
             }}
           >
-            <Play size={13} className="fill-current" />
+            {/* <Play size={13} className="fill-current" /> */}
             {hero.primaryCta.label}
           </HashLink>
         </motion.div>

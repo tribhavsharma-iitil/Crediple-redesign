@@ -4,7 +4,6 @@
  */
 
 import { homeColors } from "@/content/home";
-import coreValues3 from "@/assets/home/core_values_3.jpg";
 
 /** PDF-accurate text + shared brand colors */
 export const aboutColors = {
@@ -35,12 +34,11 @@ export const aboutColors = {
 
 export const aboutContent = {
   hero: {
-    titleLine1: "We Build Systems that",
-    titleAccent: "Outlast Trends.",
+    titleLine1: "We build systems that",
+    titleAccent: "outlast trends",
     description:
       "Crediple builds scalable technology systems for the industries shaping the future.",
     primaryCta: { label: "See What We've Built", href: "/brands/#brand-01" },
-    secondaryCta: { label: "Get in Touch", href: "/contact/#contact-form" },
   },
 
   trust: {
@@ -52,59 +50,61 @@ export const aboutContent = {
     title: "Our Core",
     headline: "A System Builder Across Industries.",
     body: "We rebuild traditional business models as scalable, technology-driven systems. Crediple's approach is consistent across industries — bring structure and intelligence to fragmented processes.",
-    accent:
-      "Our goal is to create a systemic infrastructure that powers future industries.",
-    image: coreValues3,
+    subtitle: "Our goal is to create a systemic infrastructure that powers future industries.",
   },
 
   philosophy: {
-    titleBefore: "Our Operating",
-    titleAccent: "Philosophy",
-    intro: "Before we enter any industry, we test it against three questions.",
-    principles: [
-      {
-        number: "01",
-        text: "Can we standardise the workflow?",
-      },
-      {
-        number: "02",
-        text: "Can technology scale it?",
-      },
-      {
-        number: "03",
-        text: "Can we improve decision-making?",
-      },
-    ],
-    verdict: "If the answer is yes, we build it.",
+    titleBefore: "Our Operating Philosophy",
+    titleAccent: "",
+    subtitle: "Every opportunity must pass three questions.",
+    banner: "Built only when all three align.",
     pillars: [
-      { number: "01", label: "Transparent Systems" },
-      { number: "02", label: "Scalable Infrastructure" },
-      { number: "03", label: "Industry-Ready Frameworks" },
-      { number: "04", label: "Compounding Ecosystem Value" },
+      {
+        label: "Transparent",
+        title: "Transparent Systems",
+        desc: "Create objective workflows with clarity, transparency, and immutable audit logs across operations.",
+      },
+      {
+        label: "Scale",
+        title: "Scalable Infrastructure",
+        desc: "Build technology that adjusts to growing business needs without added complexity or engineering.",
+      },
+      {
+        label: "Optimize",
+        title: "Scalable Frameworks",
+        desc: "Deployment frameworks built and tested for repeatable delivery at any complexity.",
+      },
+      {
+        label: "Compound",
+        title: "Ecosystem Growth",
+        desc: "Interconnected solutions that compound and grow one another over time.",
+      },
     ],
   },
 
   future: {
-    titleBefore: "What Comes",
-    titleAccent: "Next",
-    headline: "The next phase is a more connected ecosystem.",
+    titleBefore: "Building the Next Connected Ecosystem",
+    titleAccent: "",
     body: "We're building toward a point where different industries talk to each other seamlessly — healthcare, finance, real estate, legal, and data systems.",
-    primaryCta: { label: "Explore What's Next", href: "/solutions" },
-    secondaryCta: { label: "Know More", href: "/brands" },
+    primaryCta: { label: "Explore what's next", href: "/solutions" },
     items: [
       {
+        stat: "92%",
         title: "Healthcare Systems",
         desc: "Where clinical operations meet legal-grade documentation and compliance.",
       },
       {
+        stat: "87%",
         title: "Legal Practice",
         desc: "Where casework and documentation meet structured data systems and automation.",
       },
       {
-        title: "Finance",
+        stat: "95%",
+        title: "Financial Intelligence",
         desc: "Where lending decisions meet real-time data intelligence and predictive analytics.",
       },
       {
+        stat: "98%",
         title: "Data Intelligence",
         desc: "Where clinical decision-making meets enterprise-grade data intelligence and analytics.",
       },

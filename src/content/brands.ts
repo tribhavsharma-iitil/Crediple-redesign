@@ -36,8 +36,8 @@ export const brandsContent = {
     titleLine1: "Tailored Systems for",
     titleAccent: "Every Sector.",
     description:
-      "Every Crediple brand tackles a different industry problem, all with the same rigor and intent.",
-    descriptionLine2: "We don't follow; we set the standard.",
+      "Every crediple brand tackles a different industry problem, all with the same rigor and intent. We don’t follow, we set the standard.",
+    descriptionLine2: "",
     secondaryCta: { label: "Contact Us", href: "/contact/#contact-form" },
   },
 

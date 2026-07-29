@@ -18,17 +18,10 @@ import brand_icon_dark_4 from "@/assets/brand_icon_dark_4.png";
 import brand_icon_dark_5 from "@/assets/brand_icon_dark_5.png";
 import brand_icon_dark_6 from "@/assets/brand_icon_dark_6.png";
 import brand_icon_dark_7 from "@/assets/brand_icon_dark_7.png";
+import testimonial_1 from "@/assets/testimonial_1.png";
+import testimonial_2 from "@/assets/testimonial_2.png";
+import testimonial_3 from "@/assets/testimonial_3.png";
 
-import aboutDesk from "@/assets/home/about-desk.jpg";
-import aboutCircuit from "@/assets/home/about-circuit.jpg";
-import coreValues1 from "@/assets/home/core_values_1.jpg";
-import coreValues2 from "@/assets/home/core_values_2.png";
-import coreValues3 from "@/assets/home/core_values_3.jpg";
-import coreValues4 from "@/assets/home/core_values_4.jpg";
-import companyHistory1 from "@/assets/home/company_history_1.jpg";
-import companyHistory2 from "@/assets/home/company_history_2.png";
-import companyHistory3 from "@/assets/home/company_history_3.png";
-import companyHistory4 from "@/assets/home/company_history_4.png";
 import whoWeServe1 from "@/assets/home/who_we_serve_1.jpg";
 import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
 import whoWeServe3 from "@/assets/home/who_we_serve_3.jpg";
@@ -38,9 +31,9 @@ import whoWeServe6 from "@/assets/home/who_we_serve_6.jpg";
 
 /** Exact colors from Home.pdf / Figma */
 export const homeColors = {
-  bg: "#071122",
+  bg: "#000000",
   bgDeep: "#000818",
-  bgSection: "#081028",
+  bgSection: "#000000",
   bgCard: "#121C33",
   bgFooter: "#09101E",
   accent: "#408EF2",
@@ -49,6 +42,7 @@ export const homeColors = {
   accentSoft: "#2F80ED",
   /** Primary button linear gradient (Figma) */
   buttonFrom: "#1550B4",
+  bgButton: "#0047AB",
   buttonTo: "#2F80ED",
   buttonGradient: "linear-gradient(180deg, #1550B4 0%, #2F80ED 100%)",
   /** Title accent word gradient (Figma) — e.g. "Us" in About Us */
@@ -85,11 +79,11 @@ export const yakaTaglineClassName =
 /** Light-theme section tokens from Home (1).pdf */
 export const homeLight = {
   bg: "#F8FAFC",
-  bgAlt: "#FFFFFF",
+  bgAlt: "#FBFBFB",
   bgSoft: "#F6FAFF",
   heading: "#0F172A",
   body: "#475569",
-  muted: "#64748B",
+  muted: "#454545",
   border: "#E2E8F0",
   card: "#FFFFFF",
   accent: "#2F80ED",
@@ -98,16 +92,16 @@ export const homeLight = {
 export const homeContent = {
   hero: {
     badge: "Unified Digital Ecosystem",
-    titleLine1: "One Holding.",
-    titleLine2: "Multiple Innovations.",
+    titleLine1: "Tailored systems for every sector, every business.",
+    titleLine2: "",
     description:
       "Crediple unifies innovative companies across healthcare, finance, legal technology, education, and AI into one powerful digital ecosystem.",
     primaryCta: { label: "Explore Brands", href: "/brands/#brand-01" },
   },
 
   ecosystem: {
-    titleBefore: "Our",
-    titleAccent: "Ecosystem",
+    titleBefore: "Our Ecosystem",
+    titleAccent: "",
     subtitle: "The power of diverse industries, unified by data.",
     brands: [
       {
@@ -115,7 +109,6 @@ export const homeContent = {
         description:
           "Data intelligence ecosystem transforming fragmented business data into strategic decision-making systems.",
         href: "https://www.iitil.com",
-        cta: "Explore IITIL",
         icon: brand_icon_4,
         iconDark: brand_icon_dark_4,
         clickable: true,
@@ -125,7 +118,6 @@ export const homeContent = {
         description:
           "Your food, your way. Explore top restaurants, track orders in real time, and enjoy fast, reliable delivery to your doorstep.",
         href: "https://eatskart.com/",
-        cta: "Explore eatskart",
         icon: brand_icon_7,
         iconDark: brand_icon_dark_7,
         clickable: true,
@@ -135,7 +127,6 @@ export const homeContent = {
         description:
           "Comprehensive HRMS solutions streamlining workforce management, payroll, attendance, and organisational workflows.",
         href: "https://orgatry.com/",
-        cta: "Explore Orgatry",
         icon: brand_icon_5,
         iconDark: brand_icon_dark_5,
         clickable: true,
@@ -145,7 +136,6 @@ export const homeContent = {
         description:
           "Healthcare ecosystem focused on digital patient acquisition, healthcare visibility, and modern clinical growth systems.",
         href: "https://mydoctorcapsule.com/",
-        cta: "Explore My Doctor Capsule",
         icon: brand_icon_1,
         iconDark: brand_icon_dark_1,
         clickable: true,
@@ -155,7 +145,6 @@ export const homeContent = {
         description:
           "Structured financial intelligence and lending ecosystem simplifying credit analysis and borrower journeys.",
         href: "https://loankonnekt.com/",
-        cta: "Explore Loan Konnekt",
         icon: brand_icon_2,
         iconDark: brand_icon_dark_2,
         clickable: true,
@@ -165,7 +154,6 @@ export const homeContent = {
         description:
           "LegalTech platform focused on structured legal workflows, documentation automation, and digital legal access.",
         href: "https://lawvix.com/",
-        cta: "Explore Lawvix",
         icon: brand_icon_3,
         iconDark: brand_icon_dark_3,
         clickable: true,
@@ -175,7 +163,6 @@ export const homeContent = {
         description:
           "Intelligent property platform connecting buyers, sellers, and agents with data-driven real estate insights.",
         href: "https://propertizor.com/",
-        cta: "Explore Propertizor",
         icon: brand_icon_6,
         iconDark: brand_icon_dark_6,
         clickable: true,
@@ -184,69 +171,62 @@ export const homeContent = {
   },
 
   about: {
-    titleBefore: "About",
-    titleAccent: "Us",
+    titleBefore: "About Us",
+    titleAccent: "",
+    subtitle: "The power of diverse industries, unified by data.",
     mission: {
-      title: "MISSION",
-      text: "To engineer the digital infrastructure of tomorrow. Crediple exists to bridge the gap between complex industry challenges and streamlined technological solutions. By nurturing a powerhouse portfolio of fintech, healthtech and legal platforms, we dismantle barriers to efficiency and empower professionals to operate at their absolute peak.",
+      label: "MISSION",
+      title: "The Impact We Create",
+      text: "To transform complex business challenges into seamless digital experiences through innovative technology, intelligent automation, and customer-first solutions.",
     },
     vision: {
-      title: "VISION",
-      text: "To become the definitive global benchmark for multi sector digital transformation. Our vision is a future where the Crediple ecosystem is the invisible engine driving professional success across every major industry, turning high level complexity into accessible, high performance growth.",
+      label: "VISION",
+      title: "Inspired by Tomorrow",
+      text: "To become the world's most trusted digital innovation ecosystem, empowering businesses to grow smarter, innovate faster, and scale without limits through intelligent, future-ready technology.",
     },
-    missionImage: aboutDesk,
-    visionImage: aboutCircuit,
   },
 
   values: {
-    titleBefore: "Our Core",
-    titleAccent: "Values",
+    titleBefore: "The Values Behind Every Innovation",
+    titleAccent: "",
+    subtitle:
+      "The values that define who we are, how we work, and the impact we create.",
+    cta: { label: "Explore", href: "/about" },
     items: [
       {
-        number: "01",
+        number: "1",
         title: "Architectural Excellence",
         desc: "We don't just build businesses; we build ecosystems. Every solution under the Crediple umbrella must be scalable, secure and sophisticated.",
-        image: coreValues2,
       },
       {
-        number: "02",
+        number: "2",
         title: "Uncompromising Integrity",
         desc: "In health, finance, law, data and technology, trust is our primary currency. We lead with transparency and professional rigor in every transaction.",
-        image: coreValues1,
       },
       {
-        number: "03",
+        number: "3",
         title: "Strategic Synergy",
         desc: "We believe the whole is greater than the sum of its parts. We leverage cross industry insights to create a unique competitive advantage for our partners.",
-        image: coreValues4,
       },
       {
-        number: "04",
+        number: "4",
         title: "Relentless Innovation",
         desc: "We reject the status quo. We are committed to constant iteration, ensuring our SaaS platforms remain the gold standard in a rapidly shifting global economy.",
-        image: coreValues3,
       },
     ],
   },
 
   timeline: {
-    titleBefore: "Company",
-    titleAccent: "History",
-    images: [
-      companyHistory2,
-      companyHistory3,
-      companyHistory4,
-      companyHistory1,
-    ],
+    titleBefore: "The road so far",
+    titleAccent: "",
+    subtitle: "Our journey",
     items: [
       {
         period: "2018-2019",
         tag: "STARTED IN",
         title: "Foundation of Crediple",
         highlights: [
-          "Crediple incorporated to simplify financial access for Indian SMEs and individuals",
-          "Core founding team assembled across FinTech, LegalTech & HealthTech domains",
-          "Seed funding secured; operations commenced from Udaipur, Rajasthan",
+          "Founded Crediple to simplify financial access for Indian SMEs and individuals with a strong cross-domain leadership team.",
         ],
       },
       {
@@ -254,9 +234,7 @@ export const homeContent = {
         tag: "SUCCESSFULLY DONE",
         title: "Healthcare service and Finances and digital Brands",
         highlights: [
-          "Deep research driven development of credit improvement methodologies",
-          "Structuring service frameworks for credit audit, correction, and score enhancement",
-          "Building the initial operational blueprint and service lifecycle design",
+          "Developed research-driven credit solutions, operational frameworks, and service lifecycle processes.",
         ],
       },
       {
@@ -264,9 +242,7 @@ export const homeContent = {
         tag: "FUTURE READY TECHNOLOGIES",
         title: "Focused on Future ready solution",
         highlights: [
-          "Transition from concept to a structured credit services platform ecosystem",
-          "Service lines expansion of credit audit, correction, score improvement, and optimisation",
-          "Development of training frameworks for credit partners and internal teams",
+          "Expanded into a structured credit services platform with enhanced offerings and partner training programs.",
         ],
       },
       {
@@ -274,17 +250,17 @@ export const homeContent = {
         tag: "PRESENT",
         title: "Service across India",
         highlights: [
-          "6 years of primary market research across multiple verticals, channels, and customer segments",
-          "Development of a multi domain enterprise ecosystem across health, finance, law, technology, data, HR, and property management",
-          "Phased launch of multiple brands through structured and controlled market entry",
+          "Built a multi-domain enterprise ecosystem and launched multiple brands through strategic market expansion.",
         ],
       },
     ],
   },
 
   serve: {
-    titleBefore: "Who We",
-    titleAccent: "Serve",
+    titleBefore: "Solutions for Every Sector",
+    titleAccent: "",
+    subtitle:
+      "Industry specific solutions that drive efficiency and sustainable growth.",
     items: [
       {
         title: "Healthcare Professionals",
@@ -318,45 +294,50 @@ export const homeContent = {
         href: "/solutions",
         image: whoWeServe5,
       },
-      {
-        title: "Education Institutions",
-        heading: "Reinventing learning systems",
-        desc: "From edtech platforms to traditional institutions, we build adaptive learning systems and administrative tools that handle thousands of users seamlessly.",
-        short: "Reinventing learning systems for institutions at scale...",
-        href: "/solutions",
-        image: whoWeServe6,
-      },
-      {
-        title: "Tech Startups",
-        heading: "Launch faster, scale smarter",
-        desc: "Early-stage and growth-stage teams plug into our ecosystem to access shared infrastructure, reducing time-to-market without sacrificing quality.",
-        short: "Launch faster, scale smarter with shared infrastructure...",
-        href: "/solutions",
-        image: whoWeServe2,
-      },
+      // {
+      //   title: "Education Institutions",
+      //   heading: "Reinventing learning systems",
+      //   desc: "From edtech platforms to traditional institutions, we build adaptive learning systems and administrative tools that handle thousands of users seamlessly.",
+      //   short: "Reinventing learning systems for institutions at scale...",
+      //   href: "/solutions",
+      //   image: whoWeServe6,
+      // },
+      // {
+      //   title: "Tech Startups",
+      //   heading: "Launch faster, scale smarter",
+      //   desc: "Early-stage and growth-stage teams plug into our ecosystem to access shared infrastructure, reducing time-to-market without sacrificing quality.",
+      //   short: "Launch faster, scale smarter with shared infrastructure...",
+      //   href: "/solutions",
+      //   image: whoWeServe2,
+      // },
     ],
   },
 
   testimonials: {
-    titleBefore: "What Our",
-    titleAccent: "Clients Say",
+    title: "What industry leaders think about us",
     subtitle:
-      "TRUSTED BY PROFESSIONALS ACROSS HEALTHCARE, FINANCE, LEGAL AND TECH.",
+      "From startups to large enterprises, we build scalable digital solutions that power growth and innovation.",
     items: [
       {
         name: "Rajiv Sharma",
         role: "CEO",
+        company: "MediTech Solutions",
         text: "Crediple transformed our entire clinical workflow. What used to take days now takes hours. Their infrastructure is rock solid and the support team genuinely understands enterprise healthcare needs.",
+        image: testimonial_1,
       },
       {
         name: "Priya Nair",
         role: "CFO",
+        company: "FinVault India",
         text: "We integrated Crediple's fintech platform across 3 cities in under a month. The reconciliation automation alone saved us 40 hours a week. Truly a game changer for our operations.",
+        image: testimonial_2,
       },
       {
         name: "Arjun Mehta",
         role: "Founder",
+        company: "LexCore",
         text: "Our firm was drowning in paperwork. Crediple built us a case management system that feels like it was made specifically for us. Client satisfaction has never been higher.",
+        image: testimonial_3,
       },
     ],
   },

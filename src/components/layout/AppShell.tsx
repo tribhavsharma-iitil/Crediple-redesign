@@ -7,6 +7,7 @@ import Loader from "@/components/animations/Loader";
 import FloatingLogo from "@/components/animations/FloatingLogo";
 import ScrollButton from "@/components/ui/ScrollButton";
 import Navbar from "@/components/layout/Navbar";
+import CtaBanner from "@/components/layout/CtaBanner";
 import Footer from "@/components/layout/Footer";
 import CookieConsent from "@/components/cookies/CookieConsent";
 import {
@@ -107,6 +108,7 @@ export default function AppShell({
       >
         <Navbar />
         <main className="flex-1">{children}</main>
+        <CtaBanner />
         <Footer />
       </motion.div>
 

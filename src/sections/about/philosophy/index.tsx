@@ -1,327 +1,101 @@
 "use client";
 
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type RefObject,
-} from "react";
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useSpring,
-  type MotionValue,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { aboutContent, aboutColors } from "@/content/about";
 import { homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
-import {
-  homeFadeUp,
-  homeFadeLeft,
-} from "@/lib/animations";
+import { homeFadeUp, homeFadeLeft } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
+import weBuildBg from "@/assets/about/we_build_bg.png";
+
 
 const { philosophy } = aboutContent;
 const C = aboutColors;
 
-/* Two arches between boxes only — anchors sit at the sides, never through box centers.
-   Short mid segment under 02 is covered by the box. */
-const DESKTOP_PATH =
-  "M 22 28 C 30 8, 37 8, 45 28 L 55 28 C 63 8, 70 8, 78 28";
-
-function stepFromProgress(progress: number) {
-  if (progress < 0.33) return 0;
-  if (progress < 0.66) return 1;
-  return 2;
-}
-
-function usePathPoint(
-  pathRef: RefObject<SVGPathElement | null>,
-  progress: MotionValue<number>,
-) {
-  const [pos, setPos] = useState({ x: 22, y: 28 });
-
-  const update = (latest: number) => {
-    const path = pathRef.current;
-    if (!path) return;
-    const length = path.getTotalLength();
-    if (!length) return;
-    const point = path.getPointAtLength(
-      Math.max(0, Math.min(1, latest)) * length,
-    );
-    setPos({ x: point.x, y: point.y });
-  };
-
-  useLayoutEffect(() => {
-    update(progress.get());
-  }, [pathRef, progress]);
-
-  useMotionValueEvent(progress, "change", update);
-
-  return pos;
-}
-
 export default function AboutPhilosophy() {
   const { isDark } = useTheme();
   const { stagger, viewport } = useHomeMotion();
-  const trackRef = useRef<HTMLDivElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
-  const [progressValue, setProgressValue] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start 0.8", "end 0.4"],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 28,
-    mass: 0.4,
-  });
-
-  const desktopDot = usePathPoint(pathRef, smoothProgress);
-
-  useMotionValueEvent(smoothProgress, "change", (latest) => {
-    setActiveStep(stepFromProgress(latest));
-    setProgressValue(latest);
-  });
-
-  useEffect(() => {
-    const latest = smoothProgress.get();
-    setActiveStep(stepFromProgress(latest));
-    setProgressValue(latest);
-  }, [smoothProgress]);
 
   return (
     <section
       id="philosophy"
-      className="relative overflow-hidden section-py"
-      style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
+      className="relative overflow-hidden section-py bg-white dark:bg-black"
     >
-      <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
-        <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10">
-          <h2
-            className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
-            style={{ color: isDark ? C.textHeading : "#0F172A" }}
-          >
-            {philosophy.titleBefore}{" "}
-            <span style={homeTitleAccentStyle}>{philosophy.titleAccent}</span>
-          </h2>
-        </HomeReveal>
-
-        <HomeReveal variants={homeFadeUp}>
-          <div
-            className="mb-5 rounded-[22px] border px-4 py-8 sm:mb-6 sm:px-10 sm:py-14 md:px-14"
-            style={{
-              background: isDark ? "#0B1324" : "#FFFFFF",
-              borderColor: isDark ? "rgba(248,248,248,0.08)" : "#E2E8F0",
-            }}
-          >
-            <p
-              className="mb-12 text-center text-[10px] font-semibold uppercase tracking-[0.18em] sm:mb-14 sm:text-[11px]"
-              style={{ color: isDark ? "#707880" : "#64748B" }}
+      <div className="">
+        <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
+          <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10">
+            <h2
+              className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+              style={{ color: isDark ? '#FFFFFF' : "#0F172A" }}
             >
-              {philosophy.intro}
-            </p>
-
-            <div ref={trackRef} className="mx-auto mb-12 max-w-4xl sm:mb-14">
-              {/* Mobile stacked path */}
-              <div className="flex flex-col items-center gap-0 sm:hidden">
-                {philosophy.principles.map((item, i) => {
-                  const isActive = activeStep === i;
-                  const segment = progressValue * 3 - i;
-                  const dotInSegment = segment >= 0 && segment <= 1;
-
-                  return (
-                    <div
-                      key={`m-${item.number}`}
-                      className="flex w-full flex-col items-center text-center"
-                    >
-                      <motion.div
-                        animate={{
-                          boxShadow: isActive
-                            ? "0 0 0 4px rgba(47,128,237,0.25), 0 0 28px rgba(47,128,237,0.45)"
-                            : "0 4px 12px rgba(15,23,42,0.08)",
-                          scale: isActive ? 1.06 : 1,
-                        }}
-                        transition={{ duration: 0.35 }}
-                        className="relative z-10 flex h-11 w-11 items-center justify-center rounded-[10px] border border-[#CBD5E1] bg-[#F8FAFC] text-[13px] font-bold text-[#0F172A] dark:border-[rgba(176,200,248,0.35)] dark:bg-[#0E1628] dark:text-white"
-                      >
-                        {item.number}
-                      </motion.div>
-                      <p className="mt-3 max-w-[260px] text-sm font-semibold leading-snug text-[#0F172A] dark:text-[#F0F0F0]">
-                        {item.text}
-                      </p>
-                      {i < philosophy.principles.length - 1 && (
-                        <div aria-hidden className="relative my-4 h-10 w-px">
-                          <div className="absolute inset-0 border-l border-dashed border-[rgba(47,128,237,0.4)] dark:border-[rgba(200,220,255,0.55)]" />
-                          {dotInSegment && (
-                            <span
-                              className="absolute left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full"
-                              style={{
-                                top: `${segment * 100}%`,
-                                background: "#5FA8FF",
-                                boxShadow: "0 0 10px rgba(95,168,255,0.95)",
-                              }}
-                            />
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Desktop wave path */}
-              <div className="hidden sm:block">
-                <div className="relative h-16 md:h-20">
-                  <svg
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-visible"
-                    viewBox="0 0 100 56"
-                    fill="none"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d={DESKTOP_PATH}
-                      stroke={
-                        isDark
-                          ? "rgba(200, 220, 255, 0.4)"
-                          : "rgba(47, 128, 237, 0.35)"
-                      }
-                      strokeWidth="1.5"
-                      strokeDasharray="3.5 5.5"
-                      strokeLinecap="round"
-                      vectorEffect="non-scaling-stroke"
-                    />
-                    <motion.path
-                      d={DESKTOP_PATH}
-                      stroke="#5FA8FF"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      vectorEffect="non-scaling-stroke"
-                      style={{ pathLength: smoothProgress }}
-                    />
-                    <path
-                      ref={pathRef}
-                      d={DESKTOP_PATH}
-                      fill="none"
-                      stroke="transparent"
-                      strokeWidth="1"
-                    />
-                  </svg>
-
-                  {/* Dot rides the dashed path beside the boxes (sides only) */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute z-[15] block h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
-                    style={{
-                      left: `${desktopDot.x}%`,
-                      top: `${(desktopDot.y / 56) * 100}%`,
-                      background: "#5FA8FF",
-                      boxShadow:
-                        "0 0 0 5px rgba(95,168,255,0.22), 0 0 16px rgba(95,168,255,0.95)",
-                    }}
-                  />
-
-                  <div className="relative z-20 grid h-full grid-cols-3 items-center">
-                    {philosophy.principles.map((item, i) => {
-                      const isActive = activeStep === i;
-                      return (
-                        <div
-                          key={`d-${item.number}`}
-                          className="flex justify-center"
-                        >
-                          <motion.div
-                            animate={{
-                              boxShadow: isActive
-                                ? isDark
-                                  ? "0 0 0 4px rgba(47,128,237,0.28), 0 0 28px rgba(47,128,237,0.5)"
-                                  : "0 0 0 4px rgba(47,128,237,0.18), 0 8px 20px rgba(47,128,237,0.2)"
-                                : isDark
-                                  ? "0 0 24px rgba(47,128,237,0.2)"
-                                  : "0 4px 12px rgba(15,23,42,0.08)",
-                              scale: isActive ? 1.08 : 1,
-                            }}
-                            transition={{ duration: 0.35 }}
-                            className="relative flex h-11 w-11 items-center justify-center rounded-[10px] border border-[#CBD5E1] bg-[#F8FAFC] text-[13px] font-bold text-[#0F172A] dark:border-[rgba(176,200,248,0.35)] dark:bg-[#0E1628] dark:text-white"
-                          >
-                            {item.number}
-                          </motion.div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="mt-5 grid grid-cols-3 gap-4">
-                  {philosophy.principles.map((item, i) => (
-                    <motion.p
-                      key={`dl-${item.number}`}
-                      animate={{ opacity: activeStep === i ? 1 : 0.55 }}
-                      className="px-1 text-center text-sm font-semibold leading-snug text-[#0F172A] dark:text-[#F0F0F0]"
-                    >
-                      {item.text}
-                    </motion.p>
-                  ))}
-                </div>
-              </div>
-            </div>
-
+              {philosophy.titleBefore}{" "}
+              <span style={homeTitleAccentStyle}>{philosophy.titleAccent}</span>
+            </h2>
             <p
-              className="text-center text-sm font-bold uppercase tracking-[0.08em] sm:text-base"
-              style={{ color: isDark ? C.textAccentSoft : C.accentSoft }}
+              className="mt-2 text-sm sm:text-base"
+              style={{ color: isDark ? '#FFFFFF' : "#64748B" }}
             >
-              {philosophy.verdict}
+              {philosophy.subtitle}
             </p>
-          </div>
-        </HomeReveal>
+          </HomeReveal>
+        </div>
+
 
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4"
+          className="mb-10 grid grid-cols-1 gap-px overflow-hidden border sm:mb-12 sm:grid-cols-2 lg:grid-cols-4"
+          style={{
+            background: isDark ? C.border : "#E2E8F0",
+            borderColor: isDark ? '#232323' : "#E2E8F0",
+          }}
         >
           {philosophy.pillars.map((item) => (
-            <HomeItem key={item.number} variants={homeFadeUp}>
+            <HomeItem key={item.title} variants={homeFadeUp}>
               <div
-                className="group relative overflow-hidden rounded-2xl border px-5 py-5 sm:px-6 sm:py-6"
-                style={{
-                  background: isDark ? "#0B1324" : "#FFFFFF",
-                  borderColor: isDark
-                    ? "rgba(248,248,248,0.08)"
-                    : "#E2E8F0",
-                }}
+                className="h-full p-6 sm:p-7"
+                style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
               >
                 <span
-                  aria-hidden
-                  className="absolute inset-y-0 left-0 w-[3px] rounded-l-2xl opacity-80 transition-opacity group-hover:opacity-100"
-                  style={{ background: C.buttonGradient }}
-                />
-                <div className="flex items-baseline gap-4 pl-1">
-                  <span
-                    className="font-heading shrink-0 text-[11px] font-bold tracking-[0.14em] tabular-nums sm:text-xs"
-                    style={{ color: isDark ? C.textAccentSoft : C.accentStrong }}
-                  >
-                    {item.number}
-                  </span>
-                  <p
-                    className="font-heading min-w-0 text-[15px] font-semibold leading-snug tracking-tight sm:text-base"
-                    style={{ color: isDark ? C.textHeading : "#0F172A" }}
-                  >
-                    {item.label}
-                  </p>
-                </div>
+                  className="text-xs font-bold tracking-[0.14em] uppercase"
+                  style={{ color: isDark ? C.textAccentSoft : C.accentStrong }}
+                >
+                  {item.label}
+                </span>
+                <h3
+                  className="font-heading mt-2 mb-2 text-base font-bold tracking-tight sm:text-lg"
+                  style={{ color: isDark ? '#ffffff' : "#0F172A" }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: isDark ? '#FFFFFFCC' : "#64748B" }}
+                >
+                  {item.desc}
+                </p>
               </div>
             </HomeItem>
           ))}
         </motion.div>
+
+        <HomeReveal variants={homeFadeUp}
+        >
+          <div
+            className="px-6 py-4 text-center"
+            style={{
+              background:
+                `url(${weBuildBg.src}) center/cover no-repeat`,
+            }}
+          >
+            <p className="text-lg font-black tracking-tight text-[#FFFFFFCC] font-semibold">
+              {philosophy.banner}
+            </p>
+          </div>
+        </HomeReveal>
       </div>
     </section>
   );

@@ -6,11 +6,7 @@ import { aboutContent, aboutColors } from "@/content/about";
 import { homeTitleAccentStyle } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
-import {
-  homeFadeLeft,
-  homeFadeRight,
-  homeFadeUp,
-} from "@/lib/animations";
+import { homeFadeUp } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 const { future } = aboutContent;
@@ -26,99 +22,76 @@ export default function AboutFuture() {
       className="relative section-py overflow-hidden"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
-      <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          <HomeReveal stagger>
-            <HomeItem variants={homeFadeLeft}>
-              <h2
-                className="font-heading text-2xl font-black sm:text-3xl md:text-4xl lg:text-5xl tracking-tight mb-6"
-                style={{ color: isDark ? C.textHeading : "#0F172A" }}
-              >
-                {future.titleBefore}{" "}
-                <span style={homeTitleAccentStyle}>
-                  {future.titleAccent}
-                </span>
-              </h2>
+      <div className="w-full max-w-[1260px] mx-auto px-4 text-center sm:px-6">
+        <HomeReveal variants={homeFadeUp}>
+          <h2
+            className="font-heading text-2xl font-black sm:text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4 text-align-center md:max-w-3xl md:mx-auto"
+            style={{ color: isDark ? '#ffffff' : "#0F172A" }}
+          >
+            {future.titleBefore}{" "}
+            <span style={homeTitleAccentStyle}>{future.titleAccent}</span>
+          </h2>
 
-              <p
-                className="font-heading font-bold text-xl sm:text-2xl md:text-[1.75rem] leading-[1.35] mb-5"
-                style={{ color: isDark ? C.textHeading : "#0F172A" }}
-              >
-                {future.headline}
-              </p>
+          <p
+            className="mx-auto max-w-2xl text-sm md:text-[15px] leading-relaxed mb-10 sm:mb-12"
+            style={{ color: isDark ? '#ffffff' : "#64748B" }}
+          >
+            {future.body}
+          </p>
+        </HomeReveal>
 
-              <p
-                className="text-sm md:text-[15px] leading-relaxed mb-8 max-w-md"
-                style={{ color: isDark ? C.textHeading : "#64748B" }}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+          className="mb-10 grid grid-cols-2 items-start gap-4 sm:mb-12 sm:gap-6 lg:grid-cols-4"
+        >
+          {future.items.map((item, i) => (
+            <HomeItem
+              key={item.title}
+              variants={homeFadeUp}
+              className={i % 2 === 1 ? "mt-8 sm:mt-14" : ""}
+            >
+              <div
+                className=" border p-5 text-left sm:p-6"
+                style={{
+                  background: isDark ? "transparent" : "#F8FAFC",
+                  borderColor: isDark ? "#232323" : "#E2E8F0",
+                }}
               >
-                {future.body}
-              </p>
-
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link
-                  href={future.primaryCta.href}
-                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-full text-white text-sm font-semibold no-underline transition-opacity hover:opacity-90"
-                  style={{
-                    background: C.buttonGradient,
-                    boxShadow: `0 8px 24px ${C.glow}`,
-                  }}
+                <p
+                  className="font-black tracking-tight sm:text-4xl mb-8"
+                  style={{ color: isDark ? '#ffffff' : '#232323' }}
                 >
-                  {future.primaryCta.label}
-                </Link>
-                <Link
-                  href={future.secondaryCta.href}
-                  className="inline-flex items-center justify-center px-8 py-2.5 rounded-full text-sm font-semibold no-underline border transition-opacity hover:opacity-90"
-                  style={{
-                    borderColor: isDark
-                      ? "rgba(248,248,248,0.28)"
-                      : "rgba(15,23,42,0.15)",
-                    color: isDark ? C.text : "#0F172A",
-                  }}
+                  {item.stat}
+                </p>
+                <p
+                  className="font-heading mt-2 mb-1.5 text-lg font-bold"
+                  style={{ color: isDark ? '#ffffff' : "#0F172A" }}
                 >
-                  {future.secondaryCta.label}
-                </Link>
+                  {item.title}
+                </p>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: isDark ? '#ffffff' : "#454545" }}
+                >
+                  {item.desc}
+                </p>
               </div>
             </HomeItem>
-          </HomeReveal>
+          ))}
+        </motion.div>
 
-          <HomeReveal variants={homeFadeRight} delay={0.1}>
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-x-10"
-            >
-              {future.items.map((item) => (
-                <HomeItem key={item.title} variants={homeFadeUp}>
-                  <div
-                    className="py-5 border-b"
-                    style={{
-                      borderColor: isDark
-                        ? "rgba(248,248,248,0.12)"
-                        : "#E2E8F0",
-                    }}
-                  >
-                    <p
-                      className="font-heading font-bold text-[15px] mb-2"
-                      style={{ color: isDark ? C.textHeading : "#0F172A" }}
-                    >
-                      {item.title}
-                    </p>
-                    <p
-                      className="text-xs leading-relaxed"
-                      style={{
-                        color: isDark ? C.textClosingMuted : "#64748B",
-                      }}
-                    >
-                      {item.desc}
-                    </p>
-                  </div>
-                </HomeItem>
-              ))}
-            </motion.div>
-          </HomeReveal>
-        </div>
+        <HomeReveal variants={homeFadeUp}>
+          <Link
+            href={future.primaryCta.href}
+            className="inline-flex h-10 items-center justify-center px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
+            style={{ background: "#0047AB" }}
+          >
+            {future.primaryCta.label}
+          </Link>
+        </HomeReveal>
       </div>
     </section>
   );
