@@ -49,7 +49,7 @@ export default function ContactHero() {
   } as const;
 
   const fieldClass =
-    "w-full px-4 text-sm outline-none transition-[border-color,box-shadow] placeholder:text-[#8A93A6] focus:border-[#2F80ED]/55 focus:ring-2 focus:ring-[#2F80ED]/15 !bg-transparent";
+    "w-full px-4 text-sm !text-white outline-none transition-[border-color,box-shadow] placeholder:text-[#8A93A6] focus:border-[#2F80ED]/55 focus:ring-2 focus:ring-[#2F80ED]/15 !bg-transparent";
 
   const labelClass = "mb-1.5 block text-xs font-medium";
 
