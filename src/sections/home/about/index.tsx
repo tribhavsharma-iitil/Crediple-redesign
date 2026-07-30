@@ -34,7 +34,7 @@ export default function About() {
       <section
         id="about"
         className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
-        style={{ background: isDark ? C.bg : '#FFFFFF' }}
+        style={{ background: isDark ? '#000000' : '#FFFFFF' }}
       >
         <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
           <HomeReveal variants={aboutCardReveal}>

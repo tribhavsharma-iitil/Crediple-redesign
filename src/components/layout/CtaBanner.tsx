@@ -16,7 +16,7 @@ export default function CtaBanner() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: isDark ? "#050B18" : "#0047AB" }}
+      style={{ background: isDark ? "#000000" : "#0047AB" }}
     >
       <div className="mx-auto flex w-full max-w-[1260px] flex-col items-start gap-6 px-4 py-10 sm:px-6 sm:py-12 md:flex-row md:items-center md:justify-between">
         <HomeReveal variants={homeFadeUp}>

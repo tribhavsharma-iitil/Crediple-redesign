@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -21,9 +22,76 @@ export default function SolutionsDomains() {
   const { isDark } = useTheme();
   const { stagger, viewport } = useHomeMotion();
 
+  const domainsSectionRef = useRef<HTMLElement>(null);
+  const domainsScrollerRef = useRef<HTMLDivElement>(null);
+  const isDomainsInViewRef = useRef(false);
+
+  useEffect(() => {
+    const sectionEl = domainsSectionRef.current;
+    const scrollerEl = domainsScrollerRef.current;
+    if (!sectionEl || !scrollerEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isDomainsInViewRef.current =
+          entry.isIntersecting && entry.intersectionRatio >= 0.5;
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    observer.observe(sectionEl);
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!isDomainsInViewRef.current) return;
+
+      const { scrollLeft, scrollWidth, clientWidth } = scrollerEl;
+      const maxScrollLeft = scrollWidth - clientWidth;
+      if (maxScrollLeft <= 0) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta === 0) return;
+
+      const scrollingForward = delta > 0;
+      const atEnd = scrollLeft >= maxScrollLeft - 1;
+      const atStart = scrollLeft <= 1;
+
+      if ((scrollingForward && !atEnd) || (!scrollingForward && !atStart)) {
+        e.preventDefault();
+        scrollerEl.scrollLeft += delta;
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      if (!isDomainsInViewRef.current) return;
+
+      const activeEl = document.activeElement as HTMLElement | null;
+      const activeTag = activeEl?.tagName.toLowerCase();
+      if (activeTag === "input" || activeTag === "textarea" || activeEl?.isContentEditable) {
+        return;
+      }
+
+      e.preventDefault();
+      const step = 350;
+      scrollerEl.scrollBy({
+        left: e.key === "ArrowRight" ? step : -step,
+        behavior: "smooth",
+      });
+    };
+
+    sectionEl.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      observer.disconnect();
+      sectionEl.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <section
       id="serve"
+      ref={domainsSectionRef}
       className="relative section-py overflow-hidden"
       style={{ background: isDark ? C.bgSection : '#FFFFFF' }}
     >
@@ -47,17 +115,18 @@ export default function SolutionsDomains() {
         </div>
         <div className="">
           <motion.div
+            ref={domainsScrollerRef}
             variants={stagger}
             initial="hidden"
             whileInView="visible"
             viewport={viewport}
-            className="flex gap-0 overflow-x-auto pb-2 snap-x snap-mandatory hide-scrollbar"
+            className="flex gap-0 overflow-x-auto !overflow-y-hidden pb-2 hide-scrollbar"
           >
             {serve.items.map((item) => (
               <HomeItem
                 key={item.title}
                 variants={homeFadeUp}
-                className="w-[220px] shrink-0 snap-start sm:w-[240px] lg:w-[380px] h-[300px] sm:h-[320px] lg:h-[400px]"
+                className="w-[220px] shrink-0 sm:w-[240px] lg:w-[380px] h-[300px] sm:h-[320px] lg:h-[400px]"
               >
                 <Link
                   href={item.href}

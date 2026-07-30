@@ -7,6 +7,8 @@ import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import { homeFadeLeft, homeFadeUp } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { motion } from "framer-motion";
+import sectionBg from "@/assets/home/visual_bg.png";
+
 
 const { process } = solutionsContent;
 
@@ -22,7 +24,11 @@ export default function SolutionsProcess() {
     <section
       id="process"
       className="relative overflow-hidden section-py"
-      style={{ background: isDark ? "#03081A" : "#FFFFFF" }}
+      style={{
+        background: isDark
+          ? `url(${sectionBg.src}) center/cover no-repeat`
+          : "#FFFFFF"
+      }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-16">

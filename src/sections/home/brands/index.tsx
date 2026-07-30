@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -33,10 +34,78 @@ export default function Brands() {
   const { isDark } = useTheme();
   const { stagger, viewport, staggerFast } = useHomeMotion();
 
+  const ecosystemSectionRef = useRef<HTMLElement>(null);
+  const brandsScrollerRef = useRef<HTMLDivElement>(null);
+  const isEcosystemInViewRef = useRef(false);
+
+  useEffect(() => {
+    const sectionEl = ecosystemSectionRef.current;
+    const scrollerEl = brandsScrollerRef.current;
+    if (!sectionEl || !scrollerEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isEcosystemInViewRef.current =
+          entry.isIntersecting && entry.intersectionRatio >= 0.5;
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    observer.observe(sectionEl);
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!isEcosystemInViewRef.current) return;
+
+      const { scrollLeft, scrollWidth, clientWidth } = scrollerEl;
+      const maxScrollLeft = scrollWidth - clientWidth;
+      if (maxScrollLeft <= 0) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta === 0) return;
+
+      const scrollingForward = delta > 0;
+      const atEnd = scrollLeft >= maxScrollLeft - 1;
+      const atStart = scrollLeft <= 1;
+
+      if ((scrollingForward && !atEnd) || (!scrollingForward && !atStart)) {
+        e.preventDefault();
+        scrollerEl.scrollLeft += delta;
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      if (!isEcosystemInViewRef.current) return;
+
+      const activeEl = document.activeElement as HTMLElement | null;
+      const activeTag = activeEl?.tagName.toLowerCase();
+      if (activeTag === "input" || activeTag === "textarea" || activeEl?.isContentEditable) {
+        return;
+      }
+
+      e.preventDefault();
+      const step = 350;
+      scrollerEl.scrollBy({
+        left: e.key === "ArrowRight" ? step : -step,
+        behavior: "smooth",
+      });
+    };
+
+    sectionEl.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      observer.disconnect();
+      sectionEl.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       <section
         id="ecosystem"
+        ref={ecosystemSectionRef}
+        style={{ background: isDark ? '#000000' : '#FFFFFF' }}
         className="relative section-py"
       >
         <div className="">
@@ -69,6 +138,7 @@ export default function Brands() {
 
 
           <motion.div
+            ref={brandsScrollerRef}
             variants={stagger}
             initial="hidden"
             whileInView="visible"
@@ -84,7 +154,7 @@ export default function Brands() {
                 background: isDark ? C.bgSection : homeLight.bg,
               };
               const cardClassName =
-                "relative flex h-full w-[350px] h-80 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8";
+                "relative flex h-full w-[350px] md:h-80 h-60 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8";
 
               const inner = (
                 <>
@@ -94,7 +164,7 @@ export default function Brands() {
                       alt={brand.name}
                       width={100}
                       height={60}
-                      className="h-6 w-auto object-contain sm:h-12"
+                      className=" w-auto object-contain lg:h-12 h-10"
                     />
                   </div>
                   <h3

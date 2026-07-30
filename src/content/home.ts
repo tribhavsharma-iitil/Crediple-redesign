@@ -86,7 +86,7 @@ export const homeLight = {
   muted: "#454545",
   border: "#E2E8F0",
   card: "#FFFFFF",
-  accent: "#2F80ED",
+  accent: "#0047AB",
 } as const;
 
 export const homeContent = {
@@ -321,21 +321,21 @@ export const homeContent = {
       {
         name: "Rajiv Sharma",
         role: "CEO",
-        company: "MediTech Solutions",
+        company: "",
         text: "Crediple transformed our entire clinical workflow. What used to take days now takes hours. Their infrastructure is rock solid and the support team genuinely understands enterprise healthcare needs.",
         image: testimonial_1,
       },
       {
         name: "Priya Nair",
         role: "CFO",
-        company: "FinVault India",
+        company: "",
         text: "We integrated Crediple's fintech platform across 3 cities in under a month. The reconciliation automation alone saved us 40 hours a week. Truly a game changer for our operations.",
         image: testimonial_2,
       },
       {
         name: "Arjun Mehta",
         role: "Founder",
-        company: "LexCore",
+        company: "",
         text: "Our firm was drowning in paperwork. Crediple built us a case management system that feels like it was made specifically for us. Client satisfaction has never been higher.",
         image: testimonial_3,
       },

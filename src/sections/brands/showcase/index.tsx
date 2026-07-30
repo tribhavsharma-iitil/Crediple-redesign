@@ -33,14 +33,14 @@ function BrandTabBar({
 
   return (
     <div
-      className="sticky top-20 z-20 sm:top-24"
+      className="sticky top-21 z-20 sm:top-24"
       style={{
         background: `url(${footerBgDark.src}) center/cover no-repeat`
       }}
 
     >
-      <div className="mx-auto flex w-full max-w-[1260px] items-center justify-between gap-6 overflow-x-auto px-4 py-3 sm:px-6">
-        <div className="flex min-w-0 items-center gap-2 whitespace-nowrap text-xs sm:text-sm">
+      <div className="mx-auto flex w-full max-w-[1260px] items-center justify-between gap-6 overflow-x-auto hide-scrollbar px-4 py-4 sm:px-6">
+        <div className="flex shrink-0 items-center lg:gap-4 gap-2 whitespace-nowrap text-xs sm:text-sm">
           {brands.map((brand, i) => (
             <span key={brand.name} className="flex items-center gap-2">
               {i > 0 && <span className="text-white/30">/</span>}

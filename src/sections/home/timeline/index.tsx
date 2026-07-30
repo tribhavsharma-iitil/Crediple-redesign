@@ -62,7 +62,7 @@ export default function Timeline() {
                   <span
                     aria-hidden
                     className="h-2.5 w-2.5 shrink-0 rounded-full"
-                    style={{ background: isDark ? C.accentSoft : homeLight.accent }}
+                    style={{ background: '#0047AB' }}
                   />
                   <span
                     aria-hidden

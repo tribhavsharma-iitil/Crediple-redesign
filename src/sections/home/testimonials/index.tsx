@@ -30,7 +30,7 @@ export default function Testimonials() {
       <section
         id="testimonials"
         className="relative section-py overflow-hidden"
-        style={{ background: isDark ? T.bg : '#FFFFFF' }}
+        style={{ background: isDark ? '#000000' : '#FFFFFF' }}
       >
         <div className="relative z-10 w-full max-w-[1260px] mx-auto px-4 sm:px-6">
           <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10 w-full">
@@ -62,7 +62,7 @@ export default function Testimonials() {
             {items.map((item) => (
               <HomeItem key={item.name} variants={homeFadeUp} className="h-full">
                 <article
-                  className="relative flex h-full flex-col p-6 text-left sm:p-7"
+                  className="relative flex h-full flex-col p-6 text-left sm:p-7 border"
                   style={{ background: isDark ? 'transparent' : homeLight.bgAlt }}
                 >
                   <div className="relative h-10 w-10 shrink-0 overflow-hidden">
@@ -98,7 +98,7 @@ export default function Testimonials() {
                     className="mt-0.5 text-xs"
                     style={{ color: isDark ? T.muted : homeLight.muted }}
                   >
-                    {item.role}, {item.company}
+                    {item.role} {item.company}
                   </p>
                 </article>
               </HomeItem>
