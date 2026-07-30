@@ -220,7 +220,7 @@ export default function Brands() {
       </section>
       <section
         id="values"
-        className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
+        className="relative scroll-mt-20 overflow-hidden py-20 sm:scroll-mt-24"
         style={{
           background: isDark
             ? `url(${sectionBg.src}) center/cover no-repeat`
