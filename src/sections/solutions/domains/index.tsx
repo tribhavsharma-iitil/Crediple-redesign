@@ -34,11 +34,11 @@ export default function SolutionsDomains() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         isDomainsInViewRef.current =
-          entry.isIntersecting && entry.intersectionRatio >= 0.5;
+          entry.isIntersecting && entry.intersectionRatio >= 0.85;
       },
-      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      { threshold: [0, 0.5, 0.75, 0.85, 0.9, 1] }
     );
-    observer.observe(sectionEl);
+    observer.observe(scrollerEl);
 
     const handleWheel = (e: WheelEvent) => {
       if (!isDomainsInViewRef.current) return;

@@ -5,15 +5,15 @@ import { Play } from "lucide-react";
 import {
   homeContent,
   homeColors,
-  homeLight,
-  getHomeTitleAccentStyle,
+  // homeLight,
+  // getHomeTitleAccentStyle,
 } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { useIntroPhase } from "@/components/layout/AppShell";
 import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import HashLink from "@/components/ui/HashLink";
-import HeroWave from "@/components/home/HeroWave";
+// import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
 import {
   HERO_CONTENT_CLASS,
@@ -41,10 +41,10 @@ export default function Hero() {
 
   return (
     <section id="hero" className={`${HERO_SECTION_CLASS} px-0`}>
-      <HeroWave isDark={isDark} />
+      {/* <HeroWave isDark={isDark} /> */}
 
       {/* YAKA mark + themed tagline */}
-      {/* <div
+      <div
         id="yaka-logo-anchor"
         className={HERO_YAKA_SLOT_CLASS}
       >
@@ -54,10 +54,10 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.35 }}
           >
-            <YakaBrandMark />
+            {/* <YakaBrandMark /> */}
           </motion.div>
         )}
-      </div> */}
+      </div>
 
       <div
         aria-hidden
