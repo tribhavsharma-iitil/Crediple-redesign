@@ -167,7 +167,7 @@ export default function Brands() {
                 background: isDark ? 'transparent' : homeLight.bg,
               };
               const cardClassName =
-                "relative flex h-full w-[350px] md:h-90 h-60 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
+                "relative flex h-full w-[350px] md:h-90 h-80 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
 
               const inner = (
                 <>

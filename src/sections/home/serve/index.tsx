@@ -126,7 +126,7 @@ export default function WhoWeServe() {
               <HomeItem
                 key={item.title}
                 variants={homeFadeUp}
-                className="w-[220px] shrink-0 sm:w-[240px] lg:w-[380px] h-[300px] sm:h-[320px] lg:h-[400px]"
+                className="w-[280px] shrink-0 sm:w-[280px] lg:w-[380px] h-[300px] sm:h-[320px] lg:h-[400px]"
               >
                 <Link
                   href={item.href}
@@ -139,7 +139,7 @@ export default function WhoWeServe() {
                     fill
                     placeholder="blur"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    sizes="(max-width: 640px) 220px, (max-width: 1024px) 240px, 400px"
+                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 280px, 380px"
                   />
                   <div
                     aria-hidden
@@ -153,7 +153,7 @@ export default function WhoWeServe() {
                     <h3 className="font-heading md:text-xl font-bold text-white text-base">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-white/75">
+                    <p className="mt-1 lg:text-sm  text-xs leading-relaxed text-white/75">
                       {item.short}
                     </p>
                   </div>
