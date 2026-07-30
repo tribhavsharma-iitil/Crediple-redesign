@@ -103,7 +103,7 @@ function BrandBlock({
               alt={brand.name}
               fill
               placeholder="blur"
-              className="object-cover"
+              className=""
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
@@ -115,7 +115,7 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col p-6 sm:p-10 lg:p-12"
+            className="relative flex h-full flex-col p-10"
             style={{ background: 'transparent' }}
           >
             <div className="mb-6 flex justify-end">
@@ -158,14 +158,7 @@ function BrandBlock({
               </p>
             ))}
 
-            <div
-              className="my-6 h-px w-full"
-              style={{
-                background: isDark
-                  ? "rgba(248,248,248,0.12)"
-                  : "rgba(15,23,42,0.1)",
-              }}
-            />
+            <div className="border-y my-6 pt-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
 
             <p
               className="mb-3 text-lg font-bold"
@@ -173,17 +166,17 @@ function BrandBlock({
             >
               {brand.featuresTitle}
             </p>
-            <div className="mb-6 flex flex-wrap gap-4">
+            <div className="mb-6 flex flex-wrap gap-2">
               {brand.deliverables.map((item) => (
                 <span
                   key={item.title}
-                  className="border lg:p-4 p-2 text-sm font-medium"
+                  className="border p-3 text-sm font-medium"
                   style={{
                     color: isDark ? "#ffffff" : "#1E293B",
-                    backdropFilter: isDark ? "blur(50px)" : "none",
-                    background: isDark ? "#FFFFFF14" : "#FBFBFB",
+                    // backdropFilter: isDark ? "blur(50px)" : "none",
+                    background: isDark ? "#222222" : "#FBFBFB",
                     borderColor: isDark
-                      ? "rgba(248,248,248,0.12)"
+                      ? "#222222"
                       : "#23232329",
                   }}
                 >
@@ -191,7 +184,7 @@ function BrandBlock({
                 </span>
               ))}
             </div>
-
+            </div>
             <p
               className="mb-1.5 text-md font-semibold"
               style={{ color: isDark ? '#ffffff' : C.accentStrong }}
