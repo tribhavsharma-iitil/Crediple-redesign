@@ -33,7 +33,7 @@ function BrandTabBar({
 
   return (
     <div
-      className="sticky top-21 z-20 sm:top-24"
+      className="sticky top-[5.1rem] z-20 sm:top-22"
       style={{
         background: `url(${footerBgDark.src}) center/cover no-repeat`
       }}
