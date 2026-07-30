@@ -115,7 +115,7 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col p-10"
+            className="relative flex h-full flex-col lg:p-12 p-8"
             style={{ background: 'transparent' }}
           >
             <div className="mb-6 flex justify-end">
