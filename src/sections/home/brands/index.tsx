@@ -105,10 +105,21 @@ export default function Brands() {
       <section
         id="ecosystem"
         ref={ecosystemSectionRef}
+        className="relative section-py overflow-hidden"
         style={{ background: isDark ? '#000000' : '#FFFFFF' }}
-        className="relative section-py"
       >
-        <div className="">
+        {isDark && (
+          <video
+            aria-hidden
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 z-0 md:h-78 h-60 top-[30%] lg:block hidden w-full object-cover"
+            src="/videos/section_bg_effect.mp4"
+          />
+        )}
+        <div className="relative z-10">
           <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
             <HomeReveal variants={homeFadeLeft} className="mb-8 w-full sm:mb-10">
               <div className="flex w-full flex-wrap items-center justify-between gap-4">
@@ -145,16 +156,18 @@ export default function Brands() {
             viewport={viewport}
             className="flex gap-px overflow-x-auto !overflow-y-hidden border hide-scrollbar"
             style={{
-              background: isDark ? C.border : homeLight.border,
+              background: isDark ? 'transparent' : homeLight.border,
               borderColor: isDark ? C.border : homeLight.border,
+              backdropFilter: isDark ? "blur(104px)" : "none",
+              WebkitBackdropFilter: isDark ? "blur(104px)" : "none",
             }}
           >
             {ecosystem.brands.map((brand) => {
               const cardStyle = {
-                background: isDark ? C.bgSection : homeLight.bg,
+                background: isDark ? 'transparent' : homeLight.bg,
               };
               const cardClassName =
-                "relative flex h-full w-[350px] md:h-80 h-60 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8";
+                "relative flex h-full w-[350px] md:h-80 h-60 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
 
               const inner = (
                 <>

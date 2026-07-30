@@ -55,15 +55,31 @@ export default function Testimonials() {
             viewport={viewport}
             className="grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3"
             style={{
-              
-              borderColor: isDark ? '#232323' : homeLight.border,
+              background: isDark ? 'transparent' : homeLight.border,
+              borderColor: isDark ? C.border : homeLight.border,
+              backdropFilter: isDark ? "blur(104px)" : "none",
+              WebkitBackdropFilter: isDark ? "blur(104px)" : "none",
             }}
           >
+            {isDark && (
+              <video
+                aria-hidden
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 z-0 lg:block hidden w-full object-cover"
+                src="/videos/section_bg_effect.mp4"
+              />
+            )}
             {items.map((item) => (
               <HomeItem key={item.name} variants={homeFadeUp} className="h-full">
                 <article
                   className="relative flex h-full flex-col p-6 text-left sm:p-7 border"
-                  style={{ background: isDark ? 'transparent' : homeLight.bgAlt }}
+                  style={{ background: isDark ? 'transparent' : homeLight.bgAlt,
+                    backdropFilter: isDark ? "blur(324px)" : "none",
+                    WebkitBackdropFilter: isDark ? "blur(324px)" : "none"
+                   }}
                 >
                   <div className="relative h-10 w-10 shrink-0 overflow-hidden">
                     <Image
