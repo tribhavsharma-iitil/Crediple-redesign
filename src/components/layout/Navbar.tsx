@@ -120,7 +120,7 @@ export default function Navbar() {
                         active
                           ? isDark
                             ? "text-white"
-                            : "text-[#2F80ED]"
+                            : "text-[#0047AB]"
                           : isDark
                             ? "text-white/65"
                             : "text-[#475569]",
@@ -130,7 +130,7 @@ export default function Navbar() {
                     </Link>
                   </span>
                 </div>
-               
+
               );
             })}
           </nav>
@@ -214,7 +214,7 @@ export default function Navbar() {
                           active
                             ? isDark
                               ? "bg-white/10 text-white"
-                              : "bg-[#EFF6FF] text-[#2F80ED]"
+                              : "bg-[#EFF6FF] text-[#0047AB]"
                             : isDark
                               ? "text-white/70"
                               : "text-[#475569]",

@@ -16,7 +16,7 @@ export const solutionsColors = {
   textMuted: "#707080",
   textBody: "#586878",
   textSoftBlue: "#B0C0F8",
-  textAccent: "#3888F0",
+  textAccent: "#0047AB",
 } as const;
 
 export { homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight };

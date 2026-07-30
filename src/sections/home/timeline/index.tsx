@@ -28,7 +28,7 @@ export default function Timeline() {
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-10 text-center sm:mb-14">
           <h2
-            className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             style={{ color: isDark ? C.text : homeLight.heading }}
           >
             {timeline.titleBefore}{" "}
@@ -86,7 +86,7 @@ export default function Timeline() {
                 <div
                   className="w-full h-full border p-5 sm:p-6"
                   style={{
-                    background: isDark ? `transparent` : "#FBFBFB",
+                    background: isDark ? `#FFFFFF0A` : "#FBFBFB",
                     borderColor: isDark ? C.border : homeLight.border,
                   }}
                 >
@@ -103,7 +103,7 @@ export default function Timeline() {
                     {item.title}
                   </h3>
                   <p
-                    className="text-sm leading-relaxed mt-2"
+                    className="text-md leading-relaxed mt-4"
                     style={{ color: isDark ? "#FFFFFFCC" : homeLight.muted }}
                   >
                     {item.highlights.join(" ")}

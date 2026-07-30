@@ -24,7 +24,7 @@ function AdvantageCard({
       <div
         className="h-full  border p-6"
         style={{
-          background: isDark ? "transparent" : '#FBFBFB',
+          background: isDark ? "#FFFFFF0A" : '#FBFBFB',
           borderColor: isDark ? "#232323" : homeLight.border,
         }}
       >
@@ -35,14 +35,22 @@ function AdvantageCard({
           {item.tag}
         </span>
         <h3
-          className="font-heading mt-2 mb-2 text-xl leading-tight font-bold tracking-tight"
+          className="font-heading mt-6 mb-2 text-2xl font-black tracking-tight"
           style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
         >
-          {item.title}
+          {item.title === "Growth Funnels" || item.title === "Ecosystem Design" ? (
+            <>
+              {item.title.split(" ")[0]}
+              <br />
+              {item.title.split(" ").slice(1).join(" ")}
+            </>
+          ) : (
+            item.title
+          )}
         </h3>
         <p
-          className="text-sm leading-relaxed"
-          style={{ color: isDark ? C.textMuted : homeLight.muted }}
+          className="text-md leading-relaxed"
+          style={{ color: isDark ? '#FFFFFFCC' : homeLight.muted }}
         >
           {item.desc}
         </p>
@@ -73,7 +81,7 @@ export default function SolutionsAdvantage() {
         >
           <HomeReveal variants={homeFadeLeft} className="sm:col-span-2 lg:col-span-2">
             <h2
-              className="font-heading text-2xl leading-tight font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+              className="font-heading text-2xl leading-tight font-black tracking-tight sm:text-3xl md:text-4xl lg:text-6xl !leading-none"
               style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
             >
               {advantage.titleLine1}
@@ -84,7 +92,7 @@ export default function SolutionsAdvantage() {
             </h2>
             <p
               className="mt-3 max-w-md text-sm leading-relaxed md:text-[15px]"
-              style={{ color: isDark ? C.textSoftBlue : homeLight.muted }}
+              style={{ color: isDark ? '#ffffff' : homeLight.muted }}
             >
               {advantage.subtitle}
             </p>

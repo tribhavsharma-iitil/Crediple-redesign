@@ -41,7 +41,7 @@ export default function Testimonials() {
               {testimonials.title}
             </h2>
             <p
-              className="mt-3 max-w-2xl text-left text-sm sm:text-base"
+              className="mt-3 text-left text-sm sm:text-base"
               style={{ color: isDark ? '#FFFFFF' : '#454545CC' }}
             >
               {testimonials.subtitle}
@@ -53,7 +53,7 @@ export default function Testimonials() {
             initial="hidden"
             whileInView="visible"
             viewport={viewport}
-            className="grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3"
+            className="grid grid-cols-1 gap-0 overflow-hidden border sm:grid-cols-3 "
             style={{
               background: isDark ? 'transparent' : homeLight.border,
               borderColor: isDark ? C.border : homeLight.border,

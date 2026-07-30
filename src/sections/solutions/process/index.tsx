@@ -16,14 +16,14 @@ export default function SolutionsProcess() {
   const { isDark } = useTheme();
   const { stagger, viewport } = useHomeMotion();
 
-  const accent = isDark ? "#0047AB" : "#2F80ED";
+  const accent = isDark ? "#0047AB" : "#0047AB";
   const rowBorder = isDark ? "rgba(248,248,248,0.1)" : "#E2E8F0";
-  const cardBg = isDark ? "transparent" : "#FBFBFB";
+  const cardBg = isDark ? "#FFFFFF0A" : "#FBFBFB";
 
   return (
     <section
       id="process"
-      className="relative overflow-hidden section-py"
+      className="relative overflow-hidden py-25"
       style={{
         background: isDark
           ? `url(${sectionBg.src}) center/cover no-repeat`
@@ -34,7 +34,7 @@ export default function SolutionsProcess() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-16">
           <HomeReveal variants={homeFadeLeft} className="m-auto">
             <h2
-              className="font-heading text-2xl leading-tight font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+              className="font-heading mb-4 text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-6xl"
               style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
             >
               {process.titleLine1}
@@ -42,7 +42,7 @@ export default function SolutionsProcess() {
               {process.titleLine2}
             </h2>
             <p
-              className="mt-4 max-w-md text-sm leading-relaxed sm:text-[15px]"
+              className="mt-4 max-w-md text-sm leading-relaxed sm:text-[16px]"
               style={{ color: isDark ? "#7B8494" : "#64748B" }}
             >
               {process.subtitle}
@@ -72,19 +72,19 @@ export default function SolutionsProcess() {
                     {!isFirst && (
                       <span
                         className="absolute top-0 bottom-1/2 left-1/2 w-0 border-l-2 border-dotted"
-                        style={{ borderColor: isDark ? "#FFFFFF33" : "#2F80ED" }}
+                        style={{ borderColor: isDark ? "#FFFFFF33" : "#0047AB" }}
                       />
                     )}
                     {!isLast && (
                       <span
                         className="absolute top-1/2 bottom-0 left-1/2 w-0 border-l-2 border-dotted"
-                        style={{ borderColor: isDark ? "#FFFFFF33" : "#2F80ED" }}
+                        style={{ borderColor: isDark ? "#FFFFFF33" : "#0047AB" }}
                       />
                     )}
                     {/* Horizontal connector from the dot to the card's left edge */}
                     <span
                       className="absolute top-1/2 left-1/2 h-0 border-t-2 border-dotted"
-                      style={{ width: "calc(50% + 1.5rem)", borderColor: isDark ? "#FFFFFF33" : "#2F80ED" }}
+                      style={{ width: "calc(50% + 1.5rem)", borderColor: isDark ? "#FFFFFF33" : "#0047AB" }}
                     />
                     <span
                       className="absolute top-1/2 left-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -94,7 +94,7 @@ export default function SolutionsProcess() {
 
                   <HomeItem variants={homeFadeUp} className="flex-1">
                     <div
-                      className="p-6 sm:p-7"
+                      className="p-5 sm:p-6 lg:p-7 border-t"
                       style={{
                         background: cardBg,
                         borderStyle: "solid",
@@ -113,7 +113,7 @@ export default function SolutionsProcess() {
                         {step.number}
                       </span>
                       <h3
-                        className="font-heading mt-1 mb-1.5 text-lg font-bold"
+                        className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
                         style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
                       >
                         {step.label}

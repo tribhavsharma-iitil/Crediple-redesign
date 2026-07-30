@@ -33,7 +33,7 @@ export function CredipleButton({
   const { isDark } = useTheme();
 
   const base =
-    "inline-flex items-center justify-center !font-normal !rounded-[0px] transition-transform duration-200 ease-out hover:scale-105 active:scale-95 no-underline";
+    "inline-flex items-center justify-center !font-normal !rounded-[0px] transition-transform duration-200 ease-out hover:scale-105 active:scale-95 no-underline !px-8";
 
   const filled = "text-white hover:opacity-90";
 

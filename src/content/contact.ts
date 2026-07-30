@@ -10,7 +10,7 @@ export const contactColors = {
   textHeading: "#D8E0F0",
   textMuted: "#98A0A8",
   textSoftBlue: "#B0C0F8",
-  textAccent: "#3888F0",
+  textAccent: "#0047AB",
   textTrust: "#606878",
 } as const;
 

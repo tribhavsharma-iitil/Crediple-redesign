@@ -62,7 +62,7 @@ export default function About() {
             viewport={viewport}
             className="grid grid-cols-1 overflow-hidden border sm:grid-cols-2"
             style={{
-              background: isDark ? C.bg : homeLight.card,
+              background: isDark ? '#FFFFFF0A' : homeLight.card,
               borderColor: isDark ? C.border : homeLight.border,
             }}
           >

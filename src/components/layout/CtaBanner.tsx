@@ -25,24 +25,17 @@ export default function CtaBanner() {
             <br />
             {TITLE_LINE_2}
           </h2>
-          <p className="mt-3 max-w-md text-sm text-white/75 sm:text-base">
+          <p className="mt-3 text-sm text-white/75 sm:text-base">
             {SUBTITLE}
           </p>
         </HomeReveal>
 
         <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
           <Link
-            href="/contact"
-            className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
-            style={{ background: "rgba(255,255,255,0.16)" }}
-          >
-            Book Consultation
-          </Link>
-          <Link
             href="/solutions"
-            className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold no-underline transition-opacity hover:opacity-90"
+            className="inline-flex h-11 items-center justify-center whitespace-nowrap px-8 text-sm font-semibold no-underline transition-opacity hover:opacity-90"
             style={{
-              background: isDark ? "#2F80ED" : "#FFFFFF",
+              background: isDark ? "#0047AB" : "#FFFFFF",
               color: isDark ? "#FFFFFF" : "#0047AB",
             }}
           >

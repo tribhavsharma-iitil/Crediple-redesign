@@ -20,7 +20,7 @@ export default function AboutFoundation() {
       <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp}>
           <h2
-            className="font-heading mb-5 text-2xl font-black tracking-tight sm:text-3xl md:text-[2.75rem]"
+            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             style={{ color: isDark ? C.text : "#0F172A" }}
           >
             {foundation.title}
@@ -29,7 +29,7 @@ export default function AboutFoundation() {
           <div
             className="border px-6 py-8 sm:px-10 sm:py-10"
             style={{
-              background: isDark ? "transparent" : "#F8FAFC",
+              background: isDark ? "#FFFFFF0A" : "#F8FAFC",
               borderColor: isDark ? "#232323" : "#E2E8F0",
             }}
           >
@@ -40,13 +40,13 @@ export default function AboutFoundation() {
               {foundation.headline}
             </p>
             <p
-              className="text-sm md:text-[15px] leading-relaxed max-w-2xl"
+              className="text-sm md:text-[16px] leading-relaxed"
               style={{ color: isDark ? '#FFFFFFCC' : "#64748B" }}
             >
               {foundation.body}
             </p>
             <p
-              className="text-sm md:text-[15px] font-semibold mt-4 leading-relaxed max-w-2xl"
+              className="text-sm md:text-[16px] font-semibold mt-4 leading-relaxed"
               style={{ color: isDark ? '#FFFFFFCC' : "#64748B" }}
             >
               {foundation.subtitle}

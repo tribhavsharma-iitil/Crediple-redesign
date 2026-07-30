@@ -8,6 +8,7 @@ import { homeEase, homeFadeRight } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import aboutBg from "@/assets/about/about_us_bg.png";
+import ContactInfoBar from "@/sections/contact/form"
 
 const { hero } = contactContent;
 const C = contactColors;
@@ -49,7 +50,7 @@ export default function ContactHero() {
   } as const;
 
   const fieldClass =
-    "w-full px-4 text-sm !text-white outline-none transition-[border-color,box-shadow] placeholder:text-[#8A93A6] focus:border-[#2F80ED]/55 focus:ring-2 focus:ring-[#2F80ED]/15 !bg-transparent";
+    "w-full px-4 text-sm !text-white outline-none transition-[border-color,box-shadow] placeholder:text-[#8A93A6] focus:border-[#0047AB]/55 focus:ring-2 focus:ring-[#0047AB]/15 !bg-transparent";
 
   const labelClass = "mb-1.5 block text-xs font-medium";
 
@@ -73,7 +74,7 @@ export default function ContactHero() {
         >
           <motion.h1
             variants={heroItem}
-            className="font-heading mb-4 text-white text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:text-5xl lg:text-[3.25rem]"
+            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
 
           >
             {hero.titleLine1}
@@ -120,7 +121,7 @@ export default function ContactHero() {
               <label
                 htmlFor="contact-name"
                 className={labelClass}
-                style={{ color: C.textMuted}}
+                style={{ color: C.textMuted }}
               >
                 {hero.form.name.label}
               </label>
@@ -140,7 +141,7 @@ export default function ContactHero() {
               <label
                 htmlFor="contact-email"
                 className={labelClass}
-                style={{ color: C.textMuted}}
+                style={{ color: C.textMuted }}
               >
                 {hero.form.email.label}
               </label>
@@ -161,7 +162,7 @@ export default function ContactHero() {
               <label
                 htmlFor="contact-subject"
                 className={labelClass}
-                style={{ color: C.textMuted}}
+                style={{ color: C.textMuted }}
               >
                 {hero.form.subject.label}
               </label>
@@ -181,7 +182,7 @@ export default function ContactHero() {
               <label
                 htmlFor="contact-description"
                 className={labelClass}
-                style={{ color: C.textMuted}}
+                style={{ color: C.textMuted }}
               >
                 {hero.form.description.label}
               </label>
@@ -213,6 +214,7 @@ export default function ContactHero() {
           </form>
         </HomeReveal>
       </div>
+      <ContactInfoBar />
     </section>
   );
 }

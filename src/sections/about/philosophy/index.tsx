@@ -26,7 +26,7 @@ export default function AboutPhilosophy() {
         <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
           <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10">
             <h2
-              className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+              className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
               style={{ color: isDark ? '#FFFFFF' : "#0F172A" }}
             >
               {philosophy.titleBefore}{" "}
@@ -47,32 +47,32 @@ export default function AboutPhilosophy() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mb-10 grid grid-cols-1 gap-px overflow-hidden border sm:mb-12 sm:grid-cols-2 lg:grid-cols-4"
+          className="mb-10 grid grid-cols-1 gap-px overflow-hidden border border-[#232323] dark:divide-y dark:divide-[#232323] sm:mb-12 sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4"
           style={{
-            background: isDark ? C.border : "#E2E8F0",
+            background: isDark ? "transparent" : "#E2E8F0",
             borderColor: isDark ? '#232323' : "#E2E8F0",
           }}
         >
           {philosophy.pillars.map((item) => (
             <HomeItem key={item.title} variants={homeFadeUp}>
               <div
-                className="h-full p-6 sm:p-7"
-                style={{ background: isDark ? C.bgSection : "#F8FAFC" }}
+                className="h-full p-6 lg:py-14 py-10"
+                style={{ background: isDark ? '#FFFFFF0A' : "#F8FAFC" }}
               >
                 <span
                   className="text-xs font-bold tracking-[0.14em] uppercase"
-                  style={{ color: isDark ? C.textAccentSoft : C.accentStrong }}
+                  style={{ color: isDark ? '#0047AB' : C.accentStrong }}
                 >
                   {item.label}
                 </span>
                 <h3
-                  className="font-heading mt-2 mb-2 text-base font-bold tracking-tight sm:text-lg"
+                  className="font-heading my-4 text-2xl font-black tracking-tight"
                   style={{ color: isDark ? '#ffffff' : "#0F172A" }}
                 >
                   {item.title}
                 </h3>
                 <p
-                  className="text-sm leading-relaxed"
+                  className="text-md leading-relaxed"
                   style={{ color: isDark ? '#FFFFFFCC' : "#64748B" }}
                 >
                   {item.desc}

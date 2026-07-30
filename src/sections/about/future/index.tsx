@@ -25,7 +25,7 @@ export default function AboutFuture() {
       <div className="w-full max-w-[1260px] mx-auto px-4 text-center sm:px-6">
         <HomeReveal variants={homeFadeUp}>
           <h2
-            className="font-heading text-2xl font-black sm:text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4 text-align-center md:max-w-3xl md:mx-auto"
+            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl mb-4 text-align-center md:max-w-xl md:mx-auto"
             style={{ color: isDark ? '#ffffff' : "#0F172A" }}
           >
             {future.titleBefore}{" "}
@@ -54,9 +54,9 @@ export default function AboutFuture() {
               className={i % 2 === 1 ? "mt-8 sm:mt-14" : ""}
             >
               <div
-                className=" border p-5 text-left sm:p-6"
+                className="border py-12 px-4 text-left "
                 style={{
-                  background: isDark ? "transparent" : "#F8FAFC",
+                  background: isDark ? "#FFFFFF0A" : "#F8FAFC",
                   borderColor: isDark ? "#232323" : "#E2E8F0",
                 }}
               >
@@ -67,13 +67,13 @@ export default function AboutFuture() {
                   {item.stat}
                 </p>
                 <p
-                  className="font-heading mt-2 mb-1.5 text-lg font-bold"
+                  className="font-heading mb-4 mt-6 text-2xl font-black tracking-tight max-w-[150px]"
                   style={{ color: isDark ? '#ffffff' : "#0F172A" }}
                 >
                   {item.title}
                 </p>
                 <p
-                  className="text-sm leading-relaxed"
+                  className="text-md leading-relaxed"
                   style={{ color: isDark ? '#ffffff' : "#454545" }}
                 >
                   {item.desc}

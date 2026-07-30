@@ -39,15 +39,15 @@ export const homeColors = {
   accent: "#408EF2",
   accentStrong: "#1550B4",
   accentHover: "#1248A3",
-  accentSoft: "#2F80ED",
+  accentSoft: "#0047AB",
   /** Primary button linear gradient (Figma) */
   buttonFrom: "#1550B4",
   bgButton: "#0047AB",
-  buttonTo: "#2F80ED",
-  buttonGradient: "linear-gradient(180deg, #1550B4 0%, #2F80ED 100%)",
+  buttonTo: "#0047AB",
+  buttonGradient: "linear-gradient(180deg, #1550B4 0%, #0047AB 100%)",
   /** Title accent word gradient (Figma) — e.g. "Us" in About Us */
   titleAccentGradient:
-    "linear-gradient(180deg, #90C4FF 0%, #5FA8FF 33%, #2F80ED 66%, #1550B4 100%)",
+    "linear-gradient(180deg, #90C4FF 0%, #5FA8FF 33%, #0047AB 66%, #1550B4 100%)",
   text: "#F8F8F8",
   textMuted: "#98A0A8",
   textDim: "#586070",
@@ -69,7 +69,7 @@ export const homeTitleAccentStyle = {
 /** Light PDF uses solid blue accents; dark keeps the gradient */
 export function getHomeTitleAccentStyle(isDark: boolean) {
   if (isDark) return homeTitleAccentStyle;
-  return { color: "#2F80ED" } as const;
+  return { color: "#0047AB" } as const;
 }
 
 export const yakaTaglineClassName =

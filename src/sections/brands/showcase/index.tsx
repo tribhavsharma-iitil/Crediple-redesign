@@ -97,14 +97,15 @@ function BrandBlock({
           variants={homeFadeUp}
           className={imageLeft ? "order-1 lg:order-1" : "order-1 lg:order-2"}
         >
-          <div className="relative h-[280px] w-full sm:h-[400px] lg:h-full lg:min-h-[560px]">
+          <div className="relative h-[280px] w-full overflow-hidden sm:h-[400px] lg:h-full lg:min-h-[560px]">
             <Image
               src={brand.image}
               alt={brand.name}
               fill
               placeholder="blur"
-              className=""
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={100}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="h-full w-full object-cover object-center"
             />
           </div>
         </HomeReveal>
@@ -160,30 +161,30 @@ function BrandBlock({
 
             <div className="border-y my-6 pt-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
 
-            <p
-              className="mb-3 text-lg font-bold"
-              style={{ color: isDark ? C.text : "#0F172A" }}
-            >
-              {brand.featuresTitle}
-            </p>
-            <div className="mb-6 flex flex-wrap gap-2">
-              {brand.deliverables.map((item) => (
-                <span
-                  key={item.title}
-                  className="border p-3 text-sm font-medium"
-                  style={{
-                    color: isDark ? "#ffffff" : "#1E293B",
-                    // backdropFilter: isDark ? "blur(50px)" : "none",
-                    background: isDark ? "#222222" : "#FBFBFB",
-                    borderColor: isDark
-                      ? "#222222"
-                      : "#23232329",
-                  }}
-                >
-                  {item.title}
-                </span>
-              ))}
-            </div>
+              <p
+                className="mb-3 text-lg font-bold"
+                style={{ color: isDark ? C.text : "#0F172A" }}
+              >
+                {brand.featuresTitle}
+              </p>
+              <div className="mb-6 flex flex-wrap gap-2">
+                {brand.deliverables.map((item) => (
+                  <span
+                    key={item.title}
+                    className="border p-3 text-sm font-medium"
+                    style={{
+                      color: isDark ? "#ffffff" : "#1E293B",
+                      // backdropFilter: isDark ? "blur(50px)" : "none",
+                      background: isDark ? "#222222" : "#FBFBFB",
+                      borderColor: isDark
+                        ? "#222222"
+                        : "#23232329",
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                ))}
+              </div>
             </div>
             <p
               className="mb-1.5 text-md font-semibold"

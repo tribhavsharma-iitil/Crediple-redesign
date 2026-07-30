@@ -22,24 +22,24 @@ export default function SolutionsFoundation() {
           <div
             className="border px-6 py-8 sm:px-10 sm:py-10"
             style={{
-              background: isDark ? "transparent" : "#F8FAFC",
+              background: isDark ? "#FFFFFF0A" : "#F8FAFC",
               borderColor: isDark ? "#232323" : "#E2E8F0",
             }}
           >
             <p
-              className="font-heading mb-4 max-w-2xl text-xl leading-[1.35] font-bold sm:text-2xl md:text-[1.65rem]"
+              className="font-heading mb-4 text-xl leading-[1.35] font-bold sm:text-2xl md:text-[1.65rem]"
               style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
             >
               {foundation.headline}
             </p>
             <p
-              className="mb-4 max-w-2xl text-sm leading-relaxed md:text-[15px]"
+              className="mb-4 text-sm leading-relaxed md:text-[15px]"
               style={{ color: isDark ? "#FFFFFFCC" : "#64748B" }}
             >
               {foundation.body}
             </p>
             <p
-              className="max-w-2xl text-sm leading-relaxed md:text-[15px]"
+              className="text-sm leading-relaxed md:text-[15px]"
               style={{ color: isDark ? "#FFFFFFCC" : "#64748B" }}
             >
               {foundation.accent}

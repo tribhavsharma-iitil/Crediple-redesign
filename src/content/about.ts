@@ -18,8 +18,8 @@ export const aboutColors = {
   textBody: "#586878",
   /** Soft blue accent line (foundation) — #B0C0F8 */
   textSoftBlue: "#B0C0F8",
-  /** Title accent blue (Technology & Strategy / Philosophy) — #3888F0 */
-  textAccent: "#3888F0",
+  /** Title accent blue (Technology & Strategy / Philosophy) — #0047AB */
+  textAccent: "#0047AB",
   /** Soft accent (verdict) — #90C0F8 */
   textAccentSoft: "#90C0F8",
   /** Closing secondary / copyright — #E4E6F1 */

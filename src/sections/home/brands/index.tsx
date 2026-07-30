@@ -125,7 +125,7 @@ export default function Brands() {
               <div className="flex w-full flex-wrap items-center justify-between gap-4">
                 <div className="min-w-0">
                   <h2
-                    className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+                    className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
                     style={{ color: isDark ? C.text : homeLight.heading }}
                   >
                     {ecosystem.titleBefore}{" "}
@@ -167,7 +167,7 @@ export default function Brands() {
                 background: isDark ? 'transparent' : homeLight.bg,
               };
               const cardClassName =
-                "relative flex h-full w-[350px] md:h-80 h-60 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
+                "relative flex h-full w-[350px] md:h-90 h-60 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
 
               const inner = (
                 <>
@@ -181,13 +181,13 @@ export default function Brands() {
                     />
                   </div>
                   <h3
-                    className="font-heading text-lg font-bold tracking-tight sm:text-3xl"
+                    className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
                     style={{ color: isDark ? C.text : homeLight.heading }}
                   >
                     {brand.name}
                   </h3>
                   <p
-                    className="mt-4 text-sm leading-relaxed"
+                    className="mt-4 text-[16px] leading-relaxed"
                     style={{ color: isDark ? "rgba(220,226,246,0.65)" : homeLight.body }}
                   >
                     {brand.description}
@@ -252,7 +252,7 @@ export default function Brands() {
           <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
             <HomeReveal className="m-auto" variants={homeFadeLeft}>
               <h2
-                className="font-heading mb-4 text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+                className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
                 style={{ color: isDark ? "#ffffff" : homeLight.heading }}
               >
                 {values.titleBefore}{" "}
@@ -278,7 +278,7 @@ export default function Brands() {
               viewport={viewport}
               className="grid grid-cols-1 overflow-hidden border"
               style={{
-                background: isDark ? `transparent` : "#FBFBFB",
+                background: isDark ? `#FFFFFF0A` : "#FBFBFB",
                 borderColor: isDark ? C.border : homeLight.border,
               }}
             >
@@ -295,13 +295,13 @@ export default function Brands() {
                       {item.number}
                     </span>
                     <h3
-                      className="font-heading mt-2 mb-2 text-lg font-black tracking-tight md:text-xl"
+                      className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
                       style={{ color: isDark ? C.text : homeLight.heading }}
                     >
                       {item.title}
                     </h3>
                     <p
-                      className="text-sm leading-relaxed sm:text-[15px]"
+                      className="text-sm leading-relaxed sm:text-[16px]"
                       style={{ color: isDark ? "rgba(255,255,255,0.65)" : homeLight.muted }}
                     >
                       {item.desc}

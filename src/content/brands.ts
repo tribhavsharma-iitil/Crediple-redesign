@@ -16,7 +16,7 @@ export const brandsColors = {
   text: "#F8F8F8",
   textMuted: "#707080",
   textSoftBlue: "#B0C0F8",
-  textAccent: "#3888F0",
+  textAccent: "#0047AB",
   textTagline: "#5FA8FF",
 } as const;
 
