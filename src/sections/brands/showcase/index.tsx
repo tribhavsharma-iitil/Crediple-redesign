@@ -40,7 +40,7 @@ function BrandTabBar({
 
     >
       <div className="mx-auto flex w-full max-w-[1260px] items-center justify-between gap-6 overflow-x-auto hide-scrollbar px-4 py-4 sm:px-6">
-        <div className="flex shrink-0 items-center lg:gap-4 gap-2 whitespace-nowrap text-xs sm:text-sm">
+        <div className="flex shrink-0 items-center lg:gap-4 gap-2 whitespace-nowrap text-xs sm:text-[14px]">
           {brands.map((brand, i) => (
             <span key={brand.name} className="flex items-center gap-2">
               {i > 0 && <span className="text-white/30">/</span>}
@@ -51,7 +51,7 @@ function BrandTabBar({
                 style={{
                   color:
                     i === activeIndex ? "#FFFFFF" : "rgba(255,255,255,0.55)",
-                  fontWeight: i === activeIndex ? 700 : 500,
+                  fontWeight: i === activeIndex ? 600 : 400,
                 }}
               >
                 {brand.name}
