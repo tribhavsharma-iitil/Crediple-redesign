@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { homeContent, homeColors, homeLight } from "@/content/home";
@@ -24,10 +25,37 @@ export default function Testimonials() {
   const { isDark } = useTheme();
   const { stagger, viewport } = useHomeMotion();
   const items = testimonials.items;
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const sectionNode = sectionRef.current;
+    const videoNode = videoRef.current;
+
+    if (!sectionNode || !videoNode) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.setTimeout(() => {
+            videoNode.play().catch(() => undefined);
+          }, 1200);
+        } else {
+          videoNode.pause();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(sectionNode);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="w-full">
       <section
+        ref={sectionRef}
         id="testimonials"
         className="relative section-py overflow-hidden"
         style={{ background: isDark ? '#000000' : '#FFFFFF' }}
@@ -35,7 +63,7 @@ export default function Testimonials() {
         <div className="relative z-10 w-full max-w-[1260px] mx-auto px-4 sm:px-6">
           <HomeReveal variants={homeFadeLeft} className="mb-8 sm:mb-10 w-full">
             <h2
-              className="font-heading text-left text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+              className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
               style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
             >
               {testimonials.title}
@@ -63,11 +91,12 @@ export default function Testimonials() {
           >
             {isDark && (
               <video
+                ref={videoRef}
                 aria-hidden
-                autoPlay
                 muted
                 loop
                 playsInline
+                preload="auto"
                 className="absolute inset-0 z-0 lg:block hidden w-full object-cover"
                 src="/videos/section_bg_effect.mp4"
               />
@@ -76,10 +105,11 @@ export default function Testimonials() {
               <HomeItem key={item.name} variants={homeFadeUp} className="h-full">
                 <article
                   className="relative flex h-full flex-col p-6 text-left sm:p-7 border"
-                  style={{ background: isDark ? 'transparent' : homeLight.bgAlt,
+                  style={{
+                    background: isDark ? 'transparent' : homeLight.bgAlt,
                     backdropFilter: isDark ? "blur(324px)" : "none",
                     WebkitBackdropFilter: isDark ? "blur(324px)" : "none"
-                   }}
+                  }}
                 >
                   <div className="relative h-10 w-10 shrink-0 overflow-hidden">
                     <Image

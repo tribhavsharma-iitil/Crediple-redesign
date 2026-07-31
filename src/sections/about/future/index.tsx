@@ -47,16 +47,16 @@ export default function AboutFuture() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mb-10 grid grid-cols-2 items-start gap-4 sm:mb-12 sm:gap-6 lg:grid-cols-4"
+          className="mb-10 grid grid-cols-1 items-start gap-4 sm:mb-12 sm:gap-6 lg:grid-cols-4"
         >
           {future.items.map((item, i) => (
             <HomeItem
               key={item.title}
               variants={homeFadeUp}
-              className={i % 2 === 1 ? "mt-8 sm:mt-14" : ""}
+              className={i % 2 === 1 ? "lg:mt-8 lg:mt-14" : ""}
             >
               <div
-                className="border py-12 px-4 text-left transition-all duration-300"
+                className="border lg:py-12 py-8 px-4 text-left transition-all duration-300"
                 onMouseEnter={() => isDark && setHoveredIndex(i)}
                 onMouseLeave={() => isDark && setHoveredIndex(null)}
                 style={{
@@ -82,13 +82,13 @@ export default function AboutFuture() {
                 }}
               >
                 <p
-                  className="font-black tracking-tight sm:text-4xl mb-8"
+                  className="font-black tracking-tight lg:text-4xl text-2xl mb-8"
                   style={{ color: isDark ? '#ffffff' : '#232323' }}
                 >
                   {item.stat}
                 </p>
                 <p
-                  className="font-heading mb-4 mt-6 text-2xl font-black tracking-tight max-w-[150px]"
+                  className="font-heading mb-4 mt-6 text-2xl font-black tracking-tight lg:max-w-[150px]"
                   style={{ color: isDark ? '#ffffff' : "#0F172A" }}
                 >
                   {item.title}

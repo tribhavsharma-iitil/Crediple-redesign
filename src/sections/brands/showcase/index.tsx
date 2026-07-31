@@ -39,7 +39,7 @@ function BrandTabBar({
       }}
 
     >
-      <div className="mx-auto flex w-full max-w-[1260px] items-center justify-between gap-6 overflow-x-auto hide-scrollbar px-4 py-4 sm:px-6">
+      <div className="mx-auto flex w-full max-w-[1260px] items-center justify-center gap-6 overflow-x-auto hide-scrollbar px-4 py-4 sm:px-6">
         <div className="flex shrink-0 items-center lg:gap-4 gap-2 whitespace-nowrap text-xs sm:text-[14px]">
           {brands.map((brand, i) => (
             <span key={brand.name} className="flex items-center gap-2">
@@ -59,7 +59,7 @@ function BrandTabBar({
             </span>
           ))}
         </div>
-        <a
+        {/* <a
           href={active.href}
           target="_blank"
           rel="noopener noreferrer"
@@ -67,7 +67,7 @@ function BrandTabBar({
         >
           SEE ALL {active.name.toUpperCase()} BRANDS
           <ArrowRight size={14} />
-        </a>
+        </a> */}
       </div>
     </div>
   );
