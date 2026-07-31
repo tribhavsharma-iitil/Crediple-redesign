@@ -44,7 +44,7 @@ export default function ContactInfoBar() {
               const valueContent = isAddress ? (
                 <>
                   Sattva Knowledge City, Hi-Tech City, Hyderabad,
-                  <br />
+                  <br className="lg:block hidden" />
                   Telangana, India, Pin - 500081
                 </>
               ) : (
