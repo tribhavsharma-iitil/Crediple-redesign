@@ -97,15 +97,14 @@ function BrandBlock({
           variants={homeFadeUp}
           className={imageLeft ? "order-1 lg:order-1" : "order-1 lg:order-2"}
         >
-          <div className="relative h-[280px] w-full overflow-hidden sm:h-[400px] lg:h-full lg:min-h-[560px]">
+          <div className="relative h-full w-full overflow-hidden">
             <Image
               src={brand.image}
               alt={brand.name}
               fill
               placeholder="blur"
               quality={100}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full !relative"
             />
           </div>
         </HomeReveal>
@@ -116,15 +115,15 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col lg:p-12 p-8"
+            className="relative flex h-full flex-col lg:py-20 lg:p-12 p-8 gap-2"
             style={{ background: 'transparent' }}
           >
-            <div className="mb-6 flex justify-end">
+            <div className="mb-12 flex justify-end">
               <a
                 href={brand.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-9 items-center justify-center px-5 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
+                className="inline-flex h-9 items-center justify-center px-8 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
                 style={{ background: "#0047AB" }}
               >
                 Visit {brand.name}
@@ -137,7 +136,7 @@ function BrandBlock({
             />
 
             <h2
-              className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl"
+              className="font-heading mb-4 text-2xl font-black tracking-tight sm:text-3xl"
               style={{ color: isDark ? C.text : "#0F172A" }}
             >
               {brand.name}
@@ -152,22 +151,22 @@ function BrandBlock({
             {brand.description.map((para) => (
               <p
                 key={para.slice(0, 32)}
-                className="mb-3 text-md leading-relaxed last:mb-0"
+                className="mb-6 text-md leading-relaxed last:mb-0"
                 style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
               >
                 {para}
               </p>
             ))}
 
-            <div className="border-y my-6 pt-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
+            <div className="border-y my-10 pt-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
 
               <p
-                className="mb-3 text-lg font-bold"
+                className="mb-6 lg:text-2xl text-xl font-bold"
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
                 {brand.featuresTitle}
               </p>
-              <div className="mb-6 flex flex-wrap gap-2">
+              <div className="mb-6 flex flex-wrap gap-4">
                 {brand.deliverables.map((item) => (
                   <span
                     key={item.title}
@@ -187,13 +186,13 @@ function BrandBlock({
               </div>
             </div>
             <p
-              className="mb-1.5 text-md font-semibold"
+              className="mb-6 lg:text-2xl text-xl font-bold"
               style={{ color: isDark ? '#ffffff' : C.accentStrong }}
             >
               Core Focus
             </p>
             <p
-              className="text-sm leading-relaxed"
+              className="mb-6 text-md leading-relaxed last:mb-0"
               style={{ color: isDark ? "#D8DEE8" : "#334155" }}
             >
               {brand.coreFocus}

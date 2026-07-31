@@ -44,7 +44,7 @@ export default function SolutionsHero() {
         muted
         loop
         playsInline
-        className="absolute inset-0 z-0 h-full w-full object-cover pointer-events-none"
+        className="absolute inset-0 z-0 h-[85vh] w-full pointer-events-none"
       >
         <source src="/videos/solution_bg.mp4" type="video/mp4" />
       </video>

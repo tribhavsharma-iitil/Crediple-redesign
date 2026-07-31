@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { aboutContent, aboutColors } from "@/content/about";
@@ -15,6 +16,7 @@ const C = aboutColors;
 export default function AboutFuture() {
   const { isDark } = useTheme();
   const { stagger, viewport } = useHomeMotion();
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <section
@@ -25,7 +27,7 @@ export default function AboutFuture() {
       <div className="w-full max-w-[1260px] mx-auto px-4 text-center sm:px-6">
         <HomeReveal variants={homeFadeUp}>
           <h2
-            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl mb-4 text-align-center md:max-w-xl md:mx-auto"
+            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl mb-4 text-align-center md:max-w-2xl md:mx-auto"
             style={{ color: isDark ? '#ffffff' : "#0F172A" }}
           >
             {future.titleBefore}{" "}
@@ -54,10 +56,29 @@ export default function AboutFuture() {
               className={i % 2 === 1 ? "mt-8 sm:mt-14" : ""}
             >
               <div
-                className="border py-12 px-4 text-left "
+                className="border py-12 px-4 text-left transition-all duration-300"
+                onMouseEnter={() => isDark && setHoveredIndex(i)}
+                onMouseLeave={() => isDark && setHoveredIndex(null)}
                 style={{
-                  background: isDark ? "#FFFFFF0A" : "#F8FAFC",
-                  borderColor: isDark ? "#232323" : "#E2E8F0",
+                  background:
+                    isDark && hoveredIndex === i
+                      ? "#0047AB14"
+                      : isDark
+                        ? "#FFFFFF0A"
+                        : "#F8FAFC",
+                  borderColor:
+                    isDark && hoveredIndex === i
+                      ? "transparent"
+                      : isDark
+                        ? "#232323"
+                        : "#E2E8F0",
+                  borderWidth: isDark ? 2 : 1,
+                  borderStyle: "solid",
+                  borderImageSource:
+                    isDark && hoveredIndex === i
+                      ? "linear-gradient(34.78deg, #232323 0%, #0047AB 100%)"
+                      : undefined,
+                  borderImageSlice: isDark && hoveredIndex === i ? 1 : undefined,
                 }}
               >
                 <p

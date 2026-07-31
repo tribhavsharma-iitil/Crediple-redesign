@@ -47,7 +47,7 @@ export default function AboutPhilosophy() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mb-10 grid grid-cols-1 gap-px overflow-hidden border border-[#232323] dark:divide-y dark:divide-[#232323] sm:mb-12 sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4"
+          className="grid grid-cols-1 gap-px overflow-hidden border border-[#232323] dark:divide-y dark:divide-[#232323] sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4"
           style={{
             background: isDark ? "transparent" : "#E2E8F0",
             borderColor: isDark ? '#232323' : "#E2E8F0",

@@ -63,7 +63,7 @@ export default function AboutHero() {
 
         <motion.p
           variants={heroItem}
-          className="mb-4 max-w-xl px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
+          className="mb-4 px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
         >
           {hero.description}
         </motion.p>

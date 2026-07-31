@@ -115,7 +115,7 @@ export default function Brands() {
             muted
             loop
             playsInline
-            className="absolute inset-0 z-0 md:h-78 h-60 top-[30%] lg:block hidden w-full object-cover"
+            className="absolute inset-0 z-0 md:h-78 h-60 top-[32%] lg:block hidden w-full object-cover"
             src="/videos/section_bg_effect.mp4"
           />
         )}
@@ -220,11 +220,14 @@ export default function Brands() {
       </section>
       <section
         id="values"
-        className="relative scroll-mt-20 overflow-hidden py-20 sm:scroll-mt-24"
+        className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
         style={{
           background: isDark
             ? `url(${sectionBg.src}) center/cover no-repeat`
-            : "#FFFFFF"
+            : "#FFFFFF",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100% 100%", // width height
         }}
       >
         {/* Soft blue glow — behind image column, not over the list */}

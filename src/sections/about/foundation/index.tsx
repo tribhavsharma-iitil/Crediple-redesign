@@ -20,7 +20,7 @@ export default function AboutFoundation() {
       <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp}>
           <h2
-            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+            className="font-heading mb-8 sm:mb-10 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             style={{ color: isDark ? C.text : "#0F172A" }}
           >
             {foundation.title}

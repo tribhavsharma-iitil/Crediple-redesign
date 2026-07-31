@@ -55,7 +55,7 @@ export default function ContactInfoBar() {
                 <HomeItem key={item.label} variants={homeFadeUp}>
                   <div className="flex items-start gap-4">
                     <div
-                      className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl"
+                      className="flex h-11 w-11 flex-shrink-0 items-center justify-center"
                       style={{
                         background: "#FFFFFF14",
                         color: "#0047AB",
