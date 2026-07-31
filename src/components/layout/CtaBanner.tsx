@@ -20,7 +20,7 @@ export default function CtaBanner() {
     >
       <div className="mx-auto flex w-full max-w-[1260px] flex-col items-start gap-6 px-4 py-10 sm:px-6 sm:py-12 md:flex-row md:items-center md:justify-between">
         <HomeReveal variants={homeFadeUp}>
-          <h2 className="font-heading text-left text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
+          <h2 className="font-heading text-left text-2xl text-[#FFFFFF] tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
             {TITLE_LINE_1}
             <br />
             {TITLE_LINE_2}
