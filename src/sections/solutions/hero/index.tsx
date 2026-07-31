@@ -36,50 +36,62 @@ export default function SolutionsHero() {
   const { heroStagger } = useHomeMotion();
 
   return (
-    <section
-      id="solutions-hero"
-      className={HERO_SECTION_CLASS}
-      style={{ background: "#000000" }}
-    >
-      <motion.div
-        variants={heroStagger}
-        initial="hidden"
-        animate="visible"
-        className={`${HERO_CONTENT_CLASS} max-w-4xl`}
+    <section className="relative">
+
+      <video
+        aria-hidden
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 z-0 h-full w-full object-cover pointer-events-none"
       >
-        <motion.h1
-          variants={heroItem}
-          className="font-heading mb-2.5 px-1 text-white text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
-
-        >
-          {hero.titleLine1}
-          <br />
-          <span>{hero.titleAccent}</span>
-        </motion.h1>
-
-        <motion.p
-          variants={heroItem}
-          className="mb-4 max-w-xl px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
-
-        >
-          {hero.description}
-        </motion.p>
-
+        <source src="/videos/solution_bg.mp4" type="video/mp4" />
+      </video>
+      <div id="solutions-hero"
+        className={HERO_SECTION_CLASS}
+        style={{ background: "#00000066", backdropFilter: "blur(136px)" }}>
         <motion.div
-          variants={heroItem}
-          className="flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
+          variants={heroStagger}
+          initial="hidden"
+          animate="visible"
+          className={`${HERO_CONTENT_CLASS} max-w-4xl`}
         >
+          <motion.h1
+            variants={heroItem}
+            className="font-heading mb-2.5 px-1 text-white text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
 
-          <HashLink
-            href={hero.primaryCta.href}
-            className="inline-flex h-11 w-full items-center bg-[#FFFFFF14] justify-center gap-2 px-6 text-sm text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
-            style={{ backdropFilter: "blur(34px)" }}
           >
-            {hero.primaryCta.label}
-          </HashLink>
+            {hero.titleLine1}
+            <br />
+            <span>{hero.titleAccent}</span>
+          </motion.h1>
 
+          <motion.p
+            variants={heroItem}
+            className="mb-4 max-w-xl px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
+
+          >
+            {hero.description}
+          </motion.p>
+
+          <motion.div
+            variants={heroItem}
+            className="flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
+          >
+
+            <HashLink
+              href={hero.primaryCta.href}
+              className="inline-flex h-11 w-full items-center bg-[#FFFFFF14] justify-center gap-2 px-6 text-sm text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
+              style={{ backdropFilter: "blur(34px)" }}
+            >
+              {hero.primaryCta.label}
+            </HashLink>
+
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
+
     </section>
   );
 }

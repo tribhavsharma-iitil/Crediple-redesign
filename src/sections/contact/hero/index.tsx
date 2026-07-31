@@ -74,7 +74,7 @@ export default function ContactHero() {
         >
           <motion.h1
             variants={heroItem}
-            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+            className="font-heading mb-3 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-white"
 
           >
             {hero.titleLine1}
