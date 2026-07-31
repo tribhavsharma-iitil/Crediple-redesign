@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import DiamondNavButton from "@/components/ui/DiamondNavButton";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   homeContent,
   homeColors,
@@ -11,273 +11,311 @@ import {
   getHomeTitleAccentStyle,
 } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
-import BrandCard from "./brandCard";
-import { HomeReveal } from "@/components/home/HomeReveal";
-import { homeEase, homeFadeLeft } from "@/lib/animations";
+import { CredipleButton } from "@/components/ui/CredipleButton";
+import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
+import { homeFadeLeft, homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { cn } from "@/lib/utils";
+import sectionBg from "@/assets/home/visual_bg.png";
 
-const INTERVAL = 2200;
-const SLIDE_MS = 0.28;
-const { ecosystem } = homeContent;
+
+const { ecosystem, hero, values } = homeContent;
 const C = homeColors;
 
-function useVisibleCount() {
-  const [count, setCount] = useState(1);
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      if (w < 640) setCount(1);
-      else if (w < 1024) setCount(2);
-      else setCount(3);
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return count;
-}
+const aboutCardReveal = {
+  hidden: { y: 20 },
+  visible: {
+    y: 0,
+    transition: { duration: 0.55, ease: homeEase },
+  },
+};
 
 export default function Brands() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
   const { isDark } = useTheme();
-  const { stagger } = useHomeMotion();
-  const visible = useVisibleCount();
-  const brands = ecosystem.brands;
-  const maxIndex = Math.max(0, brands.length - visible);
-  const [current, setCurrent] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [direction, setDirection] = useState(1);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const { stagger, viewport, staggerFast } = useHomeMotion();
 
-  const goTo = useCallback(
-    (idx: number, dir?: number) => {
-      const next = Math.max(0, Math.min(idx, maxIndex));
-      setDirection(dir ?? (next >= current ? 1 : -1));
-      setCurrent(next);
-    },
-    [maxIndex, current],
-  );
-
-  const startAuto = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setDirection(1);
-      setCurrent((c) => (c < maxIndex ? c + 1 : 0));
-    }, INTERVAL);
-  }, [maxIndex]);
+  const ecosystemSectionRef = useRef<HTMLElement>(null);
+  const brandsScrollerRef = useRef<HTMLDivElement>(null);
+  const isEcosystemInViewRef = useRef(false);
 
   useEffect(() => {
-    if (!paused) startAuto();
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+    const sectionEl = ecosystemSectionRef.current;
+    const scrollerEl = brandsScrollerRef.current;
+    if (!sectionEl || !scrollerEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isEcosystemInViewRef.current =
+          entry.isIntersecting && entry.intersectionRatio >= 0.85;
+      },
+      { threshold: [0, 0.5, 0.75, 0.85, 0.9, 1] }
+    );
+    observer.observe(sectionEl);
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!isEcosystemInViewRef.current) return;
+
+      const { scrollLeft, scrollWidth, clientWidth } = scrollerEl;
+      const maxScrollLeft = scrollWidth - clientWidth;
+      if (maxScrollLeft <= 0) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta === 0) return;
+
+      const scrollingForward = delta > 0;
+      const atEnd = scrollLeft >= maxScrollLeft - 1;
+      const atStart = scrollLeft <= 1;
+
+      if ((scrollingForward && !atEnd) || (!scrollingForward && !atStart)) {
+        e.preventDefault();
+        scrollerEl.scrollLeft += delta;
+      }
     };
-  }, [paused, startAuto]);
 
-  useEffect(() => {
-    setCurrent((c) => Math.min(c, maxIndex));
-  }, [maxIndex]);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      if (!isEcosystemInViewRef.current) return;
 
-  const cardWidthPct = 100 / visible;
-  const trackX = -(current * cardWidthPct);
-  const pageCount = maxIndex + 1;
+      const activeEl = document.activeElement as HTMLElement | null;
+      const activeTag = activeEl?.tagName.toLowerCase();
+      if (activeTag === "input" || activeTag === "textarea" || activeEl?.isContentEditable) {
+        return;
+      }
+
+      e.preventDefault();
+      const step = 350;
+      scrollerEl.scrollBy({
+        left: e.key === "ArrowRight" ? step : -step,
+        behavior: "smooth",
+      });
+    };
+
+    sectionEl.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      observer.disconnect();
+      sectionEl.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
-    <section
-      id="ecosystem"
-      className="relative section-py"
-      style={{ background: isDark ? C.bgSection : homeLight.bg }}
-    >
-      <div
-        ref={sectionRef}
-        className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6"
+    <>
+      <section
+        id="ecosystem"
+        ref={ecosystemSectionRef}
+        className="relative section-py overflow-hidden"
+        style={{ background: isDark ? '#000000' : '#FFFFFF' }}
       >
-        <HomeReveal variants={homeFadeLeft} className="mb-8 w-full sm:mb-10">
-          <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
-            <div className="min-w-0 flex-1">
+        {isDark && (
+          <video
+            aria-hidden
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 z-0 md:h-78 h-60 top-[32%] lg:block hidden w-full object-cover"
+            src="/videos/section_bg_effect.mp4"
+          />
+        )}
+        <div className="relative z-10">
+          <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
+            <HomeReveal variants={homeFadeLeft} className="mb-8 w-full sm:mb-10">
+              <div className="flex w-full flex-wrap items-center justify-between gap-4">
+                <div className="min-w-0">
+                  <h2
+                    className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+                    style={{ color: isDark ? C.text : homeLight.heading }}
+                  >
+                    {ecosystem.titleBefore}{" "}
+                    <span style={getHomeTitleAccentStyle(isDark)}>
+                      {ecosystem.titleAccent}
+                    </span>
+                  </h2>
+                  <p
+                    className="mt-2 text-sm font-medium"
+                    style={{ color: isDark ? C.textMuted : homeLight.muted }}
+                  >
+                    {ecosystem.subtitle}
+                  </p>
+                </div>
+                <CredipleButton href={hero.primaryCta.href} size="md">
+                  Explore
+                </CredipleButton>
+              </div>
+            </HomeReveal>
+          </div>
+
+
+          <motion.div
+            ref={brandsScrollerRef}
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="flex gap-px overflow-x-auto !overflow-y-hidden border hide-scrollbar"
+            style={{
+              background: isDark ? 'transparent' : homeLight.border,
+              borderColor: isDark ? C.border : homeLight.border,
+              backdropFilter: isDark ? "blur(104px)" : "none",
+              WebkitBackdropFilter: isDark ? "blur(104px)" : "none",
+            }}
+          >
+            {ecosystem.brands.map((brand) => {
+              const cardStyle = {
+                background: isDark ? 'transparent' : homeLight.bg,
+              };
+              const cardClassName =
+                "relative flex h-full w-[350px] md:h-90 h-80 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
+
+              const inner = (
+                <>
+                  <div className="mb-5 flex w-full items-center justify-end sm:mb-16">
+                    <Image
+                      src={isDark ? brand.iconDark : brand.icon}
+                      alt={brand.name}
+                      width={100}
+                      height={60}
+                      className=" w-auto object-contain lg:h-12 h-10"
+                    />
+                  </div>
+                  <h3
+                    className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                    style={{ color: isDark ? C.text : homeLight.heading }}
+                  >
+                    {brand.name}
+                  </h3>
+                  <p
+                    className="mt-4 text-[16px] leading-relaxed"
+                    style={{ color: isDark ? "rgba(220,226,246,0.65)" : homeLight.body }}
+                  >
+                    {brand.description}
+                  </p>
+                </>
+              );
+
+              return (
+                <HomeItem key={brand.name} className="h-full">
+                  {brand.clickable ? (
+                    <Link
+                      href={brand.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(cardClassName, "hover:bg-black/[0.02] dark:hover:bg-white/[0.03]")}
+                      style={cardStyle}
+                    >
+                      {inner}
+                    </Link>
+                  ) : (
+                    <div className={cardClassName} style={cardStyle}>
+                      {inner}
+                    </div>
+                  )}
+                </HomeItem>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+      <section
+        id="values"
+        className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
+        style={{
+          backgroundColor: isDark ? "transparent" : "#FFFFFF",
+          backgroundImage: isDark ? `url(${sectionBg.src})` : undefined,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100% 100%", // width height
+        }}
+      >
+        {/* Soft blue glow — behind image column, not over the list */}
+        {/* <div
+          aria-hidden
+          className="absolute right-[-8%] top-[15%] w-[min(560px,70vw)] h-[min(560px,70vw)] pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, ${C.glow} 0%, transparent 68%)`,
+            filter: "blur(48px)",
+            opacity: isDark ? 0.85 : 0.3,
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute left-[35%] bottom-[-15%] w-[min(380px,55vw)] h-[min(380px,55vw)] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(47,128,237,0.14) 0%, transparent 70%)",
+            filter: "blur(56px)",
+            opacity: isDark ? 1 : 0.2,
+          }}
+        /> */}
+
+        <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
+          <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
+            <HomeReveal className="m-auto" variants={homeFadeLeft}>
               <h2
-                className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
-                style={{ color: isDark ? C.text : homeLight.heading }}
+                className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+                style={{ color: isDark ? "#ffffff" : homeLight.heading }}
               >
-                {ecosystem.titleBefore}{" "}
+                {values.titleBefore}{" "}
                 <span style={getHomeTitleAccentStyle(isDark)}>
-                  {ecosystem.titleAccent}
+                  {values.titleAccent}
                 </span>
               </h2>
               <p
-                className="mt-2 text-sm font-medium"
-                style={{ color: isDark ? C.textMuted : homeLight.muted }}
+                className="mb-6 max-w-md text-sm sm:text-base"
+                style={{ color: isDark ? "#ffffff" : homeLight.muted }}
               >
-                {ecosystem.subtitle}
+                {values.subtitle}
               </p>
-            </div>
-            <div className="hidden shrink-0 gap-3 sm:flex sm:self-end">
-              <DiamondNavButton
-                isDark={isDark}
-                onClick={() => {
-                  goTo(current > 0 ? current - 1 : maxIndex, -1);
-                  startAuto();
-                }}
-                aria-label="Previous"
-                style={{ color: isDark ? C.text : homeLight.body }}
-              >
-                <ChevronLeft size={15} />
-              </DiamondNavButton>
-              <DiamondNavButton
-                isDark={isDark}
-                onClick={() => {
-                  goTo(current < maxIndex ? current + 1 : 0, 1);
-                  startAuto();
-                }}
-                aria-label="Next"
-                style={{ color: isDark ? C.text : homeLight.body }}
-              >
-                <ChevronRight size={15} />
-              </DiamondNavButton>
-            </div>
-          </div>
-        </HomeReveal>
+              <CredipleButton href={values.cta.href} size="md" className="uppercase tracking-wide">
+                {values.cta.label}
+              </CredipleButton>
+            </HomeReveal>
 
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          <div className="overflow-x-clip">
             <motion.div
-              className="-mx-3 flex will-change-transform"
-              animate={{ x: `${trackX}%` }}
-              transition={{
-                duration: SLIDE_MS,
-                ease: homeEase,
+              variants={staggerFast}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewport}
+              className="grid grid-cols-1 overflow-hidden border"
+              style={{
+                background: isDark ? `#FFFFFF0A` : "#FBFBFB",
+                borderColor: isDark ? C.border : homeLight.border,
               }}
             >
-              {brands.map((brand, i) => {
-                const inView = i >= current && i < current + visible;
-                return (
-                  <motion.div
-                    key={brand.name}
-                    style={{
-                      width: `${cardWidthPct}%`,
-                      flex: `0 0 ${cardWidthPct}%`,
-                    }}
-                    className="px-3"
-                    animate={{
-                      opacity: inView ? 1 : 0.5,
-                      scale: inView ? 1 : 0.94,
-                      y: inView ? 0 : 10,
-                    }}
-                    transition={{
-                      duration: SLIDE_MS,
-                      ease: homeEase,
-                      delay: inView ? 0.02 * Math.max(0, i - current) : 0,
-                    }}
+              {values.items.map((item, i) => (
+                <HomeItem key={item.number} variants={aboutCardReveal}>
+                  <div
+                    className={`p-5 sm:p-6 lg:p-7 ${i === 0 ? "" : "border-t"}`}
+                    style={{ borderColor: isDark ? C.border : homeLight.border }}
                   >
-                    <motion.div
-                      whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                      className="h-full"
+                    <span
+                      className="text-sm font-bold"
+                      style={{ color: isDark ? C.accentSoft : homeLight.accent }}
                     >
-                      <BrandCard brand={brand} index={i} />
-                    </motion.div>
-                  </motion.div>
-                );
-              })}
+                      {item.number}
+                    </span>
+                    <h3
+                      className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                      style={{ color: isDark ? C.text : homeLight.heading }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      className="text-sm leading-relaxed sm:text-[16px]"
+                      style={{ color: isDark ? "rgba(255,255,255,0.65)" : homeLight.muted }}
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
+                </HomeItem>
+              ))}
             </motion.div>
           </div>
+        </div>
+      </section>
+    </>
 
-          <div className="mt-8 flex items-center justify-center gap-4 sm:gap-2">
-            <div className="flex gap-3 sm:hidden">
-              <DiamondNavButton
-                isDark={isDark}
-                onClick={() => {
-                  goTo(current > 0 ? current - 1 : maxIndex, -1);
-                  startAuto();
-                }}
-                aria-label="Previous"
-                style={{ color: isDark ? C.text : homeLight.body }}
-              >
-                <ChevronLeft size={16} />
-              </DiamondNavButton>
-            </div>
-
-            <div className="flex justify-center gap-2">
-              {Array.from({ length: pageCount }).map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => {
-                    goTo(i);
-                    startAuto();
-                  }}
-                  aria-label={`Page ${i + 1}`}
-                  aria-current={i === current ? "true" : undefined}
-                  className={cn(
-                    "relative h-1.5 overflow-hidden rounded-full transition-[width] duration-300",
-                    i === current ? "w-7" : "w-1.5",
-                  )}
-                  style={{
-                    background:
-                      i === current
-                        ? isDark
-                          ? "rgba(248,248,248,0.2)"
-                          : "rgba(47,128,237,0.2)"
-                        : isDark
-                          ? "rgba(248,248,248,0.25)"
-                          : "#CBD5E1",
-                  }}
-                >
-                  <AnimatePresence mode="wait">
-                    {i === current && (
-                      <motion.span
-                        key={`fill-${current}-${paused ? "p" : "r"}`}
-                        className="absolute inset-y-0 left-0 rounded-full"
-                        style={{
-                          background: isDark ? C.text : C.accentStrong,
-                          originX: 0,
-                        }}
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: paused ? 0 : 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={
-                          paused
-                            ? { duration: 0.15 }
-                            : {
-                                duration: INTERVAL / 1000,
-                                ease: "linear",
-                              }
-                        }
-                      />
-                    )}
-                  </AnimatePresence>
-                </button>
-              ))}
-            </div>
-
-            <div className="flex gap-3 sm:hidden">
-              <DiamondNavButton
-                isDark={isDark}
-                onClick={() => {
-                  goTo(current < maxIndex ? current + 1 : 0, 1);
-                  startAuto();
-                }}
-                aria-label="Next"
-                style={{ color: isDark ? C.text : homeLight.body }}
-              >
-                <ChevronRight size={16} />
-              </DiamondNavButton>
-            </div>
-          </div>
-
-          {/* Direction hint for a11y / subtle motion cue */}
-          <span className="sr-only" aria-live="polite">
-            Slide {current + 1} of {pageCount}, direction{" "}
-            {direction > 0 ? "forward" : "back"}
-          </span>
-        </motion.div>
-      </div>
-    </section>
   );
 }

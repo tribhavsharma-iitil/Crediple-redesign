@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   homeContent,
   homeColors,
@@ -12,202 +11,157 @@ import {
   getHomeTitleAccentStyle,
 } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
-import DiamondNavButton from "@/components/ui/DiamondNavButton";
-import { HomeReveal } from "@/components/home/HomeReveal";
-import { homeFadeUp, homeEase } from "@/lib/animations";
+import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
+import { homeFadeUp } from "@/lib/animations";
+import { useHomeMotion } from "@/hooks/useHomeMotion";
 
 const { serve } = homeContent;
 const C = homeColors;
 
-function useStripVisible() {
-  const [count, setCount] = useState(2);
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      if (w < 640) setCount(1);
-      else if (w < 1024) setCount(3);
-      else setCount(4);
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return count;
-}
-
 export default function WhoWeServe() {
   const { isDark } = useTheme();
-  const [active, setActive] = useState(1); // Finance & Fintech featured
-  const [offset, setOffset] = useState(0);
-  const visible = useStripVisible();
-  const total = serve.items.length;
-  const item = serve.items[active];
+  const { stagger, viewport } = useHomeMotion();
 
-  const clampOffset = (nextActive: number, currentOffset: number, vis: number) => {
-    if (nextActive < currentOffset) return nextActive;
-    if (nextActive >= currentOffset + vis) return nextActive - vis + 1;
-    return Math.min(currentOffset, Math.max(0, total - vis));
-  };
+  const serveSectionRef = useRef<HTMLElement>(null);
+  const serveScrollerRef = useRef<HTMLDivElement>(null);
+  const isServeInViewRef = useRef(false);
 
   useEffect(() => {
-    setOffset((o) => clampOffset(active, o, visible));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, active, total]);
+    const sectionEl = serveSectionRef.current;
+    const scrollerEl = serveScrollerRef.current;
+    if (!sectionEl || !scrollerEl) return;
 
-  const goTo = (index: number) => {
-    const next = ((index % total) + total) % total;
-    setActive(next);
-    setOffset((o) => clampOffset(next, o, visible));
-  };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isServeInViewRef.current =
+          entry.isIntersecting && entry.intersectionRatio >= 0.99;
+      },
+      { threshold: [0, 0.5, 0.75, 0.85, 0.9, 1] }
+    );
+    observer.observe(scrollerEl);
 
-  const prev = () => goTo(active - 1);
-  const next = () => goTo(active + 1);
+    const handleWheel = (e: WheelEvent) => {
+      if (!isServeInViewRef.current) return;
 
-  const stripItems = serve.items
-    .map((cat, index) => ({ ...cat, index }))
-    .slice(offset, offset + visible);
+      const { scrollLeft, scrollWidth, clientWidth } = scrollerEl;
+      const maxScrollLeft = scrollWidth - clientWidth;
+      if (maxScrollLeft <= 0) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta === 0) return;
+
+      const scrollingForward = delta > 0;
+      const atEnd = scrollLeft >= maxScrollLeft - 1;
+      const atStart = scrollLeft <= 1;
+
+      if ((scrollingForward && !atEnd) || (!scrollingForward && !atStart)) {
+        e.preventDefault();
+        scrollerEl.scrollLeft += delta;
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      if (!isServeInViewRef.current) return;
+
+      const activeEl = document.activeElement as HTMLElement | null;
+      const activeTag = activeEl?.tagName.toLowerCase();
+      if (activeTag === "input" || activeTag === "textarea" || activeEl?.isContentEditable) {
+        return;
+      }
+
+      e.preventDefault();
+      const step = 350;
+      scrollerEl.scrollBy({
+        left: e.key === "ArrowRight" ? step : -step,
+        behavior: "smooth",
+      });
+    };
+
+    sectionEl.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      observer.disconnect();
+      sectionEl.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <section
       id="serve"
+      ref={serveSectionRef}
       className="relative section-py overflow-hidden"
-      style={{ background: isDark ? C.bgSection : homeLight.bg }}
+      style={{ background: isDark ? C.bgSection : '#FFFFFF' }}
     >
-      <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
-        <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
-          <h2
-            className="font-heading text-2xl font-black sm:text-3xl md:text-4xl lg:text-5xl tracking-tight"
-            style={{ color: isDark ? "#DCE2F6" : homeLight.heading }}
-          >
-            {serve.titleBefore}{" "}
-            <span style={getHomeTitleAccentStyle(isDark)}>{serve.titleAccent}</span>
-          </h2>
-        </HomeReveal>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={item.title}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4, ease: homeEase }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center mb-12 sm:mb-14 md:mb-16"
-          >
-            <div className="max-w-xl order-2 lg:order-1">
-              <h3
-                className="font-heading font-black text-2xl sm:text-3xl md:text-[2.5rem] leading-tight mb-4 sm:mb-5 tracking-tight"
-                style={{ color: isDark ? C.text : homeLight.heading }}
-              >
-                {item.title}
-              </h3>
-              <p
-                className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed mb-6 sm:mb-8"
-                style={{ color: isDark ? "#C8D0DC" : homeLight.body }}
-              >
-                {item.desc}
-              </p>
-              <Link
-                href={item.href}
-                className="inline-flex items-center justify-center px-7 py-2.5 rounded-full text-white text-sm font-semibold no-underline transition-opacity hover:opacity-90 w-full sm:w-auto"
-                style={{
-                  background: C.buttonGradient,
-                  boxShadow: `0 8px 24px ${C.glow}`,
-                }}
-              >
-                Read More
-              </Link>
-            </div>
-
-            <div className="relative rounded-2xl overflow-hidden aspect-[16/10] shadow-2xl w-full order-1 lg:order-2">
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        <HomeReveal variants={homeFadeUp}>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 md:gap-6">
-            <div
-              className="flex-1 grid gap-x-4 sm:gap-x-5 md:gap-x-8 gap-y-6 sm:gap-y-8 min-w-0"
-              style={{
-                gridTemplateColumns: `repeat(${visible}, minmax(0, 1fr))`,
-              }}
+      <div className="">
+        <div className="w-full max-w-[1260px] mx-auto px-4 sm:px-6">
+          <HomeReveal variants={homeFadeUp} className="mb-8 text-center sm:mb-10 md:mb-12">
+            <h2
+              className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+              style={{ color: isDark ? "#ffffff" : homeLight.heading }}
             >
-              {stripItems.map((cat) => {
-                const isActive = cat.index === active;
-                return (
-                  <button
-                    key={cat.title}
-                    type="button"
-                    onClick={() => goTo(cat.index)}
-                    className="text-left group w-full pt-3 sm:pt-4 border-t-2 transition-colors min-w-0"
+              {serve.titleBefore}{" "}
+              <span style={getHomeTitleAccentStyle(isDark)}>{serve.titleAccent}</span>
+            </h2>
+            <p
+              className="mt-2 text-sm sm:text-base"
+              style={{ color: isDark ? '#FFFFFF' : homeLight.muted }}
+            >
+              {serve.subtitle}
+            </p>
+          </HomeReveal>
+        </div>
+        <div className="">
+          <motion.div
+            ref={serveScrollerRef}
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="flex gap-0 overflow-x-auto !overflow-y-hidden pb-2 hide-scrollbar"
+          >
+            {serve.items.map((item) => (
+              <HomeItem
+                key={item.title}
+                variants={homeFadeUp}
+                className="w-[280px] shrink-0 sm:w-[280px] lg:w-[380px] h-[300px] sm:h-[320px] lg:h-[400px]"
+              >
+                <Link
+                  href={item.href}
+                  className="group relative block aspect-[4/3] w-full overflow-hidden no-underline h-full"
+                  style={{ borderColor: isDark ? C.border : homeLight.border }}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    placeholder="blur"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 280px, 380px"
+                  />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0"
                     style={{
-                      borderColor: isActive
-                        ? C.accentSoft
-                        : isDark
-                          ? "rgba(220,226,246,0.28)"
-                          : homeLight.border,
+                      background:
+                        "linear-gradient(180deg, transparent 40%, rgba(3,8,26,0.85) 100%)",
                     }}
-                  >
-                    <p
-                      className="font-heading font-bold text-xs sm:text-sm md:text-[15px] mb-1.5 sm:mb-2 transition-colors break-words"
-                      style={{
-                        color: isActive
-                          ? isDark
-                            ? C.text
-                            : homeLight.heading
-                          : isDark
-                            ? "#DCE2F6"
-                            : homeLight.muted,
-                      }}
-                    >
-                      {cat.title}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                    <h3 className="font-heading md:text-xl font-bold text-white text-base">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 lg:text-sm  text-xs leading-relaxed text-white/75">
+                      {item.short}
                     </p>
-                    <p
-                      className="text-[11px] sm:text-xs leading-relaxed line-clamp-2 sm:line-clamp-1"
-                      style={{
-                        color: isActive
-                          ? isDark
-                            ? C.textMuted
-                            : homeLight.muted
-                          : isDark
-                            ? "rgba(220,226,246,0.55)"
-                            : "#94A3B8",
-                      }}
-                    >
-                      {cat.short}
-                    </p>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="flex gap-3 shrink-0 pt-0 sm:pt-4 justify-end sm:justify-start">
-              <DiamondNavButton
-                isDark={isDark}
-                onClick={prev}
-                aria-label="Previous sector"
-                style={{ color: isDark ? C.text : homeLight.body }}
-              >
-                <ChevronLeft size={15} />
-              </DiamondNavButton>
-              <DiamondNavButton
-                isDark={isDark}
-                onClick={next}
-                aria-label="Next sector"
-                style={{ color: isDark ? C.text : homeLight.body }}
-              >
-                <ChevronRight size={15} />
-              </DiamondNavButton>
-            </div>
-          </div>
-        </HomeReveal>
+                  </div>
+                </Link>
+              </HomeItem>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

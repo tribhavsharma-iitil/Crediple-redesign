@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Play, ArrowRight } from "lucide-react";
+import { Play } from "lucide-react";
 import { aboutContent, aboutColors } from "@/content/about";
 import { useTheme } from "@/context/ThemeContext";
 import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import HashLink from "@/components/ui/HashLink";
+import aboutBg from "@/assets/about/about_us_bg.png";
 import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
 import {
@@ -35,25 +36,12 @@ export default function AboutHero() {
     <section
       id="about-hero"
       className={HERO_SECTION_CLASS}
-      style={{ background: isDark ? C.bg : "#F8FAFC" }}
+      // style={{ background: "transparent" }}
+       style={{
+              background:
+                `url(${aboutBg.src}) center/cover no-repeat`,
+            }}
     >
-      <HeroWave isDark={isDark} />
-
-      <div className={HERO_YAKA_SLOT_CLASS}>
-        <YakaBrandMark />
-      </div>
-
-      {isDark && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute top-[36%] left-1/2 z-0 h-[min(360px,50vw)] w-[min(640px,100vw)] -translate-x-1/2"
-          style={{
-            background: `radial-gradient(ellipse, ${C.glow} 0%, transparent 70%)`,
-            filter: "blur(50px)",
-          }}
-        />
-      )}
-
       <motion.div
         variants={heroStagger}
         initial="hidden"
@@ -62,14 +50,12 @@ export default function AboutHero() {
       >
         <motion.h1
           variants={heroItem}
-          className="font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
-          style={{ color: isDark ? C.text : "#0F172A" }}
+          className="text-white font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
         >
           {hero.titleLine1}
           <br />
           <span
-            className="inline-block md:whitespace-nowrap"
-            style={{ color: isDark ? C.textAccent : C.accentSoft }}
+            className="text-white inline-block md:whitespace-nowrap"
           >
             {hero.titleAccent}
           </span>
@@ -77,8 +63,7 @@ export default function AboutHero() {
 
         <motion.p
           variants={heroItem}
-          className="mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
-          style={{ color: isDark ? C.textMuted : "#64748B" }}
+          className="mb-4 px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
         >
           {hero.description}
         </motion.p>
@@ -89,29 +74,10 @@ export default function AboutHero() {
         >
           <HashLink
             href={hero.primaryCta.href}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
-            style={{
-              background: C.buttonGradient,
-              boxShadow: `0 8px 28px ${C.glow}`,
-            }}
+            className="inline-flex h-11 w-full items-center bg-[#FFFFFF14] justify-center gap-2 px-6 text-sm text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
+            style={{ backdropFilter: "blur(34px)" }}
           >
-            <Play size={13} className="fill-current" />
             {hero.primaryCta.label}
-          </HashLink>
-
-          <HashLink
-            href={hero.secondaryCta.href}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border px-6 text-sm font-semibold no-underline transition-colors sm:w-auto sm:px-7 md:h-12"
-            style={{
-              borderColor: isDark
-                ? "rgba(248,248,248,0.28)"
-                : "rgba(15,23,42,0.15)",
-              color: isDark ? C.text : "#0F172A",
-              background: "transparent",
-            }}
-          >
-            {hero.secondaryCta.label}
-            <ArrowRight size={15} />
           </HashLink>
         </motion.div>
       </motion.div>

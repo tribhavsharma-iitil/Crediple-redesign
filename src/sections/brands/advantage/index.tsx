@@ -25,7 +25,7 @@ export default function BrandsAdvantage() {
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
         <HomeReveal variants={homeFadeUp} className="mb-8 sm:mb-10 md:mb-12">
           <h2
-            className="font-heading text-2xl font-black tracking-tight sm:text-3xl md:text-4xl lg:text-5xl"
+            className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             style={{ color: isDark ? "#DCE2F6" : homeLight.heading }}
           >
             {advantage.titleBefore}{" "}

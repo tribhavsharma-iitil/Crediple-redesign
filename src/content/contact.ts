@@ -10,7 +10,7 @@ export const contactColors = {
   textHeading: "#D8E0F0",
   textMuted: "#98A0A8",
   textSoftBlue: "#B0C0F8",
-  textAccent: "#3888F0",
+  textAccent: "#0047AB",
   textTrust: "#606878",
 } as const;
 
@@ -18,27 +18,43 @@ export { homeLight, getHomeTitleAccentStyle };
 
 export const contactContent = {
   hero: {
-    titleLine1: "Create The Future",
-    titleAccent: "With Crediple.",
+    titleLine1: "Got a question?",
+    titleLine2: "Let's Connect",
     description:
-      "Partner with us to build scalable digital solutions and high-impact business ecosystems. Innovation starts here.",
-    primaryCta: { label: "Know About Us", href: "/about" },
-    secondaryCta: { label: "Explore Brands", href: "/brands/#brand-01" },
+      "We just need a couple of hours. No more than 2 working days since receiving your request.",
+    sayHi: "Or just wanna say hi?",
+    email: "hello@crediple.com",
+    form: {
+      name: { label: "Full Name", placeholder: "Enter your first name" },
+      email: { label: "Email", placeholder: "Enter your email" },
+      subject: { label: "Subject", placeholder: "Enter your subject" },
+      description: {
+        label: "Description",
+        placeholder: "Please describe what you need",
+      },
+      submitLabel: "Send Message",
+    },
   },
 
-  form: {
-    titleBefore: "Contact us for more",
-    titleAccent: "Information",
-    intro:
-      "We just need a couple of hours. No more than 2 working days since receiving your request.",
-    addressLabel: "Address",
-    address:
-      "Sattva Knowledge City, Hi-Tech City, Hyderabad, Telangana, India, Pin - 500081",
-    emailLabel: "Email",
-    email: "hello@crediple.com",
-    hoursLabel: "Office open",
-    hours: "Mon – Fri, 9 AM – 6 PM IST",
-    submitLabel: "Send Message",
+  info: {
+    items: [
+      {
+        icon: "clock",
+        label: "Office open",
+        value: "Mon – Fri, 9 AM – 6 PM IST",
+      },
+      {
+        icon: "mail",
+        label: "Email",
+        value: "hello@crediple.com",
+      },
+      {
+        icon: "mapPin",
+        label: "Address",
+        value:
+          "Sattva Knowledge City, Hi-Tech City, Hyderabad, Telangana, India, Pin - 500081",
+      },
+    ],
   },
 
   cta: {

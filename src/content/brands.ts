@@ -16,7 +16,7 @@ export const brandsColors = {
   text: "#F8F8F8",
   textMuted: "#707080",
   textSoftBlue: "#B0C0F8",
-  textAccent: "#3888F0",
+  textAccent: "#0047AB",
   textTagline: "#5FA8FF",
 } as const;
 
@@ -36,8 +36,8 @@ export const brandsContent = {
     titleLine1: "Tailored Systems for",
     titleAccent: "Every Sector.",
     description:
-      "Every Crediple brand tackles a different industry problem, all with the same rigor and intent.",
-    descriptionLine2: "We don't follow; we set the standard.",
+      "Every crediple brand tackles a different industry problem, all with the same rigor and intent. We don’t follow, we set the standard.",
+    descriptionLine2: "",
     secondaryCta: { label: "Contact Us", href: "/contact/#contact-form" },
   },
 
@@ -86,8 +86,7 @@ export const brandsContent = {
       name: "eatskart",
       tagline: "Where Restaurants Keep More And Customers Pay Less",
       description: [
-        "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, eatskart helps them earn more and pass the savings on to customers.",
-        "Browse the latest menus, discover new places, track your order live, and get it delivered fast, every time.",
+        "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, eatskart helps them earn more and pass the savings on to customers. Browse the latest menus, discover new places, track your order live, and get it delivered fast, every time.",
       ],
       image: card_7,
       href: "https://eatskart.com/",
@@ -127,8 +126,7 @@ export const brandsContent = {
       name: "Orgatry",
       tagline: "One Platform For Your Entire Workforce",
       description: [
-        "Why should HR only mean spreadsheets, chasing approvals, regular onboarding, and manual payroll runs?",
-        "Orgatry replaces all of it with one connected, automated system built for modern teams.",
+        "Why should HR only mean spreadsheets, chasing approvals, regular onboarding, and manual payroll runs? Orgatry replaces all of it with one connected, automated system built for modern teams.",
       ],
       image: card_5,
       href: "https://orgatry.com/",
@@ -167,8 +165,7 @@ export const brandsContent = {
       name: "My Doctor Capsule",
       tagline: "The Growth Engine Behind Every Great Practice",
       description: [
-        "Clinics and practitioners face the same problem: patients can't find them, or don't trust what they find.",
-        "My Doctor Capsule solves both with a credible digital presence and organized patient acquisition systems for modern healthcare providers.",
+        "Clinics and practitioners face the same problem: patients can't find them, or don't trust what they find. My Doctor Capsule solves both with a credible digital presence and organized patient acquisition systems for modern healthcare providers.",
       ],
       image: card_1,
       href: "https://mydoctorcapsule.com/",
@@ -208,8 +205,7 @@ export const brandsContent = {
       name: "Loan Konnekt",
       tagline: "From Financial Confusion To Financial Clarity",
       description: [
-        "The financial system is hard to navigate. Credit and lending feel like a black box.",
-        "Loan Konnekt builds analytical frameworks and advisory systems to simplify financial decision-making for borrowers seeking to understand their options and lenders seeking to assess risk.",
+        "The financial system is hard to navigate. Credit and lending feel like a black box. Loan Konnekt builds analytical frameworks and advisory systems to simplify financial decision-making for borrowers seeking to understand their options and lenders seeking to assess risk.",
       ],
       image: card_2,
       href: "https://loankonnekt.com/",
@@ -249,8 +245,7 @@ export const brandsContent = {
       name: "Lawvix",
       tagline: "Where Legal Work Gets Faster",
       description: [
-        "Lawvix removes friction from legal processes. Say goodbye to outdated systems.",
-        "Through structured, technology-enabled workflows, we make legal access more transparent, more efficient, and more accessible. For practices and clients alike.",
+        "Lawvix removes friction from legal processes. Say goodbye to outdated systems. Through structured, technology-enabled workflows, we make legal access more transparent, more efficient, and more accessible. For practices and clients alike.",
       ],
       image: card_3,
       href: "https://lawvix.com/",
@@ -288,8 +283,7 @@ export const brandsContent = {
       name: "Propertizor",
       tagline: "Structured Data For An Unstructured Market",
       description: [
-        "Real estate runs on scattered, outdated, or simply untrustworthy information.",
-        "Propertizor fixes that by connecting buyers, sellers, and agents through verified listings and structured market data.",
+        "Real estate runs on scattered, outdated, or simply untrustworthy information. Propertizor fixes that by connecting buyers, sellers, and agents through verified listings and structured market data.",
       ],
       image: card_6,
       href: "https://propertizor.com/",

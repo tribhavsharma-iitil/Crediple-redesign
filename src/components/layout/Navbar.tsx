@@ -11,7 +11,6 @@ import { useTheme } from "@/context/ThemeContext";
 import { CredipleButton } from "@/components/ui/CredipleButton";
 import { cn } from "@/lib/utils";
 
-// Asset Imports
 import credipleDark from "@/assets/crediple_dark.png";
 import credipleLight from "@/assets/crediple_light.png";
 import yakaDark from "@/assets/yaka_dark.png";
@@ -31,6 +30,10 @@ const drawerContainer = {
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
+function isLinkActive(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
 export function ThemeToggle() {
   const { isDark, toggleTheme } = useTheme();
 
@@ -40,13 +43,11 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       className={cn(
-        "w-10 h-10 rounded-[12px] flex items-center justify-center transition-all hover:scale-105 border bg-transparent shrink-0",
-        isDark
-          ? "border-white/10 text-white hover:bg-white/5"
-          : "border-black/10 text-[#020B1A] hover:bg-black/5",
+        "flex h-10 w-10 shrink-0 items-center justify-center transition-opacity hover:opacity-70",
+        isDark ? "text-white" : "text-[#0F172A]",
       )}
     >
-      {isDark ? <Moon size={18} /> : <Sun size={18} />}
+      {isDark ? <Sun size={20} strokeWidth={1.75} /> : <Moon size={20} strokeWidth={1.75} />}
     </button>
   );
 }
@@ -71,124 +72,101 @@ export default function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full px-4 sm:px-6 md:px-12",
-          scrolled
-            ? "backdrop-blur-md border-b bg-white/80 dark:bg-black/20 border-[#0047AB40] dark:border-white/10"
-            : "bg-transparent border-b border-transparent",
+          "fixed left-4 right-4 z-50 w-full dark:bg-[#FFFFFF14] bg-white top-4 w-auto border"
         )}
+        style={{ backdropFilter: "blur(362px)" }}
       >
-        <div className="max-w-[1260px] mx-auto h-16 md:h-[72px] grid grid-cols-2 md:grid-cols-3 items-center relative">
-          {/* Column 1: Left Brand Area */}
+        <div className="relative md:px-0 px-4 mx-auto grid h-16 max-w-[1200px] grid-cols-2 items-center md:h-[72px] md:grid-cols-3">
+          {/* Logo */}
           <div className="flex items-center justify-start">
             <Link
               href="/"
-              className="flex items-center shrink-0 no-underline transition-opacity duration-200 hover:opacity-90"
+              className="flex shrink-0 items-center no-underline transition-opacity duration-200 hover:opacity-90"
             >
               <Image
                 src={isDark ? credipleDark : credipleLight}
                 alt="Crediple Logo"
                 height={28}
-                className="h-7 w-auto object-contain sm:h-9"
+                className="h-7 w-auto object-contain sm:h-8"
                 priority
               />
             </Link>
           </div>
 
-          {/* Column 2: Center Desktop Navigation */}
-          <nav className="hidden md:flex items-center justify-center gap-8">
-            {NAV_LINKS.map((link) => {
-              // Fixed: Ensures correct matching for root path vs sub-paths
-              const active = link.href === "/" 
-                ? pathname === "/" 
-                : pathname.startsWith(link.href);
+          {/* Desktop navigation */}
+          <nav
+            className={cn(
+              "hidden items-center fle justify-center md:flex gap-4",
+            )}
+          >
+            {NAV_LINKS.map((link, index) => {
+              const active = isLinkActive(pathname, link.href);
 
               return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "relative text-sm font-bold uppercase tracking-widest no-underline transition-all hover:opacity-80",
-                    active
-                      ? isDark
-                        ? "text-[#B4C5FF]"
-                        : "text-brand-blue"
-                      : isDark
-                        ? "text-dark-body/70"
-                        : "text-light-body/70",
-                  )}
-                >
-                  {link.label}
-                  {active && (
+                <div key={link.href} className="flex items-center">
+                  {index > 0 && (
                     <span
-                      className={cn(
-                        "absolute -bottom-1 left-0 right-0 h-0.5 rounded-full",
-                        isDark ? "bg-[#B4C5FF]" : "bg-brand-blue",
-                      )}
-                    />
+                      aria-hidden
+                      className="mx-4 select-none text-md text-[#3C3C3C4D] dark:text-[#FFFFFF4D]"
+                    >
+                      /
+                    </span>
                   )}
-                </Link>
+                  <span key={link.href} className="flex items-center">
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "relative text-md font-noraml no-underline transition-colors hover:opacity-80",
+                        active
+                          ? isDark
+                            ? "text-white"
+                            : "text-[#0047AB]"
+                          : isDark
+                            ? "text-white/65"
+                            : "text-[#475569]",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </span>
+                </div>
+
               );
             })}
           </nav>
 
-          {/* Column 3: Right Desktop Actions Panel */}
-          <div className="hidden md:flex items-center justify-end gap-4">
-            <div
-              className={cn(
-                "h-5 w-px shrink-0",
-                isDark ? "bg-white/20" : "bg-black/10",
-              )}
-            />
-
+          {/* Desktop actions */}
+          <div className="hidden items-center justify-end gap-3 md:flex md:gap-4">
             <ThemeToggle />
 
             <CredipleButton
               href="/contact"
               size="sm"
-              className="shrink-0 font-semibold px-5 h-10 rounded-[12px]"
+              className="h-10 shrink-0 rounded-lg px-5 font-semibold"
             >
               Contact Us
             </CredipleButton>
 
-            {/* Inline animated flex item instead of absolute overlay */}
-            <AnimatePresence mode="popLayout">
-              {scrolled && (
-                <motion.div
-                  initial={{ opacity: 0, width: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, width: "auto", scale: 1 }}
-                  exit={{ opacity: 0, width: 0, scale: 0.8 }}
-                  transition={{ type: "spring", stiffness: 180, damping: 22 }}
-                  className="hidden xl:flex items-center gap-3 pl-1 overflow-hidden shrink-0 select-none"
-                >
-                  <div
-                    className={cn(
-                      "h-5 w-px shrink-0",
-                      isDark ? "bg-white/20" : "bg-black/10",
-                    )}
-                  />
-                  <Image
-                    src={isDark ? yakaDark : yakaLight}
-                    alt="Yaka Logo"
-                    height={20}
-                    className="w-auto h-5 object-contain shrink-0"
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <Image
+              src={isDark ? yakaDark : yakaLight}
+              alt="Yaka"
+              height={24}
+              className="h-6 w-6 shrink-0 object-contain"
+            />
           </div>
 
-          {/* Mobile Layout Controls fallback */}
-          <div className="md:hidden flex items-center justify-end gap-2">
+          {/* Mobile controls */}
+          <div className="flex items-center justify-end gap-2 md:hidden">
             <ThemeToggle />
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label="Toggle menu"
               className={cn(
-                "w-10 h-10 rounded-[12px] flex items-center justify-center border bg-transparent",
+                "flex h-10 w-10 items-center justify-center rounded-lg border bg-transparent",
                 isDark
-                  ? "border-white/10 text-white"
-                  : "border-black/10 text-[#020B1A]",
+                  ? "border-white/15 text-white"
+                  : "border-[#E2E8F0] text-[#0F172A]",
               )}
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -197,7 +175,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Sidebar System */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -214,35 +192,32 @@ export default function Navbar() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
               className={cn(
-                "fixed top-0 right-0 bottom-0 z-50 w-[min(320px,85vw)] md:hidden flex flex-col p-6 pt-20",
-                isDark ? "bg-[#020B1A]" : "bg-white",
+                "fixed top-0 right-0 bottom-0 z-50 flex w-[min(320px,85vw)] flex-col p-6 pt-20 md:hidden",
+                isDark ? "bg-black" : "bg-white",
               )}
             >
               <motion.nav
                 variants={drawerContainer}
                 initial="hidden"
                 animate="show"
-                className="flex flex-col gap-2"
+                className="flex flex-col gap-1"
               >
                 {NAV_LINKS.map((link) => {
-                  // Fixed: Ensures correct matching here as well
-                  const active = link.href === "/" 
-                    ? pathname === "/" 
-                    : pathname.startsWith(link.href);
+                  const active = isLinkActive(pathname, link.href);
 
                   return (
                     <motion.div key={link.href} variants={drawerItem}>
                       <Link
                         href={link.href}
                         className={cn(
-                          "block py-3 px-4 rounded-[12px] text-sm font-medium uppercase no-underline",
+                          "block rounded-lg px-4 py-3 text-sm font-medium no-underline",
                           active
                             ? isDark
-                              ? "bg-white/10 text-[#B4C5FF]"
-                              : "bg-[#EFF6FF] text-brand-blue"
+                              ? "bg-white/10 text-white"
+                              : "bg-[#EFF6FF] text-[#0047AB]"
                             : isDark
-                              ? "text-dark-body"
-                              : "text-light-body",
+                              ? "text-white/70"
+                              : "text-[#475569]",
                         )}
                       >
                         {link.label}
@@ -257,6 +232,14 @@ export default function Navbar() {
                   >
                     Contact Us
                   </CredipleButton>
+                </motion.div>
+                <motion.div variants={drawerItem} className="flex justify-center pt-6">
+                  <Image
+                    src={isDark ? yakaDark : yakaLight}
+                    alt="Yaka"
+                    height={28}
+                    className="h-7 w-7 object-contain"
+                  />
                 </motion.div>
               </motion.nav>
             </motion.div>

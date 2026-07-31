@@ -1,170 +1,203 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import {
   brandsContent,
   brandsColors,
   type BrandDetail,
 } from "@/content/brands";
 import { useTheme } from "@/context/ThemeContext";
-import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
-import { homeFadeLeft, homeFadeRight, homeFadeUp } from "@/lib/animations";
+import { HomeReveal } from "@/components/home/HomeReveal";
+import { homeFadeUp } from "@/lib/animations";
+import footerBgDark from "@/assets/about/brands_sub_header.png";
 
 const { brands } = brandsContent;
 const C = brandsColors;
 
-function BrandBlock({
-  brand,
-  index,
+function brandId(index: number) {
+  return index === 0
+    ? "brand-01"
+    : `brand-${String(index + 1).padStart(2, "0")}`;
+}
+
+function BrandTabBar({
+  activeIndex,
+  onSelect,
 }: {
-  brand: BrandDetail;
-  index: number;
+  activeIndex: number;
+  onSelect: (index: number) => void;
 }) {
-  const { isDark } = useTheme();
-  const imageRight = index % 2 === 0;
+  const active = brands[activeIndex];
 
   return (
     <div
-      id={
-        index === 0
-          ? "brand-01"
-          : `brand-${String(index + 1).padStart(2, "0")}`
-      }
-      className="scroll-mt-20 sm:scroll-mt-24"
+      className="sticky top-[5.1rem] z-20 sm:top-22"
+      style={{
+        background: `url(${footerBgDark.src}) center/cover no-repeat`
+      }}
+
     >
-      <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">
-        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-20">
-          <HomeReveal
-            stagger
-            className={imageRight ? "order-2 lg:order-1" : "order-2 lg:order-2"}
-          >
-            <HomeItem variants={imageRight ? homeFadeLeft : homeFadeRight}>
-              <p
-                className="mb-1.5 text-xs font-medium sm:mb-2 sm:text-sm"
-                style={{ color: isDark ? C.textTagline : C.accentStrong }}
-              >
-                {brand.number}
-              </p>
-              <h2
-                className="font-heading mb-2 break-words text-[1.5rem] font-black tracking-tight sm:mb-3 sm:text-3xl md:text-4xl lg:text-5xl"
-                style={{ color: isDark ? C.text : "#0F172A" }}
+      <div className="mx-auto flex w-full max-w-[1260px] items-center justify-center gap-6 overflow-x-auto hide-scrollbar px-4 py-4 sm:px-6">
+        <div className="flex shrink-0 items-center lg:gap-4 gap-2 whitespace-nowrap text-xs sm:text-[14px]">
+          {brands.map((brand, i) => (
+            <span key={brand.name} className="flex items-center gap-2">
+              {i > 0 && <span className="text-white/30">/</span>}
+              <a
+                href={`#${brandId(i)}`}
+                onClick={() => onSelect(i)}
+                className="no-underline transition-colors"
+                style={{
+                  color:
+                    i === activeIndex ? "#FFFFFF" : "rgba(255,255,255,0.55)",
+                  fontWeight: i === activeIndex ? 600 : 400,
+                }}
               >
                 {brand.name}
-              </h2>
-              <p
-                className="font-heading mb-4 max-w-lg text-base leading-snug font-bold sm:mb-5 sm:text-xl md:text-[1.35rem]"
-                style={{ color: isDark ? C.textTagline : C.accentStrong }}
-              >
-                {brand.tagline}
-              </p>
-              <div
-                className="mb-4 h-px w-full max-w-md sm:mb-5"
-                style={{
-                  background: isDark
-                    ? "rgba(248,248,248,0.12)"
-                    : "rgba(15,23,42,0.1)",
-                }}
-              />
-              {brand.description.map((para) => (
-                <p
-                  key={para.slice(0, 32)}
-                  className="mb-3 max-w-lg text-[13px] leading-relaxed last:mb-0 sm:mb-4 sm:text-sm md:text-[15px]"
-                  style={{ color: isDark ? "#C8D0DC" : "#475569" }}
-                >
-                  {para}
-                </p>
-              ))}
+              </a>
+            </span>
+          ))}
+        </div>
+        {/* <a
+          href={active.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex shrink-0 items-center gap-1.5 text-xs font-semibold text-white no-underline sm:text-sm"
+        >
+          SEE ALL {active.name.toUpperCase()} BRANDS
+          <ArrowRight size={14} />
+        </a> */}
+      </div>
+    </div>
+  );
+}
+
+function BrandBlock({
+  brand,
+  index,
+  isDark,
+  setBlockRef,
+}: {
+  brand: BrandDetail;
+  index: number;
+  isDark: boolean;
+  setBlockRef: (el: HTMLDivElement | null) => void;
+}) {
+  const imageLeft = index % 2 === 0;
+
+  return (
+    <div
+      id={brandId(index)}
+      ref={setBlockRef}
+      className="scroll-mt-32 sm:scroll-mt-40"
+    >
+      <div className="grid grid-cols-1 items-stretch lg:grid-cols-2">
+        <HomeReveal
+          variants={homeFadeUp}
+          className={imageLeft ? "order-1 lg:order-1" : "order-1 lg:order-2"}
+        >
+          <div className="relative h-full w-full overflow-hidden">
+            <Image
+              src={brand.image}
+              alt={brand.name}
+              fill
+              placeholder="blur"
+              quality={100}
+              className="h-full w-full !relative"
+            />
+          </div>
+        </HomeReveal>
+
+        <HomeReveal
+          variants={homeFadeUp}
+          delay={0.08}
+          className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
+        >
+          <div
+            className="relative flex h-full flex-col lg:py-20 lg:p-12 p-8 gap-2"
+            style={{ background: 'transparent' }}
+          >
+            <div className="mb-12 flex justify-end">
               <a
                 href={brand.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 sm:mt-6"
-                style={{
-                  background: C.buttonGradient,
-                  boxShadow: `0 8px 24px ${C.glow}`,
-                }}
+                className="inline-flex h-9 items-center justify-center px-8 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
+                style={{ background: "#0047AB" }}
               >
                 Visit {brand.name}
-                <ArrowUpRight size={15} strokeWidth={2.2} />
               </a>
-            </HomeItem>
-          </HomeReveal>
-
-          <HomeReveal
-            variants={imageRight ? homeFadeRight : homeFadeLeft}
-            delay={0.08}
-            className={imageRight ? "order-1 lg:order-2" : "order-1 lg:order-1"}
-          >
-            <div
-              className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.45)] sm:aspect-[5/4] sm:rounded-[20px]"
-              style={{
-                border: isDark
-                  ? "1px solid rgba(248,248,248,0.08)"
-                  : "1px solid #E2E8F0",
-              }}
-            >
-              <Image
-                src={brand.image}
-                alt={brand.name}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
             </div>
-          </HomeReveal>
-        </div>
 
-        <HomeReveal variants={homeFadeUp} className="mt-8 sm:mt-12 md:mt-14">
-          <p
-            className="mb-5 font-heading text-lg font-bold sm:mb-6 sm:text-xl"
-            style={{ color: isDark ? C.text : "#0F172A" }}
-          >
-            {brand.featuresTitle}
-          </p>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3 sm:gap-y-6 md:grid-cols-5 md:gap-x-6">
-            {brand.deliverables.map((item) => (
-              <div
-                key={item.title}
-                className="border-t pt-3 sm:pt-4"
-                style={{
-                  borderColor: isDark
-                    ? "rgba(220,226,246,0.28)"
-                    : "#CBD5E1",
-                }}
+            <span
+              className="mb-3 block h-0.5 w-6 rounded-full"
+              style={{ background: isDark ? C.textTagline : C.accentStrong }}
+            />
+
+            <h2
+              className="font-heading mb-4 text-2xl font-black tracking-tight sm:text-3xl"
+              style={{ color: isDark ? C.text : "#0F172A" }}
+            >
+              {brand.name}
+            </h2>
+            <p
+              className="font-heading mb-4 text-base leading-snug font-bold sm:text-lg"
+              style={{ color: isDark ? '#ffffff' : C.accentStrong }}
+            >
+              {brand.tagline}
+            </p>
+
+            {brand.description.map((para) => (
+              <p
+                key={para.slice(0, 32)}
+                className="mb-6 text-md leading-relaxed last:mb-0"
+                style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
               >
-                <p
-                  className="font-heading mb-0 text-[13px] font-bold sm:mb-1.5 sm:text-sm"
-                  style={{ color: isDark ? C.text : "#0F172A" }}
-                >
-                  {item.title}
-                </p>
-                <p
-                  className="mt-1 text-[11px] leading-relaxed sm:mt-0 sm:text-xs"
-                  style={{
-                    color: isDark ? "rgba(220,226,246,0.55)" : "#94A3B8",
-                  }}
-                >
-                  {item.subtext}
-                </p>
-              </div>
+                {para}
+              </p>
             ))}
-          </div>
-        </HomeReveal>
 
-        <HomeReveal variants={homeFadeUp} className="mt-6 sm:mt-10 md:mt-12">
-          <p
-            className="mb-2 text-sm font-semibold"
-            style={{ color: isDark ? C.textTagline : C.accentStrong }}
-          >
-            Core Focus
-          </p>
-          <p
-            className="max-w-4xl text-[13px] leading-relaxed sm:text-sm md:text-[15px]"
-            style={{ color: isDark ? "#D8DEE8" : "#334155" }}
-          >
-            {brand.coreFocus}
-          </p>
+            <div className="border-y my-10 pt-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
+
+              <p
+                className="mb-6 lg:text-2xl text-xl font-bold"
+                style={{ color: isDark ? C.text : "#0F172A" }}
+              >
+                {brand.featuresTitle}
+              </p>
+              <div className="mb-6 flex flex-wrap gap-4">
+                {brand.deliverables.map((item) => (
+                  <span
+                    key={item.title}
+                    className="border p-3 text-sm font-medium"
+                    style={{
+                      color: isDark ? "#ffffff" : "#1E293B",
+                      // backdropFilter: isDark ? "blur(50px)" : "none",
+                      background: isDark ? "#222222" : "#FBFBFB",
+                      borderColor: isDark
+                        ? "#222222"
+                        : "#23232329",
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <p
+              className="mb-6 lg:text-2xl text-xl font-bold"
+              style={{ color: isDark ? '#ffffff' : C.accentStrong }}
+            >
+              Core Focus
+            </p>
+            <p
+              className="mb-6 text-md leading-relaxed last:mb-0"
+              style={{ color: isDark ? "#D8DEE8" : "#334155" }}
+            >
+              {brand.coreFocus}
+            </p>
+          </div>
         </HomeReveal>
       </div>
     </div>
@@ -173,16 +206,47 @@ function BrandBlock({
 
 export default function BrandsShowcase() {
   const { isDark } = useTheme();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const idx = blockRefs.current.findIndex((el) => el === entry.target);
+          if (idx !== -1) setActiveIndex(idx);
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+
+    blockRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id="brand-showcase"
-      className="relative overflow-hidden section-py"
+      className="relative"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
-      <div className="flex flex-col gap-14 sm:gap-20 md:gap-28">
+      <BrandTabBar activeIndex={activeIndex} onSelect={setActiveIndex} />
+
+      <div>
         {brands.map((brand, index) => (
-          <BrandBlock key={brand.name} brand={brand} index={index} />
+          <BrandBlock
+            key={brand.name}
+            brand={brand}
+            index={index}
+            isDark={isDark}
+            setBlockRef={(el) => {
+              blockRefs.current[index] = el;
+            }}
+          />
         ))}
       </div>
     </section>
