@@ -57,28 +57,35 @@ export default function AboutFuture() {
             >
               <div
                 className="border lg:py-12 py-8 px-4 text-left transition-all duration-300"
-                onMouseEnter={() => isDark && setHoveredIndex(i)}
-                onMouseLeave={() => isDark && setHoveredIndex(null)}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
                 style={{
                   background:
-                    isDark && hoveredIndex === i
-                      ? "#0047AB14"
+                    hoveredIndex === i
+                      ? isDark
+                        ? "#0047AB14"
+                        : "#e7edf5"
                       : isDark
                         ? "#FFFFFF0A"
-                        : "#F8FAFC",
+                        : "#FBFBFB",
+
+                  border: "2px solid",
+
+                  borderImageSource:
+                    hoveredIndex === i
+                      ? isDark
+                        ? "linear-gradient(34.78deg, #232323 0%, #0047AB 100%)"
+                        : "linear-gradient(34.78deg, rgba(251, 251, 251, 0.5) 0%, rgba(0, 71, 171, 0.5) 100%)"
+                      : "none",
+
+                  borderImageSlice: hoveredIndex === i ? 1 : undefined,
+
                   borderColor:
-                    isDark && hoveredIndex === i
+                    hoveredIndex === i
                       ? "transparent"
                       : isDark
                         ? "#232323"
                         : "#E2E8F0",
-                  borderWidth: isDark ? 2 : 1,
-                  borderStyle: "solid",
-                  borderImageSource:
-                    isDark && hoveredIndex === i
-                      ? "linear-gradient(34.78deg, #232323 0%, #0047AB 100%)"
-                      : undefined,
-                  borderImageSlice: isDark && hoveredIndex === i ? 1 : undefined,
                 }}
               >
                 <p

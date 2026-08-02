@@ -223,7 +223,7 @@ export default function Brands() {
         className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
         style={{
           backgroundColor: isDark ? "transparent" : "#FFFFFF",
-          backgroundImage: isDark ? `url(${sectionBg.src})` : undefined,
+          backgroundImage: isDark ? `url(${sectionBg.src})` : '',
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "100% 100%", // width height
