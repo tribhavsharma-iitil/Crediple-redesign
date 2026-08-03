@@ -85,9 +85,9 @@ export default function SolutionsAdvantage() {
               style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
             >
               {advantage.titleLine1}
-              <br />
+              <br className="lg:block hidden" />
               {advantage.titleLine2}
-              <br />
+              <br className="lg:block hidden" />
               {advantage.titleLine3}
             </h2>
             <p

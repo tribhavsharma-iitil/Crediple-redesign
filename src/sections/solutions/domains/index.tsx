@@ -82,10 +82,10 @@ export default function SolutionsDomains() {
                     }}
                   />
                   <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                    <h3 className="font-heading text-base font-bold text-white md:text-2xl">
+                    <h3 className="font-heading text-[20px] font-bold text-white md:text-2xl">
                       {item.title}
                     </h3>
-                    <p className="mt-1 lg:text-sm  text-xs leading-relaxed text-white/75">
+                    <p className="mt-1 lg:text-sm  leading-relaxed text-white/75">
                       {item.desc}
                     </p>
                   </div>

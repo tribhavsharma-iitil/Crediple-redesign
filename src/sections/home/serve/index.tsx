@@ -150,7 +150,7 @@ export default function WhoWeServe() {
                     }}
                   />
                   <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                    <h3 className="font-heading md:text-xl font-bold text-white text-base">
+                    <h3 className="font-heading md:text-xl font-bold text-white text-lg">
                       {item.title}
                     </h3>
                     <p className="mt-1 lg:text-sm  text-xs leading-relaxed text-white/75">

@@ -36,21 +36,20 @@ export default function SolutionsHero() {
   const { heroStagger } = useHomeMotion();
 
   return (
-    <section className="relative">
-
+    <section className="relative bg-[transparent] ">
       <video
         aria-hidden
         autoPlay
         muted
         loop
         playsInline
-        className="absolute inset-0 z-0 h-[85vh] w-full pointer-events-none"
+        className="absolute inset-0 z-0 w-full lg:block hidden pointer-events-none "
       >
         <source src="/videos/solution_bg.mp4" type="video/mp4" />
       </video>
       <div id="solutions-hero"
-        className={HERO_SECTION_CLASS}
-        style={{ background: "#00000066", backdropFilter: "blur(136px)" }}>
+        className={`${HERO_SECTION_CLASS} lg:bg-[#00000066] bg-[#000000]`}
+        style={{ backdropFilter: "blur(136px)" }}>
         <motion.div
           variants={heroStagger}
           initial="hidden"

@@ -25,11 +25,11 @@ export default function SolutionsProcess() {
       id="process"
       className="relative overflow-hidden section-py"
       style={{
-        backgroundImage: isDark ? `url(${sectionBg.src})` : "#FFFFFF",
+        backgroundColor: isDark ? "transparent" : "#FFFFFF",
+        backgroundImage: isDark ? `url(${sectionBg.src})` : '',
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "100% 100%", // width height
-        backgroundColor: isDark ? "transparent" : "#FFFFFF",
       }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">

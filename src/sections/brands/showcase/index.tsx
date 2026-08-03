@@ -115,7 +115,7 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col lg:py-20 lg:p-12 p-8 gap-2"
+            className="relative flex h-full flex-col lg:py-20 lg:p-12 p-8"
             style={{ background: 'transparent' }}
           >
             <div className="mb-12 flex justify-end">
@@ -131,9 +131,11 @@ function BrandBlock({
             </div>
 
             <span
-              className="mb-3 block h-0.5 w-6 rounded-full"
-              style={{ background: isDark ? C.textTagline : C.accentStrong }}
-            />
+              className="mb-3 block"
+              style={{ color: isDark ? '#0047AB' : C.accentStrong }}
+            >
+              {index + 1 }
+              </span>
 
             <h2
               className="font-heading mb-4 text-2xl font-black tracking-tight sm:text-3xl"
@@ -158,7 +160,7 @@ function BrandBlock({
               </p>
             ))}
 
-            <div className="border-y my-10 pt-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
+            <div className="border-y my-10 py-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
 
               <p
                 className="mb-6 lg:text-2xl text-xl font-bold"
