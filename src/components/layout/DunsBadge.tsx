@@ -79,7 +79,7 @@ export function DunsBadge({
             height={97}
             className={cn(
               "w-auto shrink-0",
-              isCard ? "h-[72px]" : isFooter ? "h-[58px]" : "h-[76px]",
+              isCard ? "h-[72px]" : isFooter ? "h-[52px]" : "h-[76px]",
             )}
           />
         </div>

@@ -45,7 +45,7 @@ export default function Footer() {
       }}
     >
       <div className="mx-auto max-w-[1260px] p-8 sm:px-6 md:px-8">
-        <div className="flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between lg:gap-20">
+        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-20 lg:items-center">
           {/* Brand */}
           <div className="max-w-[420px] shrink-0">
             <Link
@@ -86,16 +86,16 @@ export default function Footer() {
 
           </div>
 
-          <div className="grid min-w-0 flex-1 grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+          <div className="grid min-w-0 flex-1 grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
             <div>
-              <h4
+              {/* <h4
                 className={cn(
                   "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
                   isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
                 )}
               >
                 Company
-              </h4>
+              </h4> */}
               <ul className="space-y-2">
                 {COMPANY_LINKS.map((link) => {
                   const active =
@@ -126,14 +126,14 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4
+              {/* <h4
                 className={cn(
                   "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
                   isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
                 )}
               >
                 Brands
-              </h4>
+              </h4> */}
               <ul className="space-y-2">
                 {brandExternalLinks.slice(0, 4).map((link) => (
                   <li key={link.label}>
@@ -156,14 +156,14 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4
+              {/* <h4
                 className={cn(
                   "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
                   isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
                 )}
               >
                 Brands
-              </h4>
+              </h4> */}
               <ul className="space-y-2">
                 {brandExternalLinks.slice(4).map((link) => (
                   <li key={link.label}>
@@ -186,14 +186,14 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4
+              {/* <h4
                 className={cn(
                   "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
                   isDark ? "text-[#DCE2F6]" : "text-[#0F172B]",
                 )}
               >
                 Domain
-              </h4>
+              </h4> */}
               <ul className="space-y-2">
                 {DOMAIN_LINKS.map((link) => (
                   <li key={link.label}>
