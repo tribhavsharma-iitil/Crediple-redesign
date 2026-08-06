@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
   homeContent,
   homeColors,
@@ -36,8 +37,20 @@ const heroItem = {
 export default function Hero() {
   const { isDark } = useTheme();
   const { phase } = useIntroPhase();
-  const showStaticLogo = phase === "ready";
   const { heroStagger } = useHomeMotion();
+  const [showYaka, setShowYaka] = useState(true);
+
+  useEffect(() => {
+    const update = () => {
+      // Hide when header becomes solid — YAKA moves into the header
+      setShowYaka(window.scrollY <= 40);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  const showStaticLogo = phase === "ready" && showYaka;
 
   return (
     <section id="hero" className={`${HERO_SECTION_CLASS} px-0`}>
@@ -48,15 +61,21 @@ export default function Hero() {
         id="yaka-logo-anchor"
         className={HERO_YAKA_SLOT_CLASS}
       >
-        {showStaticLogo && (
+        {showStaticLogo ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.35 }}
           >
-            {/* <YakaBrandMark /> */}
+            <YakaBrandMark />
           </motion.div>
-        )}
+        ) : phase === "flying" || (phase === "ready" && !showYaka) ? (
+          // Invisible stub so FloatingLogo can measure the slot
+          <div
+            className="h-6 w-6 opacity-0 sm:h-10 sm:w-10 md:h-14 md:w-14 xl:h-16 xl:w-16"
+            aria-hidden
+          />
+        ) : null}
       </div>
 
       <div

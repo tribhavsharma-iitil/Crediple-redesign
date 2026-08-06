@@ -130,7 +130,7 @@ export default function Testimonials() {
                   </p>
 
                   <span
-                    className="mt-6 block h-0.5 w-6 rounded-full"
+                    className="mt-6 block h-0.5 w-10 rounded-full"
                     style={{ background: C.accentSoft }}
                   />
 

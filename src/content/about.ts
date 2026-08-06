@@ -72,12 +72,12 @@ export const aboutContent = {
       {
         label: "Optimize",
         title: "Scalable Frameworks",
-        desc: "Deployment frameworks built and tested for repeatable delivery at any complexity.",
+        desc: "Deployment frameworks built, tested, and refined for repeatable, reliable delivery across projects of any complexity.",
       },
       {
         label: "Compound",
         title: "Ecosystem Growth",
-        desc: "Interconnected solutions that compound and grow one another over time.",
+        desc: "We create connected solutions that deliver greater value at every stage of business growth and innovation.",
       },
     ],
   },

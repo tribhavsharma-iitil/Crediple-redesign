@@ -115,7 +115,7 @@ export default function Brands() {
             muted
             loop
             playsInline
-            className="absolute inset-0 z-0 md:h-78 h-60 top-[32%] lg:block hidden w-full object-cover"
+            className="absolute inset-0 z-0 h-60 top-[33%] lg:block hidden w-full object-cover"
             src="/videos/section_bg_effect.mp4"
           />
         )}
@@ -167,17 +167,17 @@ export default function Brands() {
                 background: isDark ? 'transparent' : homeLight.bg,
               };
               const cardClassName =
-                "relative flex h-full w-[350px] md:h-90 h-80 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
+                "relative flex h-full w-[350px] h-80 shrink-0 flex-col p-6 no-underline transition-colors duration-200 sm:p-7 lg:p-8 border-r";
 
               const inner = (
                 <>
-                  <div className="mb-5 flex w-full items-center justify-end sm:mb-16">
+                  <div className="mb-5 flex w-full items-center justify-end sm:mb-10">
                     <Image
                       src={isDark ? brand.iconDark : brand.icon}
                       alt={brand.name}
                       width={100}
                       height={60}
-                      className=" w-auto object-contain lg:h-12 h-10"
+                      className=" w-auto object-contain lg:h-13 h-10"
                     />
                   </div>
                   <h3

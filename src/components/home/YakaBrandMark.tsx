@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
-import yakaBlue from "@/assets/yaka_blue.png";
+import yakaBlue from "@/assets/yaka_dark.png";
 import yakaLight from "@/assets/yaka_light.png";
 import { cn } from "@/lib/utils";
+
 
 type YakaBrandMarkProps = {
   className?: string;
@@ -74,14 +75,14 @@ export default function YakaBrandMark({
         <p
           className={cn(
             "max-w-[4rem] text-center text-[7.5px] font-medium leading-[1.15] tracking-wide sm:max-w-none sm:whitespace-nowrap sm:text-[10px] md:text-[11px]",
-            "text-[#0047AB] dark:text-[#B0C0F8]",
+            "text-[#0047AB] dark:text-[#ffffff]",
           )}
         >
           A{" "}
-          <span className="font-bold text-[#0047AB] dark:text-[#B0C0F8]">
+          <span className="font-bold text-[#0047AB] dark:text-[#ffffff]">
             YAKA
           </span>{" "}
-          Enterprise
+          Brand
         </p>
       )}
     </div>

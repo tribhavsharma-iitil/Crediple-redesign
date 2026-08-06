@@ -82,7 +82,7 @@ export default function AboutPhilosophy() {
           ))}
         </motion.div>
 
-        <HomeReveal variants={homeFadeUp}
+        {/* <HomeReveal variants={homeFadeUp}
         >
           <div
             className="px-6 py-4 text-center"
@@ -95,7 +95,7 @@ export default function AboutPhilosophy() {
               {philosophy.banner}
             </p>
           </div>
-        </HomeReveal>
+        </HomeReveal> */}
       </div>
     </section>
   );
