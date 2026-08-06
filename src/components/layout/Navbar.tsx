@@ -72,7 +72,7 @@ export default function Navbar() {
     <>
       <header
         className={cn(
-          "fixed z-50 w-full dark:bg-[#FFFFFF14] bg-white border"
+          "fixed z-50 w-full dark:bg-[#0000001C] bg-[#FFFFFF] border dark:border-[#1010101A]"
         )}
         style={{ backdropFilter: "blur(362px)" }}
       >

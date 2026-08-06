@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useEffect, useState } from "react";
+import heroOverlay from "@/assets/home/hero_overlay.png";
 import {
   homeContent,
   homeColors,
@@ -53,7 +54,7 @@ export default function Hero() {
   const showStaticLogo = phase === "ready" && showYaka;
 
   return (
-    <section id="hero" className={`${HERO_SECTION_CLASS} px-0`}>
+    <section id="hero" className={`${HERO_SECTION_CLASS} !bg-[#000000] px-0 md:!pb-0 pb-10`}>
       {/* <HeroWave isDark={isDark} /> */}
 
       {/* YAKA mark + themed tagline */}
@@ -87,10 +88,10 @@ export default function Hero() {
         }}
       />
 
-      {/* Background video (covers whole hero) */}
+      {/* Background video — contained, not cropped, so the globe reads fully like in Figma */}
       <video
         aria-hidden
-        className="absolute inset-0 z-0 w-full h-full object-cover pointer-events-none"
+        className="pointer-events-none absolute inset-0 z-[0] mx-auto xl:h-full h-[22rem] lg:h-[45rem] md:h-[32rem] sm:h-[28rem] w-full max-w-[560px] object-contain sm:max-w-[720px] md:max-w-[700px] lg:max-w-[1200px]"
         autoPlay
         muted
         loop
@@ -98,6 +99,13 @@ export default function Hero() {
       >
         <source src="/videos/hero_bg.mp4" type="video/mp4" />
       </video>
+
+      {/* Overlay image layered on top of the video */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{ background: `url(${heroOverlay.src}) center/cover no-repeat` }}
+      />
 
       {/* Subtle overlay to keep text readable over the video */}
       <div
@@ -149,7 +157,7 @@ export default function Hero() {
         <motion.p
           variants={heroItem}
           className="mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
-          style={{ color: "#FFFFFF"}}
+          style={{ color: "#FFFFFF" }}
         >
           {hero.description}
         </motion.p>
@@ -166,7 +174,7 @@ export default function Hero() {
             //   boxShadow: `0 8px 28px ${C.glow}`,
             // }}
             style={{
-              background:"rgba(255, 255, 255, 0.16)"
+              background: "rgba(255, 255, 255, 0.16)"
             }}
           >
             {/* <Play size={13} className="fill-current" /> */}
