@@ -81,7 +81,7 @@ export default function YakaBrandMark({
           <span className="font-bold text-[#0047AB] dark:text-[#B0C0F8]">
             YAKA
           </span>{" "}
-          Enterprise
+          Brand
         </p>
       )}
     </div>

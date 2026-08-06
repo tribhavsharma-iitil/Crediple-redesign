@@ -72,7 +72,7 @@ export default function Navbar() {
     <>
       <header
         className={cn(
-          "fixed left-4 right-4 z-50 w-full dark:bg-[#FFFFFF14] bg-white top-4 w-auto border"
+          "fixed z-50 w-full dark:bg-[#FFFFFF14] bg-white border"
         )}
         style={{ backdropFilter: "blur(362px)" }}
       >
@@ -147,16 +147,50 @@ export default function Navbar() {
               Contact Us
             </CredipleButton>
 
-            <Image
-              src={isDark ? yakaDark : yakaLight}
-              alt="Yaka"
-              height={24}
-              className="h-6 w-6 shrink-0 object-contain"
-            />
+            {/* Crediple-style: YAKA lands in header after scroll */}
+            <AnimatePresence mode="popLayout">
+              {scrolled ? (
+                <motion.div
+                  key="header-yaka"
+                  initial={{ opacity: 0, width: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, width: "auto", scale: 1 }}
+                  exit={{ opacity: 0, width: 0, scale: 0.85 }}
+                  transition={{ type: "spring", stiffness: 180, damping: 22 }}
+                  className="flex items-center gap-3 overflow-hidden pl-1 select-none"
+                >
+                  <Image
+                    src={isDark ? yakaDark : yakaLight}
+                    alt="Yaka"
+                    height={24}
+                    className="h-9 w-9 shrink-0 object-contain"
+                  />
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </div>
 
           {/* Mobile controls */}
           <div className="flex items-center justify-end gap-2 md:hidden">
+            <AnimatePresence>
+              {scrolled ? (
+                <motion.div
+                  key="header-yaka-mobile"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  className="relative h-6 w-6 shrink-0"
+                >
+                  <Image
+                    src={isDark ? yakaDark : yakaLight}
+                    alt="Yaka"
+                    fill
+                    sizes="24px"
+                    className="object-contain"
+                  />
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
             <ThemeToggle />
             <button
               type="button"

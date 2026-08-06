@@ -27,7 +27,7 @@ import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
 import whoWeServe3 from "@/assets/home/who_we_serve_3.png";
 import whoWeServe4 from "@/assets/home/who_we_serve_4.png";
 import whoWeServe5 from "@/assets/home/who_we_serve_5.jpg";
-import whoWeServe6 from "@/assets/home/who_we_serve_6.jpg";
+import whoWeServe6 from "@/assets/home/who_we_serve_6.png";
 
 /** Exact colors from Home.pdf / Figma */
 export const homeColors = {
@@ -320,21 +320,21 @@ export const homeContent = {
     items: [
       {
         name: "Rajiv Sharma",
-        role: "CEO",
+        role: "",
         company: "",
         text: "Crediple transformed our entire clinical workflow. What used to take days now takes hours. Their infrastructure is rock solid and the support team genuinely understands enterprise healthcare needs.",
         image: testimonial_1,
       },
       {
         name: "Priya Nair",
-        role: "CFO",
+        role: "",
         company: "",
         text: "We integrated Crediple's fintech platform across 3 cities in under a month. The reconciliation automation alone saved us 40 hours a week. Truly a game changer for our operations.",
         image: testimonial_2,
       },
       {
         name: "Arjun Mehta",
-        role: "Founder",
+        role: "",
         company: "",
         text: "Our firm was drowning in paperwork. Crediple built us a case management system that feels like it was made specifically for us. Client satisfaction has never been higher.",
         image: testimonial_3,

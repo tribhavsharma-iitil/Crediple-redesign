@@ -92,19 +92,19 @@ function BrandBlock({
       ref={setBlockRef}
       className="scroll-mt-32 sm:scroll-mt-40"
     >
-      <div className="grid grid-cols-1 items-stretch lg:grid-cols-2">
+      <div className="grid grid-cols-1 items-stretch xl:grid-cols-2">
         <HomeReveal
           variants={homeFadeUp}
-          className={imageLeft ? "order-1 lg:order-1" : "order-1 lg:order-2"}
+          className={imageLeft ? "order-1 xl:order-1" : "order-1 xl:order-2"}
         >
-          <div className="relative h-full w-full overflow-hidden">
+          <div className="relative aspect-[4/4] h-full w-full overflow-hidden">
             <Image
               src={brand.image}
               alt={brand.name}
               fill
               placeholder="blur"
               quality={100}
-              className="h-full w-full !relative"
+              className="object-cover h-full w-full"
             />
           </div>
         </HomeReveal>
@@ -115,7 +115,7 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col lg:py-20 lg:p-12 p-8"
+            className="relative flex h-full flex-col lg:py-12 lg:p-12 p-8"
             style={{ background: 'transparent' }}
           >
             <div className="mb-12 flex justify-end">
@@ -131,20 +131,20 @@ function BrandBlock({
             </div>
 
             <span
-              className="mb-3 block"
+              className="mb-2 block"
               style={{ color: isDark ? '#0047AB' : C.accentStrong }}
             >
               {index + 1 }
               </span>
 
             <h2
-              className="font-heading mb-4 text-2xl font-black tracking-tight sm:text-3xl"
+              className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl"
               style={{ color: isDark ? C.text : "#0F172A" }}
             >
               {brand.name}
             </h2>
             <p
-              className="font-heading mb-4 text-base leading-snug font-bold sm:text-lg"
+              className="font-heading mb-2 text-base leading-snug font-bold sm:text-lg"
               style={{ color: isDark ? '#ffffff' : C.accentStrong }}
             >
               {brand.tagline}
@@ -153,22 +153,22 @@ function BrandBlock({
             {brand.description.map((para) => (
               <p
                 key={para.slice(0, 32)}
-                className="mb-6 text-md leading-relaxed last:mb-0"
+                className="mb-4 text-md leading-relaxed last:mb-0"
                 style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
               >
                 {para}
               </p>
             ))}
 
-            <div className="border-y my-10 py-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
+            <div className="border-y my-8 py-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
 
               <p
-                className="mb-6 lg:text-2xl text-xl font-bold"
+                className="mb-4 lg:text-2xl text-xl font-bold"
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
                 {brand.featuresTitle}
               </p>
-              <div className="mb-6 flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4">
                 {brand.deliverables.map((item) => (
                   <span
                     key={item.title}
@@ -188,13 +188,13 @@ function BrandBlock({
               </div>
             </div>
             <p
-              className="mb-6 lg:text-2xl text-xl font-bold"
+              className="mb-4 lg:text-2xl text-xl font-bold"
               style={{ color: isDark ? '#ffffff' : C.accentStrong }}
             >
               Core Focus
             </p>
             <p
-              className="mb-6 text-md leading-relaxed last:mb-0"
+              className="mb-4 text-md leading-relaxed last:mb-0"
               style={{ color: isDark ? "#D8DEE8" : "#334155" }}
             >
               {brand.coreFocus}
@@ -236,7 +236,7 @@ export default function BrandsShowcase() {
       className="relative"
       style={{ background: isDark ? C.bg : "#FFFFFF" }}
     >
-      <BrandTabBar activeIndex={activeIndex} onSelect={setActiveIndex} />
+      {/* <BrandTabBar activeIndex={activeIndex} onSelect={setActiveIndex} /> */}
 
       <div>
         {brands.map((brand, index) => (
