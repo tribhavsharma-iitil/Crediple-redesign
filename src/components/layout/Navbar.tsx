@@ -76,7 +76,7 @@ export default function Navbar() {
         )}
         style={{ backdropFilter: "blur(362px)" }}
       >
-        <div className="relative md:px-0 px-4 mx-auto grid h-16 max-w-[1200px] grid-cols-2 items-center md:h-[72px] md:grid-cols-3">
+        <div className="relative px-4 mx-auto grid h-16 max-w-[1200px] grid-cols-2 items-center md:h-[72px] lg:grid-cols-3">
           {/* Logo */}
           <div className="flex items-center justify-start">
             <Link
@@ -96,7 +96,7 @@ export default function Navbar() {
           {/* Desktop navigation */}
           <nav
             className={cn(
-              "hidden items-center fle justify-center md:flex gap-4",
+              "hidden items-center fle justify-center lg:flex gap-4",
             )}
           >
             {NAV_LINKS.map((link, index) => {
@@ -136,7 +136,7 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop actions */}
-          <div className="hidden items-center justify-end gap-3 md:flex md:gap-4">
+          <div className="hidden items-center justify-end gap-3 lg:flex md:gap-4">
             <ThemeToggle />
 
             <CredipleButton
@@ -170,7 +170,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile controls */}
-          <div className="flex items-center justify-end gap-2 md:hidden">
+          <div className="flex items-center justify-end gap-2 lg:hidden">
             <AnimatePresence>
               {scrolled ? (
                 <motion.div
@@ -217,7 +217,7 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/50 md:hidden"
+              className="fixed inset-0 z-40 bg-black/50 lg:hidden"
               onClick={() => setMobileOpen(false)}
             />
             <motion.div
@@ -226,7 +226,7 @@ export default function Navbar() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
               className={cn(
-                "fixed top-0 right-0 bottom-0 z-50 flex w-[min(320px,85vw)] flex-col p-6 pt-20 md:hidden",
+                "fixed top-0 right-0 bottom-0 z-50 flex w-[min(320px,85vw)] flex-col p-6 pt-20 lg:hidden",
                 isDark ? "bg-black" : "bg-white",
               )}
             >
