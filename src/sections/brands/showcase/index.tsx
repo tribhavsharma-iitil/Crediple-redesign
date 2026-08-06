@@ -115,7 +115,7 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col lg:py-12 lg:p-12 p-8"
+            className="relative flex h-full flex-col lg:py-12 lg:p-12 p-8 justify-between"
             style={{ background: 'transparent' }}
           >
             <div className="mb-12 flex justify-end">
@@ -160,7 +160,7 @@ function BrandBlock({
               </p>
             ))}
 
-            <div className="border-y my-8 py-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
+            <div className="border-y my-8 py-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
 
               <p
                 className="mb-4 lg:text-2xl text-xl font-bold"
