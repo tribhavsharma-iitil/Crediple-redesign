@@ -153,7 +153,7 @@ function BrandBlock({
             {brand.description.map((para) => (
               <p
                 key={para.slice(0, 32)}
-                className="mb-4 text-md leading-relaxed last:mb-0"
+                className="text-md leading-relaxed mb-0"
                 style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
               >
                 {para}
