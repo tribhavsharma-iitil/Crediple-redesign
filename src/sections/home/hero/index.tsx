@@ -54,7 +54,7 @@ export default function Hero() {
   const showStaticLogo = phase === "ready" && showYaka;
 
   return (
-    <section id="hero" className={`${HERO_SECTION_CLASS} !bg-[#000000] !p-0  md:-h-[calc(100vh-200px)] h-dvh`}>
+    <section id="hero" className={`${HERO_SECTION_CLASS} !bg-[#000000] !p-0  md:h-[95vh] h-[60vh]`}>
       {/* <HeroWave isDark={isDark} /> */}
 
       {/* YAKA mark + themed tagline */}
@@ -78,7 +78,7 @@ export default function Hero() {
           />
         ) : null}
       </div>
-{/* 
+      {/* 
       <div
         aria-hidden
         className="pointer-events-none absolute top-[38%] left-1/2 z-0 h-[min(360px,50vw)] w-[min(640px,100vw)] -translate-x-1/2"
@@ -91,7 +91,7 @@ export default function Hero() {
       {/* Background video — contained, not cropped, so the globe reads fully like in Figma */}
       <video
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[0] h-full w-full object-contain mt-4"
+        className="pointer-events-none absolute top-4 inset-0 z-[0] h-full w-full object-contain"
         autoPlay
         muted
         loop
@@ -118,7 +118,7 @@ export default function Hero() {
         variants={heroStagger}
         initial="hidden"
         animate="visible"
-        className={`${HERO_CONTENT_CLASS} max-w-4xl md:-h-[calc(100vh-200px)] h-dvh justify-center align-middle`}
+        className={`${HERO_CONTENT_CLASS} max-w-4xl h-full md:h-[95vh]`}
       >
         {/* <motion.div
           variants={heroItem}
