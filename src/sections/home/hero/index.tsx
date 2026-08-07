@@ -54,7 +54,7 @@ export default function Hero() {
   const showStaticLogo = phase === "ready" && showYaka;
 
   return (
-    <section id="hero" className={`${HERO_SECTION_CLASS} !bg-[#000000] !p-0  md:h-[95vh] h-[60vh]`}>
+    <section id="hero" className={`${HERO_SECTION_CLASS} dark:!bg-[transparent] !bg-[#000000]`}>
       {/* <HeroWave isDark={isDark} /> */}
 
       {/* YAKA mark + themed tagline */}
