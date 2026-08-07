@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import heroOverlay from "@/assets/home/hero_overlay.png";
 import {
   homeContent,
@@ -40,6 +40,7 @@ export default function Hero() {
   const { phase } = useIntroPhase();
   const { heroStagger } = useHomeMotion();
   const [showYaka, setShowYaka] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const update = () => {
@@ -49,6 +50,16 @@ export default function Hero() {
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  useEffect(() => {
+    // React/Next SSR hydration doesn't reliably flip the real `.muted`
+    // property in time, so mobile browsers block autoplay and show a
+    // play button. Force it explicitly and (re)kick playback.
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => {});
   }, []);
 
   const showStaticLogo = phase === "ready" && showYaka;
@@ -92,12 +103,14 @@ export default function Hero() {
 
       {/* Background video — contained, not cropped, so the globe reads fully like in Figma */}
       <video
+        ref={videoRef}
         aria-hidden
-        className="pointer-events-none absolute lg:top-18 md:top-14 top-12 inset-0 z-[0] w-full object-contain !bg-[#000000] min-w-[50rem] md:left-0 left-[-45%] lg:!h-[80vh] md:!h-[80vh] sm:!h-[52dvh] !h-[75vh]"
+        className="pointer-events-none absolute lg:top-18 md:top-14 top-12 inset-0 z-[0] w-full object-contain !bg-[#000000] min-w-[50rem] md:left-0 left-[-45%] lg:!h-[80vh] md:!h-[80vh] sm:!h-[52dvh] !h-[50vh]"
         autoPlay
         muted
         loop
         playsInline
+        webkit-playsinline="true"
       >
         <source src="/videos/hero_bg.mp4" type="video/mp4" />
       </video>
