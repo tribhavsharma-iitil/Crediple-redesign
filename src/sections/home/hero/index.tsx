@@ -40,6 +40,7 @@ export default function Hero() {
   const { phase } = useIntroPhase();
   const { heroStagger } = useHomeMotion();
   const [showYaka, setShowYaka] = useState(true);
+  const [videoMounted, setVideoMounted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -53,14 +54,21 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    // React/Next SSR hydration doesn't reliably flip the real `.muted`
-    // property in time, so mobile browsers block autoplay and show a
-    // play button. Force it explicitly and (re)kick playback.
+    // Next's SSR markup for <video muted> doesn't serialize the `muted`
+    // attribute, so the browser's first paint sees an unmuted autoplay
+    // video, blocks it, and flashes the play button. Only mount the
+    // <video> client-side so React creates it fresh (sets .muted for
+    // real from the start) instead of hydrating the unmuted SSR markup.
+    setVideoMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!videoMounted) return;
     const video = videoRef.current;
     if (!video) return;
     video.muted = true;
     video.play().catch(() => {});
-  }, []);
+  }, [videoMounted]);
 
   const showStaticLogo = phase === "ready" && showYaka;
 
@@ -102,18 +110,20 @@ export default function Hero() {
       /> */}
 
       {/* Background video — contained, not cropped, so the globe reads fully like in Figma */}
-      <video
-        ref={videoRef}
-        aria-hidden
-        className="pointer-events-none absolute lg:top-18 md:top-14 top-12 inset-0 z-[0] w-full object-contain !bg-[#000000] min-w-[50rem] md:left-0 left-[-45%] lg:!h-[80vh] md:!h-[80vh] sm:!h-[52dvh] !h-[50vh]"
-        autoPlay
-        muted
-        loop
-        playsInline
-        webkit-playsinline="true"
-      >
-        <source src="/videos/hero_bg.mp4" type="video/mp4" />
-      </video>
+      {videoMounted ? (
+        <video
+          ref={videoRef}
+          aria-hidden
+          className="pointer-events-none absolute lg:top-18 md:top-14 top-12 inset-0 z-[0] w-full object-contain !bg-[#000000] min-w-[55rem] md:left-0 left-[-50%] lg:!h-[80vh] md:!h-[80vh] sm:!h-[52dvh] !h-[50vh]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          webkit-playsinline="true"
+        >
+          <source src="/videos/hero_bg.mp4" type="video/mp4" />
+        </video>
+      ) : null}
 
       {/* Overlay image layered on top of the video */}
       {/* <div
@@ -128,7 +138,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 5, background: isDark ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.25)" }}
       /> */}
-      <div className="relative z-10 w-full lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[50vh]" style={{
+      <div className="relative z-10 w-full lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[60vh]" style={{
         background:
           `url(${heroOverlay.src}) center/cover no-repeat`,
       }}>
@@ -138,7 +148,7 @@ export default function Hero() {
         variants={heroStagger}
         initial="hidden"
         animate="visible"
-          className={`${HERO_CONTENT_CLASS} max-w-4xl lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[50vh] `}
+          className={`${HERO_CONTENT_CLASS} max-w-4xl lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[70vh] `}
       >
         {/* <motion.div
           variants={heroItem}
