@@ -41,7 +41,16 @@ export default function Hero() {
   const { heroStagger } = useHomeMotion();
   const [showYaka, setShowYaka] = useState(true);
   const [videoMounted, setVideoMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -67,8 +76,11 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
     video.muted = true;
+    video.load();
     video.play().catch(() => {});
-  }, [videoMounted]);
+    // isMobile is included because switching source swaps in a new
+    // <video> node (via key) that needs its own muted+play kick.
+  }, [videoMounted, isMobile]);
 
   const showStaticLogo = phase === "ready" && showYaka;
 
@@ -109,20 +121,37 @@ export default function Hero() {
         }}
       /> */}
 
-      {/* Background video — contained, not cropped, so the globe reads fully like in Figma */}
+      {/* Background video — dedicated mobile crop below md, contained globe above it */}
       {videoMounted ? (
-        <video
-          ref={videoRef}
-          aria-hidden
-          className="pointer-events-none absolute lg:top-18 md:top-14 top-12 inset-0 z-[0] w-full object-contain !bg-[#000000] min-w-[55rem] md:left-0 left-[-50%] lg:!h-[80vh] md:!h-[80vh] sm:!h-[52dvh] !h-[50vh]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          webkit-playsinline="true"
-        >
-          <source src="/videos/hero_bg.mp4" type="video/mp4" />
-        </video>
+        isMobile ? (
+          <video
+            key="hero-video-mobile"
+            ref={videoRef}
+            aria-hidden
+            className="pointer-events-none absolute top-10 inset-0 z-[0] h-full w-full object-cover !bg-[#000000]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            webkit-playsinline="true"
+          >
+            <source src="/videos/bg_hero_mobile.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          <video
+            key="hero-video-desktop"
+            ref={videoRef}
+            aria-hidden
+            className="pointer-events-none absolute lg:top-18 md:top-14 inset-0 z-[0] w-full object-contain !bg-[#000000] md:left-0 lg:!h-[80vh] md:!h-[80vh]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            webkit-playsinline="true"
+          >
+            <source src="/videos/hero_bg.mp4" type="video/mp4" />
+          </video>
+        )
       ) : null}
 
       {/* Overlay image layered on top of the video */}
