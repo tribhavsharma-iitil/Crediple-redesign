@@ -54,7 +54,7 @@ export default function Hero() {
   const showStaticLogo = phase === "ready" && showYaka;
 
   return (
-    <section id="hero" className={`${HERO_SECTION_CLASS} !bg-[#000000] px-0 md:!pb-0 pb-10`}>
+    <section id="hero" className={`${HERO_SECTION_CLASS} !bg-[#000000] !p-0  md:-h-[calc(100vh-200px)] h-dvh`}>
       {/* <HeroWave isDark={isDark} /> */}
 
       {/* YAKA mark + themed tagline */}
@@ -78,7 +78,7 @@ export default function Hero() {
           />
         ) : null}
       </div>
-
+{/* 
       <div
         aria-hidden
         className="pointer-events-none absolute top-[38%] left-1/2 z-0 h-[min(360px,50vw)] w-[min(640px,100vw)] -translate-x-1/2"
@@ -86,12 +86,12 @@ export default function Hero() {
           background: `radial-gradient(ellipse, ${C.glow} 0%, transparent 70%)`,
           filter: "blur(50px)",
         }}
-      />
+      /> */}
 
       {/* Background video — contained, not cropped, so the globe reads fully like in Figma */}
       <video
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[0] mx-auto xl:h-full h-[22rem] lg:h-[45rem] md:h-[32rem] sm:h-[28rem] w-full max-w-[560px] object-contain sm:max-w-[720px] md:max-w-[700px] lg:max-w-[1200px]"
+        className="pointer-events-none absolute inset-0 z-[0] h-full w-full object-contain mt-4"
         autoPlay
         muted
         loop
@@ -118,7 +118,7 @@ export default function Hero() {
         variants={heroStagger}
         initial="hidden"
         animate="visible"
-        className={`${HERO_CONTENT_CLASS} max-w-4xl`}
+        className={`${HERO_CONTENT_CLASS} max-w-4xl md:-h-[calc(100vh-200px)] h-dvh justify-center align-middle`}
       >
         {/* <motion.div
           variants={heroItem}
@@ -164,11 +164,11 @@ export default function Hero() {
 
         <motion.div
           variants={heroItem}
-          className="mb-4 flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:mb-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4 md:mb-12"
+          className="mb-4 flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:mb-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4 md:mb-12 !mb-0"
         >
           <HashLink
             href={hero.primaryCta.href}
-            className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
+            className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 !mb-0"
             // style={{
             //   background: C.buttonGradient,
             //   boxShadow: `0 8px 28px ${C.glow}`,
