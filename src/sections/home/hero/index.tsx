@@ -54,7 +54,7 @@ export default function Hero() {
   const showStaticLogo = phase === "ready" && showYaka;
 
   return (
-    <section id="hero" className={`${HERO_SECTION_CLASS} dark:!bg-[transparent] !bg-[#000000]`}
+    <section id="hero" className={`${HERO_SECTION_CLASS} lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[70vh] !p-0 !bg-[#000000]`}
 
     >
       {/* <HeroWave isDark={isDark} /> */}
@@ -93,7 +93,7 @@ export default function Hero() {
       {/* Background video — contained, not cropped, so the globe reads fully like in Figma */}
       <video
         aria-hidden
-        className="md:block hidden pointer-events-none absolute lg:top-4 inset-0 z-[0] h-full w-full object-contain !bg-[#000000]"
+        className="pointer-events-none absolute lg:top-18 md:top-14 top-12 inset-0 z-[0] w-full object-contain !bg-[#000000] min-w-[50rem] md:left-0 left-[-45%] lg:!h-[80vh] md:!h-[80vh] sm:!h-[52dvh] !h-[75vh]"
         autoPlay
         muted
         loop
@@ -115,7 +115,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 5, background: isDark ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.25)" }}
       /> */}
-      <div className="relative z-10 w-full" style={{
+      <div className="relative z-10 w-full lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[70vh]" style={{
         background:
           `url(${heroOverlay.src}) center/cover no-repeat`,
       }}>
@@ -125,7 +125,7 @@ export default function Hero() {
         variants={heroStagger}
         initial="hidden"
         animate="visible"
-        className={`${HERO_CONTENT_CLASS} max-w-4xl h-full md:h-[95vh]`}
+          className={`${HERO_CONTENT_CLASS} max-w-4xl lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[70vh] `}
       >
         {/* <motion.div
           variants={heroItem}
