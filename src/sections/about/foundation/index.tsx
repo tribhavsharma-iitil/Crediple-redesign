@@ -34,13 +34,13 @@ export default function AboutFoundation() {
             }}
           >
             <p
-              className="font-heading font-bold text-xl sm:text-2xl md:text-[1.65rem] leading-[1.35] mb-4 max-w-2xl"
+              className="font-heading font-bold text-xl sm:text-2xl md:text-[1.65rem] leading-[1.35] mb-4 max-w-2xl font-jakarta font-medium"
               style={{ color: isDark ? "#ffffff" : "#1E293B" }}
             >
               {foundation.headline}
             </p>
             <p
-              className="text-sm md:text-[16px] leading-relaxed"
+              className="text-sm md:text-[16px] leading-relaxed font-jakarta"
               style={{ color: isDark ? '#FFFFFFCC' : "#64748B" }}
             >
               {foundation.body}

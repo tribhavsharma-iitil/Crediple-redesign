@@ -115,7 +115,7 @@ export default function SolutionsProcess() {
                         {step.number}
                       </span>
                       <h3
-                        className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                        className="mt-2 mb-2 text-2xl font-black tracking-tight font-jakarta"
                         style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
                       >
                         {step.label}

@@ -35,7 +35,7 @@ export default function AboutFuture() {
           </h2>
 
           <p
-            className="mx-auto max-w-2xl text-sm md:text-[15px] leading-relaxed mb-10 sm:mb-12"
+            className="mx-auto max-w-2xl text-sm md:text-[15px] leading-relaxed mb-10 sm:mb-12 font-jakarta font-medium"
             style={{ color: isDark ? '#ffffff' : "#64748B" }}
           >
             {future.body}
@@ -89,20 +89,22 @@ export default function AboutFuture() {
                 }}
               >
                 <p
-                  className="font-black tracking-tight lg:text-4xl text-2xl mb-8"
+                  className="font-black tracking-tight lg:text-5xl text-2xl mb-8 font-heading !font-normal"
                   style={{ color: isDark ? '#ffffff' : '#232323' }}
                 >
                   {item.stat}
                 </p>
                 <p
-                  className="font-heading mb-4 mt-6 text-2xl font-black tracking-tight lg:max-w-[150px]"
-                  style={{ color: isDark ? '#ffffff' : "#0F172A" }}
+                  className="font-heading mb-4 mt-6 text-3xl font-black tracking-tight font-jakarta"
+                  style={{ color: isDark ? '#ffffff' : '#232323' }}
                 >
-                  {item.title}
+                  {item.title.split(" ")[0]}
+                  <br />
+                  {item.title.split(" ").slice(1).join(" ")}
                 </p>
                 <p
                   className="text-md leading-relaxed"
-                  style={{ color: isDark ? '#ffffff' : "#454545" }}
+                  style={{ color: isDark ? '#FFFFFFCC' : "#454545" }}
                 >
                   {item.desc}
                 </p>

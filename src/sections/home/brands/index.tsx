@@ -181,7 +181,7 @@ export default function Brands() {
                     />
                   </div>
                   <h3
-                    className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                    className="font-heading mt-2 mb-2 lg:text-3xl text-2xl font-black tracking-tight"
                     style={{ color: isDark ? C.text : homeLight.heading }}
                   >
                     {brand.name}
@@ -252,12 +252,14 @@ export default function Brands() {
 
         <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
           <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
-            <HomeReveal className="m-auto" variants={homeFadeLeft}>
+            <HomeReveal className="my-auto" variants={homeFadeLeft}>
               <h2
                 className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
                 style={{ color: isDark ? "#ffffff" : homeLight.heading }}
               >
-                {values.titleBefore}{" "}
+                {values.titleBefore}<br className="hidden sm:inline" />
+                {values.titleBefore1}<br className="hidden sm:inline" />
+                {values.titleBefore2}
                 <span style={getHomeTitleAccentStyle(isDark)}>
                   {values.titleAccent}
                 </span>
@@ -297,7 +299,7 @@ export default function Brands() {
                       {item.number}
                     </span>
                     <h3
-                      className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                      className="mt-2 mb-2 text-2xl font-black tracking-tight font-jakarta"
                       style={{ color: isDark ? C.text : homeLight.heading }}
                     >
                       {item.title}

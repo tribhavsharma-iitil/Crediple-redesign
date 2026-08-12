@@ -69,7 +69,7 @@ export default function Testimonials() {
               {testimonials.title}
             </h2>
             <p
-              className="mt-3 text-left text-sm sm:text-base"
+              className="mt-3 text-left text-sm sm:text-base font-medium"
               style={{ color: isDark ? '#FFFFFF' : '#454545CC' }}
             >
               {testimonials.subtitle}

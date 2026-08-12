@@ -35,7 +35,7 @@ function AdvantageCard({
           {item.tag}
         </span>
         <h3
-          className="font-heading mt-6 mb-2 text-2xl font-black tracking-tight"
+          className="font-heading mt-6 mb-2 text-2xl font-black tracking-tight font-jakarta"
           style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
         >
           {item.title === "Growth Funnels" || item.title === "Ecosystem Design" ? (

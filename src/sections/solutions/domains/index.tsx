@@ -39,7 +39,7 @@ export default function SolutionsDomains() {
               {/* <span style={getHomeTitleAccentStyle(isDark)}>{domains.subtitle}</span> */}
             </h2>
             <p
-              className="mt-2 text-sm sm:text-base"
+              className="mt-2 text-sm sm:text-base font-medium"
               style={{ color: isDark ? '#FFFFFF' : homeLight.muted }}
             >
               {domains.subtitle}

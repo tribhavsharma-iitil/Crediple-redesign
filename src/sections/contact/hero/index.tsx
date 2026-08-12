@@ -7,6 +7,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { homeEase, homeFadeRight } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { HomeReveal } from "@/components/home/HomeReveal";
+import { submitContactForm } from "@/lib/api/contactService";
 import aboutBg from "@/assets/about/about_us_bg.png";
 import ContactInfoBar from "@/sections/contact/form"
 
@@ -27,11 +28,14 @@ export default function ContactHero() {
   const { heroStagger } = useHomeMotion();
 
   const [form, setForm] = useState({
-    name: "",
+    fullName: "",
     email: "",
     subject: "",
     description: "",
+    brand: "crediple",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,8 +43,22 @@ export default function ContactHero() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+
+    try {
+      const result = await submitContactForm(form);
+      setMessage(result.message + " ✓");
+      setForm({ fullName: "", email: "", subject: "", description: "", brand: 'crediple' });
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : "Error sending message. Please try again.";
+      setMessage(errorMsg);
+      console.error("Form submission error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const fieldStyle = {
@@ -74,7 +92,7 @@ export default function ContactHero() {
         >
           <motion.h1
             variants={heroItem}
-            className="font-heading mb-3 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-white"
+            className="font-heading mb-3 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-white leading-[1]"
 
           >
             {hero.titleLine1}
@@ -84,21 +102,21 @@ export default function ContactHero() {
 
           <motion.p
             variants={heroItem}
-            className="mb-10 text-white max-w-md text-sm leading-relaxed sm:mb-12 sm:text-base"
+            className="mb-10 text-white max-w-md text-sm leading-relaxed sm:mb-12 sm:text-base font-semibold"
           >
             {hero.description}
           </motion.p>
 
           <motion.div variants={heroItem}>
             <p
-              className="mb-2 text-sm text-white"
+              className="mb-2 text-sm text-[#FFFFFFCC]"
 
             >
               {hero.sayHi}
             </p>
             <a
               href={`mailto:${hero.email}`}
-              className="text-xl text-white font-bold no-underline transition-opacity hover:opacity-80 sm:text-2xl"
+              className="text-xl text-white font-jakarta no-underline transition-opacity hover:opacity-80 sm:text-2xl"
 
             >
               {hero.email}
@@ -127,9 +145,9 @@ export default function ContactHero() {
               </label>
               <input
                 id="contact-name"
-                name="name"
+                name="fullName"
                 placeholder={hero.form.name.placeholder}
-                value={form.name}
+                value={form.fullName}
                 onChange={handleChange}
                 required
                 className={`${fieldClass} h-12`}
@@ -200,17 +218,25 @@ export default function ContactHero() {
 
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
+              disabled={isLoading}
+              whileHover={{ scale: isLoading ? 1 : 1.01 }}
+              whileTap={{ scale: isLoading ? 1 : 0.98 }}
               transition={{ duration: 0.2, ease: homeEase }}
-              className="mt-1 inline-flex h-12 w-full items-center justify-center text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="mt-1 inline-flex h-12 w-full items-center justify-center text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
               style={{
                 background: '#0047AB',
                 boxShadow: `0 8px 28px ${C.glow}`,
               }}
             >
-              {hero.form.submitLabel}
+              {isLoading ? "Sending..." : hero.form.submitLabel}
             </motion.button>
+
+            {message && (
+              <p className={`text-sm text-center ${message.includes("success") ? "text-green-400" : "text-red-400"
+                }`}>
+                {message}
+              </p>
+            )}
           </form>
         </HomeReveal>
       </div>

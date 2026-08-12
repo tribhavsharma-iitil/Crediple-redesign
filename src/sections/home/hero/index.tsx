@@ -75,9 +75,36 @@ export default function Hero() {
     if (!videoMounted) return;
     const video = videoRef.current;
     if (!video) return;
+
     video.muted = true;
-    video.load();
-    video.play().catch(() => {});
+    video.defaultMuted = true;
+
+    const tryPlay = () => {
+      video.play().catch(() => { });
+    };
+
+    tryPlay();
+    // Some mobile browsers aren't ready to accept play() the instant
+    // the element mounts — retry once real media data is available.
+    video.addEventListener("loadedmetadata", tryPlay);
+    video.addEventListener("canplay", tryPlay);
+
+    // Last-resort fallback: a few mobile browsers (e.g. Chrome on
+    // Android with Data Saver) still block the very first
+    // programmatic autoplay. The user's first touch/scroll/click
+    // anywhere on the page unlocks it, so playback starts without
+    // them ever needing to tap the video's own play control.
+    document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+    document.addEventListener("scroll", tryPlay, { once: true, passive: true });
+    document.addEventListener("click", tryPlay, { once: true });
+
+    return () => {
+      video.removeEventListener("loadedmetadata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+      document.removeEventListener("touchstart", tryPlay);
+      document.removeEventListener("scroll", tryPlay);
+      document.removeEventListener("click", tryPlay);
+    };
     // isMobile is included because switching source swaps in a new
     // <video> node (via key) that needs its own muted+play kick.
   }, [videoMounted, isMobile]);
@@ -172,14 +199,14 @@ export default function Hero() {
           `url(${heroOverlay.src}) center/cover no-repeat`,
       }}>
 
-     
-      <motion.div
-        variants={heroStagger}
-        initial="hidden"
-        animate="visible"
+
+        <motion.div
+          variants={heroStagger}
+          initial="hidden"
+          animate="visible"
           className={`${HERO_CONTENT_CLASS} max-w-4xl lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[70vh] `}
-      >
-        {/* <motion.div
+        >
+          {/* <motion.div
           variants={heroItem}
           className="mb-3 w-fit max-w-full sm:mb-6 md:mb-7"
         >
@@ -203,45 +230,45 @@ export default function Hero() {
           </span>
         </motion.div> */}
 
-        <motion.h1
-          variants={heroItem}
-          className="font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
-          style={{ color: "#ffffff" }}
-        >
-          {hero.titleLine1}
-          <br />
-          {/* <span style={getHomeTitleAccentStyle(isDark)}>{hero.titleLine2}</span> */}
-        </motion.h1>
-
-        <motion.p
-          variants={heroItem}
-          className="mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
-          style={{ color: "#FFFFFF" }}
-        >
-          {hero.description}
-        </motion.p>
-
-        <motion.div
-          variants={heroItem}
-          className="mb-4 flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:mb-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4 md:mb-12 !mb-0"
-        >
-          <HashLink
-            href={hero.primaryCta.href}
-            className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 !mb-0"
-            // style={{
-            //   background: C.buttonGradient,
-            //   boxShadow: `0 8px 28px ${C.glow}`,
-            // }}
-            style={{
-              background: "rgba(255, 255, 255, 0.16)"
-            }}
+          <motion.h1
+            variants={heroItem}
+            className="text-white font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1]"
+            style={{ color: "#ffffff" }}
           >
-            {/* <Play size={13} className="fill-current" /> */}
-            {hero.primaryCta.label}
-          </HashLink>
-        </motion.div>
+            {hero.titleLine1}
+            <br />
+            {/* <span style={getHomeTitleAccentStyle(isDark)}>{hero.titleLine2}</span> */}
+          </motion.h1>
 
-      </motion.div>
+          <motion.p
+            variants={heroItem}
+            className="mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-jakarta font-semibold"
+            style={{ color: "#FFFFFF" }}
+          >
+            {hero.description}
+          </motion.p>
+
+          <motion.div
+            variants={heroItem}
+            className="mb-4 flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:mb-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4 md:mb-12 !mb-0"
+          >
+            <HashLink
+              href={hero.primaryCta.href}
+              className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 !mb-0"
+              // style={{
+              //   background: C.buttonGradient,
+              //   boxShadow: `0 8px 28px ${C.glow}`,
+              // }}
+              style={{
+                background: "rgba(255, 255, 255, 0.16)"
+              }}
+            >
+              {/* <Play size={13} className="fill-current" /> */}
+              {hero.primaryCta.label}
+            </HashLink>
+          </motion.div>
+
+        </motion.div>
       </div>
     </section>
   );

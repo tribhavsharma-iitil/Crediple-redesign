@@ -27,19 +27,19 @@ export default function SolutionsFoundation() {
             }}
           >
             <p
-              className="font-heading mb-4 text-xl leading-[1.35] font-bold sm:text-2xl md:text-[1.65rem]"
+              className="font-heading mb-4 text-xl leading-[1.35] font-bold sm:text-2xl md:text-[1.65rem] font-jakarta font-medium"
               style={{ color: isDark ? "#FFFFFF" : "#0F172A" }}
             >
               {foundation.headline}
             </p>
             <p
-              className="mb-4 text-sm leading-relaxed md:text-[15px]"
+              className="mb-4 text-sm leading-relaxed md:text-[15px] font-jakarta"
               style={{ color: isDark ? "#FFFFFFCC" : "#64748B" }}
             >
               {foundation.body}
             </p>
             <p
-              className="text-sm leading-relaxed md:text-[15px]"
+              className="text-sm leading-relaxed md:text-[15px] font-semibold font-jakarta"
               style={{ color: isDark ? "#FFFFFFCC" : "#64748B" }}
             >
               {foundation.accent}
