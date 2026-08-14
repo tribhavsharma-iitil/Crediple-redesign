@@ -42,11 +42,11 @@ export default function BlogPostView({
 
     return (
         <>
-            <section className="relative overflow-hidden dark:bg-black bg-white section-py !mt-12">
+            <section className="relative dark:bg-black bg-white section-py mt-6">
 
 
-                <div className="relative z-10 mx-auto max-w-[1260px] px-4 sm:px-6">
-                    <nav aria-label="Breadcrumb" className="mb-6">
+                <div className="relative z-10 mx-auto max-w-[1260px] px-4 sm:px-6 section-py">
+                    <nav aria-label="Breadcrumb" >
                         <ol className="flex flex-wrap items-center gap-2 text-sm dark:text-white/60 sm:text-base">
                             <li>
                                 <Link href="/" className="">Home</Link>
@@ -66,11 +66,11 @@ export default function BlogPostView({
                         </ol>
                     </nav>
 
-                    <h1 className="dark:text-white font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1] max-w-4xl">
+                    <h1 className="dark:text-white font-heading my-6 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl leading-[1] max-w-4xl">
                         {post.title}
                     </h1>
 
-                    <div className="font-jakarta mt-8 flex flex-wrap items-center gap-3 text-sm dark:text-white/80 sm:text-base mb-12">
+                    <div className="font-jakarta flex flex-wrap items-center gap-3 text-sm dark:text-white/80 sm:text-base">
                         {post.tags.map((tag) => (
                             <span key={tag} className="flex items-center gap-3">
                                 <span aria-hidden className="dark:text-white/30">/</span>
@@ -179,10 +179,9 @@ export default function BlogPostView({
 
                 {relatedPosts.length > 0 && (
                     <section
-                        className="px-4 pb-20 sm:px-6 sm:pb-24"
                         style={{ background: isDark ? "#000000" : "#FFFFFF" }}
                     >
-                        <div className="mx-auto max-w-[1260px]">
+                        <div className="mx-auto max-w-[1260px] px-4 sm:px-6">
                             <div className="mb-10 sm:mb-14">
                                 <h2
                                     className="font-heading text-4xl tracking-tight sm:text-6xl"

@@ -8,7 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
-import yakaBlue from "@/assets/yaka_blue.png";
+import yakaBlue from "@/assets/yaka_dark.png";
 import yakaLight from "@/assets/yaka_light.png";
 import { useTheme } from "@/context/ThemeContext";
 import type { HomeIntroPhase } from "@/lib/homeIntro";

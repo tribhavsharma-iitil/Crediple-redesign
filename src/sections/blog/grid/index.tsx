@@ -10,7 +10,7 @@ export default function BlogGrid({ posts }: { posts: ReturnType<typeof getBlogPo
     return (
         <main
             id="blog-grid"
-            className="scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20"
+            className="scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20 !pb-10"
             style={{ background: isDark ? "#000000" : "#FFFFFF" }}
         >
             <div className="mx-auto grid max-w-[1260px] gap-6 md:grid-cols-3">

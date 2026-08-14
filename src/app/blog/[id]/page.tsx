@@ -34,7 +34,7 @@ export default async function BlogPostPage({ params }: BlogPageParams) {
         notFound();
     }
 
-    const relatedPosts = getBlogPosts().filter((p) => p.id !== post.id).slice(0, 3);
+    const relatedPosts = getBlogPosts();
 
     return <BlogPostView post={post} relatedPosts={relatedPosts} />;
 }
