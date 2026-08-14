@@ -34,7 +34,7 @@ export default async function BlogPostPage({ params }: BlogPageParams) {
         notFound();
     }
 
-    const relatedPosts = getBlogPosts();
+    const relatedPosts = [...getBlogPosts()];
 
     return <BlogPostView post={post} relatedPosts={relatedPosts} />;
 }
