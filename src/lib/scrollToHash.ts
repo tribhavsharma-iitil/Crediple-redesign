@@ -11,12 +11,32 @@ export function scrollToHash(
   const el = document.getElementById(id);
   if (!el) return false;
 
+  const restoreScrollBehavior = disableCssSmoothScroll();
   if (behavior === "smooth") {
-    animateScrollToElement(el);
+    animateScrollToElement(el, { onDone: restoreScrollBehavior });
   } else {
     el.scrollIntoView({ behavior: "auto", block: "start" });
+    restoreScrollBehavior();
   }
   return true;
+}
+
+/**
+ * The global `html { scroll-behavior: smooth }` rule also applies to plain
+ * `window.scrollTo()` calls (the "auto" behavior defers to it), so every frame
+ * of our own rAF-driven animation below would itself kick off a native smooth
+ * scroll — stacking on top of each other and turning an 850ms animation into
+ * a multi-second stutter. Disable it for the duration of a manual scroll and
+ * restore it afterwards.
+ */
+function disableCssSmoothScroll(): () => void {
+  if (typeof document === "undefined") return () => {};
+  const root = document.documentElement;
+  const previous = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  return () => {
+    root.style.scrollBehavior = previous;
+  };
 }
 
 /**
@@ -28,7 +48,8 @@ export function animateScrollToElement(
   {
     duration = 850,
     offset = 0,
-  }: { duration?: number; offset?: number } = {},
+    onDone,
+  }: { duration?: number; offset?: number; onDone?: () => void } = {},
 ): void {
   const prefersReduced =
     typeof window !== "undefined" &&
@@ -42,6 +63,7 @@ export function animateScrollToElement(
 
   if (prefersReduced || Math.abs(targetY - window.scrollY) < 2) {
     window.scrollTo(0, targetY);
+    onDone?.();
     return;
   }
 
@@ -53,7 +75,11 @@ export function animateScrollToElement(
   const step = (now: number) => {
     const t = Math.min(1, (now - start) / duration);
     window.scrollTo(0, startY + delta * easeOutCubic(t));
-    if (t < 1) requestAnimationFrame(step);
+    if (t < 1) {
+      requestAnimationFrame(step);
+    } else {
+      onDone?.();
+    }
   };
 
   requestAnimationFrame(step);
@@ -132,7 +158,9 @@ export function scrollToHashWhenReady(
 
     if (startFromTop && !didStartFromTop) {
       didStartFromTop = true;
+      const restore = disableCssSmoothScroll();
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      restore();
     }
 
     if (scrollToHash(hashOrId, "smooth")) {

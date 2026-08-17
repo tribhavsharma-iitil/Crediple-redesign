@@ -271,6 +271,14 @@ export default function Footer() {
                 <Link
                   key={link.label}
                   href={link.href}
+                  onClick={(e) => {
+                    // Already on /legal: same-route Link clicks don't trigger
+                    // navigation, so scroll to top manually every time.
+                    if (pathname.startsWith("/legal")) {
+                      e.preventDefault();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                  }}
                   className={cn(
                     "text-[12px] no-underline transition-colors",
                     isDark
