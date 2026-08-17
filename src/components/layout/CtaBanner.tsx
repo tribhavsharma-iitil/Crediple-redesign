@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp } from "@/lib/animations";
+import { pathsMatch } from "@/lib/scrollToHash";
 
 const TITLE_LINE_1 = "The Values Behind";
 const TITLE_LINE_2 = "Every Innovation";
@@ -12,6 +14,7 @@ const SUBTITLE =
 
 export default function CtaBanner() {
   const { isDark } = useTheme();
+  const pathname = usePathname();
 
   return (
     <section
@@ -33,6 +36,11 @@ export default function CtaBanner() {
         <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
           <Link
             href="/solutions"
+            onClick={() => {
+              if (pathsMatch(pathname, "/solutions")) {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+              }
+            }}
             className="inline-flex h-11 items-center justify-center whitespace-nowrap px-8 text-sm font-semibold no-underline transition-opacity hover:opacity-90"
             style={{
               background: isDark ? "#0047AB" : "#FFFFFF",

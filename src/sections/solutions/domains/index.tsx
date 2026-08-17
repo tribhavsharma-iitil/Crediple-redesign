@@ -25,7 +25,7 @@ export default function SolutionsDomains() {
   return (
     <section
       id="domains"
-      className="relative section-py overflow-hidden"
+      className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
       style={{ background: isDark ? '#000000' : '#FFFFFF' }}
     >
       <div className="">

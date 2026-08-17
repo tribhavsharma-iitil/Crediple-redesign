@@ -154,12 +154,11 @@ export default function Navbar() {
                             exit={{ opacity: 0, y: 8 }}
                             transition={{ duration: 0.15 }}
                             className={cn(
-                              "absolute left-0 top-full z-50 mt-6 min-w-[180px] overflow-hidden border py-2",
+                              "absolute left-0 top-full z-50 mt-6 min-w-[190px] overflow-hidden border p-1.5 shadow-lg",
                               isDark
-                                ? "border-white/10 bg-[#050505]"
-                                : "border-[#E2E8F0] bg-white",
+                                ? "border-white/10 bg-[#050505] shadow-[0_16px_40px_rgba(0,71,171,0.35)]"
+                                : "border-[#E2E8F0] bg-white shadow-[0_16px_32px_rgba(15,23,42,0.08)]",
                             )}
-                            style={{ backdropFilter: "blur(24px)" }}
                           >
                             {link.dropdown!.map((item) => {
                               const itemActive = isLinkActive(pathname, item.href);
@@ -168,14 +167,14 @@ export default function Navbar() {
                                   key={item.href}
                                   href={item.href}
                                   className={cn(
-                                    "block px-4 py-2.5 text-sm no-underline transition-colors hover:opacity-80",
+                                    "block px-3.5 py-2.5 text-sm no-underline transition-colors",
                                     itemActive
                                       ? isDark
-                                        ? "text-white"
-                                        : "text-[#0047AB]"
+                                        ? "bg-white/10 text-white"
+                                        : "bg-[#EFF6FF] text-[#0047AB]"
                                       : isDark
-                                        ? "text-white/65"
-                                        : "text-[#475569]",
+                                        ? "text-white/65 hover:bg-white/5 hover:text-white"
+                                        : "text-[#475569] hover:bg-slate-50 hover:text-[#0047AB]",
                                   )}
                                 >
                                   {item.label}
