@@ -55,7 +55,12 @@ export default function AppShell({
 
     const pending = consumePendingHash();
     const hash = pending || window.location.hash.replace(/^#/, "") || null;
-    if (!hash) return;
+    if (!hash) {
+      // Force top on every plain route change — Next's router cache can
+      // otherwise restore a previously visited page's old scroll offset.
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      return;
+    }
 
     const path = normalizePath(pathname || "/");
 

@@ -151,7 +151,7 @@ export default function LegalPage() {
            stacked flex column. This prevents the browser layout engine from pinning 
            height boundaries mid-screen on highly expanded responsive text cards.
       */}
-      <main className="mx-auto flex flex-col max-w-[1440px] w-full gap-6 px-5 py-12 sm:px-6 sm:py-16">
+      <main className="mx-auto flex flex-col max-w-[1440px] w-full gap-6 px-5 py-12 sm:px-6 sm:py-20">
         {legalSections.map((section) => {
           const Icon = section.icon;
 

@@ -48,7 +48,7 @@ export default function About() {
               </span>
             </h2>
             <p
-              className="mb-8 text-sm sm:mb-10 sm:text-base"
+              className="mb-8 text-sm sm:mb-10 sm:text-base font-medium"
               style={{ color: isDark ? '#FFFFFF' : homeLight.muted }}
             >
               {about.subtitle}

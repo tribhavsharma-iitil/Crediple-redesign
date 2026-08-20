@@ -97,14 +97,15 @@ function BrandBlock({
           variants={homeFadeUp}
           className={imageLeft ? "order-1 xl:order-1" : "order-1 xl:order-2"}
         >
-          <div className="relative aspect-[4/4] h-full w-full overflow-hidden">
+          <div className="relative w-full overflow-hidden">
             <Image
               src={brand.image}
               alt={brand.name}
-              fill
-              placeholder="blur"
+              width={1200}
+              height={800}
               quality={100}
-              className="object-cover h-full w-full"
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 600px"
+              className="block h-auto w-full object-contain"
             />
           </div>
         </HomeReveal>
@@ -115,10 +116,10 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col lg:py-12 lg:p-12 p-8 justify-between"
+            className="relative flex h-full flex-col px-10 p-8 justify-between"
             style={{ background: 'transparent' }}
           >
-            <div className="mb-12 flex justify-end">
+            <div className="mb-8 flex justify-end">
               <a
                 href={brand.href}
                 target="_blank"
@@ -138,7 +139,7 @@ function BrandBlock({
               </span>
 
             <h2
-              className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl"
+              className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl font-jakarta"
               style={{ color: isDark ? C.text : "#0F172A" }}
             >
               {brand.name}
@@ -160,10 +161,10 @@ function BrandBlock({
               </p>
             ))}
 
-            <div className="border-y my-8 py-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
+            <div className="border-y my-6 py-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
 
               <p
-                className="mb-4 lg:text-2xl text-xl font-bold"
+                className="mb-4 lg:text-2xl text-xl"
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
                 {brand.featuresTitle}
@@ -188,7 +189,7 @@ function BrandBlock({
               </div>
             </div>
             <p
-              className="mb-4 lg:text-2xl text-xl font-bold"
+              className="mb-4 lg:text-2xl text-xl"
               style={{ color: isDark ? '#ffffff' : C.accentStrong }}
             >
               Core Focus
@@ -233,8 +234,8 @@ export default function BrandsShowcase() {
   return (
     <section
       id="brand-showcase"
-      className="relative"
-      style={{ background: isDark ? C.bg : "#FFFFFF" }}
+      className="relative max-w-[1600px] max-[1600px]:mx-0 min-[1601px]:mx-auto"
+      style={{ background: isDark ? '#000000' : "#FFFFFF" }}
     >
       {/* <BrandTabBar activeIndex={activeIndex} onSelect={setActiveIndex} /> */}
 

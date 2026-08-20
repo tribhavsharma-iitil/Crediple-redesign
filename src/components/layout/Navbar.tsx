@@ -1,6 +1,6 @@
 "use client";
 
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -57,6 +57,8 @@ export default function Navbar() {
   const { isDark } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -66,13 +68,15 @@ export default function Navbar() {
 
   useEffect(() => {
     setMobileOpen(false);
+    setOpenDropdown(null);
+    setMobileDropdown(null);
   }, [pathname]);
 
   return (
     <>
       <header
         className={cn(
-          "fixed z-50 w-full dark:bg-[#FFFFFF14] bg-white border"
+          "fixed z-50 w-full dark:bg-[#0000001C] bg-[#FFFFFF] border dark:border-[#1010101A]"
         )}
         style={{ backdropFilter: "blur(362px)" }}
       >
@@ -101,6 +105,8 @@ export default function Navbar() {
           >
             {NAV_LINKS.map((link, index) => {
               const active = isLinkActive(pathname, link.href);
+              const hasDropdown = Boolean(link.dropdown?.length);
+              const isOpen = openDropdown === link.href;
 
               return (
                 <div key={link.href} className="flex items-center">
@@ -112,11 +118,15 @@ export default function Navbar() {
                       /
                     </span>
                   )}
-                  <span key={link.href} className="flex items-center">
+                  <div
+                    className="relative flex items-center"
+                    onMouseEnter={() => hasDropdown && setOpenDropdown(link.href)}
+                    onMouseLeave={() => hasDropdown && setOpenDropdown(null)}
+                  >
                     <Link
                       href={link.href}
                       className={cn(
-                        "relative text-md font-noraml no-underline transition-colors hover:opacity-80",
+                        "relative flex items-center gap-1 text-md font-noraml no-underline transition-colors hover:opacity-80",
                         active
                           ? isDark
                             ? "text-white"
@@ -127,10 +137,56 @@ export default function Navbar() {
                       )}
                     >
                       {link.label}
+                      {hasDropdown && (
+                        <ChevronDown
+                          size={14}
+                          className={cn("transition-transform ml-2", isOpen && "rotate-180")}
+                        />
+                      )}
                     </Link>
-                  </span>
-                </div>
 
+                    {hasDropdown && (
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 8 }}
+                            transition={{ duration: 0.15 }}
+                            className={cn(
+                              "absolute left-0 top-full z-50 mt-6 min-w-[190px] overflow-hidden border p-1.5 shadow-lg",
+                              isDark
+                                ? "border-white/10 bg-[#050505] shadow-[0_16px_40px_rgba(0,71,171,0.35)]"
+                                : "border-[#E2E8F0] bg-white shadow-[0_16px_32px_rgba(15,23,42,0.08)]",
+                            )}
+                          >
+                            {link.dropdown!.map((item) => {
+                              const itemActive = isLinkActive(pathname, item.href);
+                              return (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  className={cn(
+                                    "block px-3.5 py-2.5 text-sm no-underline transition-colors",
+                                    itemActive
+                                      ? isDark
+                                        ? "bg-white/10 text-white"
+                                        : "bg-[#EFF6FF] text-[#0047AB]"
+                                      : isDark
+                                        ? "text-white/65 hover:bg-white/5 hover:text-white"
+                                        : "text-[#475569] hover:bg-slate-50 hover:text-[#0047AB]",
+                                  )}
+                                >
+                                  {item.label}
+                                </Link>
+                              );
+                            })}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    )}
+                  </div>
+                </div>
               );
             })}
           </nav>
@@ -238,24 +294,80 @@ export default function Navbar() {
               >
                 {NAV_LINKS.map((link) => {
                   const active = isLinkActive(pathname, link.href);
+                  const hasDropdown = Boolean(link.dropdown?.length);
+                  const expanded = mobileDropdown === link.href;
 
                   return (
                     <motion.div key={link.href} variants={drawerItem}>
-                      <Link
-                        href={link.href}
-                        className={cn(
-                          "block rounded-lg px-4 py-3 text-sm font-medium no-underline",
-                          active
-                            ? isDark
-                              ? "bg-white/10 text-white"
-                              : "bg-[#EFF6FF] text-[#0047AB]"
-                            : isDark
-                              ? "text-white/70"
-                              : "text-[#475569]",
+                      <div className="flex items-center">
+                        <Link
+                          href={link.href}
+                          className={cn(
+                            "block flex-1 rounded-lg px-4 py-3 text-sm font-medium no-underline",
+                            active
+                              ? isDark
+                                ? "bg-white/10 text-white"
+                                : "bg-[#EFF6FF] text-[#0047AB]"
+                              : isDark
+                                ? "text-white/70"
+                                : "text-[#475569]",
+                          )}
+                        >
+                          {link.label}
+                        </Link>
+                        {hasDropdown && (
+                          <button
+                            type="button"
+                            onClick={() => setMobileDropdown(expanded ? null : link.href)}
+                            aria-label={`Toggle ${link.label} submenu`}
+                            className={cn(
+                              "flex h-9 w-9 shrink-0 items-center justify-center ml-2",
+                              isDark ? "text-white/70" : "text-[#475569]",
+                            )}
+                          >
+                            <ChevronDown
+                              size={16}
+                              className={cn("transition-transform", expanded && "rotate-180")}
+                            />
+                          </button>
                         )}
-                      >
-                        {link.label}
-                      </Link>
+                      </div>
+
+                      {hasDropdown && (
+                        <AnimatePresence>
+                          {expanded && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden pl-4"
+                            >
+                              {link.dropdown!.map((item) => {
+                                const itemActive = isLinkActive(pathname, item.href);
+                                return (
+                                  <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    className={cn(
+                                      "block rounded-lg px-4 py-2.5 text-sm no-underline",
+                                      itemActive
+                                        ? isDark
+                                          ? "text-white"
+                                          : "text-[#0047AB]"
+                                        : isDark
+                                          ? "text-white/60"
+                                          : "text-[#64748B]",
+                                    )}
+                                  >
+                                    {item.label}
+                                  </Link>
+                                );
+                              })}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      )}
                     </motion.div>
                   );
                 })}

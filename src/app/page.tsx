@@ -5,6 +5,7 @@ import About from "@/sections/home/about";
 import Timeline from "@/sections/home/timeline";
 import Serve from "@/sections/home/serve";
 import Testimonials from "@/sections/home/testimonials";
+import Insights from "@/sections/home/insights";
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_KEYWORDS,
@@ -28,6 +29,7 @@ export default function Home() {
       <Timeline />
       <Serve />
       <Testimonials />
+      <Insights />
     </>
   );
 }

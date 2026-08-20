@@ -37,10 +37,10 @@ export default function AboutHero() {
       id="about-hero"
       className={HERO_SECTION_CLASS}
       // style={{ background: "transparent" }}
-       style={{
-              background:
-                `url(${aboutBg.src}) center/cover no-repeat`,
-            }}
+      style={{
+        background:
+          `url(${aboutBg.src}) center/cover no-repeat`,
+      }}
     >
       <motion.div
         variants={heroStagger}
@@ -50,7 +50,7 @@ export default function AboutHero() {
       >
         <motion.h1
           variants={heroItem}
-          className="text-white font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl xl:text-[4.25rem]"
+          className="text-white text-white font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1]"
         >
           {hero.titleLine1}
           <br />
@@ -63,7 +63,7 @@ export default function AboutHero() {
 
         <motion.p
           variants={heroItem}
-          className="mb-4 px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base"
+          className="mb-4 px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-semibold"
         >
           {hero.description}
         </motion.p>

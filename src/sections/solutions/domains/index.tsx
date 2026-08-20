@@ -25,7 +25,7 @@ export default function SolutionsDomains() {
   return (
     <section
       id="domains"
-      className="relative section-py overflow-hidden"
+      className="relative scroll-mt-20 overflow-hidden section-py sm:scroll-mt-24"
       style={{ background: isDark ? '#000000' : '#FFFFFF' }}
     >
       <div className="">
@@ -39,7 +39,7 @@ export default function SolutionsDomains() {
               {/* <span style={getHomeTitleAccentStyle(isDark)}>{domains.subtitle}</span> */}
             </h2>
             <p
-              className="mt-2 text-sm sm:text-base"
+              className="mt-2 text-sm sm:text-base font-medium"
               style={{ color: isDark ? '#FFFFFF' : homeLight.muted }}
             >
               {domains.subtitle}
