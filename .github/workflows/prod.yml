@@ -31,7 +31,8 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          
       - name: Verify out folder
         run: ls -la out
 
@@ -56,3 +57,4 @@ jobs:
         run: |
           echo "### Deployment Successful" >> $GITHUB_STEP_SUMMARY
           echo "- Static export deployed from out/" >> $GITHUB_STEP_SUMMARY
+          echo "- API URL: ${{ vars.NEXT_PUBLIC_API_URL }}" >> $GITHUB_STEP_SUMMARY
