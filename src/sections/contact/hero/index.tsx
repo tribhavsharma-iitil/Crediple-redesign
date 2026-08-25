@@ -122,6 +122,21 @@ export default function ContactHero() {
               {hero.email}
             </a>
           </motion.div>
+          <motion.div variants={heroItem} className="mt-6">
+            <p
+              className="mb-2 text-sm text-[#FFFFFFCC]"
+
+            >
+              {hero.forJob}
+            </p>
+            <a
+              href={`mailto:${hero.jobEmail}`}
+              className="text-xl text-white font-jakarta no-underline transition-opacity hover:opacity-80 sm:text-2xl"
+
+            >
+              {hero.jobEmail}
+            </a>
+          </motion.div>
         </motion.div>
 
         {/* Right — form card */}

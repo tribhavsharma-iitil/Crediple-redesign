@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { homeContent, homeColors, homeLight } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
@@ -12,6 +11,13 @@ import ctaBg from "@/assets/gradient.png";
 
 const { testimonials, cta } = homeContent;
 const C = homeColors;
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/[\s.]+/).filter(Boolean);
+  const first = parts[0]?.[0] ?? "";
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+  return (first + last).toUpperCase();
+}
 
 /** Sampled from Home.pdf testimonials frame */
 const T = {
@@ -111,15 +117,16 @@ export default function Testimonials() {
                     WebkitBackdropFilter: isDark ? "blur(324px)" : "none"
                   }}
                 >
-                  <div className="relative h-10 w-10 shrink-0 overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      placeholder="blur"
-                      className="object-cover"
-                      sizes="40px"
-                    />
+                  <div
+                    className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-normal"
+                    style={{
+                      background: isDark ? "#FFFFFF1A" : homeLight.bgAlt,
+                      color: isDark ? "#FFFFFF" : homeLight.heading,
+                      border: `1px solid ${isDark ? C.border : homeLight.border}`,
+                    }}
+                    aria-hidden
+                  >
+                    {getInitials(item.name)}
                   </div>
 
                   <p

@@ -11,6 +11,7 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp } from "@/lib/animations";
+import { withTheme } from "@/lib/utils";
 import footerBgDark from "@/assets/about/brands_sub_header.png";
 
 const { brands } = brandsContent;
@@ -99,7 +100,7 @@ function BrandBlock({
         >
           <div className="relative w-full overflow-hidden">
             <Image
-              src={brand.image}
+              src={isDark ? brand.imageDark : brand.imageLight}
               alt={brand.name}
               width={1200}
               height={800}
@@ -119,9 +120,24 @@ function BrandBlock({
             className="relative flex h-full flex-col px-10 p-8 justify-between"
             style={{ background: 'transparent' }}
           >
-            <div className="mb-8 flex justify-end">
+            <div className="mb-8 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={isDark ? brand.iconDark : brand.icon}
+                  alt={`${brand.name} icon`}
+                  width={40}
+                  height={40}
+                  className="h-9 w-auto object-contain sm:h-10"
+                />
+                <h2
+                  className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl font-jakarta"
+                  style={{ color: isDark ? C.text : "#0F172A" }}
+                >
+                  {brand.name}
+                </h2>
+              </div>
               <a
-                href={brand.href}
+                href={withTheme(brand.href, isDark)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-9 items-center justify-center px-8 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
@@ -130,20 +146,6 @@ function BrandBlock({
                 Visit {brand.name}
               </a>
             </div>
-
-            <span
-              className="mb-2 block"
-              style={{ color: isDark ? '#0047AB' : C.accentStrong }}
-            >
-              {index + 1 }
-              </span>
-
-            <h2
-              className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl font-jakarta"
-              style={{ color: isDark ? C.text : "#0F172A" }}
-            >
-              {brand.name}
-            </h2>
             <p
               className="font-heading mb-2 text-base leading-snug font-bold sm:text-lg"
               style={{ color: isDark ? '#ffffff' : C.accentStrong }}
@@ -169,11 +171,11 @@ function BrandBlock({
               >
                 {brand.featuresTitle}
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {brand.deliverables.map((item) => (
                   <span
                     key={item.title}
-                    className="border p-3 text-sm font-medium"
+                    className="border p-3 text-sm font-medium text-center"
                     style={{
                       color: isDark ? "#ffffff" : "#1E293B",
                       // backdropFilter: isDark ? "blur(50px)" : "none",
@@ -234,7 +236,7 @@ export default function BrandsShowcase() {
   return (
     <section
       id="brand-showcase"
-      className="relative max-w-[1600px] max-[1600px]:mx-0 min-[1601px]:mx-auto"
+      className="relative max-w-[1800px] max-[1800px]:mx-0 min-[1601px]:mx-auto"
       style={{ background: isDark ? '#000000' : "#FFFFFF" }}
     >
       {/* <BrandTabBar activeIndex={activeIndex} onSelect={setActiveIndex} /> */}

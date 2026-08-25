@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import enterprise_light from "@/assets/enterprise_light.png";
 import enterprise_dark from "@/assets/enterprise_dark.png";
+import crediple_light from "@/assets/crediple_light.png";
+import crediple_dark from "@/assets/crediple_dark.png";
 import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -11,11 +13,13 @@ interface LoaderProps {
   onComplete: () => void;
 }
 
-const VISIBLE_MS = 3200;
+const STEP_MS = 1500;
+const VISIBLE_MS = STEP_MS * 2;
 const EXIT_MS = 600;
 
 export default function Loader({ onComplete }: LoaderProps) {
   const [visible, setVisible] = useState(true);
+  const [step, setStep] = useState<"crediple" | "enterprise">("crediple");
   const { isDark } = useTheme();
   const finishedRef = useRef(false);
 
@@ -26,15 +30,24 @@ export default function Loader({ onComplete }: LoaderProps) {
   }, [onComplete]);
 
   useEffect(() => {
+    const stepTimer = setTimeout(() => setStep("enterprise"), STEP_MS);
     const hideTimer = setTimeout(() => setVisible(false), VISIBLE_MS);
     const fallbackTimer = setTimeout(finish, VISIBLE_MS + EXIT_MS + 200);
     return () => {
+      clearTimeout(stepTimer);
       clearTimeout(hideTimer);
       clearTimeout(fallbackTimer);
     };
   }, [finish]);
 
-  const logoSrc = isDark ? enterprise_dark : enterprise_light;
+  const logoSrc =
+    step === "crediple"
+      ? isDark
+        ? crediple_dark
+        : crediple_light
+      : isDark
+        ? enterprise_dark
+        : enterprise_light;
 
   return (
     <AnimatePresence mode="wait" onExitComplete={finish}>
@@ -69,13 +82,24 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="relative z-10 flex flex-col items-center gap-5"
           >
             <div className="relative w-[180px] h-[180px]">
-              <Image
-                src={logoSrc}
-                alt="Crediple"
-                fill
-                className="object-contain"
-                priority
-              />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={step}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={logoSrc}
+                    alt={step === "crediple" ? "Crediple" : "Enterprise"}
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             <div

@@ -84,12 +84,12 @@ export function InsightCard({
                                     {views}
                                 </span>
                             </div>
-                            <div className="flex items-center gap-1">
+                            {/* <div className="flex items-center gap-1">
                                 <MessageCircle size={16} style={{ color: C.textMuted }} />
                                 <span className="text-xs font-medium" style={{ color: C.textMuted }}>
                                     {comments}
                                 </span>
-                            </div>
+                            </div> */}
                         </div>
                         <p className="text-xs font-medium" style={{ color: C.textMuted }}>
                             {date}

@@ -15,7 +15,7 @@ import { CredipleButton } from "@/components/ui/CredipleButton";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import { homeFadeLeft, homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
-import { cn } from "@/lib/utils";
+import { cn, withTheme } from "@/lib/utils";
 import sectionBg from "@/assets/home/visual_bg.png";
 
 
@@ -199,7 +199,7 @@ export default function Brands() {
                 <HomeItem key={brand.name} className="h-full">
                   {brand.clickable ? (
                     <Link
-                      href={brand.href}
+                      href={withTheme(brand.href, isDark)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(cardClassName, "hover:bg-black/[0.02] dark:hover:bg-white/[0.03]")}
@@ -251,8 +251,8 @@ export default function Brands() {
         /> */}
 
         <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
-          <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
-            <HomeReveal className="my-auto" variants={homeFadeLeft}>
+          <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-10 lg:gap-16">
+            <HomeReveal className="my-auto col-span-4" variants={homeFadeLeft}>
               <h2
                 className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
                 style={{ color: isDark ? "#ffffff" : homeLight.heading }}
@@ -280,7 +280,7 @@ export default function Brands() {
               initial="hidden"
               whileInView="visible"
               viewport={viewport}
-              className="grid grid-cols-1 overflow-hidden border"
+              className="grid grid-cols-1 overflow-hidden border col-span-6"
               style={{
                 background: isDark ? `#FFFFFF0A` : "#FBFBFB",
                 borderColor: isDark ? C.border : homeLight.border,

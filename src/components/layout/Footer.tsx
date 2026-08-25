@@ -7,7 +7,7 @@ import { Mail } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { brandExternalLinks } from "@/content/brands";
 import { solutionsContent } from "@/content/solutions";
-import { cn } from "@/lib/utils";
+import { cn, withTheme } from "@/lib/utils";
 import { DunsBadge } from "@/components/layout/DunsBadge";
 import credipleDark from "@/assets/crediple_dark.png";
 import credipleLight from "@/assets/crediple_light.png";
@@ -136,9 +136,9 @@ export default function Footer() {
               </h4> */}
               <ul className="space-y-2">
                 {brandExternalLinks.slice(0, 4).map((link) => (
-                  <li key={link.label}>
+                  <li key={link.href}>
                     <a
-                      href={link.href}
+                      href={withTheme(link.href, isDark)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(
@@ -166,9 +166,9 @@ export default function Footer() {
               </h4> */}
               <ul className="space-y-2">
                 {brandExternalLinks.slice(4).map((link) => (
-                  <li key={link.label}>
+                  <li key={link.href}>
                     <a
-                      href={link.href}
+                      href={withTheme(link.href, isDark)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(
