@@ -108,17 +108,18 @@ export default function Brands() {
         className="relative section-py overflow-hidden"
         style={{ background: isDark ? '#000000' : '#FFFFFF' }}
       >
-        {isDark && (
-          <video
-            aria-hidden
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 z-0 h-60 top-[33%] lg:block hidden w-full object-cover"
-            src="/videos/section_bg_effect.mp4"
-          />
-        )}
+        <video
+          aria-hidden
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={cn(
+            "absolute inset-0 z-0 h-60 top-[33%] lg:block hidden w-full object-cover",
+            isDark ? "!bg-[#000000]" : "!bg-[#FFFFFF]",
+          )}
+          src={isDark ? "/videos/section_bg_effect.mp4" : "/videos/section_bg_light.mp4"}
+        />
         <div className="relative z-10">
           <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
             <HomeReveal variants={homeFadeLeft} className="mb-8 w-full sm:mb-10">

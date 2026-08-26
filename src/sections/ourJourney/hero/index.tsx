@@ -1,16 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ourJourneyContent } from "@/content/ourJourney";
 import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
-import HashLink from "@/components/ui/HashLink";
 import heroBg from "@/assets/about/hero_section_bg_our_journey.png";
+import heroBgLight from "@/assets/about/hero_section_bg_our_journey_light.png";
+
+
 import {
   HERO_CONTENT_CLASS,
   HERO_SECTION_CLASS,
 } from "@/components/home/heroLayout";
+
+import { useTheme } from "@/context/ThemeContext";
+import { cn } from "@/lib/utils";
+
 
 const { hero } = ourJourneyContent;
 
@@ -25,13 +30,16 @@ const heroItem = {
 
 export default function OurJourneyHero() {
   const { heroStagger } = useHomeMotion();
+  const { isDark } = useTheme();
 
   return (
     <section
       id="our-journey-hero"
       className={`${HERO_SECTION_CLASS} relative overflow-hidden md:!pt-0`}
       style={{
-        background: `url(${heroBg.src}) center/cover no-repeat`,
+        background: isDark
+          ? `url(${heroBg.src}) center/cover no-repeat, #000000`
+          : `url(${heroBgLight.src}) center/cover no-repeat, #FFFFFF`,
       }}
     >
       <motion.div
@@ -42,15 +50,19 @@ export default function OurJourneyHero() {
       >
         <motion.h1
           variants={heroItem}
-          className="text-white font-heading mb-2 px-1 text-[2rem] leading-[0] sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1] font-heading"
+          className={cn("text-white font-heading mb-2 px-1 text-[2rem] leading-[0] sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1] font-heading",
+          isDark ? "text-white" : "text-black",
+          )}
         >
           {hero.titleLine1}
         </motion.h1>
 
         <motion.p
           variants={heroItem}
-          className="mb-4 max-w-5xl px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-semibold font-jakarta"
-        >
+          className={cn("mb-4 max-w-5xl px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-semibold font-jakarta",
+         isDark ? "text-white" : "text-black",
+          )}
+            >
           {hero.description}
         </motion.p>
 

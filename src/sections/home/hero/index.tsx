@@ -7,7 +7,7 @@ import heroOverlay from "@/assets/home/hero_overlay.png";
 import {
   homeContent,
   homeColors,
-  // homeLight,
+  homeLight,
   // getHomeTitleAccentStyle,
 } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
@@ -17,6 +17,8 @@ import { useHomeMotion } from "@/hooks/useHomeMotion";
 import HashLink from "@/components/ui/HashLink";
 // import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
+import { CredipleButton } from "@/components/ui/CredipleButton";
+import { cn } from "@/lib/utils";
 import {
   HERO_CONTENT_CLASS,
   HERO_SECTION_CLASS,
@@ -42,7 +44,15 @@ export default function Hero() {
   const [showYaka, setShowYaka] = useState(true);
   const [videoMounted, setVideoMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // A <video> paints solid black until its first frame decodes, no matter
+    // what CSS background it has — reset so the section's own themed
+    // background shows through while the newly-selected source loads.
+    setVideoReady(false);
+  }, [isDark, isMobile]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -112,8 +122,13 @@ export default function Hero() {
   const showStaticLogo = phase === "ready" && showYaka;
 
   return (
-    <section id="hero" className={`${HERO_SECTION_CLASS} lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[50vh] !p-0 !bg-[#000000]`}
-
+    <section
+      id="hero"
+      className={cn(
+        HERO_SECTION_CLASS,
+        "lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[50vh] !p-0",
+        isDark ? "!bg-[#000000]" : "!bg-[#FFFFFF]",
+      )}
     >
       {/* <HeroWave isDark={isDark} /> */}
 
@@ -152,31 +167,47 @@ export default function Hero() {
       {videoMounted ? (
         isMobile ? (
           <video
-            key="hero-video-mobile"
+            key={isDark ? "hero-video-mobile-dark" : "hero-video-mobile-light"}
             ref={videoRef}
             aria-hidden
-            className="pointer-events-none absolute top-10 inset-0 z-[0] h-full w-full object-cover !bg-[#000000]"
+            onLoadedData={() => setVideoReady(true)}
+            className={cn(
+              "pointer-events-none absolute inset-0 z-[0] h-full w-full object-cover !top-[2rem] transition-opacity duration-500",
+              isDark ? "!bg-[#000000]" : "!bg-[#FFFFFF]",
+              videoReady ? "opacity-100" : "opacity-0",
+            )}
             autoPlay
             muted
             loop
             playsInline
             webkit-playsinline="true"
           >
-            <source src="/videos/bg_hero_mobile.mp4" type="video/mp4" />
+            <source
+              src={isDark ? "/videos/bg_hero_mobile.mp4" : "/videos/bg_hero_mobile_light.mp4"}
+              type="video/mp4"
+            />
           </video>
         ) : (
           <video
-            key="hero-video-desktop"
+            key={isDark ? "hero-video-desktop-dark" : "hero-video-desktop-light"}
             ref={videoRef}
             aria-hidden
-            className="pointer-events-none absolute lg:top-18 md:top-14 inset-0 z-[0] w-full object-contain !bg-[#000000] md:left-0 lg:!h-[80vh] md:!h-[80vh]"
+            onLoadedData={() => setVideoReady(true)}
+            className={cn(
+              "pointer-events-none absolute lg:top-18 md:top-14 inset-0 z-[0] w-full object-contain md:left-0 lg:!h-[80vh] md:!h-[80vh] transition-opacity duration-500",
+              isDark ? "!bg-[#000000]" : "!bg-[#FFFFFF]",
+              videoReady ? "opacity-100" : "opacity-0",
+            )}
             autoPlay
             muted
             loop
             playsInline
             webkit-playsinline="true"
           >
-            <source src="/videos/hero_bg.mp4" type="video/mp4" />
+            <source
+              src={isDark ? "/videos/hero_bg.mp4" : "/videos/hero_bg_light.mp4"}
+              type="video/mp4"
+            />
           </video>
         )
       ) : null}
@@ -195,8 +226,9 @@ export default function Hero() {
         style={{ zIndex: 5, background: isDark ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.25)" }}
       /> */}
       <div className="relative z-10 w-full lg:!h-[100vh] md:!h-[100vh] sm:!h-[100dvh] !h-[60vh]" style={{
-        background:
-          `url(${heroOverlay.src}) center/cover no-repeat`,
+        background: isDark
+          ? `url(${heroOverlay.src}) center/cover no-repeat`
+          : "transparent",
       }}>
 
 
@@ -232,8 +264,8 @@ export default function Hero() {
 
           <motion.h1
             variants={heroItem}
-            className="text-white font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1]"
-            style={{ color: "#ffffff" }}
+            className="font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1]"
+            style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
           >
             {hero.titleLine1}
             <br />
@@ -243,7 +275,7 @@ export default function Hero() {
           <motion.p
             variants={heroItem}
             className="mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-jakarta font-semibold"
-            style={{ color: "#FFFFFF" }}
+            style={{ color: isDark ? "#FFFFFF" : homeLight.body }}
           >
             {hero.description}
           </motion.p>
@@ -252,20 +284,24 @@ export default function Hero() {
             variants={heroItem}
             className="mb-4 flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:mb-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4 md:mb-12 !mb-0"
           >
-            <HashLink
-              href={hero.primaryCta.href}
-              className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 !mb-0"
-              // style={{
-              //   background: C.buttonGradient,
-              //   boxShadow: `0 8px 28px ${C.glow}`,
-              // }}
-              style={{
-                background: "rgba(255, 255, 255, 0.16)"
-              }}
-            >
-              {/* <Play size={13} className="fill-current" /> */}
-              {hero.primaryCta.label}
-            </HashLink>
+            {isDark ? (
+              <HashLink
+                href={hero.primaryCta.href}
+                className="inline-flex h-11 items-center justify-center whitespace-nowrap px-6 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 !mb-0"
+                style={{
+                  background: "rgba(255, 255, 255, 0.16)"
+                }}
+              >
+                {hero.primaryCta.label}
+              </HashLink>
+            ) : (
+              <CredipleButton
+                href={hero.primaryCta.href}
+                className="h-10 shrink-0 rounded-lg px-5 font-semibold"
+              >
+                {hero.primaryCta.label}
+              </CredipleButton>
+            )}
           </motion.div>
 
         </motion.div>

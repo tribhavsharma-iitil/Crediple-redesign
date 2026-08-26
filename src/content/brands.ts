@@ -68,6 +68,7 @@ export const brandsContent = {
     {
       number: "Brand 01",
       name: "",
+      shortName: "IITIL",
       icon: iitil_light_logo,
       iconDark: iitil_dark_logo,
       tagline: "Where Raw Data Becomes Real Decisions",
@@ -110,6 +111,7 @@ export const brandsContent = {
     {
       number: "Brand 02",
       name: "",
+      shortName: "eatskart",
       icon: brand_icon_7,
       iconDark: brand_icon_7,
       tagline: "Where Restaurants Keep More And Customers Pay Less",
@@ -153,6 +155,7 @@ export const brandsContent = {
     {
       number: "Brand 03",
       name: "",
+      shortName: "Orgatry",
       icon: brand_icon_5,
       iconDark: brand_icon_5,
       tagline: "One Platform For Your Entire Workforce",
@@ -195,6 +198,7 @@ export const brandsContent = {
     {
       number: "Brand 04",
       name: "",
+      shortName: "My Doctor Capsule",
       icon: brand_icon_1,
       iconDark: brand_icon_1,
       tagline: "The Growth Engine Behind Every Great Practice",
@@ -238,6 +242,7 @@ export const brandsContent = {
     {
       number: "Brand 05",
       name: "",
+      shortName: "Loan Konnekt",
       icon: brand_icon_2,
       iconDark: brand_icon_2,
       tagline: "From Financial Confusion To Financial Clarity",
@@ -281,6 +286,7 @@ export const brandsContent = {
     {
       number: "Brand 06",
       name: "",
+      shortName: "Lawvix",
       icon: brand_icon_3,
       iconDark: brand_icon_dark_3,
       tagline: "Where Legal Work Gets Faster",
@@ -322,6 +328,7 @@ export const brandsContent = {
     {
       number: "Brand 07",
       name: "",
+      shortName: "Propertizor",
       icon: brand_icon_6,
       iconDark: brand_icon_dark_6,
       tagline: "Structured Data For An Unstructured Market",
@@ -387,6 +394,6 @@ export type BrandDetail = (typeof brandsContent.brands)[number];
 
 /** Footer / nav brand links (live product sites). */
 export const brandExternalLinks = brandsContent.brands.map((brand) => ({
-  label: brand.name,
+  label: brand.shortName,
   href: brand.href,
 }));

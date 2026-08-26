@@ -9,6 +9,7 @@ import { useHomeMotion } from "@/hooks/useHomeMotion";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { submitContactForm } from "@/lib/api/contactService";
 import aboutBg from "@/assets/about/about_us_bg.png";
+import aboutBgLight from "@/assets/about/about_us_bg_light.png";
 import ContactInfoBar from "@/sections/contact/form"
 
 const { hero } = contactContent;
@@ -68,7 +69,7 @@ export default function ContactHero() {
   } as const;
 
   const fieldClass =
-    "w-full px-4 text-sm !text-white outline-none transition-[border-color,box-shadow] placeholder:text-[#8A93A6] focus:border-[#0047AB]/55 focus:ring-2 focus:ring-[#0047AB]/15 !bg-transparent";
+    "w-full px-4 text-sm outline-none transition-[border-color,box-shadow] placeholder:text-[#8A93A6] focus:border-[#0047AB]/55 focus:ring-2 focus:ring-[#0047AB]/15 !bg-transparent";
 
   const labelClass = "mb-1.5 block text-xs font-medium";
 
@@ -77,8 +78,9 @@ export default function ContactHero() {
       id="contact-hero"
       className="relative overflow-hidden pt-[7.5rem] pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24"
       style={{
-        background:
-          `url(${aboutBg.src}) center/cover no-repeat`,
+        background: isDark
+          ? `url(${aboutBg.src}) center/cover no-repeat, #000000`
+          : `url(${aboutBgLight.src}) center/cover no-repeat, #FFFFFF`,
       }}
 
     >
@@ -92,8 +94,8 @@ export default function ContactHero() {
         >
           <motion.h1
             variants={heroItem}
-            className="font-heading mb-3 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-white leading-[1]"
-
+            className="font-heading mb-3 text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl leading-[1]"
+            style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
           >
             {hero.titleLine1}
             <br />
@@ -102,37 +104,38 @@ export default function ContactHero() {
 
           <motion.p
             variants={heroItem}
-            className="mb-10 text-white max-w-md text-sm leading-relaxed sm:mb-12 sm:text-base font-semibold"
+            className="mb-10 max-w-md text-sm leading-relaxed sm:mb-12 sm:text-base font-semibold"
+            style={{ color: isDark ? "#FFFFFF" : homeLight.body }}
           >
             {hero.description}
           </motion.p>
 
           <motion.div variants={heroItem}>
             <p
-              className="mb-2 text-sm text-[#FFFFFFCC]"
-
+              className="mb-2 text-sm"
+              style={{ color: isDark ? "#FFFFFFCC" : homeLight.muted }}
             >
               {hero.sayHi}
             </p>
             <a
               href={`mailto:${hero.email}`}
-              className="text-xl text-white font-jakarta no-underline transition-opacity hover:opacity-80 sm:text-2xl"
-
+              className="text-xl font-jakarta no-underline transition-opacity hover:opacity-80 sm:text-2xl"
+              style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
             >
               {hero.email}
             </a>
           </motion.div>
           <motion.div variants={heroItem} className="mt-6">
             <p
-              className="mb-2 text-sm text-[#FFFFFFCC]"
-
+              className="mb-2 text-sm"
+              style={{ color: isDark ? "#FFFFFFCC" : homeLight.muted }}
             >
               {hero.forJob}
             </p>
             <a
               href={`mailto:${hero.jobEmail}`}
-              className="text-xl text-white font-jakarta no-underline transition-opacity hover:opacity-80 sm:text-2xl"
-
+              className="text-xl font-jakarta no-underline transition-opacity hover:opacity-80 sm:text-2xl"
+              style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
             >
               {hero.jobEmail}
             </a>
@@ -145,9 +148,11 @@ export default function ContactHero() {
             onSubmit={handleSubmit}
             className="flex flex-col gap-5 p-6 sm:p-8"
             style={{
-              background: "rgba(255,255,255,0.03)",
-              border: `1px solid "rgba(220,226,246,0.08)"`,
-              boxShadow: "0 20px 60px rgba(0,0,0,0.35)"
+              background: isDark ? "rgba(255,255,255,0.03)" : homeLight.card,
+              border: `1px solid ${isDark ? "rgba(220,226,246,0.08)" : homeLight.border}`,
+              boxShadow: isDark
+                ? "0 20px 60px rgba(0,0,0,0.35)"
+                : "0 20px 60px rgba(15,23,42,0.08)",
             }}
           >
             <div>

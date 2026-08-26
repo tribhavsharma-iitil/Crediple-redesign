@@ -12,6 +12,7 @@ import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import HashLink from "@/components/ui/HashLink";
 import aboutBg from "@/assets/about/brands_bg.png";
+import aboutBgLight from "@/assets/about/brands_bg_light.png";
 import HeroWave from "@/components/home/HeroWave";
 import YakaBrandMark from "@/components/home/YakaBrandMark";
 import {
@@ -19,6 +20,8 @@ import {
   HERO_SECTION_CLASS,
   HERO_YAKA_SLOT_CLASS,
 } from "@/components/home/heroLayout";
+import { CredipleButton } from "@/components/ui/CredipleButton";
+import { cn } from "@/lib/utils";
 
 const { hero } = brandsContent;
 const C = brandsColors;
@@ -41,8 +44,9 @@ export default function BrandsHero() {
       id="brands-hero"
       className={HERO_SECTION_CLASS}
       style={{
-        background:
-          `url(${aboutBg.src}) center/cover no-repeat`,
+        background: isDark
+          ? `url(${aboutBg.src}) center/cover no-repeat, #000000`
+          : `url(${aboutBgLight.src}) center/cover no-repeat, #FFFFFF`,
       }}
     >
       <motion.div
@@ -53,17 +57,20 @@ export default function BrandsHero() {
       >
         <motion.h1
           variants={heroItem}
-          className="text-white text-white font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1]"
-
+          className={cn("font-heading mb-2.5 px-1 text-[2rem] leading-[1.15] font-[800] tracking-tight sm:mb-5 sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1]",
+            isDark ? "text-white" : "text-black",
+          )}
         >
           {hero.titleLine1}
           <br />
-          <span className="text-white inline-block md:whitespace-nowrap">{hero.titleAccent}</span>
+          <span className={cn("inline-block md:whitespace-nowrap", isDark ? "text-white" : "text-black")}>{hero.titleAccent}</span>
         </motion.h1>
 
         <motion.p
           variants={heroItem}
-          className="mb-4 max-w-xl px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-semibold font-jakarta"
+          className={cn("mb-4 max-w-xl px-1 text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-semibold font-jakarta",
+            isDark ? "text-white" : "text-black",
+          )}
         >
           {hero.description}
           <br className="hidden sm:block" /> {hero.descriptionLine2}
@@ -73,15 +80,22 @@ export default function BrandsHero() {
           variants={heroItem}
           className="flex w-full max-w-[240px] flex-col items-stretch justify-center gap-3 sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
         >
-
-          <HashLink
-            href={hero.secondaryCta.href}
-            className="inline-flex h-11 w-full items-center bg-[#FFFFFF14] justify-center gap-2 px-6 text-sm text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
-            style={{ backdropFilter: "blur(34px)" }}
-          >
-            {hero.secondaryCta.label}
-          </HashLink>
-
+          {isDark ? (
+            <HashLink
+              href={hero.secondaryCta.href}
+              className="inline-flex h-11 w-full items-center bg-[#FFFFFF14] justify-center gap-2 px-6 text-sm text-white no-underline transition-opacity hover:opacity-90 sm:w-auto sm:px-7 md:h-12"
+              style={{ backdropFilter: "blur(34px)" }}
+            >
+              {hero.secondaryCta.label}
+            </HashLink>
+          ) : (
+            <CredipleButton
+              href={hero.secondaryCta.href}
+              className="h-10 shrink-0 rounded-lg px-5 font-semibold"
+            >
+              {hero.secondaryCta.label}
+            </CredipleButton>
+          )}
         </motion.div>
       </motion.div>
     </section>

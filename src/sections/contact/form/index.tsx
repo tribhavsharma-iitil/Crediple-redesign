@@ -57,9 +57,9 @@ export default function ContactInfoBar() {
                     <div
                       className="flex h-11 w-11 flex-shrink-0 items-center justify-center"
                       style={{
-                        background: "#FFFFFF14",
+                        background: isDark ? "#FFFFFF14" : "#0047AB14",
                         color: "#0047AB",
-                        border: `1px solid rgba(220,226,246,0.12)`,
+                        border: `1px solid ${isDark ? "rgba(220,226,246,0.12)" : homeLight.border}`,
                       }}
                     >
                       <Icon
@@ -75,7 +75,8 @@ export default function ContactInfoBar() {
                         {item.label}
                       </p>
                       <p
-                        className="text-sm leading-relaxed font-medium text-white"
+                        className="text-sm leading-relaxed font-medium"
+                        style={{ color: isDark ? "#FFFFFF" : homeLight.heading }}
                       >
                         {valueContent}
                       </p>

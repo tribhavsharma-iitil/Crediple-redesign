@@ -282,10 +282,23 @@ export default function Navbar() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
               className={cn(
-                "fixed top-0 right-0 bottom-0 z-50 flex w-[min(320px,85vw)] flex-col p-6 pt-20 lg:hidden",
+                "fixed top-0 right-0 bottom-0 z-40 flex w-[min(320px,85vw)] flex-col p-6 pt-20 lg:hidden",
                 isDark ? "bg-black" : "bg-white",
               )}
             >
+              <button
+                type="button"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+                className={cn(
+                  "absolute top-5 right-5 flex h-10 w-10 items-center justify-center rounded-lg border bg-transparent",
+                  isDark
+                    ? "border-white/15 text-white"
+                    : "border-[#E2E8F0] text-[#0F172A]",
+                )}
+              >
+                <X size={20} />
+              </button>
               <motion.nav
                 variants={drawerContainer}
                 initial="hidden"
