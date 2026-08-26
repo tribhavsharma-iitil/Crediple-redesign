@@ -67,7 +67,7 @@ export const brandsContent = {
   brands: [
     {
       number: "Brand 01",
-      name: "IITIL",
+      name: "",
       icon: iitil_light_logo,
       iconDark: iitil_dark_logo,
       tagline: "Where Raw Data Becomes Real Decisions",
@@ -109,7 +109,7 @@ export const brandsContent = {
     },
     {
       number: "Brand 02",
-      name: "eatskart",
+      name: "",
       icon: brand_icon_7,
       iconDark: brand_icon_7,
       tagline: "Where Restaurants Keep More And Customers Pay Less",
@@ -152,7 +152,7 @@ export const brandsContent = {
     },
     {
       number: "Brand 03",
-      name: "Orgatry",
+      name: "",
       icon: brand_icon_5,
       iconDark: brand_icon_5,
       tagline: "One Platform For Your Entire Workforce",
@@ -194,7 +194,7 @@ export const brandsContent = {
     },
     {
       number: "Brand 04",
-      name: "My Doctor Capsule",
+      name: "",
       icon: brand_icon_1,
       iconDark: brand_icon_1,
       tagline: "The Growth Engine Behind Every Great Practice",
@@ -237,7 +237,7 @@ export const brandsContent = {
     },
     {
       number: "Brand 05",
-      name: "Loan Konnekt",
+      name: "",
       icon: brand_icon_2,
       iconDark: brand_icon_2,
       tagline: "From Financial Confusion To Financial Clarity",
@@ -280,7 +280,7 @@ export const brandsContent = {
     },
     {
       number: "Brand 06",
-      name: "Lawvix",
+      name: "",
       icon: brand_icon_3,
       iconDark: brand_icon_dark_3,
       tagline: "Where Legal Work Gets Faster",
@@ -321,7 +321,7 @@ export const brandsContent = {
     },
     {
       number: "Brand 07",
-      name: "Propertizor",
+      name: "",
       icon: brand_icon_6,
       iconDark: brand_icon_dark_6,
       tagline: "Structured Data For An Unstructured Market",
