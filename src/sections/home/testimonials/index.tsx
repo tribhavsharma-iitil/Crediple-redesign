@@ -8,7 +8,6 @@ import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import { homeFadeUp, homeFadeLeft, homeScaleIn } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import ctaBg from "@/assets/gradient.png";
-import { cn } from "@/lib/utils";
 
 const { testimonials, cta } = homeContent;
 const C = homeColors;
@@ -57,7 +56,7 @@ export default function Testimonials() {
     observer.observe(sectionNode);
 
     return () => observer.disconnect();
-  }, []);
+  }, [isDark]);
 
   return (
     <div className="w-full">
@@ -96,19 +95,18 @@ export default function Testimonials() {
               WebkitBackdropFilter: isDark ? "blur(104px)" : "none",
             }}
           >
-            <video
-              ref={videoRef}
-              aria-hidden
-              muted
-              loop
-              playsInline
-              preload="auto"
-              className={cn(
-                "absolute inset-0 z-0 lg:block hidden w-full object-cover",
-                isDark ? "!bg-[#000000]" : "!bg-[#FFFFFF]",
-              )}
-              src={isDark ? "/videos/section_bg_effect.mp4" : "/videos/section_bg_light.mp4"}
-            />
+            {isDark && (
+              <video
+                ref={videoRef}
+                aria-hidden
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="absolute inset-0 z-0 lg:block hidden w-full object-cover"
+                src="/videos/section_bg_effect.mp4"
+              />
+            )}
             {items.map((item) => (
               <HomeItem key={item.name} variants={homeFadeUp} className="h-full">
                 <article
