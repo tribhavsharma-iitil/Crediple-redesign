@@ -75,7 +75,7 @@ export default function SolutionsHero() {
             playsInline
             onLoadedData={() => setVideoReady(true)}
             className={cn(
-              "absolute inset-0 z-0 w-full lg:block hidden pointer-events-none transition-opacity duration-500",
+              "absolute inset-0 z-0 w-full h-[30rem] lg:block hidden pointer-events-none transition-opacity duration-500",
               videoReady ? "opacity-100" : "opacity-0",
             )}
           >
