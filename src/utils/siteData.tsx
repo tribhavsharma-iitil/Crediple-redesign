@@ -35,6 +35,7 @@ export const NAV_LINKS = [
   { label: "About", href: "/about", hasDropdown: false },
   { label: "Solutions", href: "/solutions", hasDropdown: false },
   { label: "Brands", href: "/brands", hasDropdown: false },
+  { label: "Blog", href: "/blog", hasDropdown: false },
 ];
 
 export const HERO_CONTENT = {
@@ -475,6 +476,7 @@ export const FOOTER_COL1 = [
 
 export const FOOTER_COL2 = [
   { label: "Brands", href: "/brands" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
   { label: "Legal", href: "/legal" },
 ];
