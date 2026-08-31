@@ -321,21 +321,21 @@ export const homeContent = {
       "From startups to large enterprises, we build scalable digital solutions that power growth and innovation.",
     items: [
       {
-        name: "Rajiv Sharma",
+        name: "R.Sharma",
         role: "",
         company: "",
         text: "Crediple transformed our entire clinical workflow. What used to take days now takes hours. Their infrastructure is rock solid and the support team genuinely understands enterprise healthcare needs.",
         image: testimonial_1,
       },
       {
-        name: "Priya Nair",
+        name: "P.Nair",
         role: "",
         company: "",
         text: "We integrated Crediple's fintech platform across 3 cities in under a month. The reconciliation automation alone saved us 40 hours a week. Truly a game changer for our operations.",
         image: testimonial_2,
       },
       {
-        name: "Arjun Mehta",
+        name: "A.Mehta",
         role: "",
         company: "",
         text: "Our firm was drowning in paperwork. Crediple built us a case management system that feels like it was made specifically for us. Client satisfaction has never been higher.",

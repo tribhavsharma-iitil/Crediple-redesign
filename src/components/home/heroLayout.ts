@@ -7,7 +7,7 @@ export const HERO_YAKA_SLOT_CLASS =
  * md+: content vertically centered in the hero.
  */
 export const HERO_SECTION_CLASS =
-  "relative flex min-h-0 items-center justify-center overflow-x-clip pt-[9.75rem] pb-10 select-none md:min-h-[var(--hero-min-h)] md:items-center md:pt-24 md:pb-14 lg:pt-59 lg:pb-40 lg:h-[100vh]";
+  "relative flex min-h-0 items-center justify-center overflow-x-clip pt-[9.75rem] pb-10 select-none md:min-h-[var(--hero-min-h)] md:items-center md:pt-24 md:pb-14 lg:pt-59 lg:pb-40 lg:h-[85vh]";
 
 /** Centered hero copy — equal side padding on all breakpoints. */
 export const HERO_CONTENT_CLASS =

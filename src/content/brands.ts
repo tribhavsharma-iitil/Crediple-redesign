@@ -3,13 +3,36 @@
  */
 
 import { homeColors, homeTitleAccentStyle, getHomeTitleAccentStyle, homeLight } from "@/content/home";
-import card_1 from "@/assets/card_1.png";
-import card_2 from "@/assets/card_2.png";
-import card_3 from "@/assets/card_3.png";
-import card_4 from "@/assets/card_4.png";
-import card_5 from "@/assets/card_5.png";
-import card_6 from "@/assets/card_6.png";
-import card_7 from "@/assets/card_7.png";
+import card_1_dark from "@/assets/card_1_dark.png";
+import card_1_light from "@/assets/card_1_light.png";
+import card_2_dark from "@/assets/card_2_dark.png";
+import card_2_light from "@/assets/card_2_light.png";
+import card_3_dark from "@/assets/card_3_dark.png";
+import card_3_light from "@/assets/card_3_light.png";
+import card_4_dark from "@/assets/card_4_dark.png";
+import card_4_light from "@/assets/card_4_light.png";
+import card_5_dark from "@/assets/card_5_dark.png";
+import card_5_light from "@/assets/card_5_light.png";
+import card_6_dark from "@/assets/card_6_dark.png";
+import card_6_light from "@/assets/card_6_light.png";
+import card_7_dark from "@/assets/card_7_dark.png";
+import card_7_light from "@/assets/card_7_light.png";
+import brand_icon_1 from "@/assets/brand_icon_1.png";
+// import brand_icon_dark_1 from "@/assets/brand_icon_dark_1.png";
+import brand_icon_2 from "@/assets/brand_icon_2.png";
+// import brand_icon_dark_2 from "@/assets/brand_icon_dark_2.png";
+import brand_icon_3 from "@/assets/brand_icon_3.png";
+import brand_icon_dark_3 from "@/assets/brand_icon_dark_3.png";
+import brand_icon_4 from "@/assets/brand_icon_4.png";
+// import brand_icon_dark_4 from "@/assets/brand_icon_dark_4.png";
+import brand_icon_5 from "@/assets/brand_icon_5.png";
+// import brand_icon_dark_5 from "@/assets/brand_icon_dark_5.png";
+import brand_icon_6 from "@/assets/brand_icon_6.png";
+import brand_icon_dark_6 from "@/assets/brand_icon_dark_6.png";
+import brand_icon_7 from "@/assets/brand_icon_7.png";
+// import brand_icon_dark_7 from "@/assets/brand_icon_dark_7.png";
+import iitil_dark_logo from "@/assets/iitil_dark_logo.png";
+import iitil_light_logo from "@/assets/iitil_light_logo.png";
 
 export const brandsColors = {
   ...homeColors,
@@ -44,12 +67,16 @@ export const brandsContent = {
   brands: [
     {
       number: "Brand 01",
-      name: "IITIL",
+      name: "",
+      shortName: "IITIL",
+      icon: iitil_light_logo,
+      iconDark: iitil_dark_logo,
       tagline: "Where Raw Data Becomes Real Decisions",
       description: [
         "Every business generates data, but few know what to do with it. Data without any structure is useless. IITIL converts raw, scattered information into clear, strategic intelligence for operational and growth insights.",
       ],
-      image: card_4,
+      imageDark: card_4_dark,
+      imageLight: card_4_light,
       href: "https://www.iitil.com",
       featuresTitle: "What We Build",
       deliverables: [
@@ -83,12 +110,16 @@ export const brandsContent = {
     },
     {
       number: "Brand 02",
-      name: "eatskart",
+      name: "",
+      shortName: "eatskart",
+      icon: brand_icon_7,
+      iconDark: brand_icon_7,
       tagline: "Where Restaurants Keep More And Customers Pay Less",
       description: [
         "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, eatskart helps them earn more and pass the savings on to customers. Browse the latest menus, discover new places, track your order live, and get it delivered fast, every time.",
       ],
-      image: card_7,
+      imageDark: card_7_dark,
+      imageLight: card_7_light,
       href: "https://eatskart.com/",
       featuresTitle: "What We Build",
       deliverables: [
@@ -123,12 +154,16 @@ export const brandsContent = {
     },
     {
       number: "Brand 03",
-      name: "Orgatry",
+      name: "",
+      shortName: "Orgatry",
+      icon: brand_icon_5,
+      iconDark: brand_icon_5,
       tagline: "One Platform For Your Entire Workforce",
       description: [
         "Why should HR only mean spreadsheets, chasing approvals, regular onboarding, and manual payroll runs? Orgatry replaces all of it with one connected, automated system built for modern teams.",
       ],
-      image: card_5,
+      imageDark: card_5_dark,
+      imageLight: card_5_light,
       href: "https://orgatry.com/",
       featuresTitle: "What We Build",
       deliverables: [
@@ -162,12 +197,16 @@ export const brandsContent = {
     },
     {
       number: "Brand 04",
-      name: "My Doctor Capsule",
+      name: "",
+      shortName: "My Doctor Capsule",
+      icon: brand_icon_1,
+      iconDark: brand_icon_1,
       tagline: "The Growth Engine Behind Every Great Practice",
       description: [
         "Clinics and practitioners face the same problem: patients can't find them, or don't trust what they find. My Doctor Capsule solves both with a credible digital presence and organized patient acquisition systems for modern healthcare providers.",
       ],
-      image: card_1,
+      imageDark: card_1_dark,
+      imageLight: card_1_light,
       href: "https://mydoctorcapsule.com/",
       featuresTitle: "What We Build",
       deliverables: [
@@ -202,12 +241,16 @@ export const brandsContent = {
     },
     {
       number: "Brand 05",
-      name: "Loan Konnekt",
+      name: "",
+      shortName: "Loan Konnekt",
+      icon: brand_icon_2,
+      iconDark: brand_icon_2,
       tagline: "From Financial Confusion To Financial Clarity",
       description: [
         "The financial system is hard to navigate. Credit and lending feel like a black box. Loan Konnekt builds analytical frameworks and advisory systems to simplify financial decision-making for borrowers seeking to understand their options and lenders seeking to assess risk.",
       ],
-      image: card_2,
+      imageDark: card_2_dark,
+      imageLight: card_2_light,
       href: "https://loankonnekt.com/",
       featuresTitle: "What We Build",
       deliverables: [
@@ -242,12 +285,16 @@ export const brandsContent = {
     },
     {
       number: "Brand 06",
-      name: "Lawvix",
+      name: "",
+      shortName: "Lawvix",
+      icon: brand_icon_3,
+      iconDark: brand_icon_dark_3,
       tagline: "Where Legal Work Gets Faster",
       description: [
         "Lawvix removes friction from legal processes. Say goodbye to outdated systems. Through structured, technology-enabled workflows, we make legal access more transparent, more efficient, and more accessible. For practices and clients alike.",
       ],
-      image: card_3,
+      imageDark: card_3_dark,
+      imageLight: card_3_light,
       href: "https://lawvix.com/",
       featuresTitle: "What We Build",
       deliverables: [
@@ -280,12 +327,16 @@ export const brandsContent = {
     },
     {
       number: "Brand 07",
-      name: "Propertizor",
+      name: "",
+      shortName: "Propertizor",
+      icon: brand_icon_6,
+      iconDark: brand_icon_dark_6,
       tagline: "Structured Data For An Unstructured Market",
       description: [
         "Real estate runs on scattered, outdated, or simply untrustworthy information. Propertizor fixes that by connecting buyers, sellers, and agents through verified listings and structured market data.",
       ],
-      image: card_6,
+      imageDark: card_6_dark,
+      imageLight: card_6_light,
       href: "https://propertizor.com/",
       featuresTitle: "What We Build",
       deliverables: [
@@ -343,6 +394,6 @@ export type BrandDetail = (typeof brandsContent.brands)[number];
 
 /** Footer / nav brand links (live product sites). */
 export const brandExternalLinks = brandsContent.brands.map((brand) => ({
-  label: brand.name,
+  label: brand.shortName,
   href: brand.href,
 }));

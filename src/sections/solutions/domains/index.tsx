@@ -60,8 +60,7 @@ export default function SolutionsDomains() {
                 variants={homeFadeUp}
                 className="h-[300px] sm:h-[320px] lg:h-[400px]"
               >
-                <Link
-                  href={item.href}
+                <div
                   className="group relative block h-full w-full overflow-hidden no-underline"
                   style={{ borderColor: isDark ? '' : homeLight.border }}
                 >
@@ -89,7 +88,7 @@ export default function SolutionsDomains() {
                       {item.desc}
                     </p>
                   </div>
-                </Link>
+                </div>
               </HomeItem>
             ))}
           </motion.div>

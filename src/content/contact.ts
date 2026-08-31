@@ -23,6 +23,8 @@ export const contactContent = {
     description:
       "We just need a couple of hours. No more than 2 working days since receiving your request.",
     sayHi: "Or just wanna say hi?",
+    forJob: "For career opportunities",
+    jobEmail: "jobs@crediple.com",
     email: "hello@crediple.com",
     form: {
       name: { label: "Full Name", placeholder: "Enter your first name" },
@@ -40,7 +42,7 @@ export const contactContent = {
     items: [
       {
         icon: "clock",
-        label: "Office open",
+        label: "Working hours",
         value: "Mon – Fri, 9 AM – 6 PM IST",
       },
       {

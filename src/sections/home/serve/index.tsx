@@ -128,8 +128,7 @@ export default function WhoWeServe() {
                 variants={homeFadeUp}
                 className="w-[280px] shrink-0 sm:w-[280px] lg:w-[380px] h-[300px] sm:h-[320px] lg:h-[400px]"
               >
-                <Link
-                  href={item.href}
+                <div
                   className="group relative block aspect-[4/3] w-full overflow-hidden no-underline h-full"
                   style={{ borderColor: isDark ? C.border : homeLight.border }}
                 >
@@ -157,7 +156,7 @@ export default function WhoWeServe() {
                       {item.short}
                     </p>
                   </div>
-                </Link>
+                </div>
               </HomeItem>
             ))}
           </motion.div>
