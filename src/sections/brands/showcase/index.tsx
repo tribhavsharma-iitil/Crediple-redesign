@@ -17,10 +17,12 @@ import footerBgDark from "@/assets/about/brands_sub_header.png";
 const { brands } = brandsContent;
 const C = brandsColors;
 
-function brandId(index: number) {
-  return index === 0
-    ? "brand-01"
-    : `brand-${String(index + 1).padStart(2, "0")}`;
+function brandId(name: string) {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function BrandTabBar({
@@ -43,10 +45,10 @@ function BrandTabBar({
       <div className="mx-auto flex w-full max-w-[1260px] items-center justify-center gap-6 overflow-x-auto hide-scrollbar px-4 py-4 sm:px-6">
         <div className="flex shrink-0 items-center lg:gap-4 gap-2 whitespace-nowrap text-xs sm:text-[14px]">
           {brands.map((brand, i) => (
-            <span key={brand.name} className="flex items-center gap-2">
+            <span key={brand.shortName} className="flex items-center gap-2">
               {i > 0 && <span className="text-white/30">/</span>}
               <a
-                href={`#${brandId(i)}`}
+                href={`#${brandId(brand.shortName)}`}
                 onClick={() => onSelect(i)}
                 className="no-underline transition-colors"
                 style={{
@@ -89,7 +91,7 @@ function BrandBlock({
 
   return (
     <div
-      id={brandId(index)}
+      id={brandId(brand.shortName)}
       ref={setBlockRef}
       className="scroll-mt-32 sm:scroll-mt-40"
     >
@@ -244,7 +246,7 @@ export default function BrandsShowcase() {
       <div>
         {brands.map((brand, index) => (
           <BrandBlock
-            key={brand.name}
+            key={brand.shortName}
             brand={brand}
             index={index}
             isDark={isDark}

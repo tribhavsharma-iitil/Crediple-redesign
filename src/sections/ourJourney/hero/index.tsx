@@ -79,6 +79,16 @@ export default function OurJourneyHero() {
           </HashLink>
         </motion.div> */}
       </motion.div>
+
+      {!isDark && (
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-[-1] h-[10%]"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #FFFFFF 100%)",
+          }}
+        />
+      )}
     </section>
   );
 }
