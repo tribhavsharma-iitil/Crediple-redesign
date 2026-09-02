@@ -56,46 +56,50 @@ export default function AboutFuture() {
               className={i % 2 === 1 ? "lg:mt-8 lg:mt-14" : ""}
             >
               <div
-                className="border lg:py-12 py-8 px-4 text-left transition-all duration-300"
+                className="relative lg:py-12 py-8 px-4 text-left"
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 style={{
-                  background:
-                    hoveredIndex === i
-                      ? isDark
-                        ? "#0047AB14"
-                        : "#e7edf5"
-                      : isDark
-                        ? "#FFFFFF0A"
-                        : "#FBFBFB",
-
-                  border: "2px solid",
-
-                  borderImageSource:
-                    hoveredIndex === i
-                      ? isDark
-                        ? "linear-gradient(34.78deg, #232323 0%, #0047AB 100%)"
-                        : "linear-gradient(34.78deg, rgba(251, 251, 251, 0.5) 0%, rgba(0, 71, 171, 0.5) 100%)"
-                      : "none",
-
-                  borderImageSlice: hoveredIndex === i ? 1 : undefined,
-
-                  borderColor:
-                    hoveredIndex === i
-                      ? "transparent"
-                      : isDark
-                        ? "#232323"
-                        : "#E2E8F0",
+                  border: "1.8px solid transparent",
+                  background: isDark ? "#FFFFFF0A" : "#FBFBFB",
                 }}
               >
+                <div
+                  className="pointer-events-none absolute inset-[-1px]"
+                  style={{
+                    border: "1.8px solid",
+                    borderColor: isDark ? "#232323" : "#E2E8F0",
+                    opacity: hoveredIndex === i ? 0 : 1,
+                    transition: "opacity 0.7s ease",
+                  }}
+                />
+                <div
+                  className="pointer-events-none absolute inset-[-1px]"
+                  style={{
+                    border: "1.8px solid",
+                    borderImage: isDark
+                      ? "linear-gradient(34.78deg, #232323 0%, #0047AB 100%) 1"
+                      : "linear-gradient(34.78deg, rgba(251, 251, 251, 0.5) 0%, rgba(0, 71, 171, 0.5) 100%) 1",
+                    opacity: hoveredIndex === i ? 1 : 0,
+                    transition: "opacity 0.7s ease",
+                  }}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background: isDark ? "#0047AB14" : "#e7edf5",
+                    opacity: hoveredIndex === i ? 1 : 0,
+                    transition: "opacity 0.7s ease",
+                  }}
+                />
                 <p
-                  className="font-black tracking-tight lg:text-5xl text-2xl mb-8 font-heading !font-normal"
+                  className="relative font-black tracking-tight lg:text-5xl text-2xl mb-8 font-heading !font-normal"
                   style={{ color: isDark ? '#ffffff' : '#232323' }}
                 >
                   {item.stat}
                 </p>
                 <p
-                  className="font-heading mb-4 mt-6 text-3xl font-black tracking-tight font-jakarta"
+                  className="relative font-heading mb-4 mt-6 text-3xl font-black tracking-tight font-jakarta"
                   style={{ color: isDark ? '#ffffff' : '#232323' }}
                 >
                   {item.title.split(" ")[0]}
@@ -103,7 +107,7 @@ export default function AboutFuture() {
                   {item.title.split(" ").slice(1).join(" ")}
                 </p>
                 <p
-                  className="text-md leading-relaxed"
+                  className="relative text-md leading-relaxed"
                   style={{ color: isDark ? '#FFFFFFCC' : "#454545" }}
                 >
                   {item.desc}
