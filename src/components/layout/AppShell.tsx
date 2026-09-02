@@ -76,7 +76,12 @@ export default function AppShell({
   const handleLoaderComplete = useCallback(() => {
     if (loaderDoneRef.current) return;
     loaderDoneRef.current = true;
-    setPhase("flying");
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      markHomeIntroCompleted();
+      setPhase("ready");
+    } else {
+      setPhase("flying");
+    }
   }, []);
 
   const handleIntroComplete = useCallback(() => {
