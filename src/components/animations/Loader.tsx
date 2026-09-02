@@ -82,19 +82,20 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="relative z-10 flex flex-col items-center gap-5"
           >
             <div className="relative w-[180px] h-[180px]">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.div
                   key={step}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
                   className="absolute inset-0"
                 >
                   <Image
                     src={logoSrc}
                     alt={step === "crediple" ? "Crediple" : "Enterprise"}
                     fill
+                    sizes="180px"
                     className="object-contain"
                     priority
                   />
