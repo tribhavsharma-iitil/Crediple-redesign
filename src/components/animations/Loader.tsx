@@ -23,8 +23,12 @@ export default function Loader({ onComplete }: LoaderProps) {
   const finishedRef = useRef(false);
   const loadedCount = useRef(0);
 
-  const credipleLogo = isDark ? crediple_dark : crediple_light;
-  const enterpriseLogo = isDark ? enterprise_dark : enterprise_light;
+  // Lock the theme at mount time so logo sources never change mid-animation,
+  // which was causing the "blink" on mobile / tablet when hydration flipped isDark.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const credipleLogo = useState(() => (isDark ? crediple_dark : crediple_light))[0];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const enterpriseLogo = useState(() => (isDark ? enterprise_dark : enterprise_light))[0];
 
   const handleImageLoad = useCallback(() => {
     loadedCount.current += 1;
