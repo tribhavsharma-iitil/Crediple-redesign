@@ -14,7 +14,6 @@ interface LoaderProps {
 
 const STEP_MS = 1500;
 const VISIBLE_MS = STEP_MS * 2;
-const EXIT_MS = 600;
 
 export default function Loader({ onComplete }: LoaderProps) {
   const [visible, setVisible] = useState(true);
@@ -43,29 +42,29 @@ export default function Loader({ onComplete }: LoaderProps) {
   useEffect(() => {
     if (!imagesReady) return;
     const stepTimer = setTimeout(() => setStep("enterprise"), STEP_MS);
-    const hideTimer = setTimeout(() => setVisible(false), VISIBLE_MS);
-    const fallbackTimer = setTimeout(finish, VISIBLE_MS + EXIT_MS + 200);
+    const hideTimer = setTimeout(() => {
+      finish();
+      setTimeout(() => setVisible(false), 500);
+    }, VISIBLE_MS);
     return () => {
       clearTimeout(stepTimer);
       clearTimeout(hideTimer);
-      clearTimeout(fallbackTimer);
     };
   }, [finish, imagesReady]);
 
-  // Fallback: if images never fire onLoad (e.g. cached), start after a short delay
   useEffect(() => {
     const t = setTimeout(() => setImagesReady(true), 300);
     return () => clearTimeout(t);
   }, []);
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={finish}>
+    <AnimatePresence>
       {visible && (
         <motion.div
           key="intro-loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: EXIT_MS / 1000, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           className="fixed inset-0 z-[9999] flex items-center justify-center"
           style={{ backgroundColor: "var(--loader-bg)" }}
         >

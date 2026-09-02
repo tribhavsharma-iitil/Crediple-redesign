@@ -111,7 +111,7 @@ export default function AppShell({
         animate={{
           opacity: contentReady ? 1 : 0,
         }}
-        transition={{ duration: contentReady ? 0.4 : 0, delay: contentReady ? 0.1 : 0 }}
+        transition={{ duration: contentReady ? 0.3 : 0, delay: 0 }}
         style={{ pointerEvents: contentReady ? "auto" : "none" }}
         className="relative flex min-h-screen flex-col"
         aria-hidden={!contentReady}
