@@ -138,11 +138,7 @@ export default function Hero() {
         className={HERO_YAKA_SLOT_CLASS}
       >
         {showStaticLogo ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.35 }}
-          >
+          <motion.div>
             <YakaBrandMark />
           </motion.div>
         ) : phase === "flying" || (phase === "ready" && !showYaka) ? (

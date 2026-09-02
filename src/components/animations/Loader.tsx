@@ -40,14 +40,8 @@ export default function Loader({ onComplete }: LoaderProps) {
     };
   }, [finish]);
 
-  const logoSrc =
-    step === "crediple"
-      ? isDark
-        ? crediple_dark
-        : crediple_light
-      : isDark
-        ? enterprise_dark
-        : enterprise_light;
+  const credipleLogo = isDark ? crediple_dark : crediple_light;
+  const enterpriseLogo = isDark ? enterprise_dark : enterprise_light;
 
   return (
     <AnimatePresence mode="wait" onExitComplete={finish}>
@@ -82,25 +76,24 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="relative z-10 flex flex-col items-center gap-5"
           >
             <div className="relative w-[180px] h-[180px]">
-              <AnimatePresence>
-                <motion.div
-                  key={step}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={logoSrc}
-                    alt={step === "crediple" ? "Crediple" : "Enterprise"}
-                    fill
-                    sizes="180px"
-                    className="object-contain"
-                    priority
-                  />
-                </motion.div>
-              </AnimatePresence>
+              <Image
+                src={credipleLogo}
+                alt="Crediple"
+                fill
+                sizes="180px"
+                className={`object-contain transition-opacity duration-500 ease-in-out ${step === "crediple" ? "opacity-100" : "opacity-0"
+                  }`}
+                priority
+              />
+              <Image
+                src={enterpriseLogo}
+                alt="Enterprise"
+                fill
+                sizes="180px"
+                className={`object-contain transition-opacity duration-500 ease-in-out ${step === "enterprise" ? "opacity-100" : "opacity-0"
+                  }`}
+                priority
+              />
             </div>
 
             <div
