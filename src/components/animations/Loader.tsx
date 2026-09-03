@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import enterprise_light from "@/assets/enterprise_light.png";
 import enterprise_dark from "@/assets/enterprise_dark.png";
 import crediple_light from "@/assets/crediple_light.png";
@@ -22,20 +23,24 @@ export default function Loader({ onComplete }: LoaderProps) {
   const { isDark } = useTheme();
   const finishedRef = useRef(false);
   const loadedCount = useRef(0);
+  const fallbackFired = useRef(false);
 
-  // Lock the theme at mount time so logo sources never change mid-animation,
-  // which was causing the "blink" on mobile / tablet when hydration flipped isDark.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const credipleLogo = useState(() => (isDark ? crediple_dark : crediple_light))[0];
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const enterpriseLogo = useState(() => (isDark ? enterprise_dark : enterprise_light))[0];
+  const credipleLogo = isDark ? crediple_dark : crediple_light;
+  const enterpriseLogo = isDark ? enterprise_dark : enterprise_light;
+
+  // Mark images ready only once — whichever fires first (onLoad or fallback) wins.
+  const markReady = useCallback(() => {
+    if (fallbackFired.current) return;
+    fallbackFired.current = true;
+    setImagesReady(true);
+  }, []);
 
   const handleImageLoad = useCallback(() => {
     loadedCount.current += 1;
     if (loadedCount.current >= 2) {
-      setImagesReady(true);
+      markReady();
     }
-  }, []);
+  }, [markReady]);
 
   const finish = useCallback(() => {
     if (finishedRef.current) return;
@@ -56,10 +61,12 @@ export default function Loader({ onComplete }: LoaderProps) {
     };
   }, [finish, imagesReady]);
 
+  // Safety-net fallback: if onLoad never fires (e.g. cached images skip the
+  // event), force-start after a generous delay so the loader isn't stuck.
   useEffect(() => {
-    const t = setTimeout(() => setImagesReady(true), 300);
+    const t = setTimeout(markReady, 800);
     return () => clearTimeout(t);
-  }, []);
+  }, [markReady]);
 
   return (
     <AnimatePresence>
@@ -94,22 +101,45 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="relative z-10 flex flex-col items-center gap-5"
           >
             <div className="relative w-[180px] h-[180px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={credipleLogo.src}
-                alt="Crediple"
-                onLoad={handleImageLoad}
-                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out ${step === "crediple" ? "opacity-100" : "opacity-0"
-                  }`}
-              />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={enterpriseLogo.src}
-                alt="Enterprise"
-                onLoad={handleImageLoad}
-                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ease-in-out ${step === "enterprise" ? "opacity-100" : "opacity-0"
-                  }`}
-              />
+              {/* Crediple logo — visible when step === "crediple" */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  opacity: step === "crediple" ? 1 : 0,
+                  transition: "opacity 500ms ease-in-out",
+                  willChange: "opacity",
+                }}
+              >
+                <Image
+                  src={credipleLogo}
+                  alt="Crediple"
+                  fill
+                  sizes="180px"
+                  className="object-contain"
+                  priority
+                  onLoad={handleImageLoad}
+                />
+              </div>
+
+              {/* Enterprise logo — visible when step === "enterprise" */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  opacity: step === "enterprise" ? 1 : 0,
+                  transition: "opacity 500ms ease-in-out",
+                  willChange: "opacity",
+                }}
+              >
+                <Image
+                  src={enterpriseLogo}
+                  alt="Enterprise"
+                  fill
+                  sizes="180px"
+                  className="object-contain"
+                  priority
+                  onLoad={handleImageLoad}
+                />
+              </div>
             </div>
 
             <div
