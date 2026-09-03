@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import enterprise_light from "@/assets/enterprise_light.png";
 import enterprise_dark from "@/assets/enterprise_dark.png";
 import crediple_light from "@/assets/crediple_light.png";
 import crediple_dark from "@/assets/crediple_dark.png";
-import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 
 interface LoaderProps {
@@ -15,56 +15,141 @@ interface LoaderProps {
 
 const STEP_MS = 1500;
 const VISIBLE_MS = STEP_MS * 2;
-const EXIT_MS = 600;
+const IMAGE_TIMEOUT_MS = 5000;
 
 export default function Loader({ onComplete }: LoaderProps) {
   const [visible, setVisible] = useState(true);
   const [step, setStep] = useState<"crediple" | "enterprise">("crediple");
+  const [imagesReady, setImagesReady] = useState(false);
+
   const { isDark } = useTheme();
+
   const finishedRef = useRef(false);
 
+  const credipleLogo = isDark ? crediple_dark : crediple_light;
+  const enterpriseLogo = isDark ? enterprise_dark : enterprise_light;
+
+  /**
+   * Preload and decode both logos before showing them.
+   * This avoids starting the animation while Safari/iOS
+   * is still decoding the images.
+   */
+  useEffect(() => {
+    let cancelled = false;
+
+    const preloadImage = (src: string) =>
+      new Promise<void>((resolve) => {
+        const img = new window.Image();
+
+        img.onload = async () => {
+          try {
+            await img.decode();
+          } catch {
+            // decode() can fail even when the image is usable.
+            // In that case, continue normally.
+          }
+
+          resolve();
+        };
+
+        img.onerror = () => resolve();
+
+        img.src = src;
+      });
+
+    const preload = async () => {
+      await Promise.all([
+        preloadImage(credipleLogo.src),
+        preloadImage(enterpriseLogo.src),
+      ]);
+
+      if (!cancelled) {
+        setImagesReady(true);
+      }
+    };
+
+    preload();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [credipleLogo.src, enterpriseLogo.src]);
+
+  /**
+   * Safety fallback.
+   * This is intentionally longer than the old 800ms fallback,
+   * so we don't start the animation while images are still decoding.
+   */
+  useEffect(() => {
+    if (imagesReady) return;
+
+    const timeout = setTimeout(() => {
+      setImagesReady(true);
+    }, IMAGE_TIMEOUT_MS);
+
+    return () => clearTimeout(timeout);
+  }, [imagesReady]);
+
+  /**
+   * Switch logo and finish loader.
+   */
   const finish = useCallback(() => {
     if (finishedRef.current) return;
+
     finishedRef.current = true;
     onComplete();
   }, [onComplete]);
 
   useEffect(() => {
-    const stepTimer = setTimeout(() => setStep("enterprise"), STEP_MS);
-    const hideTimer = setTimeout(() => setVisible(false), VISIBLE_MS);
-    const fallbackTimer = setTimeout(finish, VISIBLE_MS + EXIT_MS + 200);
+    if (!imagesReady) return;
+
+    const stepTimer = setTimeout(() => {
+      setStep("enterprise");
+    }, STEP_MS);
+
+    const hideTimer = setTimeout(() => {
+      finish();
+
+      setTimeout(() => {
+        setVisible(false);
+      }, 500);
+    }, VISIBLE_MS);
+
     return () => {
       clearTimeout(stepTimer);
       clearTimeout(hideTimer);
-      clearTimeout(fallbackTimer);
     };
-  }, [finish]);
-
-  const logoSrc =
-    step === "crediple"
-      ? isDark
-        ? crediple_dark
-        : crediple_light
-      : isDark
-        ? enterprise_dark
-        : enterprise_light;
+  }, [imagesReady, finish]);
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={finish}>
+    <AnimatePresence>
       {visible && (
         <motion.div
           key="intro-loader"
           initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: EXIT_MS / 1000, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           className="fixed inset-0 z-[9999] flex items-center justify-center"
-          style={{ backgroundColor: "var(--loader-bg)" }}
+          style={{
+            backgroundColor: "var(--loader-bg)",
+          }}
         >
+          {/* Background glow */}
           <motion.div
             aria-hidden
-            initial={{ opacity: 0, scale: 0.4 }}
-            animate={{ opacity: 0.6, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            initial={{
+              opacity: 0,
+              scale: 0.4,
+            }}
+            animate={{
+              opacity: imagesReady ? 0.6 : 0,
+              scale: 1,
+            }}
+            transition={{
+              duration: 1,
+              ease: "easeOut",
+            }}
             className="absolute pointer-events-none rounded-full"
             style={{
               width: 400,
@@ -75,39 +160,61 @@ export default function Loader({ onComplete }: LoaderProps) {
             }}
           />
 
-          <motion.div
-            initial={{ scale: 3.5, opacity: 0, filter: "blur(18px)" }}
-            animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 flex flex-col items-center gap-5"
-          >
+          <div className="relative z-10 flex flex-col items-center gap-5">
+            {/* Logos */}
             <div className="relative w-[180px] h-[180px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={step}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={logoSrc}
-                    alt={step === "crediple" ? "Crediple" : "Enterprise"}
-                    fill
-                    className="object-contain"
-                    priority
-                  />
-                </motion.div>
-              </AnimatePresence>
+              {/* Crediple */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  opacity:
+                    imagesReady && step === "crediple" ? 1 : 0,
+                  transition: "opacity 500ms ease-in-out",
+                }}
+              >
+                <Image
+                  src={credipleLogo}
+                  alt="Crediple"
+                  fill
+                  sizes="180px"
+                  className="object-contain"
+                  priority
+                />
+              </div>
+
+              {/* Enterprise */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  opacity:
+                    imagesReady && step === "enterprise" ? 1 : 0,
+                  transition: "opacity 500ms ease-in-out",
+                }}
+              >
+                <Image
+                  src={enterpriseLogo}
+                  alt="Enterprise"
+                  fill
+                  sizes="180px"
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </div>
 
+            {/* Loading indicator */}
             <div
               className="rounded-full overflow-hidden"
-              style={{ width: 80, height: 2, background: "var(--border)" }}
+              style={{
+                width: 80,
+                height: 2,
+                background: "var(--border)",
+              }}
             >
               <motion.div
-                animate={{ x: ["-100%", "200%"] }}
+                animate={{
+                  x: ["-100%", "200%"],
+                }}
                 transition={{
                   duration: 1.2,
                   repeat: Infinity,
@@ -121,7 +228,7 @@ export default function Loader({ onComplete }: LoaderProps) {
                 }}
               />
             </div>
-          </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
