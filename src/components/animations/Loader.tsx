@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import enterprise_light from "@/assets/enterprise_light.png";
@@ -25,8 +25,19 @@ export default function Loader({ onComplete }: LoaderProps) {
   const loadedCount = useRef(0);
   const fallbackFired = useRef(false);
 
+  // Detect client-side mount without setState-in-effect.
+  // useSyncExternalStore returns false on server, true on client — no blink.
+  const isMounted = useSyncExternalStore(
+    () => () => { },      // subscribe (no-op, value never changes)
+    () => true,          // client snapshot
+    () => false,         // server snapshot
+  );
+
+  // Only derive logos from isDark after mount (when useTheme has resolved).
+  // Before mount isMounted is false so we don't render <Image> at all.
   const credipleLogo = isDark ? crediple_dark : crediple_light;
   const enterpriseLogo = isDark ? enterprise_dark : enterprise_light;
+  const themeReady = isMounted;
 
   // Mark images ready only once — whichever fires first (onLoad or fallback) wins.
   const markReady = useCallback(() => {
@@ -101,45 +112,50 @@ export default function Loader({ onComplete }: LoaderProps) {
             className="relative z-10 flex flex-col items-center gap-5"
           >
             <div className="relative w-[180px] h-[180px]">
-              {/* Crediple logo — visible when step === "crediple" */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  opacity: step === "crediple" ? 1 : 0,
-                  transition: "opacity 500ms ease-in-out",
-                  willChange: "opacity",
-                }}
-              >
-                <Image
-                  src={credipleLogo}
-                  alt="Crediple"
-                  fill
-                  sizes="180px"
-                  className="object-contain"
-                  priority
-                  onLoad={handleImageLoad}
-                />
-              </div>
+              {/* Only mount images after theme resolves to prevent src swap blink */}
+              {themeReady && (
+                <>
+                  {/* Crediple logo — visible when step === "crediple" */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      opacity: step === "crediple" ? 1 : 0,
+                      transition: "opacity 500ms ease-in-out",
+                      willChange: "opacity",
+                    }}
+                  >
+                    <Image
+                      src={credipleLogo}
+                      alt="Crediple"
+                      fill
+                      sizes="180px"
+                      className="object-contain"
+                      priority
+                      onLoad={handleImageLoad}
+                    />
+                  </div>
 
-              {/* Enterprise logo — visible when step === "enterprise" */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  opacity: step === "enterprise" ? 1 : 0,
-                  transition: "opacity 500ms ease-in-out",
-                  willChange: "opacity",
-                }}
-              >
-                <Image
-                  src={enterpriseLogo}
-                  alt="Enterprise"
-                  fill
-                  sizes="180px"
-                  className="object-contain"
-                  priority
-                  onLoad={handleImageLoad}
-                />
-              </div>
+                  {/* Enterprise logo — visible when step === "enterprise" */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      opacity: step === "enterprise" ? 1 : 0,
+                      transition: "opacity 500ms ease-in-out",
+                      willChange: "opacity",
+                    }}
+                  >
+                    <Image
+                      src={enterpriseLogo}
+                      alt="Enterprise"
+                      fill
+                      sizes="180px"
+                      className="object-contain"
+                      priority
+                      onLoad={handleImageLoad}
+                    />
+                  </div>
+                </>
+              )}
             </div>
 
             <div
