@@ -148,25 +148,28 @@ function BrandBlock({
                 Visit {brand.name}
               </a>
             </div>
-            <p
-              className="font-heading mb-2 text-base leading-snug font-bold sm:text-lg"
-              style={{ color: isDark ? '#ffffff' : C.accentStrong }}
-            >
-              {brand.tagline}
-            </p>
-
-            {brand.description.map((para) => (
+            <div>
               <p
-                key={para.slice(0, 32)}
-                className="text-md leading-relaxed mb-0"
-                style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
+                className="font-heading mb-2 text-base leading-snug font-bold sm:text-lg"
+                style={{ color: isDark ? '#ffffff' : C.accentStrong }}
               >
-                {para}
+                {brand.tagline}
               </p>
-            ))}
+
+              {brand.description.map((para) => (
+                <p
+                  key={para.slice(0, 32)}
+                  className="text-md leading-relaxed mb-0"
+                  style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
+                >
+                  {para}
+                </p>
+              ))}
+
+            </div>
+
 
             <div className="border-y my-6 py-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
-
               <p
                 className="mb-4 lg:text-2xl text-xl"
                 style={{ color: isDark ? C.text : "#0F172A" }}
@@ -192,18 +195,20 @@ function BrandBlock({
                 ))}
               </div>
             </div>
-            <p
-              className="mb-4 lg:text-2xl text-xl"
-              style={{ color: isDark ? '#ffffff' : C.accentStrong }}
-            >
-              Core Focus
-            </p>
-            <p
-              className="mb-4 text-md leading-relaxed last:mb-0"
-              style={{ color: isDark ? "#D8DEE8" : "#334155" }}
-            >
-              {brand.coreFocus}
-            </p>
+            <div>
+              <p
+                className="mb-4 lg:text-2xl text-xl"
+                style={{ color: isDark ? '#ffffff' : C.accentStrong }}
+              >
+                Core Focus
+              </p>
+              <p
+                className="mb-4 text-md leading-tight last:mb-0"
+                style={{ color: isDark ? "#D8DEE8" : "#334155" }}
+              >
+                {brand.coreFocus}
+              </p>
+            </div>
           </div>
         </HomeReveal>
       </div>
