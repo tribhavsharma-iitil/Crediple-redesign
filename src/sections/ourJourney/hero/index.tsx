@@ -51,7 +51,7 @@ export default function OurJourneyHero() {
         <motion.h1
           variants={heroItem}
           className={cn("text-white font-heading mb-2 px-1 text-[2rem] leading-[0] sm:text-4xl md:mb-6 md:text-5xl lg:text-6xl leading-[1] font-heading",
-          isDark ? "text-white" : "text-black",
+            isDark ? "text-white" : "text-black",
           )}
         >
           {hero.titleLine1}
@@ -60,9 +60,9 @@ export default function OurJourneyHero() {
         <motion.p
           variants={heroItem}
           className={cn("mb-4 max-w-5xl px-1 text-white text-[13px] leading-relaxed sm:mb-8 sm:text-sm md:mb-9 md:text-[15px] lg:text-base font-semibold font-jakarta",
-         isDark ? "text-white" : "text-black",
+            isDark ? "text-white" : "text-black",
           )}
-            >
+        >
           {hero.description}
         </motion.p>
 
@@ -80,7 +80,16 @@ export default function OurJourneyHero() {
         </motion.div> */}
       </motion.div>
 
-      {!isDark && (
+      {isDark ? (
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-[-1] h-[20%]"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #000000 100%)",
+          }}
+        />
+      ) : (
+
         <div
           className="pointer-events-none absolute inset-x-0 bottom-[-1] h-[10%]"
           style={{

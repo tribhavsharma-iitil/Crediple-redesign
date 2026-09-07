@@ -137,7 +137,15 @@ export default function SolutionsHero() {
           </motion.div>
         </motion.div>
       </div>
-
+      {isDark && (
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-[-1] h-[20%]"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #000000 100%)",
+          }}
+        />
+      )}
     </section>
   );
 }
