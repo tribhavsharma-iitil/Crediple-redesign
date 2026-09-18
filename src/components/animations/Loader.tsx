@@ -7,6 +7,8 @@ import enterprise_light from "@/assets/enterprise_light.png";
 import enterprise_dark from "@/assets/enterprise_dark.png";
 import crediple_light from "@/assets/crediple_light.png";
 import crediple_dark from "@/assets/crediple_dark.png";
+import crediple_light_icon_loading from "@/assets/crediple_light_icon_loading.png";
+import crediple_dark_icon_loading from "@/assets/crediple_dark_icon_loading.png";
 import { useTheme } from "@/context/ThemeContext";
 
 interface LoaderProps {
@@ -14,18 +16,23 @@ interface LoaderProps {
 }
 
 const STEP_MS = 1500;
-const VISIBLE_MS = STEP_MS * 2;
+const VISIBLE_MS = STEP_MS * 3;
 const IMAGE_TIMEOUT_MS = 5000;
 
 export default function Loader({ onComplete }: LoaderProps) {
   const [visible, setVisible] = useState(true);
-  const [step, setStep] = useState<"crediple" | "enterprise">("crediple");
+  const [step, setStep] = useState<"icon" | "crediple" | "enterprise">(
+    "icon"
+  );
   const [imagesReady, setImagesReady] = useState(false);
 
   const { isDark } = useTheme();
 
   const finishedRef = useRef(false);
 
+  const iconLogo = isDark
+    ? crediple_dark_icon_loading
+    : crediple_light_icon_loading;
   const credipleLogo = isDark ? crediple_dark : crediple_light;
   const enterpriseLogo = isDark ? enterprise_dark : enterprise_light;
 
@@ -59,6 +66,7 @@ export default function Loader({ onComplete }: LoaderProps) {
 
     const preload = async () => {
       await Promise.all([
+        preloadImage(iconLogo.src),
         preloadImage(credipleLogo.src),
         preloadImage(enterpriseLogo.src),
       ]);
@@ -73,7 +81,7 @@ export default function Loader({ onComplete }: LoaderProps) {
     return () => {
       cancelled = true;
     };
-  }, [credipleLogo.src, enterpriseLogo.src]);
+  }, [iconLogo.src, credipleLogo.src, enterpriseLogo.src]);
 
   /**
    * Safety fallback.
@@ -103,9 +111,13 @@ export default function Loader({ onComplete }: LoaderProps) {
   useEffect(() => {
     if (!imagesReady) return;
 
-    const stepTimer = setTimeout(() => {
-      setStep("enterprise");
+    const stepTimer1 = setTimeout(() => {
+      setStep("crediple");
     }, STEP_MS);
+
+    const stepTimer2 = setTimeout(() => {
+      setStep("enterprise");
+    }, STEP_MS * 2);
 
     const hideTimer = setTimeout(() => {
       finish();
@@ -116,7 +128,8 @@ export default function Loader({ onComplete }: LoaderProps) {
     }, VISIBLE_MS);
 
     return () => {
-      clearTimeout(stepTimer);
+      clearTimeout(stepTimer1);
+      clearTimeout(stepTimer2);
       clearTimeout(hideTimer);
     };
   }, [imagesReady, finish]);
@@ -163,6 +176,24 @@ export default function Loader({ onComplete }: LoaderProps) {
           <div className="relative z-10 flex flex-col items-center gap-5">
             {/* Logos */}
             <div className="relative w-[180px] h-[180px]">
+              {/* Icon */}
+              <div
+                className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[90px]"
+                style={{
+                  opacity: imagesReady && step === "icon" ? 1 : 0,
+                  transition: "opacity 500ms ease-in-out",
+                }}
+              >
+                <Image
+                  src={iconLogo}
+                  alt="Crediple Icon"
+                  fill
+                  sizes="180px"
+                  className="object-contain"
+                  priority
+                />
+              </div>
+
               {/* Crediple */}
               <div
                 className="absolute inset-0"
