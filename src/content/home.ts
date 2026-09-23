@@ -266,7 +266,8 @@ export const homeContent = {
         title: "Healthcare Professionals",
         heading: "Digitising clinical workflows",
         desc: "From independent practitioners to multi-specialty hospitals, we deliver HIPAA-aligned platforms that streamline patient management, billing, and compliance.",
-        short: "From patient acquisition to clinical growth, digital infrastructure for healthcare providers.",
+        short:
+          "From patient acquisition to clinical growth, digital infrastructure for healthcare providers.",
         href: "/solutions",
         image: whoWeServe1,
       },
@@ -274,7 +275,8 @@ export const homeContent = {
         title: "Finance & Fintech",
         heading: "Powering next-gen financial ops",
         desc: "Banks, NBFCs, and fintech startups rely on our infrastructure to automate reconciliation, reporting, and regulatory compliance at scale.",
-        short: "Financial infrastructure for smarter lending and sustainable growth.",
+        short:
+          "Financial infrastructure for smarter lending and sustainable growth.",
         href: "/solutions",
         image: whoWeServe3,
       },
@@ -282,7 +284,8 @@ export const homeContent = {
         title: "Legal Practices",
         heading: "Technology meets jurisprudence",
         desc: "Law firms and solo advocates use our tools to manage case files, automate documentation, and serve clients faster with end-to-end legal tech.",
-        short: "Legal workflow infrastructure to reduce paperwork and speed up legal services.",
+        short:
+          "Legal workflow infrastructure to reduce paperwork and speed up legal services.",
         href: "/solutions",
         image: whoWeServe4,
       },
@@ -346,6 +349,14 @@ export const homeContent = {
     title: "Ready for Institutional Excellence?",
     description:
       "Join the ecosystem that's redefining the future of global industry. Let's discuss your next strategic move.",
+  },
+
+  insights: {
+    title: "Latest Insights",
+    subtitle:
+      "Explore our latest thinking, stories, and expertise across technology, design, and business transformation.",
+    ctaLabel: "Check Insights",
+    ctaHref: "/blog",
   },
 } as const;
 

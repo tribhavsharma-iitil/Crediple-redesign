@@ -25,11 +25,11 @@ export function SectionWrapper({
 
   const bgClass = (() => {
     if (isDark) {
-      return "bg-[#020B1A]";
+      return "bg-[#000000]";
     }
     switch (bg) {
       case "alt":
-        return "bg-[#FAF7FF]";
+        return "bg-[#FFFFFF]";
       case "hero":
         return "section-hero-light";
       default:
@@ -47,7 +47,9 @@ export function SectionWrapper({
         className,
       )}
     >
-      <div className="max-w-[1260px] mx-auto">{children}</div>
+      <div className="mx-auto w-full max-w-[1260px] px-4 sm:px-6">
+        {children}
+      </div>
     </section>
   );
 }
