@@ -12,8 +12,13 @@ export const metadata: Metadata = createPageMetadata({
   path: "/blog/",
 });
 
-const PAGE_SIZE = 3;
-const EMPTY_PAGINATION: Pagination = { page: 1, limit: PAGE_SIZE, totalItems: 0, totalPages: 1 };
+const PAGE_SIZE = 6;
+const EMPTY_PAGINATION: Pagination = {
+  page: 1,
+  limit: PAGE_SIZE,
+  totalItems: 0,
+  totalPages: 1,
+};
 
 export default async function BlogIndexPage() {
   const initial = await fetchBlogsPage(1, PAGE_SIZE);
@@ -21,9 +26,12 @@ export default async function BlogIndexPage() {
   return (
     <>
       <BlogHero />
-    <SectionWrapper>
-        <BlogList initialBlogs={initial?.blogs ?? []} initialPagination={initial?.pagination ?? EMPTY_PAGINATION} />
-    </SectionWrapper>
+      <SectionWrapper bg="alt">
+        <BlogList
+          initialBlogs={initial?.blogs ?? []}
+          initialPagination={initial?.pagination ?? EMPTY_PAGINATION}
+        />
+      </SectionWrapper>
     </>
   );
 }

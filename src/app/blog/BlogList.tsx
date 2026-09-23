@@ -12,7 +12,11 @@ function formatDate(publishedAt: string | null) {
   if (!publishedAt) return "";
   const date = new Date(publishedAt);
   if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 export function BlogList({
@@ -47,7 +51,8 @@ export function BlogList({
   useBlogStream(refresh);
 
   function goToPage(next: number) {
-    if (next < 1 || next > pagination.totalPages || next === page || loading) return;
+    if (next < 1 || next > pagination.totalPages || next === page || loading)
+      return;
     setLoading(true);
     setPage(next);
   }
@@ -57,27 +62,51 @@ export function BlogList({
   const dividerClass = isDark ? "border-white/10" : "border-black/10";
 
   if (!blogs.length) {
-    return <p className={bodyClass}>No posts published yet — check back soon.</p>;
+    return (
+      <p className={bodyClass}>No posts published yet — check back soon.</p>
+    );
   }
 
   return (
     <div>
-      <div className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 transition-opacity ${loading ? "opacity-50" : ""}`}>
+      <div
+        className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 transition-opacity ${loading ? "opacity-50" : ""}`}
+      >
         {blogs.map((blog) => (
-          <Link key={blog.id} href={`/blog/${blog.slug}`}>
-            <Card className="h-full overflow-hidden p-0">
-              {blog.coverImageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={blog.coverImageUrl} alt={blog.title} className="h-48 w-full object-cover" />
-              )}
-              <div className="p-6">
-                <h2 className={`font-heading line-clamp-2 text-lg font-semibold ${headingClass}`}>
+          <Link key={blog.id} href={`/blog/${blog.slug}`} className="flex">
+            <Card className="flex flex-col h-full w-full overflow-hidden p-0 rounded-none">
+              <div className="relative aspect-video w-full overflow-hidden">
+                {blog.coverImageUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={blog.coverImageUrl}
+                    alt={blog.title}
+                    className="h-full w-full object-cover"
+                  />
+                )}
+              </div>
+
+
+              <div className="flex flex-1 flex-col p-6">
+                <h2
+                  className={`font-heading line-clamp-2 text-lg font-semibold min-h-[3.5rem] ${headingClass}`}
+                >
                   {blog.title}
                 </h2>
-                {blog.excerpt && (
-                  <p className={`mt-2 line-clamp-2 text-sm leading-relaxed ${bodyClass}`}>{blog.excerpt}</p>
-                )}
-                <div className={`mt-5 flex items-center justify-end gap-1.5 border-t pt-4 text-xs ${dividerClass} ${bodyClass}`}>
+
+                <div className="mt-2 flex-1 min-h-[2.5rem]">
+                  {blog.excerpt && (
+                    <p
+                      className={`line-clamp-2 text-sm leading-relaxed ${bodyClass}`}
+                    >
+                      {blog.excerpt}
+                    </p>
+                  )}
+                </div>
+
+                <div
+                  className={`mt-5 flex items-center justify-end gap-1.5 border-t pt-4 text-xs ${dividerClass} ${bodyClass}`}
+                >
                   <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
                   {formatDate(blog.publishedAt)}
                 </div>
