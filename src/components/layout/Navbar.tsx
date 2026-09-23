@@ -71,10 +71,8 @@ export default function Navbar() {
       {" "}
       <header
         className={cn(
-          "fixed z-50 w-full border",
-          isDark
-            ? "border-transparent bg-[#FFFFFF14]"
-            : "border-[#E2E8F0] bg-white",
+          "fixed z-50 w-full border dark:border-[#1010101A]",
+          isDark ? "border-[transparent]" : "bg-[#FFFFFF] ",
         )}
         style={{ backdropFilter: "blur(362px)" }}
       >
@@ -116,19 +114,16 @@ export default function Navbar() {
                       {" "}
                       /{" "}
                     </span>
-                  )}{" "}
+                  )}
                   <div
                     className="relative flex items-center"
-                    onMouseEnter={() =>
-                      hasDropdown && setOpenDropdown(link.href)
-                    }
+                    onMouseEnter={() => hasDropdown && setOpenDropdown(link.href)}
                     onMouseLeave={() => hasDropdown && setOpenDropdown(null)}
                   >
-                    {" "}
                     <Link
                       href={link.href}
                       className={cn(
-                        "relative flex items-center gap-1 text-md font-normal no-underline transition-colors hover:opacity-80",
+                        "relative flex items-center gap-1 text-md font-noraml no-underline transition-colors hover:opacity-80",
                         active
                           ? isDark
                             ? "text-white"
@@ -138,22 +133,17 @@ export default function Navbar() {
                             : "text-[#475569]",
                       )}
                     >
-                      {" "}
-                      {link.label}{" "}
+                      {link.label}
                       {hasDropdown && (
                         <ChevronDown
                           size={14}
-                          className={cn(
-                            "ml-2 transition-transform",
-                            isOpen && "rotate-180",
-                          )}
+                          className={cn("transition-transform ml-2", isOpen && "rotate-180")}
                         />
-                      )}{" "}
-                    </Link>{" "}
-                    {/* Desktop dropdown */}{" "}
+                      )}
+                    </Link>
+
                     {hasDropdown && (
                       <AnimatePresence>
-                        {" "}
                         {isOpen && (
                           <motion.div
                             initial={{ opacity: 0, y: 8 }}
@@ -167,12 +157,8 @@ export default function Navbar() {
                                 : "border-[#E2E8F0] bg-white shadow-[0_16px_32px_rgba(15,23,42,0.08)]",
                             )}
                           >
-                            {" "}
                             {link.dropdown!.map((item) => {
-                              const itemActive = isLinkActive(
-                                pathname,
-                                item.href,
-                              );
+                              const itemActive = isLinkActive(pathname, item.href);
                               return (
                                 <Link
                                   key={item.href}
@@ -188,16 +174,15 @@ export default function Navbar() {
                                         : "text-[#475569] hover:bg-slate-50 hover:text-[#0047AB]",
                                   )}
                                 >
-                                  {" "}
-                                  {item.label}{" "}
+                                  {item.label}
                                 </Link>
                               );
-                            })}{" "}
+                            })}
                           </motion.div>
-                        )}{" "}
+                        )}
                       </AnimatePresence>
-                    )}{" "}
-                  </div>{" "}
+                    )}
+                  </div>
                 </div>
               );
             })}{" "}
@@ -299,12 +284,10 @@ export default function Navbar() {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 280 }}
               className={cn(
-                "fixed top-0 right-0 bottom-0 z-50 flex w-[min(320px,85vw)] flex-col p-6 pt-20 lg:hidden",
+                "fixed top-0 right-0 bottom-0 z-40 flex w-[min(320px,85vw)] flex-col p-6 pt-20 lg:hidden",
                 isDark ? "bg-black" : "bg-white",
               )}
             >
-              {" "}
-              {/* Close button */}{" "}
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}
@@ -316,9 +299,8 @@ export default function Navbar() {
                     : "border-[#E2E8F0] text-[#0F172A]",
                 )}
               >
-                {" "}
-                <X size={20} />{" "}
-              </button>{" "}
+                <X size={20} />
+              </button>
               <motion.nav
                 variants={drawerContainer}
                 initial="hidden"
@@ -330,11 +312,10 @@ export default function Navbar() {
                   const active = isLinkActive(pathname, link.href);
                   const hasDropdown = Boolean(link.dropdown?.length);
                   const expanded = mobileDropdown === link.href;
+
                   return (
                     <motion.div key={link.href} variants={drawerItem}>
-                      {" "}
                       <div className="flex items-center">
-                        {" "}
                         <Link
                           href={link.href}
                           className={cn(
@@ -348,36 +329,28 @@ export default function Navbar() {
                                 : "text-[#475569]",
                           )}
                         >
-                          {" "}
-                          {link.label}{" "}
-                        </Link>{" "}
+                          {link.label}
+                        </Link>
                         {hasDropdown && (
                           <button
                             type="button"
-                            onClick={() =>
-                              setMobileDropdown(expanded ? null : link.href)
-                            }
+                            onClick={() => setMobileDropdown(expanded ? null : link.href)}
                             aria-label={`Toggle ${link.label} submenu`}
                             className={cn(
-                              "ml-2 flex h-9 w-9 shrink-0 items-center justify-center",
+                              "flex h-9 w-9 shrink-0 items-center justify-center ml-2",
                               isDark ? "text-white/70" : "text-[#475569]",
                             )}
                           >
-                            {" "}
                             <ChevronDown
                               size={16}
-                              className={cn(
-                                "transition-transform",
-                                expanded && "rotate-180",
-                              )}
-                            />{" "}
+                              className={cn("transition-transform", expanded && "rotate-180")}
+                            />
                           </button>
-                        )}{" "}
-                      </div>{" "}
-                      {/* Mobile dropdown */}{" "}
+                        )}
+                      </div>
+
                       {hasDropdown && (
                         <AnimatePresence>
-                          {" "}
                           {expanded && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
@@ -386,12 +359,8 @@ export default function Navbar() {
                               transition={{ duration: 0.2 }}
                               className="overflow-hidden pl-4"
                             >
-                              {" "}
                               {link.dropdown!.map((item) => {
-                                const itemActive = isLinkActive(
-                                  pathname,
-                                  item.href,
-                                );
+                                const itemActive = isLinkActive(pathname, item.href);
                                 return (
                                   <Link
                                     key={item.href}
@@ -407,15 +376,14 @@ export default function Navbar() {
                                           : "text-[#64748B]",
                                     )}
                                   >
-                                    {" "}
-                                    {item.label}{" "}
+                                    {item.label}
                                   </Link>
                                 );
-                              })}{" "}
+                              })}
                             </motion.div>
-                          )}{" "}
+                          )}
                         </AnimatePresence>
-                      )}{" "}
+                      )}
                     </motion.div>
                   );
                 })}{" "}

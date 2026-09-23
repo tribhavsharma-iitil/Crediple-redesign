@@ -37,7 +37,7 @@ export default function Timeline() {
             </span>
           </h2>
           <p
-            className="mt-2 text-sm sm:text-base"
+            className="mt-2 text-sm sm:text-base font-medium"
             style={{ color: isDark ? '#ffffff' : homeLight.muted }}
           >
             {timeline.subtitle}
@@ -97,7 +97,7 @@ export default function Timeline() {
                     {item.period}
                   </p>
                   <h3
-                    className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                    className="mt-2 mb-2 text-2xl font-black tracking-tight font-jakarta"
                     style={{ color: isDark ? C.text : homeLight.heading }}
                   >
                     {item.title}

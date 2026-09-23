@@ -15,7 +15,7 @@ import { CredipleButton } from "@/components/ui/CredipleButton";
 import { HomeReveal, HomeItem } from "@/components/home/HomeReveal";
 import { homeFadeLeft, homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
-import { cn } from "@/lib/utils";
+import { cn, withTheme } from "@/lib/utils";
 import sectionBg from "@/assets/home/visual_bg.png";
 
 
@@ -108,17 +108,18 @@ export default function Brands() {
         className="relative section-py overflow-hidden"
         style={{ background: isDark ? '#000000' : '#FFFFFF' }}
       >
-        {isDark && (
-          <video
-            aria-hidden
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 z-0 h-60 top-[33%] lg:block hidden w-full object-cover"
-            src="/videos/section_bg_effect.mp4"
-          />
-        )}
+        <video
+          aria-hidden
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={cn(
+            "absolute inset-0 z-0 h-60 top-[33%] lg:block hidden w-full object-cover",
+            isDark ? "!bg-[#000000]" : "!bg-[#FFFFFF]",
+          )}
+          src={isDark ? "/videos/section_bg_effect.mp4" : "/videos/section_bg_light.mp4"}
+        />
         <div className="relative z-10">
           <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
             <HomeReveal variants={homeFadeLeft} className="mb-8 w-full sm:mb-10">
@@ -181,7 +182,7 @@ export default function Brands() {
                     />
                   </div>
                   <h3
-                    className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                    className="font-heading mt-2 mb-2 lg:text-3xl text-2xl font-black tracking-tight"
                     style={{ color: isDark ? C.text : homeLight.heading }}
                   >
                     {brand.name}
@@ -199,7 +200,7 @@ export default function Brands() {
                 <HomeItem key={brand.name} className="h-full">
                   {brand.clickable ? (
                     <Link
-                      href={brand.href}
+                      href={withTheme(brand.href, isDark)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(cardClassName, "hover:bg-black/[0.02] dark:hover:bg-white/[0.03]")}
@@ -251,13 +252,15 @@ export default function Brands() {
         /> */}
 
         <div className="relative z-10 mx-auto w-full max-w-[1260px] px-4 sm:px-6">
-          <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
-            <HomeReveal className="m-auto" variants={homeFadeLeft}>
+          <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-10 lg:gap-16">
+            <HomeReveal className="my-auto col-span-4" variants={homeFadeLeft}>
               <h2
                 className="font-heading mb-3 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
                 style={{ color: isDark ? "#ffffff" : homeLight.heading }}
               >
-                {values.titleBefore}{" "}
+                {values.titleBefore}<br className="hidden sm:inline" />
+                {values.titleBefore1}<br className="hidden sm:inline" />
+                {values.titleBefore2}
                 <span style={getHomeTitleAccentStyle(isDark)}>
                   {values.titleAccent}
                 </span>
@@ -278,7 +281,7 @@ export default function Brands() {
               initial="hidden"
               whileInView="visible"
               viewport={viewport}
-              className="grid grid-cols-1 overflow-hidden border"
+              className="grid grid-cols-1 overflow-hidden border col-span-6"
               style={{
                 background: isDark ? `#FFFFFF0A` : "#FBFBFB",
                 borderColor: isDark ? C.border : homeLight.border,
@@ -297,7 +300,7 @@ export default function Brands() {
                       {item.number}
                     </span>
                     <h3
-                      className="font-heading mt-2 mb-2 text-2xl font-black tracking-tight"
+                      className="mt-2 mb-2 text-2xl font-black tracking-tight font-jakarta"
                       style={{ color: isDark ? C.text : homeLight.heading }}
                     >
                       {item.title}

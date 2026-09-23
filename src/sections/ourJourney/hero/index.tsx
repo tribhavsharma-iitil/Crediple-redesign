@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ourJourneyContent } from "@/content/ourJourney";
 import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import heroBg from "@/assets/about/hero_section_bg_our_journey.png";
@@ -14,7 +15,6 @@ import {
 
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
-import { ourJourneyContent } from "@/content/ourJourney";
 
 
 const { hero } = ourJourneyContent;

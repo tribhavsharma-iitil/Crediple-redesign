@@ -11,15 +11,18 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp } from "@/lib/animations";
+import { withTheme } from "@/lib/utils";
 import footerBgDark from "@/assets/about/brands_sub_header.png";
 
 const { brands } = brandsContent;
 const C = brandsColors;
 
-function brandId(index: number) {
-  return index === 0
-    ? "brand-01"
-    : `brand-${String(index + 1).padStart(2, "0")}`;
+function brandId(name: string) {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function BrandTabBar({
@@ -42,10 +45,10 @@ function BrandTabBar({
       <div className="mx-auto flex w-full max-w-[1260px] items-center justify-center gap-6 overflow-x-auto hide-scrollbar px-4 py-4 sm:px-6">
         <div className="flex shrink-0 items-center lg:gap-4 gap-2 whitespace-nowrap text-xs sm:text-[14px]">
           {brands.map((brand, i) => (
-            <span key={brand.name} className="flex items-center gap-2">
+            <span key={brand.shortName} className="flex items-center gap-2">
               {i > 0 && <span className="text-white/30">/</span>}
               <a
-                href={`#${brandId(i)}`}
+                href={`#${brandId(brand.shortName)}`}
                 onClick={() => onSelect(i)}
                 className="no-underline transition-colors"
                 style={{
@@ -88,7 +91,7 @@ function BrandBlock({
 
   return (
     <div
-      id={brandId(index)}
+      id={brandId(brand.shortName)}
       ref={setBlockRef}
       className="scroll-mt-32 sm:scroll-mt-40"
     >
@@ -97,14 +100,15 @@ function BrandBlock({
           variants={homeFadeUp}
           className={imageLeft ? "order-1 xl:order-1" : "order-1 xl:order-2"}
         >
-          <div className="relative aspect-[4/4] h-full w-full overflow-hidden">
+          <div className="relative w-full overflow-hidden">
             <Image
-              src={brand.image}
+              src={isDark ? brand.imageDark : brand.imageLight}
               alt={brand.name}
-              fill
-              placeholder="blur"
+              width={1200}
+              height={800}
               quality={100}
-              className="object-cover h-full w-full"
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 600px"
+              className="block h-auto w-full object-contain"
             />
           </div>
         </HomeReveal>
@@ -115,12 +119,27 @@ function BrandBlock({
           className={imageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"}
         >
           <div
-            className="relative flex h-full flex-col lg:py-12 lg:p-12 p-8 justify-between"
+            className="relative flex h-full flex-col px-10 p-8 justify-between"
             style={{ background: 'transparent' }}
           >
-            <div className="mb-12 flex justify-end">
+            <div className="mb-8 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={isDark ? brand.iconDark : brand.icon}
+                  alt={`${brand.name} icon`}
+                  width={40}
+                  height={40}
+                  className="h-9 w-auto object-contain sm:h-10"
+                />
+                <h2
+                  className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl font-jakarta"
+                  style={{ color: isDark ? C.text : "#0F172A" }}
+                >
+                  {brand.name}
+                </h2>
+              </div>
               <a
-                href={brand.href}
+                href={withTheme(brand.href, isDark)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-9 items-center justify-center px-8 text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
@@ -129,50 +148,39 @@ function BrandBlock({
                 Visit {brand.name}
               </a>
             </div>
-
-            <span
-              className="mb-2 block"
-              style={{ color: isDark ? '#0047AB' : C.accentStrong }}
-            >
-              {index + 1 }
-              </span>
-
-            <h2
-              className="font-heading mb-2 text-2xl font-black tracking-tight sm:text-3xl"
-              style={{ color: isDark ? C.text : "#0F172A" }}
-            >
-              {brand.name}
-            </h2>
-            <p
-              className="font-heading mb-2 text-base leading-snug font-bold sm:text-lg"
-              style={{ color: isDark ? '#ffffff' : C.accentStrong }}
-            >
-              {brand.tagline}
-            </p>
-
-            {brand.description.map((para) => (
+            <div>
               <p
-                key={para.slice(0, 32)}
-                className="text-md leading-relaxed mb-0"
-                style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
+                className="font-heading mb-2 text-base leading-snug font-bold sm:text-lg"
+                style={{ color: isDark ? '#ffffff' : C.accentStrong }}
               >
-                {para}
+                {brand.tagline}
               </p>
-            ))}
 
-            <div className="border-y my-8 py-8 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
+              {brand.description.map((para) => (
+                <p
+                  key={para.slice(0, 32)}
+                  className="text-md leading-relaxed mb-0"
+                  style={{ color: isDark ? "#FFFFFFCC" : "#475569" }}
+                >
+                  {para}
+                </p>
+              ))}
 
+            </div>
+
+
+            <div className="border-y my-6 py-6 border-dashed" style={{ borderColor: isDark ? "#FFFFFF29" : "#E2E8F0" }}>
               <p
-                className="mb-4 lg:text-2xl text-xl font-bold"
+                className="mb-4 lg:text-2xl text-xl"
                 style={{ color: isDark ? C.text : "#0F172A" }}
               >
                 {brand.featuresTitle}
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {brand.deliverables.map((item) => (
                   <span
                     key={item.title}
-                    className="border p-3 text-sm font-medium"
+                    className="border p-3 text-sm font-medium text-center"
                     style={{
                       color: isDark ? "#ffffff" : "#1E293B",
                       // backdropFilter: isDark ? "blur(50px)" : "none",
@@ -187,18 +195,20 @@ function BrandBlock({
                 ))}
               </div>
             </div>
-            <p
-              className="mb-4 lg:text-2xl text-xl font-bold"
-              style={{ color: isDark ? '#ffffff' : C.accentStrong }}
-            >
-              Core Focus
-            </p>
-            <p
-              className="mb-4 text-md leading-relaxed last:mb-0"
-              style={{ color: isDark ? "#D8DEE8" : "#334155" }}
-            >
-              {brand.coreFocus}
-            </p>
+            <div>
+              <p
+                className="mb-4 lg:text-2xl text-xl"
+                style={{ color: isDark ? '#ffffff' : C.accentStrong }}
+              >
+                Core Focus
+              </p>
+              <p
+                className="mb-4 text-md leading-tight last:mb-0"
+                style={{ color: isDark ? "#D8DEE8" : "#334155" }}
+              >
+                {brand.coreFocus}
+              </p>
+            </div>
           </div>
         </HomeReveal>
       </div>
@@ -233,15 +243,15 @@ export default function BrandsShowcase() {
   return (
     <section
       id="brand-showcase"
-      className="relative"
-      style={{ background: isDark ? C.bg : "#FFFFFF" }}
+      className="relative max-w-[1800px] max-[1800px]:mx-0 min-[1601px]:mx-auto"
+      style={{ background: isDark ? '#000000' : "#FFFFFF" }}
     >
       {/* <BrandTabBar activeIndex={activeIndex} onSelect={setActiveIndex} /> */}
 
       <div>
         {brands.map((brand, index) => (
           <BrandBlock
-            key={brand.name}
+            key={brand.shortName}
             brand={brand}
             index={index}
             isDark={isDark}

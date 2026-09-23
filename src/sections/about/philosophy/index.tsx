@@ -33,7 +33,7 @@ export default function AboutPhilosophy() {
               <span style={homeTitleAccentStyle}>{philosophy.titleAccent}</span>
             </h2>
             <p
-              className="mt-2 text-sm sm:text-base"
+              className="mt-2 text-sm sm:text-base font-medium"
               style={{ color: isDark ? '#FFFFFF' : "#64748B" }}
             >
               {philosophy.subtitle}
@@ -66,7 +66,7 @@ export default function AboutPhilosophy() {
                   {item.label}
                 </span>
                 <h3
-                  className="font-heading my-4 text-2xl font-black tracking-tight"
+                  className="font-heading my-4 text-2xl font-black tracking-tight font-jakarta font-normal"
                   style={{ color: isDark ? '#ffffff' : "#0F172A" }}
                 >
                   {item.title}

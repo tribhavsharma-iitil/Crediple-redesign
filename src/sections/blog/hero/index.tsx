@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { blogHero } from "@/content/blog";
 import { homeEase } from "@/lib/animations";
 import { useHomeMotion } from "@/hooks/useHomeMotion";
 import blogHeroBg from "@/assets/blog_hero.png";
@@ -14,7 +15,6 @@ import HashLink from "@/components/ui/HashLink";
 import { CredipleButton } from "@/components/ui/CredipleButton";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
-import { blogHero } from "@/content/blog";
 
 const heroItem = {
   hidden: { opacity: 0, y: 28 },
@@ -92,4 +92,3 @@ export default function BlogHero() {
     </section>
   );
 }
- 

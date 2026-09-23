@@ -5,19 +5,19 @@ import OurJourneyFoundation from "@/sections/ourJourney/foundation";
 import Timeline from "@/sections/home/timeline";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Our Journey | Crediple",
-  description:
-    "From a single idea to a multi-sector ecosystem — explore the milestones behind Crediple's growth.",
-  path: "/our-journey",
-  keywords: [...DEFAULT_KEYWORDS, "our journey", "timeline", "company history"],
+    title: "Our Journey | Crediple",
+    description:
+        "From a single idea to a multi-sector ecosystem — explore the milestones behind Crediple's growth.",
+    path: "/our-journey",
+    keywords: [...DEFAULT_KEYWORDS, "our journey", "timeline", "company history"],
 });
 
 export default function OurJourneyPage() {
-  return (
-    <>
-      <OurJourneyHero />
-      <OurJourneyFoundation />
-      <Timeline />
-    </>
-  );
+    return (
+        <>
+            <OurJourneyHero />
+            <OurJourneyFoundation />
+            <Timeline />
+        </>
+    );
 }

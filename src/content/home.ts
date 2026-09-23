@@ -26,7 +26,7 @@ import whoWeServe1 from "@/assets/home/who_we_serve_1.png";
 import whoWeServe2 from "@/assets/home/who_we_serve_2.png";
 import whoWeServe3 from "@/assets/home/who_we_serve_3.png";
 import whoWeServe4 from "@/assets/home/who_we_serve_4.png";
-import whoWeServe5 from "@/assets/home/who_we_serve_5.jpg";
+import whoWeServe5 from "@/assets/home/who_we_serve_5.png";
 import whoWeServe6 from "@/assets/home/who_we_serve_6.png";
 
 /** Exact colors from Home.pdf / Figma */
@@ -114,7 +114,7 @@ export const homeContent = {
         clickable: true,
       },
       {
-        name: "eatskart",
+        name: "Eatskart",
         description:
           "Your food, your way. Explore top restaurants, track orders in real time, and enjoy fast, reliable delivery to your doorstep.",
         href: "https://eatskart.com/",
@@ -187,7 +187,9 @@ export const homeContent = {
   },
 
   values: {
-    titleBefore: "The Values Behind Every Innovation",
+    titleBefore: "The Values",
+    titleBefore1: 'Behind Every',
+    titleBefore2: 'Innovation',
     titleAccent: "",
     subtitle:
       "The values that define who we are, how we work, and the impact we create.",
@@ -263,11 +265,10 @@ export const homeContent = {
       "Industry specific solutions that drive efficiency and sustainable growth.",
     items: [
       {
-        title: "Healthcare Professionals",
+        title: "Healthcare",
         heading: "Digitising clinical workflows",
-        desc: "From independent practitioners to multi-specialty hospitals, we deliver HIPAA-aligned platforms that streamline patient management, billing, and compliance.",
-        short:
-          "From patient acquisition to clinical growth, digital infrastructure for healthcare providers.",
+        desc: "HIPAA-aligned platforms for seamless patient management, billing, & compliance.",
+        short: "HIPAA-aligned platforms for seamless patient management, billing, & compliance.",
         href: "/solutions",
         image: whoWeServe1,
       },
@@ -290,10 +291,10 @@ export const homeContent = {
         image: whoWeServe4,
       },
       {
-        title: "Enterprise & Corporates",
+        title: "Enterprise Clients",
         heading: "Enterprise-grade digital backbone",
-        desc: "Large organisations trust Crediple to modernise legacy systems, integrate cross-functional data pipelines, and maintain operational continuity.",
-        short: "Enterprise-grade digital backbone for complex ops...",
+        desc: "Helping enterprises modernise systems and streamline data integration.",
+        short: "Helping enterprises modernise systems and streamline data integration.",
         href: "/solutions",
         image: whoWeServe5,
       },
@@ -322,21 +323,21 @@ export const homeContent = {
       "From startups to large enterprises, we build scalable digital solutions that power growth and innovation.",
     items: [
       {
-        name: "Rajiv Sharma",
+        name: "R.Sharma",
         role: "",
         company: "",
         text: "Crediple transformed our entire clinical workflow. What used to take days now takes hours. Their infrastructure is rock solid and the support team genuinely understands enterprise healthcare needs.",
         image: testimonial_1,
       },
       {
-        name: "Priya Nair",
+        name: "P.Nair",
         role: "",
         company: "",
         text: "We integrated Crediple's fintech platform across 3 cities in under a month. The reconciliation automation alone saved us 40 hours a week. Truly a game changer for our operations.",
         image: testimonial_2,
       },
       {
-        name: "Arjun Mehta",
+        name: "A.Mehta",
         role: "",
         company: "",
         text: "Our firm was drowning in paperwork. Crediple built us a case management system that feels like it was made specifically for us. Client satisfaction has never been higher.",

@@ -30,7 +30,14 @@ import brands_hero_img from "@/assets/brands_hero.png";
 import solutions_hero_img from "@/assets/solutions_hero.png";
 import contact_hero_img from "@/assets/contact_hero.png";
 
-export const NAV_LINKS = [
+export interface NavLink {
+  label: string;
+  href: string;
+  hasDropdown: boolean;
+  dropdown?: { label: string; href: string }[];
+}
+
+export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/", hasDropdown: false },
   {
     label: "About",

@@ -1,10 +1,10 @@
 "use client";
 
+import { ourJourneyContent } from "@/content/ourJourney";
 import { homeColors } from "@/content/home";
 import { useTheme } from "@/context/ThemeContext";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { homeFadeUp } from "@/lib/animations";
-import { ourJourneyContent } from "@/content/ourJourney";
 
 const { foundation } = ourJourneyContent;
 const C = homeColors;
