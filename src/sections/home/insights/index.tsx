@@ -72,8 +72,8 @@ export default function Insights() {
                 href="/blog"
                 className="inline-flex h-11 items-center justify-center whitespace-nowrap px-8 text-sm font-semibold no-underline transition-opacity hover:opacity-90"
                 style={{
-                  background: isDark ? "#FFFFFF" : "#0047AB",
-                  color: isDark ? "#0047AB" : "#FFFFFF",
+                  background: "#0047AB",
+                  color: "#FFFFFF",
                 }}
               >
                 {insights.ctaLabel}
@@ -82,7 +82,11 @@ export default function Insights() {
           </HomeReveal>
         </div>
 
-        <BlogList initialBlogs={blogs} initialPagination={pagination} showPagination={false} />
+        <BlogList
+          initialBlogs={blogs}
+          initialPagination={pagination}
+          showPagination={false}
+        />
       </div>
     </section>
   );
