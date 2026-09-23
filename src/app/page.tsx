@@ -11,6 +11,7 @@ import {
   DEFAULT_TITLE,
   createPageMetadata,
 } from "@/lib/seo";
+import Insights from "@/sections/home/insights";
 
 export const metadata: Metadata = createPageMetadata({
   title: DEFAULT_TITLE,
@@ -28,6 +29,7 @@ export default function Home() {
       <Timeline />
       <Serve />
       <Testimonials />
+      <Insights />
     </>
   );
 }

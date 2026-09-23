@@ -18,9 +18,11 @@ function formatDate(publishedAt: string | null) {
 export function BlogList({
   initialBlogs,
   initialPagination,
+  showPagination = true,
 }: {
   initialBlogs: Blog[];
   initialPagination: Pagination;
+  showPagination?: boolean;
 }) {
   const { isDark } = useTheme();
   const [blogs, setBlogs] = useState(initialBlogs);
@@ -85,7 +87,7 @@ export function BlogList({
         ))}
       </div>
 
-      {pagination.totalPages > 1 && (
+      {showPagination && pagination.totalPages > 1 && (
         <div className="mt-10 flex items-center justify-center gap-4">
           <button
             type="button"

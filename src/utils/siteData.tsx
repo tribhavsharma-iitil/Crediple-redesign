@@ -32,10 +32,17 @@ import contact_hero_img from "@/assets/contact_hero.png";
 
 export const NAV_LINKS = [
   { label: "Home", href: "/", hasDropdown: false },
-  { label: "About", href: "/about", hasDropdown: false },
+  {
+    label: "About",
+    href: "/about",
+    hasDropdown: true,
+    dropdown: [
+      { label: "Blog", href: "/blog" },
+      { label: "Our Journey", href: "/our-journey" },
+    ],
+  },
   { label: "Solutions", href: "/solutions", hasDropdown: false },
   { label: "Brands", href: "/brands", hasDropdown: false },
-  { label: "Blog", href: "/blog", hasDropdown: false },
 ];
 
 export const HERO_CONTENT = {
