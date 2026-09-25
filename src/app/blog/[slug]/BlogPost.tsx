@@ -69,7 +69,7 @@ export function BlogPost({ slug, initialBlog }: { slug: string; initialBlog: Blo
 
   return (
     <article>
-      <div className="max-w-[1260px] mx-auto px-4 pt-10 sm:pt-14">
+      <div className="max-w-[1260px] mx-auto px-4 pt-20 sm:pt-24">
         <nav aria-label="Breadcrumb" className={`mb-6 flex flex-wrap items-center gap-2 text-sm ${mutedClass}`}>
           <Link href="/" className="hover:underline">
             Home
