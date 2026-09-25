@@ -7,16 +7,13 @@ import { useTheme } from "@/context/ThemeContext";
 import { fetchBlogBySlug, type Blog } from "@/lib/blogs";
 import { useBlogStream } from "@/lib/useBlogStream";
 import { extractHeadings, withHeadingIds } from "@/lib/toc";
+import { scrollToHash } from "@/lib/scrollToHash";
 
 function formatDate(publishedAt: string | null) {
   if (!publishedAt) return "";
   const date = new Date(publishedAt);
   if (Number.isNaN(date.getTime())) return "";
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-}
-
-function scrollToHeading(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export function BlogPost({ slug, initialBlog }: { slug: string; initialBlog: Blog }) {
@@ -128,7 +125,7 @@ export function BlogPost({ slug, initialBlog }: { slug: string; initialBlog: Blo
                     >
                       <button
                         type="button"
-                        onClick={() => scrollToHeading(item.id)}
+                        onClick={() => scrollToHash(item.id)}
                         className={`block w-full py-2.5 text-left text-sm leading-6 transition-colors hover:underline ${bodyClass} hover:text-brand-blue`}
                       >
                         {item.text}
@@ -145,7 +142,7 @@ export function BlogPost({ slug, initialBlog }: { slug: string; initialBlog: Blo
             {blog.content?.trim() ? (
               <div
                 className="prose prose-lg max-w-none dark:prose-invert
-                  prose-headings:font-heading prose-headings:text-light-heading dark:prose-headings:text-dark-heading
+                  prose-headings:scroll-mt-24 prose-headings:font-heading prose-headings:text-light-heading dark:prose-headings:text-dark-heading
                   prose-p:text-light-body dark:prose-p:text-dark-body
                   prose-li:text-light-body dark:prose-li:text-dark-body
                   prose-strong:text-light-heading dark:prose-strong:text-dark-heading
