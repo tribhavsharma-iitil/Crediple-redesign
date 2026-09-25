@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { useTheme } from "@/context/ThemeContext";
-import { fetchBlogsPage, type Blog, type Pagination } from "@/lib/blogs";
+import { blogHref, fetchBlogsPage, loadBuiltSlugs, type Blog, type Pagination } from "@/lib/blogs";
 import { useBlogStream } from "@/lib/useBlogStream";
 
 function formatDate(publishedAt: string | null) {
@@ -33,10 +33,14 @@ export function BlogList({
   const [pagination, setPagination] = useState(initialPagination);
   const [page, setPage] = useState(initialPagination.page);
   const [loading, setLoading] = useState(false);
+  const [builtSlugs, setBuiltSlugs] = useState<Set<string> | null>(null);
 
   const refresh = useCallback(() => {
-    fetchBlogsPage(page, pagination.limit).then((result) => {
+    // Wait for the built-slugs manifest too, so a post published after the
+    // last build is never rendered with a link to a page that doesn't exist.
+    Promise.all([fetchBlogsPage(page, pagination.limit), loadBuiltSlugs()]).then(([result, slugs]) => {
       setLoading(false);
+      setBuiltSlugs(slugs);
       if (result) {
         setBlogs(result.blogs);
         setPagination(result.pagination);
@@ -73,7 +77,7 @@ export function BlogList({
         className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 transition-opacity ${loading ? "opacity-50" : ""}`}
       >
         {blogs.map((blog) => (
-          <Link key={blog.id} href={`/blog/${blog.slug}`} className="flex">
+          <Link key={blog.id} href={blogHref(blog.slug, builtSlugs)} className="flex">
             <Card className="flex flex-col h-full w-full overflow-hidden p-0 rounded-none">
               <div className="relative aspect-video w-full overflow-hidden">
                 {blog.coverImageUrl && (
