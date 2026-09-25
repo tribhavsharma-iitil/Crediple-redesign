@@ -88,6 +88,32 @@ export async function fetchBlogBySlug(
   return { status: "error" };
 }
 
+let builtSlugsPromise: Promise<Set<string> | null> | null = null;
+
+/**
+ * Browser-only: slugs that have a pre-rendered /blog/[slug]/ page in the
+ * currently deployed build (from the static /blog/built-slugs.json). Fetched
+ * once per page load. Null if it couldn't be loaded.
+ */
+export function loadBuiltSlugs(): Promise<Set<string> | null> {
+  builtSlugsPromise ??= fetch("/blog/built-slugs.json", { cache: "no-store" })
+    .then((res) => (res.ok ? res.json() : null))
+    .then((slugs) => (Array.isArray(slugs) ? new Set<string>(slugs) : null))
+    .catch(() => null);
+  return builtSlugsPromise;
+}
+
+/**
+ * Link target for a post. The static export only has pages for slugs that
+ * existed at build time, so posts published since then go to the
+ * client-rendered /blog/view/ fallback until the next rebuild. With no
+ * manifest (not loaded yet, or failed), assume the static page exists.
+ */
+export function blogHref(slug: string, builtSlugs: Set<string> | null): string {
+  if (!builtSlugs || builtSlugs.has(slug)) return `/blog/${slug}/`;
+  return `/blog/view/?slug=${encodeURIComponent(slug)}`;
+}
+
 /** URL for the live blog-change SSE stream, or null if not configured. */
 export function blogStreamUrl(): string | null {
   if (!API_BASE || !API_KEY) return null;
