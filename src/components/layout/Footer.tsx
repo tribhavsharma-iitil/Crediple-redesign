@@ -26,6 +26,7 @@ const DOMAIN_LINKS = solutionsContent.domains.items.map((item) => ({
 }));
 
 const LEGAL_LINKS = [
+  { label: "Corporate Secretaria", href: "/legal" },
   { label: "Privacy Policy", href: "/legal" },
   { label: "Terms of Service", href: "/legal" },
 ];

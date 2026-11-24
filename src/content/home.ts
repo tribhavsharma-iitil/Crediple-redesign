@@ -104,24 +104,24 @@ export const homeContent = {
     titleAccent: "",
     subtitle: "The power of diverse industries, unified by data.",
     brands: [
-      {
-        name: "Iitil",
-        description:
-          "Data intelligence ecosystem transforming fragmented business data into strategic decision-making systems.",
-        href: "https://www.iitil.com",
-        icon: brand_icon_4,
-        iconDark: brand_icon_dark_4,
-        clickable: true,
-      },
-      {
-        name: "Eatskart",
-        description:
-          "Your food, your way. Explore top restaurants, track orders in real time, and enjoy fast, reliable delivery to your doorstep.",
-        href: "https://eatskart.com/",
-        icon: brand_icon_7,
-        iconDark: brand_icon_dark_7,
-        clickable: true,
-      },
+      // {
+      //   name: "Iitil",
+      //   description:
+      //     "Data intelligence ecosystem transforming fragmented business data into strategic decision-making systems.",
+      //   href: "https://www.iitil.com",
+      //   icon: brand_icon_4,
+      //   iconDark: brand_icon_dark_4,
+      //   clickable: true,
+      // },
+      // {
+      //   name: "Eatskart",
+      //   description:
+      //     "Your food, your way. Explore top restaurants, track orders in real time, and enjoy fast, reliable delivery to your doorstep.",
+      //   href: "https://eatskart.com/",
+      //   icon: brand_icon_7,
+      //   iconDark: brand_icon_dark_7,
+      //   clickable: true,
+      // },
       {
         name: "Orgatry",
         description:
@@ -140,15 +140,15 @@ export const homeContent = {
         iconDark: brand_icon_dark_1,
         clickable: true,
       },
-      {
-        name: "Loan Konnekt",
-        description:
-          "Structured financial intelligence and lending ecosystem simplifying credit analysis and borrower journeys.",
-        href: "https://loankonnekt.com/",
-        icon: brand_icon_2,
-        iconDark: brand_icon_dark_2,
-        clickable: true,
-      },
+      // {
+      //   name: "Loan Konnekt",
+      //   description:
+      //     "Structured financial intelligence and lending ecosystem simplifying credit analysis and borrower journeys.",
+      //   href: "https://loankonnekt.com/",
+      //   icon: brand_icon_2,
+      //   iconDark: brand_icon_dark_2,
+      //   clickable: true,
+      // },
       {
         name: "Lawvix",
         description:

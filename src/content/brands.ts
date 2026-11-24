@@ -65,93 +65,93 @@ export const brandsContent = {
   },
 
   brands: [
-    {
-      number: "Brand 01",
-      name: "",
-      shortName: "IITIL",
-      icon: iitil_light_logo,
-      iconDark: iitil_dark_logo,
-      tagline: "Where Raw Data Becomes Real Decisions",
-      description: [
-        "Every business generates data, but few know what to do with it. Data without any structure is useless. IITIL converts raw, scattered information into clear, strategic intelligence for operational and growth insights.",
-      ],
-      imageDark: card_4_dark,
-      imageLight: card_4_light,
-      href: "https://www.iitil.com",
-      featuresTitle: "What We Build",
-      deliverables: [
-        {
-          title: "Data Aggregation",
-          subtext:
-            "Pulling scattered data from every source into one structured system.",
-        },
-        {
-          title: "Performance Dashboards",
-          subtext:
-            "Clear, visual dashboards to turn raw numbers into actionable decisions.",
-        },
-        {
-          title: "Cross-Domain Intelligence",
-          subtext:
-            "Benchmarks and trends drawn from data across multiple industries.",
-        },
-        {
-          title: "Predictive Analytics",
-          subtext:
-            "Predictive models to give decision-makers a head start.",
-        },
-        {
-          title: "Strategic Frameworks",
-          subtext: "Decision tools to make the right call at the right time.",
-        },
-      ],
-      coreFocus:
-        "We build the intelligence layer between raw data and real-world decisions.",
-    },
-    {
-      number: "Brand 02",
-      name: "",
-      shortName: "eatskart",
-      icon: brand_icon_7,
-      iconDark: brand_icon_7,
-      tagline: "Where Restaurants Keep More And Customers Pay Less",
-      description: [
-        "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, eatskart helps them earn more and pass the savings on to customers. Browse the latest menus, discover new places, track your order live, and get it delivered fast, every time.",
-      ],
-      imageDark: card_7_dark,
-      imageLight: card_7_light,
-      href: "https://eatskart.com/",
-      featuresTitle: "What We Build",
-      deliverables: [
-        {
-          title: "Lower Commissions",
-          subtext:
-            "We charge restaurants less, so you get lower prices. Everyone wins!",
-        },
-        {
-          title: "Live Status Tracking",
-          subtext:
-            'Tracking that removes the guesswork. No more "where\'s my food?"',
-        },
-        {
-          title: "Restaurant Discovery",
-          subtext:
-            "Surfacing the best local options in seconds, whether something new or familiar.",
-        },
-        {
-          title: "Hyperlocal Marketplaces",
-          subtext:
-            "Local restaurants, local delivery, matched by geography. Fast and dependable.",
-        },
-        {
-          title: "Instant Delivery",
-          subtext:
-            "Connecting restaurants and customers through one coordinated system.",
-        },
-      ],
-      coreFocus:
-        "We keep commissions low so restaurants earn more and customers pay less.",
-    },
+    // {
+    //   number: "Brand 01",
+    //   name: "",
+    //   shortName: "IITIL",
+    //   icon: iitil_light_logo,
+    //   iconDark: iitil_dark_logo,
+    //   tagline: "Where Raw Data Becomes Real Decisions",
+    //   description: [
+    //     "Every business generates data, but few know what to do with it. Data without any structure is useless. IITIL converts raw, scattered information into clear, strategic intelligence for operational and growth insights.",
+    //   ],
+    //   imageDark: card_4_dark,
+    //   imageLight: card_4_light,
+    //   href: "https://www.iitil.com",
+    //   featuresTitle: "What We Build",
+    //   deliverables: [
+    //     {
+    //       title: "Data Aggregation",
+    //       subtext:
+    //         "Pulling scattered data from every source into one structured system.",
+    //     },
+    //     {
+    //       title: "Performance Dashboards",
+    //       subtext:
+    //         "Clear, visual dashboards to turn raw numbers into actionable decisions.",
+    //     },
+    //     {
+    //       title: "Cross-Domain Intelligence",
+    //       subtext:
+    //         "Benchmarks and trends drawn from data across multiple industries.",
+    //     },
+    //     {
+    //       title: "Predictive Analytics",
+    //       subtext:
+    //         "Predictive models to give decision-makers a head start.",
+    //     },
+    //     {
+    //       title: "Strategic Frameworks",
+    //       subtext: "Decision tools to make the right call at the right time.",
+    //     },
+    //   ],
+    //   coreFocus:
+    //     "We build the intelligence layer between raw data and real-world decisions.",
+    // },
+    // {
+    //   number: "Brand 02",
+    //   name: "",
+    //   shortName: "eatskart",
+    //   icon: brand_icon_7,
+    //   iconDark: brand_icon_7,
+    //   tagline: "Where Restaurants Keep More And Customers Pay Less",
+    //   description: [
+    //     "Most delivery platforms take a large cut from every order. By charging restaurants lower commissions, eatskart helps them earn more and pass the savings on to customers. Browse the latest menus, discover new places, track your order live, and get it delivered fast, every time.",
+    //   ],
+    //   imageDark: card_7_dark,
+    //   imageLight: card_7_light,
+    //   href: "https://eatskart.com/",
+    //   featuresTitle: "What We Build",
+    //   deliverables: [
+    //     {
+    //       title: "Lower Commissions",
+    //       subtext:
+    //         "We charge restaurants less, so you get lower prices. Everyone wins!",
+    //     },
+    //     {
+    //       title: "Live Status Tracking",
+    //       subtext:
+    //         'Tracking that removes the guesswork. No more "where\'s my food?"',
+    //     },
+    //     {
+    //       title: "Restaurant Discovery",
+    //       subtext:
+    //         "Surfacing the best local options in seconds, whether something new or familiar.",
+    //     },
+    //     {
+    //       title: "Hyperlocal Marketplaces",
+    //       subtext:
+    //         "Local restaurants, local delivery, matched by geography. Fast and dependable.",
+    //     },
+    //     {
+    //       title: "Instant Delivery",
+    //       subtext:
+    //         "Connecting restaurants and customers through one coordinated system.",
+    //     },
+    //   ],
+    //   coreFocus:
+    //     "We keep commissions low so restaurants earn more and customers pay less.",
+    // },
     {
       number: "Brand 03",
       name: "",
@@ -239,50 +239,50 @@ export const brandsContent = {
       coreFocus:
         "We make sure good healthcare providers are impossible to miss through the right systems.",
     },
-    {
-      number: "Brand 05",
-      name: "",
-      shortName: "Loan Konnekt",
-      icon: brand_icon_2,
-      iconDark: brand_icon_2,
-      tagline: "From Financial Confusion To Financial Clarity",
-      description: [
-        "The financial system is hard to navigate. Credit and lending feel like a black box. Loan Konnekt builds analytical frameworks and advisory systems to simplify financial decision-making for borrowers seeking to understand their options and lenders seeking to assess risk.",
-      ],
-      imageDark: card_2_dark,
-      imageLight: card_2_light,
-      href: "https://loankonnekt.com/",
-      featuresTitle: "What We Build",
-      deliverables: [
-        {
-          title: "Credit Analysis",
-          subtext:
-            "A structured approach to assessing creditworthiness for lenders.",
-        },
-        {
-          title: "Borrower Profiling",
-          subtext:
-            "Comprehensive systems for accurately and fairly profiling borrowers.",
-        },
-        {
-          title: "Credit Ecosystem",
-          subtext:
-            "Bringing borrowers and lenders together through a guided process.",
-        },
-        {
-          title: "Lending Analytics",
-          subtext:
-            "Dashboards to convert credit and lending data into clear next steps.",
-        },
-        {
-          title: "Structured Credit Repair",
-          subtext:
-            "Step-by-step pathways from where credit stands to where it needs to be.",
-        },
-      ],
-      coreFocus:
-        "We exist to make financial decision-making less complicated for borrowers and lenders alike.",
-    },
+    // {
+    //   number: "Brand 05",
+    //   name: "",
+    //   shortName: "Loan Konnekt",
+    //   icon: brand_icon_2,
+    //   iconDark: brand_icon_2,
+    //   tagline: "From Financial Confusion To Financial Clarity",
+    //   description: [
+    //     "The financial system is hard to navigate. Credit and lending feel like a black box. Loan Konnekt builds analytical frameworks and advisory systems to simplify financial decision-making for borrowers seeking to understand their options and lenders seeking to assess risk.",
+    //   ],
+    //   imageDark: card_2_dark,
+    //   imageLight: card_2_light,
+    //   href: "https://loankonnekt.com/",
+    //   featuresTitle: "What We Build",
+    //   deliverables: [
+    //     {
+    //       title: "Credit Analysis",
+    //       subtext:
+    //         "A structured approach to assessing creditworthiness for lenders.",
+    //     },
+    //     {
+    //       title: "Borrower Profiling",
+    //       subtext:
+    //         "Comprehensive systems for accurately and fairly profiling borrowers.",
+    //     },
+    //     {
+    //       title: "Credit Ecosystem",
+    //       subtext:
+    //         "Bringing borrowers and lenders together through a guided process.",
+    //     },
+    //     {
+    //       title: "Lending Analytics",
+    //       subtext:
+    //         "Dashboards to convert credit and lending data into clear next steps.",
+    //     },
+    //     {
+    //       title: "Structured Credit Repair",
+    //       subtext:
+    //         "Step-by-step pathways from where credit stands to where it needs to be.",
+    //     },
+    //   ],
+    //   coreFocus:
+    //     "We exist to make financial decision-making less complicated for borrowers and lenders alike.",
+    // },
     {
       number: "Brand 06",
       name: "",
