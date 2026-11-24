@@ -26,9 +26,9 @@ const DOMAIN_LINKS = solutionsContent.domains.items.map((item) => ({
 }));
 
 const LEGAL_LINKS = [
-  { label: "Corporate Secretaria", href: "/legal" },
-  { label: "Privacy Policy", href: "/legal" },
-  { label: "Terms of Service", href: "/legal" },
+  { label: "Corporate Secretarial", href: "/corporate-secretarial" },
+  { label: "Privacy Policy", href: "/legal#privacy-policy" },
+  { label: "Terms of Service", href: "/legal#terms-of-service" },
 ];
 
 export default function Footer() {
@@ -46,7 +46,7 @@ export default function Footer() {
       }}
     >
       <div className="mx-auto max-w-[1260px] p-8 sm:px-6 md:px-8">
-        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-20 lg:items-center">
+        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-40 lg:items-center">
           {/* Brand */}
           <div className="max-w-[420px] shrink-0">
             <Link
@@ -87,7 +87,7 @@ export default function Footer() {
 
           </div>
 
-          <div className="grid min-w-0 flex-1 grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+          <div className="grid min-w-0 flex-1 grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
             <div>
               {/* <h4
                 className={cn(
@@ -156,7 +156,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div>
+            {/* <div>
               {/* <h4
                 className={cn(
                   "mb-2 text-[11px] font-bold uppercase tracking-[0.18em]",
@@ -165,7 +165,7 @@ export default function Footer() {
               >
                 Brands
               </h4> */}
-              <ul className="space-y-2">
+              {/* <ul className="space-y-2">
                 {brandExternalLinks.slice(4).map((link) => (
                   <li key={link.href}>
                     <a
@@ -184,7 +184,7 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             <div>
               {/* <h4
